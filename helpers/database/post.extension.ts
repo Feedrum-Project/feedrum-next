@@ -1,0 +1,86 @@
+import { Prisma, PrismaClient, VoteScore } from "@prisma/client";
+import JwtUser from "types/JwtUser";
+import { PostType, PostUpdateType } from "validation/post.model";
+
+export default Prisma.defineExtension((client: PrismaClient) => {
+
+    return client.$extends({
+        name: "Post",
+        model: {
+            post: {
+                async getAll(page: number, offset: number) {
+                    return client.post.findMany({
+                        skip: page * offset,
+                        take: offset,
+                    });
+                },
+                async createPost(post: PostType, userId: number) {
+                    return client.post.create({
+                        data: {
+                            ...post,
+                            userId
+                        },
+                    });
+                },
+                async getPostById(id: number) {
+                    return client.post.findUnique({
+                        where: {
+                            id,
+                        },
+                    });
+                },
+                async updatePostById(id: number, post: PostUpdateType) {
+                    return client.post.update({
+                        data: post,
+                        where: {
+                            id
+                        }
+                    })
+                },
+                async deletePostById(id: number) {
+                    return client.post.delete({
+                        where: {
+                            id
+                        }
+                    })
+                },
+                async getPostComments(id: number) {
+                    return client.comment.findMany({
+                        where: {
+                            User: {
+                                id
+                            }
+                        }
+                    })
+                },
+                async votePost(id: number, userId: number, score: VoteScore) {
+                    return await client.vote.create({
+                        data: {
+                            fieldId: id,
+                            type: "POST",
+                            score,
+                            userId,
+                        }
+                    })
+                },
+                async getPostVotes(id: number) {
+                    const votes = await client.vote.findMany({
+                        where: {
+                            fieldId: id,
+                            type: "POST"
+                        },
+                        select: {
+                            score: true
+                        },
+                    })
+
+                    const votesCount = votes.reduce(
+                        (votes, { score }) =>
+                            votes + (score === "UPVOTE" ? 1 : -1), 0)
+
+                    return votesCount
+                },
+            }
+        },
+    });
+});

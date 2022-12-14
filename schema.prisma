@@ -1,0 +1,103 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["clientExtensions"]
+}
+
+model User {
+    id         Int      @id @default(autoincrement())
+    createdAt  DateTime @default(now())
+    email      String   @unique
+    name       String   @unique
+    password   String
+    rank       Int      @default(0)
+    role       Role     @default(USER)
+    isVerified Boolean  @default(false)
+
+    Posts       Post[]
+    Comments    Comment[]
+    VerifyCodes VerifyCode[]
+    Votes       Vote[]
+    Images      Image[]
+}
+
+model VerifyCode {
+    id        Int      @id @default(autoincrement())
+    code      String   @unique
+    createdAt DateTime @default(now())
+
+    User   User @relation(fields: [userId], references: [id])
+    userId Int
+}
+
+model Post {
+    id        Int      @id @default(autoincrement())
+    body      String
+    title     String
+    rank      Int      @default(0)
+    createdAt DateTime @default(now())
+
+    Comments Comment[]
+
+    User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId Int
+}
+
+model Comment {
+    id        Int      @id @default(autoincrement())
+    body      String
+    rank      Int      @default(0)
+    createdAt DateTime @default(now())
+
+    Post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId Int
+
+    User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId Int
+}
+
+model Vote {
+    id        Int       @id @default(autoincrement())
+    score     VoteScore
+    type      VoteType
+    fieldId   Int
+    createdAt DateTime  @default(now())
+
+    User   User @relation(fields: [userId], references: [id])
+    userId Int
+}
+
+model Image {
+    id        String      @id
+    createdAt DateTime    @default(now())
+    type      ImageFormat
+
+    User   User @relation(fields: [userId], references: [id])
+    userId Int
+}
+
+enum Role {
+    USER
+    ADMIN
+}
+
+enum VoteScore {
+    UPVOTE
+    DOWNVOTE
+}
+
+enum VoteType {
+    POST
+    COMMENT
+    USER
+}
+
+enum ImageFormat {
+    JPEG
+    PNG
+    GIF
+}
