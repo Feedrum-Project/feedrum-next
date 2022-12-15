@@ -26,7 +26,6 @@ model User {
 }
 
 model VerifyCode {
-    id        Int      @id @default(autoincrement())
     code      String   @unique
     createdAt DateTime @default(now())
 
@@ -41,10 +40,10 @@ model Post {
     rank      Int      @default(0)
     createdAt DateTime @default(now())
 
-    Comments Comment[]
-
     User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId Int
+
+    Comments Comment[]
 }
 
 model Comment {
