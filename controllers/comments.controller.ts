@@ -4,9 +4,7 @@ import NotImplementedError from "errors/NotImplemented";
 import ObjectNotFoundError from "errors/ObjectNotFound";
 
 import client from "helpers/database";
-import JwtUser from "types/JwtUser";
-import { CommentType, CommentUpdate, CommentUpdateType } from "validation/comment.model";
-import { PostType } from "validation/post.model";
+import { CommentUpdate, CommentUpdateType } from "validation/comment.model";
 import PostController from "./post.controller";
 
 export default class CommentController {
