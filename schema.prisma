@@ -60,7 +60,6 @@ model Comment {
 }
 
 model Vote {
-    id        Int       @id @default(autoincrement())
     score     VoteScore
     type      VoteType
     fieldId   Int
@@ -68,6 +67,8 @@ model Vote {
 
     User   User @relation(fields: [userId], references: [id])
     userId Int
+    
+    @@id([fieldId, userId, type])
 }
 
 model Image {

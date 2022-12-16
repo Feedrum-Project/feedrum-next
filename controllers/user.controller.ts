@@ -1,3 +1,4 @@
+import InvalidPermissionError from "errors/InvalidPermission";
 import NotImplementedError from "errors/NotImplemented";
 import ObjectNotFoundError from "errors/ObjectNotFound";
 import xprisma from "helpers/database";
@@ -20,6 +21,12 @@ export default class UserController {
         await this.get(id)
 
         return xprisma.user.getUserPosts(id)
+    }
+
+    static async getImages(id: number, userId: number) {
+        if (id !== userId) throw new InvalidPermissionError()
+
+        return xprisma.user.getUserImages(id)
     }
 
     static async upvote(id: number) {

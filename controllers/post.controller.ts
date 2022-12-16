@@ -1,3 +1,4 @@
+import { VoteScore } from "@prisma/client";
 import InvalidBodyError from "errors/InvalidBody";
 import InvalidPermissionError from "errors/InvalidPermission";
 import InvalidQueryParamError from "errors/InvalidQueryParam";
@@ -7,6 +8,7 @@ import ObjectNotFoundError from "errors/ObjectNotFound";
 import xprisma from "helpers/database";
 import JwtUser from "types/JwtUser";
 import * as validation from "validation/general/page";
+import scores from "validation/general/voteScore";
 import Post, { PostType, PostUpdate, PostUpdateType } from "validation/post.model";
 
 
@@ -60,7 +62,12 @@ export default class PostController {
         return xprisma.post.getPostComments(id)
     }
 
-    static async upvote(id: number) {
-        throw new NotImplementedError()
+    static async vote(id: number, userId: number, score: VoteScore) {
+        const scoreValid = await scores.spa(score);
+        if (!scoreValid.success) throw new InvalidBodyError(scoreValid.error);
+
+        await this.get(id)
+
+        return xprisma.post.votePost(id, userId, score)
     }
 }

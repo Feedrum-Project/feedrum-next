@@ -1,5 +1,4 @@
 import { Prisma, PrismaClient, VoteScore } from "@prisma/client";
-import JwtUser from "types/JwtUser";
 import { PostType, PostUpdateType } from "validation/post.model";
 
 export default Prisma.defineExtension((client: PrismaClient) => {
@@ -54,31 +53,68 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                     })
                 },
                 async votePost(id: number, userId: number, score: VoteScore) {
-                    return await client.vote.create({
-                        data: {
-                            fieldId: id,
-                            type: "POST",
-                            score,
-                            userId,
-                        }
-                    })
-                },
-                async getPostVotes(id: number) {
-                    const votes = await client.vote.findMany({
+                    let vote = await client.vote.findFirst({
                         where: {
                             fieldId: id,
-                            type: "POST"
-                        },
-                        select: {
-                            score: true
-                        },
+                            type: "POST",
+                            User: {
+                                id
+                            }
+                        }
                     })
 
-                    const votesCount = votes.reduce(
-                        (votes, { score }) =>
-                            votes + (score === "UPVOTE" ? 1 : -1), 0)
+                    if (vote === null) {
+                        await client.vote.create({
+                            data: {
+                                fieldId: id,
+                                type: "POST",
+                                score,
+                                userId
+                            }
+                        })
 
-                    return votesCount
+                        return await client.post.update({
+                            where: {
+                                id
+                            },
+                            data: {
+                                rank: {
+                                    increment: score === "UPVOTE" ? 1 : -1
+                                }
+                            }
+                        })
+                    } 
+
+                    if (vote.score === score) return vote
+
+                    await client.vote.update({
+                        where: {
+                            fieldId_userId_type: {
+                                fieldId: id,
+                                userId,
+                                type: "POST"
+                            }
+                        },
+                        data: {
+                            score
+                        }
+                    })
+
+                    await client.post.update({
+                        where: {
+                            id
+                        },
+                        data: {
+                            rank: {
+                                increment: score === "UPVOTE" ? 2 : -2
+                            }
+                        }
+                    })
+                    
+
+
+
+                    return vote
                 },
             }
         },
