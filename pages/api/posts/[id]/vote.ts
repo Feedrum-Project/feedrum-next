@@ -1,16 +1,18 @@
+import PostController from "controllers/post.controller";
 import NotImplementedError from "errors/NotImplemented";
+import success from "helpers/success.helper";
 import authMiddleware from "middlewares/auth.middleware";
 import errorMiddleware from "middlewares/error.middleware";
+import invalidIdMiddleware from "middlewares/invalidId.middleware";
 import validMethodsMiddleware from "middlewares/validMethods.middleware";
 
 import { NextApiHandler } from "next";
 import { use } from "next-api-middleware";
 
-const handler: NextApiHandler = (req, res) => {
+const handler: NextApiHandler = async (req, res) => {
     switch (req.method) {
         case "POST":
-            throw new NotImplementedError();
-
+            await votePost(req, res)
             break;
         case "DELETE":
             throw new NotImplementedError();
@@ -19,8 +21,15 @@ const handler: NextApiHandler = (req, res) => {
     }
 };
 
+const votePost: NextApiHandler = async (req, res) => {
+    const post = await PostController.vote(req.id, req.user.id, req.body.score)
+
+    success(res, post)
+}
+
 export default use(
     errorMiddleware,
+    invalidIdMiddleware,
     validMethodsMiddleware(["POST", "DELETE"]),
     authMiddleware
 )(handler);

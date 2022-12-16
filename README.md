@@ -54,7 +54,11 @@
 
 ## TODO
  * `/user/me/update` - зміна інфи юзера
- * `/user/:id/images` - усі зображення юзера
+ * `offset` та `page` query для шляхів 
+   * `/users/:id/comments` 
+   * `/users/:id/posts` 
+   * `/users/:id/images`
+   * `/posts/:id/comments`
  * Система апвотів
  * Аунтифікація по auth хедеру
  * Авто-тести

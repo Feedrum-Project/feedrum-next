@@ -67,6 +67,15 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                         },
                     });
                 },
+                async getUserImages(id: number) {
+                    return client.image.findMany({
+                        where: {
+                            User: {
+                                id
+                            }
+                        }
+                    })
+                },
                 async setVerified(id: number) {
                     return client.user.update({
                         where: { id },

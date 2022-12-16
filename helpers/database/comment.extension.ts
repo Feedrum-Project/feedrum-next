@@ -1,6 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import JwtUser from "types/JwtUser";
-import { CommentType, CommentUpdateType } from "validation/comment.model";
+import { CommentUpdateType } from "validation/comment.model";
 
 export default Prisma.defineExtension((client: PrismaClient) => {
     return client.$extends({
