@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, VoteScore } from "@prisma/client";
+import { Post, Prisma, PrismaClient, VoteScore } from "@prisma/client";
 import { PostType, PostUpdateType } from "validation/post.model";
 
 export default Prisma.defineExtension((client: PrismaClient) => {
@@ -62,6 +62,9 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                             }
                         }
                     })
+                    let post = await client.post.findUnique({
+                        where: { id }
+                    }) as Post
 
                     if (vote === null) {
                         await client.vote.create({
@@ -83,9 +86,9 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                                 }
                             }
                         })
-                    } 
+                    }
 
-                    if (vote.score === score) return vote
+                    if (vote.score === score) return post
 
                     await client.vote.update({
                         where: {
@@ -100,7 +103,7 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                         }
                     })
 
-                    await client.post.update({
+                    return await client.post.update({
                         where: {
                             id
                         },
@@ -110,12 +113,44 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                             }
                         }
                     })
-                    
-
-
-
-                    return vote
                 },
+                async isUserVoted(id: number, userId: number) {
+                    const isUserVoted = await client.vote.findUnique({
+                        where: {
+                            fieldId_userId_type: {
+                                fieldId: id,
+                                userId,
+                                type: "POST"
+                            }
+                        }
+                    })
+
+                    return isUserVoted !== null
+                },
+                async deletePostVote(id: number, userId: number) {
+                    const vote = await client.vote.delete({
+                        where: {
+                            fieldId_userId_type: {
+                                fieldId: id,
+                                userId,
+                                type: "POST"
+                            }
+                        }
+                    });
+
+                    const post = await client.post.update({
+                        where: {
+                            id
+                        },
+                        data: {
+                            rank: {
+                                increment: vote.score === "UPVOTE" ? -1 : 1
+                            }
+                        }
+                    })
+
+                    return post
+                }
             }
         },
     });

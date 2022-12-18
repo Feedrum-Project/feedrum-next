@@ -1,11 +1,11 @@
 import InvalidPermissionError from "errors/InvalidPermission";
 import NotImplementedError from "errors/NotImplemented";
 import ObjectNotFoundError from "errors/ObjectNotFound";
-import xprisma from "helpers/database";
+import prisma from "@database";
 
 export default class UserController {
     static async get(id: number) {
-        const user = await xprisma.user.getUserById(id);
+        const user = await prisma.user.getUserById(id);
         if (user === null) throw new ObjectNotFoundError("User");
 
         return user;
@@ -14,19 +14,19 @@ export default class UserController {
     static async getComments(id: number) {
         await this.get(id)
 
-        return xprisma.user.getUserComments(id)
+        return prisma.user.getUserComments(id)
     }
 
     static async getPosts(id: number) {
         await this.get(id)
 
-        return xprisma.user.getUserPosts(id)
+        return prisma.user.getUserPosts(id)
     }
 
     static async getImages(id: number, userId: number) {
         if (id !== userId) throw new InvalidPermissionError()
 
-        return xprisma.user.getUserImages(id)
+        return prisma.user.getUserImages(id)
     }
 
     static async upvote(id: number) {

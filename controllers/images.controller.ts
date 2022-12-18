@@ -1,7 +1,7 @@
 import ImagesMissingError from "errors/ImagesMissing";
 import InvalidPermissionError from "errors/InvalidPermission";
 import ObjectNotFoundError from "errors/ObjectNotFound";
-import xprisma from "helpers/database";
+import prisma from "@database";
 import ImageFile from "types/ImageFile";
 
 export default class ImageController {
@@ -9,11 +9,11 @@ export default class ImageController {
         if (images.length === 0) throw new ImagesMissingError()
 
         return Promise.all(images.map(image => 
-            xprisma.image.createImage(image.id, userId, image.type)))
+            prisma.image.createImage(image.id, userId, image.type)))
     }
 
     static async get(id: string) {
-        const image = await xprisma.image.getImageById(id)
+        const image = await prisma.image.getImageById(id)
         if (image === null) throw new ObjectNotFoundError("Image");
 
         return image;
@@ -23,7 +23,7 @@ export default class ImageController {
         const image = await this.get(id)
         if (image.userId !== userId) throw new InvalidPermissionError();
 
-        await xprisma.image.deleteImageById(id);
+        await prisma.image.deleteImageById(id);
 
         return image
     }
