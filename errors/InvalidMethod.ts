@@ -1,5 +1,5 @@
 import method from "types/method";
-import ApiError from "./ApiError";
+import ApiError from "../types/ApiError";
 
 export default class InvalidMethodsError extends ApiError {
     public code = 405

@@ -1,8 +1,8 @@
-import formidable, { Files } from "formidable"
+import formidable from "formidable"
 import { join } from "path";
 import { randomUUID } from "crypto";
 import { NextApiRequest, NextApiResponse } from "next";
-import { access, mkdir, readFile, stat } from "fs/promises";
+import { access, mkdir, readFile } from "fs/promises";
 import WTFError from "errors/WTF";
 import ImageFile from "types/ImageFile";
 import { ImageFormat } from "@prisma/client";
@@ -21,9 +21,7 @@ export function parseImages(req: NextApiRequest): Promise<ImageFile[]> {
     return new Promise(async (resolve, reject) => {
         const uploadDir = join(process.cwd(), "/uploads/")
 
-        await access(uploadDir).catch(async () => {
-            await mkdir(uploadDir)
-        })
+        await access(uploadDir).catch(async () => await mkdir(uploadDir))
 
         const form = formidable({
             uploadDir,

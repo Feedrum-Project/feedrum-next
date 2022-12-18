@@ -2,16 +2,18 @@ import { readFile } from "fs/promises";
 import { createTestAccount, createTransport, getTestMessageUrl } from "nodemailer";
 import { join } from "path";
 
+interface TemplateVariables {
+    [key: string]: string 
+}
+
 interface EmailOptions {
     email: string;
     subject: string;
     letterName: string;
-    options: {
-        [key: string]: string
-    }
+    options: TemplateVariables
 }
 
-async function getLetter(letterName: string, data: EmailOptions["options"]) {
+async function getLetter(letterName: string, data: TemplateVariables) {
     const lettersFolder = join(process.cwd(), "letters");
     const letter = await readFile(`${lettersFolder}/${letterName}.html`, "utf-8")
 
@@ -22,7 +24,6 @@ export default async function sendEmail(email: EmailOptions) {
     const account = await createTestAccount();
     const transporter = createTransport({
         host: "smtp.ethereal.email",
-        // secure: true,
         port: 587,
         auth: {
             user: account.user,
@@ -30,7 +31,7 @@ export default async function sendEmail(email: EmailOptions) {
         },
     });
     const sendedEmail = await transporter.sendMail({
-        from: '"Fred Foo 👻" <foo@example.com>',
+        from: 'dick <support@feedrum.com>', // "Fred Foo 👻" <foo@example.com>
         to: email.email,
         subject: email.subject,
         html: await getLetter(email.letterName, email.options),

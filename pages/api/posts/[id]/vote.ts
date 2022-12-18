@@ -15,14 +15,19 @@ const handler: NextApiHandler = async (req, res) => {
             await votePost(req, res)
             break;
         case "DELETE":
-            throw new NotImplementedError();
-
+            await unvotePost(req, res)
             break;
     }
 };
 
 const votePost: NextApiHandler = async (req, res) => {
     const post = await PostController.vote(req.id, req.user.id, req.body.score)
+
+    success(res, post)
+}
+
+const unvotePost: NextApiHandler = async (req, res) => {
+    const post = await PostController.unvote(req.id, req.user.id)
 
     success(res, post)
 }
