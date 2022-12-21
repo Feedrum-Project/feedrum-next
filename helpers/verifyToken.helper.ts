@@ -1,9 +1,6 @@
-import InvalidTokenError from "errors/InvalidToken";
-import ExpiredTokenError from "errors/ExpiredToken";
 import WTFError from "errors/WTF";
-import { JsonWebTokenError, JwtPayload, TokenExpiredError as TEError, verify } from "jsonwebtoken";
+import { JwtPayload, verify } from "jsonwebtoken";
 import JwtUser from "types/JwtUser";
-
 
 
 type TokenType = "refresh" | "access"

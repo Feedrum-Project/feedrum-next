@@ -1,16 +1,39 @@
-import type { NextApiHandler } from "next";
-import missingBodyMiddleware from "middlewares/missingBody.middleware";
-import { use } from "next-api-middleware";
-import validMethodsMiddleware from "middlewares/validMethods.middleware";
+import CommentController from "controllers/comments.controller";
+import success from "helpers/success.helper";
+import authMiddleware from "middlewares/auth.middleware";
 import errorMiddleware from "middlewares/error.middleware";
-import NotImplementedError from "errors/NotImplemented";
+import invalidIdMiddleware from "middlewares/invalidId.middleware";
+import validMethodsMiddleware from "middlewares/validMethods.middleware";
+
+import { NextApiHandler } from "next";
+import { use } from "next-api-middleware";
 
 const handler: NextApiHandler = async (req, res) => {
-    throw new NotImplementedError();
+    switch (req.method) {
+        case "POST":
+            await voteComment(req, res)
+            break;
+        case "DELETE":
+            await unvoteComment(req, res)
+            break;
+    }
 };
 
+const voteComment: NextApiHandler = async (req, res) => {
+    const comment = await CommentController.vote(req.id, req.user.id, req.body.score)
+
+    success(res, comment)
+}
+
+const unvoteComment: NextApiHandler = async (req, res) => {
+    const comment = await CommentController.unvote(req.id, req.user.id)
+
+    success(res, comment)
+}
+
 export default use(
-    missingBodyMiddleware,
+    errorMiddleware,
+    invalidIdMiddleware,
     validMethodsMiddleware(["POST", "DELETE"]),
-    errorMiddleware
+    authMiddleware
 )(handler);
