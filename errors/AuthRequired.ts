@@ -1,4 +1,4 @@
-import ApiError from "./ApiError";
+import ApiError from "../types/ApiError";
 
 export default class AuthRequiredError extends ApiError {
     public code = 401;

@@ -1,5 +1,5 @@
 import { ZodError, ZodIssue } from "zod";
-import ApiError from "./ApiError";
+import ApiError from "../types/ApiError";
 
 export default class InvalidIdTypeError extends ApiError {
     public issues: ZodIssue[]

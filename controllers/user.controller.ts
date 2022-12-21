@@ -1,10 +1,15 @@
+import InvalidPermissionError from "errors/InvalidPermission";
 import NotImplementedError from "errors/NotImplemented";
 import ObjectNotFoundError from "errors/ObjectNotFound";
-import xprisma from "helpers/database";
+import prisma from "@database";
+import YourVoteError from "errors/YourVote";
+import { VoteScore } from "@prisma/client";
+import MissingVoteError from "errors/MissingVote";
+import scores from "validation/general/voteScore";
 
 export default class UserController {
     static async get(id: number) {
-        const user = await xprisma.user.getUserById(id);
+        const user = await prisma.user.getUserById(id);
         if (user === null) throw new ObjectNotFoundError("User");
 
         return user;
@@ -13,16 +18,36 @@ export default class UserController {
     static async getComments(id: number) {
         await this.get(id)
 
-        return xprisma.user.getUserComments(id)
+        return prisma.user.getUserComments(id)
     }
 
     static async getPosts(id: number) {
         await this.get(id)
 
-        return xprisma.user.getUserPosts(id)
+        return prisma.user.getUserPosts(id)
     }
 
-    static async upvote(id: number) {
-        throw new NotImplementedError()
+    static async getImages(id: number, userId: number) {
+        if (id !== userId) throw new InvalidPermissionError()
+
+        return prisma.user.getUserImages(id)
+    }
+
+    static async vote(id: number, userId: number, score: VoteScore) {
+        await scores.parseAsync(score);
+        const user = await this.get(id);
+
+        if (user.id === userId) throw new YourVoteError()
+
+        return prisma.user.voteUser(id, userId, score)
+    }
+
+    static async unvote(id: number, userId: number) {
+        await this.get(id)
+
+        const isUserVoted = await prisma.user.isUserVoted(id, userId)
+        if (!isUserVoted) throw new MissingVoteError()
+
+        return prisma.user.deleteVote(id, userId)
     }
 }

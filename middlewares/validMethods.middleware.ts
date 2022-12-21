@@ -4,11 +4,11 @@ import method from "types/method";
 
 const validMethodsMiddleware = (methods: method | method[]) => {
     const methodMiddleware: Middleware = async (req, res, next) => {
-        const isMethodInvalid = Array.isArray(methods)
-            ? !methods.includes(req.method as method)
-            : req.method !== methods;
+        const isMethodValid = Array.isArray(methods)
+            ? methods.includes(req.method as method)
+            : req.method === methods;
 
-        if (isMethodInvalid) throw new InvalidMethodsError(methods)
+        if (!isMethodValid) throw new InvalidMethodsError(methods)
 
         await next();
     };

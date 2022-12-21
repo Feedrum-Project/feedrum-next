@@ -1,14 +1,14 @@
-import InvalidBodyError from "errors/InvalidBody";
+import { VoteScore } from "@prisma/client";
 import InvalidPermissionError from "errors/InvalidPermission";
 import InvalidQueryParamError from "errors/InvalidQueryParam";
-import NotImplementedError from "errors/NotImplemented";
+import MissingVoteError from "errors/MissingVote";
 import ObjectNotFoundError from "errors/ObjectNotFound";
 
-import xprisma from "helpers/database";
-import JwtUser from "types/JwtUser";
+import prisma from "@database";
 import * as validation from "validation/general/page";
-import Post, { PostType, PostUpdate, PostUpdateType } from "validation/post.model";
-
+import scores from "validation/general/voteScore";
+import { PostType, PostUpdate, PostUpdateType } from "validation/post.model";
+import YourVoteError from "errors/YourVote";
 
 export default class PostController {
     static async getAll(pageQuery: number, offsetQuery: number) {
@@ -18,11 +18,11 @@ export default class PostController {
         const offset = await validation.offset.spa(offsetQuery);
         if (!offset.success) throw new InvalidQueryParamError("offset");
 
-        return await xprisma.post.getAll(page.data, offset.data);
+        return await prisma.post.getAll(page.data, offset.data);
     }
 
     static async get(id: number) {
-        const post = await xprisma.post.getPostById(id);
+        const post = await prisma.post.getPostById(id);
         if (post === null) throw new ObjectNotFoundError("Post");
 
         return post;
@@ -32,35 +32,47 @@ export default class PostController {
         const post = await this.get(id);
         if (post.userId !== userId) throw new InvalidPermissionError();
 
-        await xprisma.post.deletePostById(id);
+        await prisma.post.deletePostById(id);
 
         return post;
     }
 
     static async create(newPost: PostType, userId: number) {
-        const validation = await PostUpdate.spa(newPost);
-        if (!validation.success) throw new InvalidBodyError(validation.error);
+        await PostUpdate.parseAsync(newPost);
 
-        return xprisma.post.createPost(newPost, userId);
+        return prisma.post.createPost(newPost, userId);
     }
 
     static async update(id: number, newPost: PostUpdateType, userId: number) {
         const post = await this.get(id);
         if (post.userId !== userId) throw new InvalidPermissionError();
 
-        const postValid = await PostUpdate.spa(newPost);
-        if (!postValid.success) throw new InvalidBodyError(postValid.error);
+        await PostUpdate.parseAsync(newPost);
 
-        return xprisma.post.updatePostById(id, newPost);
+        return prisma.post.updatePostById(id, newPost);
     }
 
     static async getPostComments(id: number) {
         await this.get(id)
 
-        return xprisma.post.getPostComments(id)
+        return prisma.post.getPostComments(id)
     }
 
-    static async upvote(id: number) {
-        throw new NotImplementedError()
+    static async vote(id: number, userId: number, score: VoteScore) {
+        await scores.parseAsync(score);
+        const post = await this.get(id);
+
+        if (post.userId === userId) throw new YourVoteError()
+
+        return prisma.post.votePost(id, userId, score)
+    }
+
+    static async unvote(id: number, userId: number) {
+        await this.get(id)
+
+        const isUserVoted = await prisma.post.isUserVoted(id, userId)
+        if (!isUserVoted) throw new MissingVoteError()
+
+        return prisma.post.deleteVote(id, userId)
     }
 }

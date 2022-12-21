@@ -1,8 +1,11 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import JwtUser from "types/JwtUser";
-import { CommentType, CommentUpdateType } from "validation/comment.model";
+import { CommentUpdateType } from "validation/comment.model";
+import createVoteSystem from "./voteSystem";
 
 export default Prisma.defineExtension((client: PrismaClient) => {
+    const { voteObject: voteComment, deleteVote, isUserVoted } = createVoteSystem(client, "comment")
+
+
     return client.$extends({
         name: "Comment",
         model: {
@@ -31,7 +34,10 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                             postId
                         }
                     })
-                }
+                },
+                voteComment,
+                deleteVote,
+                isUserVoted
             }
         },
     });

@@ -1,20 +1,22 @@
-import { Prisma, PrismaClient, VoteScore } from "@prisma/client";
-import JwtUser from "types/JwtUser";
+import { Comment, Post, Prisma, PrismaClient } from "@prisma/client";
 import { PostType, PostUpdateType } from "validation/post.model";
+import createVoteSystem from "./voteSystem";
+
 
 export default Prisma.defineExtension((client: PrismaClient) => {
+    const { voteObject: votePost, deleteVote, isUserVoted } = createVoteSystem(client, "post")
 
     return client.$extends({
         name: "Post",
         model: {
             post: {
-                async getAll(page: number, offset: number) {
+                async getAll(page: number, offset: number): Promise<Post[]> {
                     return client.post.findMany({
                         skip: page * offset,
                         take: offset,
                     });
                 },
-                async createPost(post: PostType, userId: number) {
+                async createPost(post: PostType, userId: number): Promise<Post> {
                     return client.post.create({
                         data: {
                             ...post,
@@ -22,14 +24,14 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                         },
                     });
                 },
-                async getPostById(id: number) {
+                async getPostById(id: number): Promise<Post | null> {
                     return client.post.findUnique({
                         where: {
                             id,
                         },
                     });
                 },
-                async updatePostById(id: number, post: PostUpdateType) {
+                async updatePostById(id: number, post: PostUpdateType): Promise<Post> {
                     return client.post.update({
                         data: post,
                         where: {
@@ -37,14 +39,14 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                         }
                     })
                 },
-                async deletePostById(id: number) {
+                async deletePostById(id: number): Promise<Post> {
                     return client.post.delete({
                         where: {
                             id
                         }
                     })
                 },
-                async getPostComments(id: number) {
+                async getPostComments(id: number): Promise<Comment[]> {
                     return client.comment.findMany({
                         where: {
                             User: {
@@ -53,33 +55,9 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                         }
                     })
                 },
-                async votePost(id: number, userId: number, score: VoteScore) {
-                    return await client.vote.create({
-                        data: {
-                            fieldId: id,
-                            type: "POST",
-                            score,
-                            userId,
-                        }
-                    })
-                },
-                async getPostVotes(id: number) {
-                    const votes = await client.vote.findMany({
-                        where: {
-                            fieldId: id,
-                            type: "POST"
-                        },
-                        select: {
-                            score: true
-                        },
-                    })
-
-                    const votesCount = votes.reduce(
-                        (votes, { score }) =>
-                            votes + (score === "UPVOTE" ? 1 : -1), 0)
-
-                    return votesCount
-                },
+                votePost,
+                deleteVote,
+                isUserVoted,
             }
         },
     });

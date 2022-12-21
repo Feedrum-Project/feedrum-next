@@ -1,7 +1,9 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { UserType } from "validation/user.model";
+import createVoteSystem from "./voteSystem";
 
 export default Prisma.defineExtension((client: PrismaClient) => {
+    const { voteObject: voteUser, deleteVote, isUserVoted } = createVoteSystem(client, "user")
     const jwtUserSelectFields = {
         id: true,
         email: true,
@@ -67,6 +69,15 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                         },
                     });
                 },
+                async getUserImages(id: number) {
+                    return client.image.findMany({
+                        where: {
+                            User: {
+                                id
+                            }
+                        }
+                    })
+                },
                 async setVerified(id: number) {
                     return client.user.update({
                         where: { id },
@@ -75,6 +86,9 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                         },
                     });
                 },
+                voteUser,
+                deleteVote,
+                isUserVoted
             },
         },
     });

@@ -1,12 +1,11 @@
-import { verify, sign } from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 import { NextApiResponse } from "next/types";
 import bcrypt from "bcryptjs";
 
-import xprisma from "helpers/database";
+import prisma from "@database";
 import User, { UserType } from "validation/user.model";
 
 import FieldRegisteredError from "errors/FieldRegistered";
-import InvalidBodyError from "errors/InvalidBody";
 import InvalidCredentialsError from "errors/InvalidCredentials";
 import EmailNotFoundError from "errors/EmailNotFound";
 import success from "helpers/success.helper";
@@ -15,9 +14,8 @@ import ObjectNotFoundError from "errors/ObjectNotFound";
 import UserController from "./user.controller";
 import VerifyCodeExpired from "errors/VerifyCodeExpired";
 import NotImplementedError from "errors/NotImplemented";
-import WTFError from "errors/WTF";
 import JwtUser from "types/JwtUser";
-import verifyToken, { TokenType } from "helpers/verifyToken.helper";
+import verifyToken from "helpers/verifyToken.helper";
 
 interface Tokens {
     access: string;
@@ -53,7 +51,7 @@ export default class AuthController {
     }
 
     static refresh(refreshToken: string) {
-        const user = verifyToken(refreshToken, TokenType.refresh)
+        const user = verifyToken(refreshToken, "refresh")
 
         delete user.exp
         delete user.iat
@@ -62,10 +60,9 @@ export default class AuthController {
     }
 
     static async login(userData: Omit<UserType, "name">) {
-        const validation = await User.omit({ name: true }).spa(userData);
-        if (!validation.success) throw new InvalidBodyError(validation.error);
+        await User.omit({ name: true }).parseAsync(userData);
 
-        const user = await xprisma.user.getUserByEmail(userData.email);
+        const user = await prisma.user.getUserByEmail(userData.email);
         if (user === null) throw new EmailNotFoundError();
 
         const isPasswordValid = await bcrypt.compare(
@@ -77,7 +74,6 @@ export default class AuthController {
             throw new InvalidCredentialsError();
         }
 
-
         return {
             ...user,
             password: undefined,
@@ -86,12 +82,11 @@ export default class AuthController {
     }
 
     static async register(userData: UserType) {
-        const validation = await User.spa(userData);
-        if (!validation.success) throw new InvalidBodyError(validation.error);
+        await User.parseAsync(userData);
 
         const uniqueFields: (keyof UserType)[] = ["email", "name"];
         const checkedUniqueFields = await Promise.all(uniqueFields.map(
-            (field) => xprisma.user.isFieldRegistered(userData[field], field)
+            (field) => prisma.user.isFieldRegistered(userData[field], field)
         ));
 
         checkedUniqueFields.forEach((isFieldRegistered, index) => {
@@ -100,9 +95,9 @@ export default class AuthController {
 
 
         userData.password = await bcrypt.hash(userData.password, 10);
-        const user = await xprisma.user.createUser(userData);
+        const user = await prisma.user.createUser(userData);
 
-        const verifyCode = await xprisma.verifyCode.createCode(user.id);
+        const verifyCode = await prisma.verifyCode.createCode(user.id);
         await sendEmail({
             email: user.email,
             subject: "Please verify your email",
@@ -120,22 +115,22 @@ export default class AuthController {
     }
 
     static async verifyEmail(code: string) {
-        const verifyCode = await xprisma.verifyCode.getCode(code);
+        const verifyCode = await prisma.verifyCode.getCode(code);
         if (verifyCode === null) throw new ObjectNotFoundError("VerifyCode");
 
         const codeExparationTime = 2 * 60 * 60 * 1000; // 2 hours
         const isCodeExpired =
             verifyCode.createdAt.valueOf() + codeExparationTime < Date.now();
         if (isCodeExpired) {
-            await xprisma.verifyCode.deleteCode(code);
+            await prisma.verifyCode.deleteCode(code);
 
             throw new VerifyCodeExpired();
         }
 
         const user = await UserController.get(verifyCode.userId);
 
-        await xprisma.user.setVerified(user.id);
-        await xprisma.verifyCode.deleteCode(code);
+        await prisma.user.setVerified(user.id);
+        await prisma.verifyCode.deleteCode(code);
 
         return user;
     }
