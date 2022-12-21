@@ -20,7 +20,7 @@ export interface ErrorResponse extends BaseResponse {
   code: 400 | 401 | 403 | 404 | 405 | 422 | 429 | 500 | 501
   type: string
   message: string
-  data: ZodIssue[]
+  data?: ZodIssue[]
 }
 
 type ApiResponse = SuccessResponse | ErrorResponse
