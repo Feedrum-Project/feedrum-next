@@ -4,7 +4,6 @@ import { use } from "next-api-middleware";
 import errorMiddleware from "middlewares/error.middleware";
 import validMethodsMiddleware from "middlewares/validMethods.middleware";
 import { parseImages } from "helpers/image.helper";
-import WTFError from "errors/WTF";
 import ImageController from "controllers/images.controller";
 import authMiddleware from "middlewares/auth.middleware";
 import success from "helpers/success.helper";

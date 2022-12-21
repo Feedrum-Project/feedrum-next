@@ -8,7 +8,7 @@ declare module "next" {
     export interface NextApiRequest extends ApiRequest { }
 }
 
-const authMiddleware: Middleware = async (req: NextApiRequest, res, next) => {
+const authMiddleware: Middleware = async (req: NextApiRequest, _res, next) => {
     const token = req.cookies.token;
     if (token === undefined) throw new AuthRequiredError();
 

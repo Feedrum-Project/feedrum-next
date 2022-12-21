@@ -10,7 +10,7 @@ const handler: NextApiHandler = async (req, res) => {
     const token = AuthController.refresh(req.body.refreshToken)
     AuthController.setCookieToken(res, token)
 
-    return success(res, token)
+    return success(res, { token })
 };
 
 export default use(
