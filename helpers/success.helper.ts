@@ -1,9 +1,9 @@
 import { NextApiResponse } from "next";
-import ApiResponse from "types/ApiResponse";
+import ApiResponse, { DataType } from "types/ApiResponse";
 
 export default function success(
     res: NextApiResponse<ApiResponse>,
-    data: { [key: string]: any }
+    data: DataType
 ) {
     const code = 200;
 

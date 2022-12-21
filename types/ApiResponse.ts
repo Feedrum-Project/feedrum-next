@@ -1,22 +1,26 @@
+import { ZodIssue } from "zod";
 
 interface BaseResponse {
   status: "success" | "error"
   code: number
-
 }
 
-interface SuccessResponse extends BaseResponse {
+export type DataType = {
+  [key: string]: any
+}
+
+export interface SuccessResponse extends BaseResponse {
   status: "success";
-  data: {
-    [key: string]: any
-  }
+  code: 200 | 201
+  data: DataType | string
 }
 
-interface ErrorResponse extends BaseResponse {
+export interface ErrorResponse extends BaseResponse {
   status: "error"
+  code: 400 | 401 | 403 | 404 | 405 | 422 | 429 | 500 | 501
   type: string
   message: string
-  data: any
+  data: ZodIssue[]
 }
 
 type ApiResponse = SuccessResponse | ErrorResponse

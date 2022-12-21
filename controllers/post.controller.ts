@@ -8,7 +8,7 @@ import prisma from "@database";
 import * as validation from "validation/general/page";
 import scores from "validation/general/voteScore";
 import { PostType, PostUpdate, PostUpdateType } from "validation/post.model";
-
+import YourVoteError from "errors/YourVote";
 
 export default class PostController {
     static async getAll(pageQuery: number, offsetQuery: number) {
@@ -60,7 +60,9 @@ export default class PostController {
 
     static async vote(id: number, userId: number, score: VoteScore) {
         await scores.parseAsync(score);
-        await this.get(id)
+        const post = await this.get(id);
+
+        if (post.userId === userId) throw new YourVoteError()
 
         return prisma.post.votePost(id, userId, score)
     }
@@ -71,6 +73,6 @@ export default class PostController {
         const isUserVoted = await prisma.post.isUserVoted(id, userId)
         if (!isUserVoted) throw new MissingVoteError()
 
-        return prisma.post.deletePostVote(id, userId)
+        return prisma.post.deleteVote(id, userId)
     }
 }

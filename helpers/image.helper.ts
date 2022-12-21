@@ -27,7 +27,7 @@ export function parseImages(req: NextApiRequest): Promise<ImageFile[]> {
             uploadDir,
             maxFiles: 3,
             keepExtensions: true,
-            maxFileSize: 2 * 1024 * 1024,
+            maxFileSize: 2 * 1024 * 1024, // 2mb
             filename: (_name, ext, _part, _form) => `${randomUUID()}${ext}`,
             filter: (part) => {
                 if (part.mimetype === null) return false

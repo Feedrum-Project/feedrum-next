@@ -2,6 +2,10 @@ import InvalidPermissionError from "errors/InvalidPermission";
 import NotImplementedError from "errors/NotImplemented";
 import ObjectNotFoundError from "errors/ObjectNotFound";
 import prisma from "@database";
+import YourVoteError from "errors/YourVote";
+import { VoteScore } from "@prisma/client";
+import MissingVoteError from "errors/MissingVote";
+import scores from "validation/general/voteScore";
 
 export default class UserController {
     static async get(id: number) {
@@ -29,7 +33,21 @@ export default class UserController {
         return prisma.user.getUserImages(id)
     }
 
-    static async upvote(id: number) {
-        throw new NotImplementedError()
+    static async vote(id: number, userId: number, score: VoteScore) {
+        await scores.parseAsync(score);
+        const user = await this.get(id);
+
+        if (user.id === userId) throw new YourVoteError()
+
+        return prisma.user.voteUser(id, userId, score)
+    }
+
+    static async unvote(id: number, userId: number) {
+        await this.get(id)
+
+        const isUserVoted = await prisma.user.isUserVoted(id, userId)
+        if (!isUserVoted) throw new MissingVoteError()
+
+        return prisma.user.deleteVote(id, userId)
     }
 }

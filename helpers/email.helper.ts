@@ -31,7 +31,7 @@ export default async function sendEmail(email: EmailOptions) {
         },
     });
     const sendedEmail = await transporter.sendMail({
-        from: 'dick <support@feedrum.com>', // "Fred Foo 👻" <foo@example.com>
+        from: 'dick <support@feedrum.com>',
         to: email.email,
         subject: email.subject,
         html: await getLetter(email.letterName, email.options),

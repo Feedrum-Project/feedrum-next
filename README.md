@@ -1,4 +1,5 @@
-# Feedrum Updated #
+# Feedrum #
+**[Сайт](https://feedrum.com)**
 
 ## Опис ##
 Платформа для створення статей та постів від програмістів до програмістів, на українській мові  
@@ -17,13 +18,13 @@
  * Анімації
 
 ## Технології ##
- * Next.js 
  * PostgreSQL *(або будь-яка інша БД яка підтримується в prisma)*
  * JWT
  * Node.js
  * Prisma
+ * Next.js 
  * TypeScript
- * EsLint
+ * Eslint
  * Nodemailer
  * Zod
  * Formidable
@@ -52,7 +53,7 @@
 > `npm run dev` або `yarn dev`
 
 
-## TODO
+## TODO ##
  * `/user/me/update` - зміна інфи юзера
  * `offset` та `page` query для шляхів 
    * `/users/:id/comments` 
