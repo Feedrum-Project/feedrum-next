@@ -1,6 +1,7 @@
 import ImagesMissingError from "errors/ImagesMissing";
 import InvalidPermissionError from "errors/InvalidPermission";
 import ObjectNotFoundError from "errors/ObjectNotFound";
+
 import prisma from "@database";
 import ImageFile from "types/ImageFile";
 
@@ -8,7 +9,7 @@ export default class ImageController {
     static async createImages(images: ImageFile[], userId: number) {
         if (images.length === 0) throw new ImagesMissingError()
 
-        return Promise.all(images.map(image => 
+        return Promise.all(images.map(image =>
             prisma.image.createImage(image.id, userId, image.type)))
     }
 

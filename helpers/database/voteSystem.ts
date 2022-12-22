@@ -2,7 +2,7 @@ import { PrismaClient, VoteType, VoteScore, Vote } from "@prisma/client";
 
 type VoteModel = "user" | "post" | "comment"
 
-export default function createVoteSystem(client: PrismaClient, model: VoteModel) {
+export default function createVoteSystem(client: PrismaClient, model: VoteModel, select?: Record<string, boolean>) {
     const type = model.toUpperCase() as VoteType
 
     async function voteObject(id: number, userId: number, score: VoteScore): Promise<any | null> {
@@ -11,6 +11,7 @@ export default function createVoteSystem(client: PrismaClient, model: VoteModel)
                 where: {
                     id,
                 },
+                select
             });
         }
 
@@ -21,7 +22,7 @@ export default function createVoteSystem(client: PrismaClient, model: VoteModel)
                     fieldId: id,
                     type,
                     User: {
-                        id
+                        id: userId
                     }
                 }
             })
@@ -47,7 +48,8 @@ export default function createVoteSystem(client: PrismaClient, model: VoteModel)
                     rank: {
                         increment: score === "UPVOTE" ? 1 : -1
                     }
-                }
+                },
+                select
             })
         }
     
@@ -62,7 +64,7 @@ export default function createVoteSystem(client: PrismaClient, model: VoteModel)
                 },
                 data: {
                     score
-                }
+                },
             })
         }
     
@@ -75,7 +77,8 @@ export default function createVoteSystem(client: PrismaClient, model: VoteModel)
                     rank: {
                         increment: score === "UPVOTE" ? 2 : -2
                     }
-                }
+                },
+                select
             })
         }
     
@@ -95,17 +98,18 @@ export default function createVoteSystem(client: PrismaClient, model: VoteModel)
     }
 
     async function deleteVote(id: number, userId: number) {
+
         const vote = await client.vote.delete({
             where: {
                 fieldId_userId_type: {
                     fieldId: id,
                     userId,
-                    type: "POST"
+                    type,
                 }
             }
         });
 
-        const post = await client[model as "post"].update({
+        const object = await client[model as "post"].update({
             where: {
                 id
             },
@@ -113,14 +117,16 @@ export default function createVoteSystem(client: PrismaClient, model: VoteModel)
                 rank: {
                     increment: vote.score === "UPVOTE" ? -1 : 1
                 }
-            }
+            },
+            select
+
         })
 
-        return post
+        return object
     }
 
     async function isUserVoted(id: number, userId: number) {
-        const isUserVoted = await client.vote.findUnique({
+        const object = await client.vote.findUnique({
             where: {
                 fieldId_userId_type: {
                     fieldId: id,
@@ -130,7 +136,7 @@ export default function createVoteSystem(client: PrismaClient, model: VoteModel)
             }
         })
 
-        return isUserVoted !== null
+        return object !== null
     }
 
     return {

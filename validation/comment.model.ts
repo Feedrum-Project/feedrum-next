@@ -13,5 +13,6 @@ const CommentUpdate = Comment.omit({
 
 export type CommentType = z.infer<typeof Comment>;
 export type CommentUpdateType = Omit<CommentType, "userId">
+
 export default Comment;
 export { CommentUpdate }

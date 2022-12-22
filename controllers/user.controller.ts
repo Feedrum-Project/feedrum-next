@@ -1,10 +1,11 @@
 import InvalidPermissionError from "errors/InvalidPermission";
 import NotImplementedError from "errors/NotImplemented";
 import ObjectNotFoundError from "errors/ObjectNotFound";
-import prisma from "@database";
-import YourVoteError from "errors/YourVote";
-import { VoteScore } from "@prisma/client";
 import MissingVoteError from "errors/MissingVote";
+import YourVoteError from "errors/YourVote";
+
+import prisma from "@database";
+import { VoteScore } from "@prisma/client";
 import scores from "validation/general/voteScore";
 
 export default class UserController {

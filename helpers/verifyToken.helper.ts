@@ -1,9 +1,10 @@
 import WTFError from "errors/WTF";
 import { JwtPayload, verify } from "jsonwebtoken";
 import JwtUser from "types/JwtUser";
+import Tokens from "types/Tokens";
 
 
-type TokenType = "refresh" | "access"
+type TokenType = keyof Tokens
 
 interface VerifiedJwtUser extends JwtUser, JwtPayload {}
 

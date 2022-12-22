@@ -1,14 +1,14 @@
-import { VoteScore } from "@prisma/client";
 import InvalidPermissionError from "errors/InvalidPermission";
 import InvalidQueryParamError from "errors/InvalidQueryParam";
 import MissingVoteError from "errors/MissingVote";
+import YourVoteError from "errors/YourVote";
 import ObjectNotFoundError from "errors/ObjectNotFound";
 
 import prisma from "@database";
+import { VoteScore } from "@prisma/client";
 import * as validation from "validation/general/page";
 import scores from "validation/general/voteScore";
 import { PostType, PostUpdate, PostUpdateType } from "validation/post.model";
-import YourVoteError from "errors/YourVote";
 
 export default class PostController {
     static async getAll(pageQuery: number, offsetQuery: number) {

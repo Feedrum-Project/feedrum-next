@@ -5,14 +5,12 @@ interface BaseResponse {
   code: number
 }
 
-export type DataType = {
-  [key: string]: any
-}
+export type DataType = Record<string, any>
 
 export interface SuccessResponse extends BaseResponse {
   status: "success";
   code: 200 | 201
-  data: DataType | string
+  data: DataType
 }
 
 export interface ErrorResponse extends BaseResponse {
