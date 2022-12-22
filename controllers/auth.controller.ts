@@ -4,23 +4,19 @@ import bcrypt from "bcryptjs";
 
 import prisma from "@database";
 import User, { UserType } from "validation/user.model";
+import UserController from "./user.controller";
+import JwtUser from "types/JwtUser";
+import Tokens from "types/Tokens";
 
 import FieldRegisteredError from "errors/FieldRegistered";
 import InvalidCredentialsError from "errors/InvalidCredentials";
+import VerifyCodeExpired from "errors/VerifyCodeExpired";
+import ObjectNotFoundError from "errors/ObjectNotFound";
 import EmailNotFoundError from "errors/EmailNotFound";
+
 import success from "helpers/success.helper";
 import sendEmail from "helpers/email.helper";
-import ObjectNotFoundError from "errors/ObjectNotFound";
-import UserController from "./user.controller";
-import VerifyCodeExpired from "errors/VerifyCodeExpired";
-import NotImplementedError from "errors/NotImplemented";
-import JwtUser from "types/JwtUser";
 import verifyToken from "helpers/verifyToken.helper";
-
-interface Tokens {
-    access: string;
-    refresh: string;
-}
 
 interface UserResponse extends Omit<JwtUser, "password"> {
     tokens: Tokens
@@ -133,9 +129,5 @@ export default class AuthController {
         await prisma.verifyCode.deleteCode(code);
 
         return user;
-    }
-
-    static async refreshToken() {
-        throw new NotImplementedError()
     }
 }

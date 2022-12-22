@@ -1,10 +1,8 @@
 import { readFile } from "fs/promises";
-import { createTestAccount, createTransport, getTestMessageUrl } from "nodemailer";
+import { createTestAccount, createTransport } from "nodemailer";
 import { join } from "path";
 
-interface TemplateVariables {
-    [key: string]: string 
-}
+type TemplateVariables = Record<string, string>
 
 interface EmailOptions {
     email: string;
@@ -31,14 +29,13 @@ export default async function sendEmail(email: EmailOptions) {
         },
     });
     const sendedEmail = await transporter.sendMail({
-        from: 'dick <support@feedrum.com>',
+        from: "dick <support@feedrum.com>",
         to: email.email,
         subject: email.subject,
         html: await getLetter(email.letterName, email.options),
     });
 
-    console.log(getTestMessageUrl(sendedEmail))
-
+    // console.log(getTestMessageUrl(sendedEmail))
 
     return sendedEmail
 }

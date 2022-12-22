@@ -3,7 +3,6 @@ import { UserType } from "validation/user.model";
 import createVoteSystem from "./voteSystem";
 
 export default Prisma.defineExtension((client: PrismaClient) => {
-    const { voteObject: voteUser, deleteVote, isUserVoted } = createVoteSystem(client, "user")
     const jwtUserSelectFields = {
         id: true,
         email: true,
@@ -19,6 +18,8 @@ export default Prisma.defineExtension((client: PrismaClient) => {
         createdAt: true,
         isVerified: true,
     };
+
+    const { voteObject: voteUser, deleteVote, isUserVoted } = createVoteSystem(client, "user", viewUserSelectFields)
 
     return client.$extends({
         name: "User",

@@ -1,13 +1,13 @@
 import InvalidPermissionError from "errors/InvalidPermission";
 import ObjectNotFoundError from "errors/ObjectNotFound";
-
-import prisma from "@database";
-import { CommentUpdate, CommentUpdateType } from "validation/comment.model";
-import PostController from "./post.controller";
-import { VoteScore } from "@prisma/client";
 import MissingVoteError from "errors/MissingVote";
 import YourVoteError from "errors/YourVote";
+
+import { CommentUpdate, CommentUpdateType } from "validation/comment.model";
 import scores from "validation/general/voteScore";
+import prisma from "@database";
+import PostController from "./post.controller";
+import { VoteScore } from "@prisma/client";
 
 export default class CommentController {
     static async get(id: number) {

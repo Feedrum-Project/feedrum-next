@@ -7,6 +7,7 @@ const Post = object({
     userId: id,
     title: string().regex(/(.*?)/).min(8).max(1024),
 }).strict();
+
 const PostUpdate = Post.omit({
     userId: true,
 })
@@ -16,5 +17,6 @@ const PostUpdate = Post.omit({
 
 export type PostType = z.infer<typeof Post>;
 export type PostUpdateType = Omit<PostType, "userId">;
+
 export default Post;
 export { PostUpdate };
