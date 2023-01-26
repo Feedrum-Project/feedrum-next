@@ -1,0 +1,29 @@
+.main
+  display: flex
+
+@media screen and (max-width:87.5rem)
+  .main
+    display: flex
+    flex-direction: column-reverse
+    align-items: center
+
+.article
+  width: min-content
+  margin: 0 2rem 0
+
+.sorting
+  display: flex
+  color: #bebebe
+  margin: 0 0 1.125rem
+  width: min-content
+
+.new, .best, .popular
+  margin: 0 1.25rem 0 0
+  background: none
+  border: none
+  color: #bebebe
+  &:focus
+    color: white
+
+.posts
+  width: min-content

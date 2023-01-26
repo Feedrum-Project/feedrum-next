@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     
-    background: teal;
+    background: #1b1b1b;
     font-family: ${firaSans.style.fontFamily};
     font-weight: 500;
   }
