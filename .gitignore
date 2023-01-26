@@ -11,6 +11,7 @@ uploads
 # Lock files
 package-lock.json
 yarn.lock
+.env
 
 # testing
 /coverage
