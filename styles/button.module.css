@@ -1,0 +1,19 @@
+.button {
+  padding: 0.6875rem 1.25rem;
+  margin: 0 0 0 1rem;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.standart {
+  background-color: #292929;
+  border: #464646;
+  border: 1px solid #464646;
+}
+
+.purple {
+  border: 1px solid #CE67FF;
+  background-color: #260B33;
+}/*# sourceMappingURL=button.module.css.map */

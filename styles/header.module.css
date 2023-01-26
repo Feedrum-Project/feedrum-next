@@ -1,0 +1,24 @@
+.header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: -0.2rem;
+  background-color: rgba(27, 27, 27, 0.9);
+  padding: 1.125rem 7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  -webkit-backdrop-filter: blur(0.2rem);
+          backdrop-filter: blur(0.2rem);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.logo__text {
+  margin-left: 0.625rem;
+  font-weight: 500;
+  font-size: 1rem;
+}/*# sourceMappingURL=header.module.css.map */
