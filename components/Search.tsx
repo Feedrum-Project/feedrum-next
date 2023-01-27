@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import styles from '../styles/input.module.css'
+import styles from '../styles/input.module.sass'
 const search = require('../images/search.svg')
 
 export default function Input({Type, Placeholder, className}:any) {

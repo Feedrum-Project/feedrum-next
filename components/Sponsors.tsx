@@ -1,4 +1,4 @@
-import styles from '../styles/aside.module.css'
+import styles from '../styles/aside.module.sass'
 
 const sponsors = [
   {id:1, name:"Oleža", moneys:"254$"},
