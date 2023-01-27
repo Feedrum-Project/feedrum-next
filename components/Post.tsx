@@ -1,4 +1,4 @@
-import styles from '../styles/post.module.css'
+import styles from '../styles/posts.module.sass'
 
 const avatar = require('../images/avatar.svg')
 const message = require('../images/message.svg')
