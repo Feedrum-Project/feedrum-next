@@ -1,4 +1,4 @@
-import styles from '../styles/header.module.css'
+import styles from '../styles/header.module.sass'
 import Navigation from './Navigation'
 const logo = require('../images/logo.svg')
 
