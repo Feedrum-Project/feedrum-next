@@ -49,7 +49,7 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                 async getPostComments(id: number): Promise<Comment[]> {
                     return client.comment.findMany({
                         where: {
-                            User: {
+                            Post: {
                                 id
                             }
                         }
