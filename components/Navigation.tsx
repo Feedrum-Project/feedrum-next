@@ -1,6 +1,6 @@
 import Button from "./Button"
 import Search from "./Search"
-import styles from '../styles/nav.module.sass'
+import styles from 'styles/nav.module.sass'
 export default function Navigation() {
   return (
     <nav className={styles["nav"]}>

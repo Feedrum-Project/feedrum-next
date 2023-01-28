@@ -1,5 +1,7 @@
+@import variables
+
 .main
-  color: #fff
+  color: $white
   display: flex
   font-family: 'Raleway'
 
@@ -14,15 +16,15 @@
   margin: 0 0 2.315rem
 
 .content
-  border: 1px solid #464646
-  background: #292929
+  border: 1px solid $border
+  background: $block
   padding: 1.25rem
   border-radius: .5rem
   line-height: 2.125rem
 
 .comments
   margin: 3.5rem 0 1.875rem 0
-  &__title
+  &Title
     display: flex
     align-items: center
     font-weight: 500
@@ -35,15 +37,15 @@
 .comment
   display: flex
   align-items: center
-  &__top
+  &Top
     display: flex
     justify-content: space-between
     margin: 0 0 1rem 0
-  &__content
+  &Content
     padding: .75rem
     margin: 0 0 1.125rem .875rem
-    background: #292929
-    border: .0625rem solid #464646
+    background: $block
+    border: .0625rem solid $border
     border-radius: .375rem
     min-width: 17.25rem
     min-height: 5rem

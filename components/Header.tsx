@@ -1,13 +1,14 @@
-import styles from '../styles/header.module.sass'
+import styles from 'styles/header.module.sass'
 import Navigation from './Navigation'
-const logo = require('../images/logo.svg')
+import logo from 'images/logo.svg'
+import Image from 'next/image'
 
 export default function Header()  {
     return (
         <header className={styles.header}>
             <div className={styles.logo}>
-                <img src={logo.default.src} alt="logotype" />
-                <span className={styles.logo__text}>Feedrum</span>
+                <Image src={logo} alt="Логотип" />
+                <span className={styles["logoText"]}>Feedrum</span>
             </div>
             <Navigation/>
         </header>
