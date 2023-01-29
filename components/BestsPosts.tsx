@@ -15,14 +15,14 @@ export default function AsideElement() {
       <div className="title">
         {e.title}
       </div>
-      <div className={styles["elemBottom"]}>
-        <div className={styles["elemComments"]}>
+      <div className={styles.elemBottom}>
+        <div className={styles.elemComments}>
           <Image src={message} alt="Повідомлення"/>
-          <span className={styles["elemCommentsCount"]}>{e.comments}</span>
+          <span className={styles.elemCommentsCount}>{e.comments}</span>
           </div>
-        <div className={styles["elemRank"]}>
+        <div className={styles.elemRank}>
           <Image src={star} alt="Зіронька, репутація статті"/>
-          <span className={styles["elemRankCount"]}>{e.rank}</span>
+          <span className={styles.elemRankCount}>{e.rank}</span>
         </div>
       </div>
     </div>

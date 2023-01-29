@@ -12,8 +12,8 @@ export default function Input({Type, Placeholder, className}:any) {
   
   return (
     <div onClick={onFocus} className={styles[className]}>
-      <input ref={ref} type={Type} placeholder={Placeholder} className={styles['inputInside']} />
-      <button className={styles['inputButton']}>
+      <input ref={ref} type={Type} placeholder={Placeholder} className={styles.inputInside} />
+      <button className={styles.inputButton}>
         <Image src={search} alt="Пошук" />
       </button>
     </div>
