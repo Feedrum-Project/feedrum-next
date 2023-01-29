@@ -9,7 +9,7 @@ export default function Layout({ children }: Props) {
         <>
             <ThemeProvider theme={theme}>
                 <Header />
-                <main className={styles["main"]}>{children}</main>
+                <main className={styles.main}>{children}</main>
             </ThemeProvider>
         </>
     )
