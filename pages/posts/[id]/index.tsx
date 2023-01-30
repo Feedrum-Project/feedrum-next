@@ -62,11 +62,7 @@ export default function Post({postContent, postComments, author}:any) {
         </div>
 
       </div>
-<<<<<<< HEAD
       <AsideProfile userName={author.name} userId={author.id}/>
-=======
-      <AsideProfile nickname={author.name}/>
->>>>>>> 474fb20c9f30b795db3d688f693700a8cce0176e
     </div>
   )
 }
@@ -77,19 +73,11 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
   const post = await prisma.post.getPostById(id)
   const postParsed = JSON.parse(JSON.stringify(post))
 
-<<<<<<< HEAD
   let comments:Array<any>= await prisma.post.getPostComments(id)
   comments = comments.sort((a:any,b:any) => {
     if(a.createdAt < b.createdAt) return +1
     return -1
   })
-
-
-  const commentsPreparing = comments.map(e => {
-    e.createdAt = `${e.createdAt.getDate() > 9 ?
-      e.createdAt.getDate() : "0"+e.createdAt.getDate()}.${e.createdAt.getMonth() > 9 ? e.createdAt.getMonth() : "0"+e.createdAt.getMonth()}.${e.createdAt.getFullYear().toString().slice(2)} у ${e.createdAt.getHours() > 9 ? e.createdAt.getHours() :"0"+e.createdAt.getHours()}:${e.createdAt.getMinutes() > 9 ? e.createdAt.getMinutes() : "0"+e.createdAt.getMinutes()}`
-=======
-  const comments:Array<any>= await prisma.post.getPostComments(id)
 
   const commentsPreparing = comments.map(e => {
     e.createdAt = `${e.createdAt.getDate() > 9 ?
@@ -98,7 +86,6 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
       ${e.createdAt.getFullYear().toString().slice(2)} у 
       ${e.createdAt.getHours() > 9 ? e.createdAt.getHours() :
       "0"+e.createdAt.getHours()}:${e.createdAt.getMinutes() > 9 ? e.createdAt.getMinutes() : "0"+e.createdAt.getMinutes()}`
->>>>>>> 474fb20c9f30b795db3d688f693700a8cce0176e
     return e
   })
   const commentsParsed = JSON.parse(JSON.stringify(commentsPreparing))
