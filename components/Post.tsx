@@ -30,7 +30,7 @@ export default function Post(props:any){
             <span className={styles.postCommentsCount}>12</span>
             </div>
           <div className={styles.postRank}
-          style={{color: props.postData.rank > 0 ? "green" : "red"}}>
+          style={{color: props.postData.rank > 0 ? "#6AEA3D" : "#F36A6A"}}>
             <Image
             src={star}
             alt="Зіронька, репутація"
