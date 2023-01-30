@@ -3,6 +3,8 @@ import { GetServerSideProps } from 'next'
 import Image from "next/image"
 import Link from "next/link"
 import AsideUser from 'components/AsideUser'
+import Button from "components/Button"
+import Rank from 'components/Rank'
 import avatar from 'images/avatar.svg'
 import styles from 'styles/profile.module.sass'
 import message from 'images/message.svg'
@@ -12,15 +14,21 @@ export default function User({userInformation, userPosts}:any) {
   return (
     <div className={styles.main}>
       <div className={styles.profile}>
-        <div className={styles.name}>
-          <Image width="41" height="41" src={avatar} alt="Аватар"/>
-          <span className={styles.nameNick}>{userInformation.name}</span>
+        <div className={styles.profileTop}>
+          <div className={styles.name}>
+            <Image width="41" height="41" src={avatar} alt="Аватар"/>
+            <span className={styles.nameNick}>{userInformation.name}</span>
+          </div>
+          <div className={styles.profileAside}>
+            <Button Style="purple">Підписатися</Button>
+            <Rank userRank={userInformation.rank}></Rank>
+          </div>
         </div>
         <div className={styles.sort}>
           <div className="post">Пости</div>
           <div className={styles.comments}>Коментарі</div>
         </div>
-        <div className="content">
+        <div className={styles.profileContent}>
           {
             userPosts.map((e:any) => {
               return (
@@ -51,7 +59,7 @@ export default function User({userInformation, userPosts}:any) {
           }
         </div>
       </div>
-      <AsideUser/>
+      {/* <AsideUser userRank={userInformation.rank}/> */}
     </div>
   )
 }
