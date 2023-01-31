@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import styles from 'input.module.sass'
+import styles from './input.module.sass'
 import search from 'images/search.svg'
 import Image from 'next/image'
 

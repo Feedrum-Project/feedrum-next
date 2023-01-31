@@ -1,4 +1,4 @@
-import styles from 'styles/aside.module.sass'
+import styles from './aside.module.sass'
 import Button from '../Button/Button'
 import Rank from './Rank'
 

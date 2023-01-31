@@ -1,4 +1,4 @@
-import styles from 'posts.module.sass'
+import styles from './posts.module.sass'
 import Image from 'next/image'
 import Link from 'next/link'
 

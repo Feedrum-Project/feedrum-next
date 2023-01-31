@@ -1,4 +1,4 @@
-import styles from 'header.module.sass'
+import styles from './header.module.sass'
 import Navigation from './Navigation'
 import logo from 'images/logo.svg'
 import Image from 'next/image'

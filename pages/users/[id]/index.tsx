@@ -5,7 +5,7 @@ import Link from "next/link"
 import Button from "components/Button/Button"
 import Rank from 'components/Aside/Rank'
 import avatar from 'images/avatar.svg'
-import styles from 'profile.module.sass'
+import styles from './profile.module.sass'
 import message from 'images/message.svg'
 import star from 'images/star.svg'
 

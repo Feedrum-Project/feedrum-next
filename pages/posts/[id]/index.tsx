@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import styles from 'post.module.sass'
+import styles from './post.module.sass'
 import prisma from "@database"
 import { GetServerSideProps } from 'next'
 import AsideProfile from 'components/Aside/AsideProfile'

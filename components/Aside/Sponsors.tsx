@@ -1,4 +1,4 @@
-import styles from 'aside.module.sass'
+import styles from './aside.module.sass'
 import avatar from 'images/avatar.svg'
 import Image from 'next/image'
 
