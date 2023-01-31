@@ -3,7 +3,11 @@ import Image from 'next/image'
 import arrowTop from 'images/arrow-top.svg'
 import arrowBottom from 'images/arrow-bottom.svg'
 
-export default function Rank({userRank=0}:any) {
+interface RankProps {
+  userRank:number
+}
+
+export default function Rank({userRank=0}:RankProps) {
   return (
     <div className={styles.rank}>
       <button className={styles.growReputation}>

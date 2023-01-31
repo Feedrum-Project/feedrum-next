@@ -1,9 +1,10 @@
-import Header from "./Header";
+import Header from "../Header/Header";
 import { ThemeProvider } from "styled-components"
 import theme from "styles/theme";
-import styles from '../styles/layout.module.sass'
+import styles from 'layout.module.sass'
 
 type Props = { children: React.ReactNode };
+
 export default function Layout({ children }: Props) {
     return (
         <>

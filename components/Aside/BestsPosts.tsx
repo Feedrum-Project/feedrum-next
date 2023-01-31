@@ -3,7 +3,7 @@ import message from 'images/message.svg'
 import star from 'images/star.svg'
 import Image from 'next/image'
 
-export default function AsideElement() {
+export default function BestPosts() {
 
   const bestPosts = [
     {id:1, title:"Скільки років мовам програмування?", comments:12, rank:5},

@@ -1,6 +1,6 @@
-import Button from "./Button"
-import Search from "./Search"
-import styles from 'styles/nav.module.sass'
+import Button from "../Button/Button"
+import Search from "../Input/Search"
+import styles from 'nav.module.sass'
 import Link from "next/link"
 
 export default function Navigation() {

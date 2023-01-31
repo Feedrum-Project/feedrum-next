@@ -1,10 +1,15 @@
 import styles from 'styles/aside.module.sass'
-import Button from './Button'
+import Button from '../Button/Button'
 import Link from 'next/link'
 import Image from 'next/image'
 import avatar from 'images/avatar.svg'
 
-export default function AsideProfile({userName, userId}:any) {
+interface AsideProfileProps {
+  userName: string,
+  userId: number
+}
+
+export default function AsideProfile({userName, userId}:AsideProfileProps) {
   return (
     <div className={styles.AsideProfile}>
       <div className={styles.left}>

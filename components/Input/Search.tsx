@@ -1,11 +1,17 @@
 import { useRef } from 'react'
-import styles from 'styles/input.module.sass'
+import styles from 'input.module.sass'
 import search from 'images/search.svg'
 import Image from 'next/image'
 
-export default function Input({Type, Placeholder, className}:any) {
+interface InputProps {
+  Type?:string,
+  Placeholder:string,
+  className:string
+}
 
-  const ref = useRef(null)
+export default function Input({Type, Placeholder, className}:InputProps) {
+
+  const ref:any = useRef(null)
   function onFocus() {
     ref.current.focus()
   }

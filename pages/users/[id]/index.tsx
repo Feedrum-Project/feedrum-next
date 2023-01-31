@@ -2,15 +2,32 @@ import prisma from "@database"
 import { GetServerSideProps } from 'next'
 import Image from "next/image"
 import Link from "next/link"
-import AsideUser from 'components/AsideUser'
-import Button from "components/Button"
-import Rank from 'components/Rank'
+import Button from "components/Button/Button"
+import Rank from 'components/Aside/Rank'
 import avatar from 'images/avatar.svg'
-import styles from 'styles/profile.module.sass'
+import styles from 'profile.module.sass'
 import message from 'images/message.svg'
 import star from 'images/star.svg'
 
-export default function User({userInformation, userPosts}:any) {
+interface UserProps {
+  userInformation: {
+    id:number,
+    name:string,
+    rank:number,
+    createdAt:string,
+    isVerified:boolean
+  },
+  userPosts: {
+    id:number,
+    body:string,
+    title:string,
+    rank:number,
+    createdAt:string,
+    userId:number
+  }[]
+}
+
+export default function User({userInformation, userPosts}:UserProps) {
   return (
     <div className={styles.main}>
       <div className={styles.profile}>
@@ -59,7 +76,6 @@ export default function User({userInformation, userPosts}:any) {
           }
         </div>
       </div>
-      {/* <AsideUser userRank={userInformation.rank}/> */}
     </div>
   )
 }

@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import styles from 'styles/post.module.sass'
+import styles from 'post.module.sass'
 import prisma from "@database"
 import { GetServerSideProps } from 'next'
-import AsideProfile from 'components/AsideProfile'
+import AsideProfile from 'components/Aside/AsideProfile'
 import arrowTop from 'images/arrow-top.svg'
 import arrowBottom from 'images/arrow-bottom.svg'
 

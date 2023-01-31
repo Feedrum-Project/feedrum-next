@@ -17,6 +17,7 @@
     display: flex
     align-items: center
     justify-content: space-between
+    flex-wrap: wrap
 
   &Aside
     display: flex
@@ -24,6 +25,10 @@
 
   &Content
     max-width: min-content
+
+@media screen and (max-width: 1300px)
+  .profile
+    width: min-content
 
 .name
   display: flex
