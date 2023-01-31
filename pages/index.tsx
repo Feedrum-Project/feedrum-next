@@ -31,7 +31,7 @@ export default function Home({ posts }: HomeProps) {
     )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
     const posts = await PostController.getAll(0, 20)
 
     return {
