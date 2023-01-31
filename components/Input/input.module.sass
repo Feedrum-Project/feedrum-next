@@ -10,11 +10,35 @@
     background: none
     border: none
     outline: none
-    color: white
+    color: $white
   &Button
     background: none
     border: none
-    color: white
+    color: $white
     cursor: pointer
     width: 1.2rem
     height: 1.2rem
+
+.inputSquare
+  background: $block
+  border: 1px solid $border
+  border-radius: .5625rem
+  padding: .625rem
+  margin: 0 0 .875rem
+  &Name
+    display: flex
+    justify-content: space-between
+    font-weight: 400
+    font-size: .875rem
+    line-height: 1rem
+    color: $gray
+    margin: 0 0 .5rem
+    &>button
+      border: none
+      background: none
+  &Input
+    background: none
+    border: none
+    outline: none
+    color: white
+    width: 100%

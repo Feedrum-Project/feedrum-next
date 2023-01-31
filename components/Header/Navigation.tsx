@@ -10,7 +10,9 @@ export default function Navigation() {
       <Link href="/reg">
         <Button Style="purple">Зареєструватись</Button>
       </Link>
+      <Link href="/login">
       <Button Style="standart">Увійти</Button>
+      </Link>
     </nav>
   )
 }
