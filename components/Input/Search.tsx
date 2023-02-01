@@ -9,7 +9,7 @@ interface InputProps {
   className:string
 }
 
-export default function Input({Type, Placeholder, className}:InputProps) {
+export default function Search({Type, Placeholder, className}:InputProps) {
 
   const ref:any = useRef(null)
   function onFocus() {

@@ -6,12 +6,16 @@ import Link from "next/link"
 export default function Navigation() {
   return (
     <nav className={styles.nav}>
-      <Search Placeholder="Пошук" className="input"/>
+      <div className={styles.navSearch}>
+        <Search Placeholder="Пошук" className="input"/>
+      </div>
       <Link href="/reg">
         <Button Style="purple">Зареєструватись</Button>
       </Link>
       <Link href="/login">
-      <Button Style="standart">Увійти</Button>
+      <div className={styles.navLogin}>
+        <Button className={styles.navLogin} Style="standart">Увійти</Button>
+      </div>
       </Link>
     </nav>
   )

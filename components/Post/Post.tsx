@@ -10,18 +10,21 @@ export default function Post(props:any){
   const data = new Date(Date.parse(props.postData.createdAt))
   return (
     <div className={styles.post}>
-      <Link href={`/posts/${props.postData.id}`} style={{ textDecoration: 'none', color:"#fff" }}>
         <div className={styles.postTop}>
           <div className={styles.postAuthor}>
-            <Image src={avatar} alt="Аватар" />
-            <span className={styles.postAuthorname}>{props.postData.userId}</span>
+            <Link className={styles.postAuthor} href={`/users/${props.postData.userId}`} style={{ textDecoration: 'none', color:"#fff" }}>
+              <Image src={avatar} alt="Аватар" />
+              <span className={styles.postAuthorname}>{props.postData.userId}</span>
+            </Link>
           </div>
           <div className={styles.postDate}>
             {data.getDay() <= 9 ? '0'+data.getDay() : data.getDay()},&nbsp;
             {data.getHours() <= 9 ? '0'+data.getHours() : data.getHours()}:{data.getMinutes() <= 9 ? '0'+data.getMinutes() : data.getMinutes()}</div>
         </div>
         <div className={styles.postMiddle}>
-          <div className={styles.postTitle}>{props.postData.title}</div>
+          <Link href={`/posts/${props.postData.id}`} style={{ textDecoration: 'none', color:"#fff" }}>
+            <div className={styles.postTitle}>{props.postData.title}</div>
+          </Link>
           <div className={styles.postBody}>{props.postData.body}</div>  
         </div>
         <div className={styles.postBottom}>
@@ -38,7 +41,6 @@ export default function Post(props:any){
             <span className={styles.postRankCount}>{props.postData.rank}</span>
             </div>
         </div>
-      </Link>
     </div>
   )
 }

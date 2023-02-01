@@ -49,11 +49,12 @@ export default function User({userInformation, userPosts}:UserProps) {
           {
             userPosts.map((e:any) => {
               return (
-                <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: 'none', color:'white'}}>
                   <div key={e.id} className={styles.post}>
                     <div className={styles.postTime}>{e.createdAt}</div>
                     <div className={styles.postContent}>
-                      <div className={styles.postTitle}>{e.title}</div>
+                      <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: 'none', color:'white'}}>
+                        <div className={styles.postTitle}>{e.title}</div>
+                      </Link>
                       <div className={styles.postBody}>{e.body}</div>
                     </div>
                     <div className={styles.postBottom}>
@@ -70,7 +71,6 @@ export default function User({userInformation, userPosts}:UserProps) {
                         </div>
                     </div>
                   </div>
-                </Link>
               )
             })
           }

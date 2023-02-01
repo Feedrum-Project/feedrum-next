@@ -6,7 +6,7 @@
 @media screen and (max-width:87.5rem)
   .main
     display: flex
-    flex-direction: column-reverse
+    flex-direction: column
     align-items: center
 
 .article
@@ -24,8 +24,18 @@
   background: none
   border: none
   color: $gray
+  cursor: pointer
   &:focus
     color: white
 
 .posts
   width: min-content
+
+
+@media screen and (max-width: 55rem)
+  .main
+    // width: max-content
+  .sorting
+    display: flex
+    justify-content: space-around
+    width: 100%
