@@ -29,9 +29,9 @@ export default function BestPosts() {
   ))
 
   return (
-    <div className={styles["elem"]}>
-      <div className={styles["elemTitle"]}>Найкращі пости тижня</div>
-        <div className={styles["elemBody"]}>
+    <div className={styles.elem}>
+      <div className={styles.elemTitle}>Найкращі пости тижня</div>
+        <div className={styles.elemBody}>
           {parse}
         </div>
       </div>

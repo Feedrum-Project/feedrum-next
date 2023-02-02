@@ -5,6 +5,7 @@ import { GetServerSideProps } from 'next'
 import AsideProfile from 'components/Aside/AsideProfile'
 import arrowTop from 'images/arrow-top.svg'
 import arrowBottom from 'images/arrow-bottom.svg'
+import SimilarPosts from 'components/Aside/SimilarPosts'
 
 export default function Post({postContent, postComments, author}:any) {
 
@@ -62,12 +63,16 @@ export default function Post({postContent, postComments, author}:any) {
         </div>
 
       </div>
-      <AsideProfile userName={author.name} userId={author.id}/>
+      <div className="aside">
+        <AsideProfile userName={author.name} userId={author.id}/>
+        <SimilarPosts/>
+      </div>
     </div>
   )
 }
 
 export const getServerSideProps:GetServerSideProps = async (context) => {
+  console.log(context.req)
 
   const id = Number(context.query.id)
   const post = await prisma.post.getPostById(id)

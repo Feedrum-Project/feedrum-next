@@ -3,7 +3,7 @@ import Button from '../Button/Button'
 import Rank from './Rank'
 
 interface AsideUserProps {
-  userRank:string
+  userRank:number
 }
 
 export default function AsideUser({userRank}:AsideUserProps) {
