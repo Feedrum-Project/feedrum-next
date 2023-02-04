@@ -17,8 +17,8 @@ export default function Login() {
                         </div>
                     </div>
                     <div className={styles.loginMiddle}>
-                        <Input type='text' name="Пошта" placeholder='Пошта'/>
-                        <Input type='password' name="Пароль" placeholder='Пароль'/>
+                        <Input type="text" name="Пошта" placeholder="Пошта"/>
+                        <Input type="password" name="Пароль" placeholder="Пароль"/>
                         <Link href="/forgetPassword" className={styles.forgetPassword}>Забув&nbsp;пароль?</Link>
                     </div>
                     <div className={styles.loginBottom}>
