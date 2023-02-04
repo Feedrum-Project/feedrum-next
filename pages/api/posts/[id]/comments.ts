@@ -12,12 +12,12 @@ import { use } from "next-api-middleware";
 
 const handler: NextApiHandler = async (req, res) => {
     switch (req.method) {
-        case "GET":
-            await getComments(req, res)
-            break;
-        case "POST":
-            await use(missingBodyMiddleware, authMiddleware)(createComment)(req, res)
-            break;
+    case "GET":
+        await getComments(req, res)
+        break;
+    case "POST":
+        await use(missingBodyMiddleware, authMiddleware)(createComment)(req, res)
+        break;
             
     }
 

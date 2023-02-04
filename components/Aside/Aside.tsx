@@ -3,14 +3,14 @@ import Sponsors from "./Sponsors"
 
 export default function Aside() {
 
-  return (
-    <aside>
-      {
-        <>
-          <BestsPosts/>
-          <Sponsors/>
-        </>
-      }
-    </aside>
-  )
+    return (
+        <aside>
+            {
+                <>
+                    <BestsPosts/>
+                    <Sponsors/>
+                </>
+            }
+        </aside>
+    )
 }

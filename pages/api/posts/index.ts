@@ -9,12 +9,12 @@ import success from "helpers/success.helper";
 
 const handler: NextApiHandler = async (req, res) => {
     switch (req.method) {
-        case "GET":
-            await getPosts(req, res);
-            break;
-        case "POST":
-            await use(authMiddleware, missingBodyMiddleware)(createPost)(req, res);
-            break;
+    case "GET":
+        await getPosts(req, res);
+        break;
+    case "POST":
+        await use(authMiddleware, missingBodyMiddleware)(createPost)(req, res);
+        break;
     }
 };
 

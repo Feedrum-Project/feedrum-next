@@ -26,16 +26,16 @@ const handler: NextApiHandler = async (req, res) => {
     if (!idValidation.success) throw new InvalidIdTypeError(idValidation.error);
 
     switch (req.method) {
-        case "DELETE":
-            await use(authMiddleware)(deleteImage(id))(req, res)
-            break;
+    case "DELETE":
+        await use(authMiddleware)(deleteImage(id))(req, res)
+        break;
 
-        case "GET":
-            await getImage(id)(req, res)
+    case "GET":
+        await getImage(id)(req, res)
 
-            break;
-        default:
-            break;
+        break;
+    default:
+        break;
     }
 };
 

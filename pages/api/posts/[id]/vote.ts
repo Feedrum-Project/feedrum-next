@@ -11,12 +11,12 @@ import { use } from "next-api-middleware";
 
 const handler: NextApiHandler = async (req, res) => {
     switch (req.method) {
-        case "POST":
-            await votePost(req, res)
-            break;
-        case "DELETE":
-            await unvotePost(req, res)
-            break;
+    case "POST":
+        await votePost(req, res)
+        break;
+    case "DELETE":
+        await unvotePost(req, res)
+        break;
     }
 };
 

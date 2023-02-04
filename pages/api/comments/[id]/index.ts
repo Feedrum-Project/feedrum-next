@@ -11,20 +11,20 @@ import authMiddleware from "middlewares/auth.middleware";
 
 const handler: NextApiHandler = async (req, res) => {
     switch (req.method as method) {
-        case "GET":
-            await getComment(req, res)
-            break;
+    case "GET":
+        await getComment(req, res)
+        break;
 
-        case "PUT":
-            await use(missingBodyMiddleware, authMiddleware)(updateComment)(req, res)
-            break;
+    case "PUT":
+        await use(missingBodyMiddleware, authMiddleware)(updateComment)(req, res)
+        break;
         
-        case "DELETE":
-            await use(authMiddleware)(deleteComment)(req, res)
-            break;
+    case "DELETE":
+        await use(authMiddleware)(deleteComment)(req, res)
+        break;
     
-        default:
-            break;
+    default:
+        break;
     }
 };
 

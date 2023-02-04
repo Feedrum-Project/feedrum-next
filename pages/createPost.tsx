@@ -1,5 +1,5 @@
 export default function createPost() {
-  return (
-    <div>create Post(soon)</div>
-  )
+    return (
+        <div>create Post(soon)</div>
+    )
 }
