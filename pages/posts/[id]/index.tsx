@@ -72,7 +72,6 @@ export default function Post({postContent, postComments, author}:any) {
 }
 
 export const getServerSideProps:GetServerSideProps = async (context) => {
-    console.log(context.req)
 
     const id = Number(context.query.id)
     const post = await prisma.post.getPostById(id)
