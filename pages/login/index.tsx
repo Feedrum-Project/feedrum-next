@@ -10,10 +10,10 @@ export default function Login() {
                 <div className={styles.login}>
                     <div className={styles.loginTop}>
                         <div className={styles.loginTitle}>
-              Увійти
+                            Увійти
                         </div>
                         <div className={styles.register}>
-              або <u>зареєструватися</u>
+                            або <u><Link href="/registration" style={{color:"white"}}>зареєструватися</Link></u>
                         </div>
                     </div>
                     <div className={styles.loginMiddle}>

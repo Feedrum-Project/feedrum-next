@@ -22,7 +22,7 @@ export default function Navigation({id}:NavProps) {
     } else {
         Logged = (
             <>
-                <Link href="/reg">
+                <Link href="/registration">
                     <Button Style="purple">Зареєструватись</Button>
                 </Link>
                 <Link href="/login">
