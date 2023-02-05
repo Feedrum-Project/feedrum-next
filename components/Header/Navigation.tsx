@@ -13,10 +13,10 @@ export default function Navigation({id}:NavProps) {
     if( id !== undefined) {
         Logged = (
             <>
-                <Button Style="purple"><Link href="./createPost" style={{textDecoration:"none", color:"white"}}>Створити пост</Link></Button>
-                <Button className="offic" Style="Unborder" style={{margin:"0 1rem"}}>
+                <Link className={styles.LinkInsteadButton} href="/createPost">Створити пост</Link>
+                <Link className="office" href={"/users/"+id} style={{margin:"1rem"}}>
                     <Image src={avatar} alt="Ваш аватар" height="28" width="28"/>
-                </Button>
+                </Link>
             </>
         )
     } else {
