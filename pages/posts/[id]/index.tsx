@@ -2,10 +2,10 @@ import Image from "next/image"
 import styles from "./post.module.sass"
 import prisma from "@database"
 import { GetServerSideProps } from "next"
-import AsideProfile from "components/Aside/AsideProfile"
+import AsideProfile from "module/Aside/AsideProfile"
 import arrowTop from "images/arrow-top.svg"
 import arrowBottom from "images/arrow-bottom.svg"
-import SimilarPosts from "components/Aside/SimilarPosts"
+import SimilarPosts from "module/Aside/SimilarPosts"
 
 export default function Post({postContent, postComments, author}:any) {
 

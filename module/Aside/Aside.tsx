@@ -1,5 +1,5 @@
-import BestsPosts from "./BestsPosts"
-import Sponsors from "./Sponsors"
+import BestsPosts from "./Components/BestsPosts"
+import Sponsors from "./Components/Sponsors"
 
 export default function Aside() {
 

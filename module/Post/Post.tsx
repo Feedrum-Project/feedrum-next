@@ -1,10 +1,10 @@
-import styles from "./posts.module.sass"
-import Image from "next/image"
-import Link from "next/link"
+import styles from "./styles/posts.module.sass";
+import Image from "next/image";
+import Link from "next/link";
 
-import avatar from "images/avatar.svg"
-import message from "images/message.svg"
-import star from "images/star.svg"
+import avatar from "images/avatar.svg";
+import message from "images/message.svg";
+import star from "images/star.svg";
 
 export default function Post(props:any){
     const data = new Date(Date.parse(props.postData.createdAt))

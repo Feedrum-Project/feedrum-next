@@ -1,4 +1,4 @@
-import styles from "./aside.module.sass"
+import styles from "../styles/aside.module.sass"
 import message from "images/message.svg"
 import star from "images/star.svg"
 import Image from "next/image"

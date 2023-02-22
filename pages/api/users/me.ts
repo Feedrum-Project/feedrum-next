@@ -7,7 +7,6 @@ import { NextApiHandler } from "next";
 import { use } from "next-api-middleware";
 
 const handler: NextApiHandler = async (req, res) => {
-    console.log(566)
     const user = await UserController.get(req.user.id)
 
     success(res, user)

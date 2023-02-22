@@ -1,8 +1,8 @@
-import styles from "./aside.module.sass"
-import Button from "../Button/Button"
-import Link from "next/link"
-import Image from "next/image"
-import avatar from "images/avatar.svg"
+import styles from "./aside.module.sass";
+import Button from "components/UI/Button/Button";
+import Link from "next/link";
+import Image from "next/image";
+import avatar from "images/avatar.svg";
 
 interface AsideProfileProps {
   userName: string,

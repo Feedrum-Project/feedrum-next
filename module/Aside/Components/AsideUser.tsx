@@ -1,5 +1,5 @@
 import styles from "./aside.module.sass"
-import Button from "../Button/Button"
+import Button from "../../components/UI/Button/Button"
 import Rank from "./Rank"
 
 interface AsideUserProps {

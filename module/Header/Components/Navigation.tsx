@@ -1,9 +1,9 @@
-import Button from "../Button/Button";
-import Search from "../Input/Search";
+import Button from "components/UI/Button/Button";
+import Search from "components/UI/Input/Search";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./nav.module.sass";
-import avatar from "../../images/avatar.svg"
+import styles from "../styles/nav.module.sass";
+import avatar from "images/avatar.svg";
 
 interface NavProps {
   id: number | undefined

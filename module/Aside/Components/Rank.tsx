@@ -1,4 +1,4 @@
-import styles from "./rank.module.sass"
+import styles from "../styles/rank.module.sass"
 import Image from "next/image"
 import arrowTop from "images/arrow-top.svg"
 import arrowBottom from "images/arrow-bottom.svg"

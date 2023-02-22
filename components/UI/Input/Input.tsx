@@ -1,6 +1,6 @@
 import Image from "next/image"
 import styles from "./input.module.sass"
-import eye from "../../images/eye.svg"
+import eye from "../../../images/eye.svg"
 
 interface InputProps {
   type?:string,

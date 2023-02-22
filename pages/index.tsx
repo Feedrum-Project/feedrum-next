@@ -1,9 +1,9 @@
 import { Post } from "@prisma/client";
 import PostController from "controllers/post.controller";
 import { GetServerSideProps } from "next";
-import PostComponent from "components/Post/Post";
+import PostComponent from "module/Post/Post";
 import styles from "./home.module.sass";
-import Aside from "components/Aside/Aside";
+import Aside from "module/Aside/Aside";
 
 interface HomeProps {
     posts: Post[]
