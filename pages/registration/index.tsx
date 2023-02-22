@@ -1,9 +1,9 @@
-import Button from "components/UI/Button/Button"
-import Input from "components/UI/Input/Input"
+import RegistrationForm from "module/RegistrationForm/RegistrationForm"
+
 import Link from "next/link"
 import styles from "./registration.module.sass"
 
-export default function Login() {
+export default function Registration() {
     return (
         <div className={styles.main}>
             <div className={styles.form}>
@@ -16,16 +16,7 @@ export default function Login() {
                             або <u><Link href="/login" style={{color:"white"}}>увійти</Link></u>
                         </div>
                     </div>
-                    <div className={styles.registrationMiddle}>
-                        <Input type="text" name="Пошта" placeholder="Пошта"/>
-                        <Input type="text" name="Ім'я" placeholder="Ім'я"/>
-                        <Input type="password" name="Пароль" placeholder="Пароль"/>
-                        <Input type="password" name="Підтвердіть пароль" placeholder="Підтвердіть пароль"/>
-                        <Link href="/forgetPassword" className={styles.forgetPassword}>Забув&nbsp;пароль?</Link>
-                    </div>
-                    <div className={styles.registrationBottom}>
-                        <Button Style="purple">Зареєструватися</Button>
-                    </div>
+                    <RegistrationForm/>
                 </div>
             </div>
         </div>
