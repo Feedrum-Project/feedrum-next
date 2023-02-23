@@ -1,4 +1,4 @@
-import styles from "./aside.module.sass";
+import styles from "../styles/aside.module.sass";
 import Button from "components/UI/Button/Button";
 import Link from "next/link";
 import Image from "next/image";

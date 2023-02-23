@@ -1,11 +1,10 @@
-import Image from "next/image"
 import styles from "./post.module.sass"
 import prisma from "@database"
 import { GetServerSideProps } from "next"
-import AsideProfile from "module/Aside/AsideProfile"
-import arrowTop from "images/arrow-top.svg"
-import arrowBottom from "images/arrow-bottom.svg"
-import SimilarPosts from "module/Aside/SimilarPosts"
+
+import AsideProfile from "module/Aside/Components/AsideProfile"
+import SimilarPosts from "module/Aside/Components/SimilarPosts"
+import Comment from "components/comment/Comment"
 
 export default function Post({postContent, postComments, author}:any) {
 
@@ -31,29 +30,7 @@ export default function Post({postContent, postComments, author}:any) {
                                 postComments.map((e:any) => {
                                     return (
                                         <div key={e.id} className={styles.comment}>
-                                            <div className={styles.rank}>
-                                                <Image
-                                                    src={arrowTop}
-                                                    alt="Збільшити репутацію"
-                                                />
-                                                <div
-                                                    className={styles.rankCount}
-                                                    style={{ color: e.rank > 0 ? "#6AEA3D" :
-                                                        e.rank == 0 ? "gray" : "#F36A6A"}}>
-                                                    {e.rank}
-                                                </div>
-                                                <Image
-                                                    src={arrowBottom}
-                                                    alt="Зменшити репутацію"
-                                                />
-                                            </div>
-                                            <div className={styles.commentContent}>
-                                                <div className={styles.commentTop}>
-                                                    <div className="commentLeft">{e.id}</div>
-                                                    <div className="commentRight">{e.createdAt}</div>
-                                                </div>
-                                                <div className="commentBody">{e.body}</div>
-                                            </div>
+                                            <Comment comment={e}/>
                                         </div>
                                     )
                                 })

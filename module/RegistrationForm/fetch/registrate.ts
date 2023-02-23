@@ -18,12 +18,12 @@ export default async function registrate(body:bodyObj) {
     if(body.password1 !== body.password2) return
     
     const newBody:bodyPreparing = {...body, password1: undefined, password2: undefined, password: body.password1}
-    console.log(newBody)
+    
     const result = await fetch("http://localhost:3000/api/auth/register", {
         method:"POST",
         body: newBody
     })
         .then(res => res.json())
     
-    console.log(result)
+    return result
 }

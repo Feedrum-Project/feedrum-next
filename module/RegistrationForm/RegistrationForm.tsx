@@ -1,5 +1,4 @@
-import Button from "components/UI/Button/Button"
-import Input from "components/UI/Input/Input"
+import {Input, Button} from "components/UI/index"
 import registrate from "./fetch/registrate"
 
 import styles from "./styles/registration.module.sass"

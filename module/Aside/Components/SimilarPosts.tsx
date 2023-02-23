@@ -1,5 +1,5 @@
 import Image from "next/image"
-import styles from "./aside.module.sass"
+import styles from "../styles/aside.module.sass"
 import comments from "images/message.svg"
 import star from "images/star.svg"
 
