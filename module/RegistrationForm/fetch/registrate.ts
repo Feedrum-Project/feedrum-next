@@ -21,7 +21,7 @@ export default async function registrate(body:bodyObj) {
     
     const result = await fetch("http://localhost:3000/api/auth/register", {
         method:"POST",
-        body: newBody
+        body: JSON.parse(JSON.stringify(newBody)) // It doesn't work, as in LoginForm
     })
         .then(res => res.json())
     

@@ -1,5 +1,7 @@
+import CreateForm from "module/CreateForm/CreateForm"
+
 export default function createPost() {
     return (
-        <div>create Post(soon)</div>
+        <CreateForm/>
     )
 }

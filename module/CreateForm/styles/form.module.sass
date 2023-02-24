@@ -1,0 +1,65 @@
+@import ../../../styles/variables
+
+
+.form
+    color: $white
+    background: $block
+    border: 1px solid $border
+    border-radius: .6875rem
+    padding: .25rem
+
+.panel
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 0 2rem 0 0
+    color: white
+
+    &Elements
+        display: flex
+        justify-content: space-between
+        flex-wrap: wrap
+        margin: 1rem 0
+        &>*
+            display: flex
+            align-items: center
+            justify-content: center
+            flex-wrap: wrap
+            background: $border
+            border-radius: .5rem
+            padding: .5rem
+            margin: .25rem 0 .25rem 2rem
+            transition: .2s
+            width: 1.5rem
+            user-select: none
+            &:hover
+                transition: .5s
+                background: $pink
+                cursor: pointer
+
+.textarea
+    background: $background
+    color: $white
+    min-width: calc(100% - .25rem)
+    max-width: calc(100% - .25rem)
+    min-height: 25rem
+    max-height: 50rem
+    margin: 0 1rem 0 0
+    border: none
+    outline: none
+
+.sectionSubmit
+    display: flex
+    justify-content: space-between
+.submit
+    margin: 1rem 1rem
+    padding: 0.6875rem 1.25rem
+    color: $white
+    border: 1px solid $pink
+    background-color: $purple
+    font-weight: 500
+    border-radius: 5px
+    cursor: pointer
+
+.centrilizer
+    height: 1rem

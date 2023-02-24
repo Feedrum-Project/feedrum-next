@@ -21,16 +21,6 @@ export default function Home({ posts }: HomeProps) {
         })
         setPostsSorted(buffer)
     }
-    // function setSortingNew() {
-    //     sort = "new"
-    //     const buffer = postsSorted.sort((a,b):any => {
-    //         if(a.createdAt<b.createdAt) return Date.parse(a.createdAt)+Date.parse(b.createdAt)
-    //         return Date.parse(a.createdAt)-Date.parse(b.createdAt)
-    //     })
-    //     setPostsSorted(buffer)
-    //     console.log(postsSorted)
-    // }
-    
 
     return (
         <>
