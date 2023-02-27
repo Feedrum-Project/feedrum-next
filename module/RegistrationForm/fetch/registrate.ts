@@ -15,15 +15,18 @@ interface bodyPreparing {
 
 export default async function registrate(body:bodyObj) {
 
-    if(body.password1 !== body.password2) return
+    if(body.password1 !== body.password2) return "mistake"
     
+    const form = new FormData()
     const newBody:bodyPreparing = {...body, password1: undefined, password2: undefined, password: body.password1}
+    form.append("json", JSON.stringify(newBody))
     
     const result = await fetch("http://localhost:3000/api/auth/register", {
         method:"POST",
-        body: JSON.parse(JSON.stringify(newBody)) // It doesn't work, as in LoginForm
+        body: form
     })
         .then(res => res.json())
+        .then(e => console.log(e))
     
     return result
 }
