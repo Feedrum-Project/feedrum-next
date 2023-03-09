@@ -20,18 +20,18 @@ export const config = {
 const handler: NextApiHandler = async (req, res) => {
     if (req.query.id === undefined) throw new WTFError();
 
-    const id = Array.isArray(req.query.id) ? req.query.id[0] : req.query.id
+    const id = Array.isArray(req.query.id) ? req.query.id[0] : req.query.id;
 
     const idValidation = await uuid.spa(id);
     if (!idValidation.success) throw new InvalidIdTypeError(idValidation.error);
 
     switch (req.method) {
     case "DELETE":
-        await use(authMiddleware)(deleteImage(id))(req, res)
+        await use(authMiddleware)(deleteImage(id))(req, res);
         break;
 
     case "GET":
-        await getImage(id)(req, res)
+        await getImage(id)(req, res);
 
         break;
     default:
@@ -41,23 +41,23 @@ const handler: NextApiHandler = async (req, res) => {
 
 const deleteImage = (id: string) => {
     const handler: NextApiHandler = async (req, res) => {
-        const image = await ImageController.delete(id, req.user.id)
+        const image = await ImageController.delete(id, req.user.id);
 
-        success(res, image)
-    }
+        success(res, image);
+    };
 
-    return handler
-}
+    return handler;
+};
 
 const getImage = (id: string) => {
     const handler: NextApiHandler = async (req, res) => {
-        const image = await ImageController.get(id)
+        const image = await ImageController.get(id);
 
-        sendImage(res, id, image.type)
-    }
+        sendImage(res, id, image.type);
+    };
 
-    return handler
-}
+    return handler;
+};
 
 export default use(
     errorMiddleware,

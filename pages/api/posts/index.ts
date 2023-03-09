@@ -22,16 +22,16 @@ const getPosts: NextApiHandler = async (req, res) => {
     const posts = await PostController.getAll(
         Number(req.query.page),
         Number(req.query.offset)
-    )
+    );
 
-    return success(res, posts)
+    return success(res, posts);
 
 };
 
 const createPost: NextApiHandler = async (req, res) => {
     const post = await PostController.create(req.body, req.user.id);
 
-    return success(res, post)
+    return success(res, post);
 };
 
 export default use(errorMiddleware, validMethodsMiddleware(["GET", "POST"]))(handler);

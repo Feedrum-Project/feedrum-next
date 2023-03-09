@@ -8,9 +8,9 @@ import success from "helpers/success.helper";
 import CommentController from "controllers/comments.controller";
 
 const handler: NextApiHandler = async (req, res) => {
-    const comment = await CommentController.create(req.body, req.user.id)
+    const comment = await CommentController.create(req.body, req.user.id);
 
-    success(res, comment)
+    success(res, comment);
 };
 
 

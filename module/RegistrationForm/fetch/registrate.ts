@@ -15,20 +15,14 @@ interface bodyPreparing {
 export default async function registrate(body:bodyObj) {
 
     if(body.password1 !== body.password2) return "mistake";
-    
     const newBody = {...body, password: body.password1} as bodyPreparing & BodyInit;
-
     delete newBody.password1; delete newBody.password2;
 
     const result = await fetch("http://localhost:3000/api/auth/register", {
         method:"POST",
-        body: JSON.stringify(newBody),
-        // headers: {
-        //     "Content-Type":"application/json"
-        // }
+        body: JSON.stringify(newBody)
     })
-        .then(res => res.json())
-        .then(e => console.log(e));
+        .then(res => res.json());
     
     return result;
 }

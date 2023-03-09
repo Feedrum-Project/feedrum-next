@@ -13,10 +13,10 @@ import { use } from "next-api-middleware";
 const handler: NextApiHandler = async (req, res) => {
     switch (req.method) {
     case "GET":
-        await getComments(req, res)
+        await getComments(req, res);
         break;
     case "POST":
-        await use(missingBodyMiddleware, authMiddleware)(createComment)(req, res)
+        await use(missingBodyMiddleware, authMiddleware)(createComment)(req, res);
         break;
             
     }
@@ -27,17 +27,17 @@ const getComments: NextApiHandler = async (req, res) => {
     const comments = await PostController.getPostComments(req.id);
 
     return success(res, comments);
-}
+};
 
 const createComment: NextApiHandler = async (req, res) => {
     const commentData = {
         ...req.body,
         postId: req.id
-    }
-    const comment = await CommentController.create(commentData, req.user.id)
+    };
+    const comment = await CommentController.create(commentData, req.user.id);
 
-    return success(res, comment)
-}
+    return success(res, comment);
+};
 
 export default use(
     errorMiddleware,

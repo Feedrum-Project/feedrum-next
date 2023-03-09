@@ -15,9 +15,9 @@ export const config = {
 };
 
 const handler: NextApiHandler = async (req, res) => {
-    const images = await parseImages(req)
+    const images = await parseImages(req);
 
-    success(res, await ImageController.createImages(images, req.user.id))
+    success(res, await ImageController.createImages(images, req.user.id));
 };
 
 export default use(

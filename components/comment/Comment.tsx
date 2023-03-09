@@ -1,7 +1,7 @@
-import Image from "next/image"
-import styles from "./comment.module.sass"
-import arrowTop from "images/arrow-top.svg"
-import arrowBottom from "images/arrow-bottom.svg"
+import Image from "next/image";
+import styles from "./comment.module.sass";
+import arrowTop from "images/arrow-top.svg";
+import arrowBottom from "images/arrow-bottom.svg";
 
 interface CommentObj {
     comment: {
@@ -39,5 +39,5 @@ export default function Comment({comment}:CommentObj) {
                 <div className="commentcomment">{comment.body}</div>
             </div>
         </>
-    )
+    );
 }

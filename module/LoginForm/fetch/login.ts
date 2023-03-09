@@ -4,14 +4,12 @@ interface bodyObj {
 }
 
 export default async function login(body:bodyObj) {
-    const form = new FormData()
-    form.append("json", body)
+    
     const result = await fetch("http://localhost:3000/api/auth/login", {
         method:"POST",
-        body: form
+        body: JSON.stringify(body)
     })
-        .then(res => res.json())
-        .then(e => console.log(e))
+        .then(res => res.json());
     
-    return result
+    return result;
 }

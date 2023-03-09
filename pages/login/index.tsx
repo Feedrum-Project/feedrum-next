@@ -1,5 +1,5 @@
-import LoginForm from "module/LoginForm/LoginForm"
-import styles from "./login.module.sass"
+import LoginForm from "module/LoginForm/LoginForm";
+import styles from "./login.module.sass";
 
 export default function Login() {
     return (
@@ -10,5 +10,5 @@ export default function Login() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

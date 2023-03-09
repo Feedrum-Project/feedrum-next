@@ -1,13 +1,13 @@
-import prisma from "@database"
-import { GetServerSideProps } from "next"
-import Image from "next/image"
-import Link from "next/link"
-import Button from "components/UI/Button/Button"
-import Rank from "module/Aside/Components/Rank"
-import avatar from "images/avatar.svg"
-import styles from "./profile.module.sass"
-import message from "images/message.svg"
-import star from "images/star.svg"
+import prisma from "@database";
+import { GetServerSideProps } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import Button from "components/UI/Button/Button";
+import Rank from "module/Aside/Components/Rank";
+import avatar from "images/avatar.svg";
+import styles from "./profile.module.sass";
+import message from "images/message.svg";
+import star from "images/star.svg";
 
 interface UserProps {
   userInformation: {
@@ -71,23 +71,23 @@ export default function User({userInformation, userPosts}:UserProps) {
                                         </div>
                                     </div>
                                 </div>
-                            )
+                            );
                         })
                     }
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export const getServerSideProps:GetServerSideProps = async (context) => {
-    const userPosts:any = await prisma.user.getUserPosts(Number(context.query.id))
-    const userInformation:any = await prisma.user.getUserById(Number(context.query.id))
+    const userPosts:any = await prisma.user.getUserPosts(Number(context.query.id));
+    const userInformation:any = await prisma.user.getUserById(Number(context.query.id));
 
     return {
         props: {
             userInformation: JSON.parse(JSON.stringify(userInformation)),
             userPosts: JSON.parse(JSON.stringify(userPosts))
         }
-    }
-}
+    };
+};

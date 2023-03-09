@@ -1,10 +1,10 @@
-import styles from "./post.module.sass"
-import prisma from "@database"
-import { GetServerSideProps } from "next"
+import styles from "./post.module.sass";
+import prisma from "@database";
+import { GetServerSideProps } from "next";
 
-import AsideProfile from "module/Aside/Components/AsideProfile"
-import SimilarPosts from "module/Aside/Components/SimilarPosts"
-import Comment from "components/comment/Comment"
+import AsideProfile from "module/Aside/Components/AsideProfile";
+import SimilarPosts from "module/Aside/Components/SimilarPosts";
+import Comment from "components/comment/Comment";
 
 export default function Post({postContent, postComments, author}:any) {
 
@@ -32,7 +32,7 @@ export default function Post({postContent, postComments, author}:any) {
                                         <div key={e.id} className={styles.comment}>
                                             <Comment comment={e}/>
                                         </div>
-                                    )
+                                    );
                                 })
                             }
                         </div>
@@ -45,20 +45,20 @@ export default function Post({postContent, postComments, author}:any) {
                 <SimilarPosts/>
             </div>
         </div>
-    )
+    );
 }
 
 export const getServerSideProps:GetServerSideProps = async (context) => {
 
-    const id = Number(context.query.id)
-    const post = await prisma.post.getPostById(id)
-    const postParsed = JSON.parse(JSON.stringify(post))
+    const id = Number(context.query.id);
+    const post = await prisma.post.getPostById(id);
+    const postParsed = JSON.parse(JSON.stringify(post));
 
-    let comments:Array<any>= await prisma.post.getPostComments(id)
+    let comments:Array<any>= await prisma.post.getPostComments(id);
     comments = comments.sort((a:any,b:any) => {
-        if(a.createdAt < b.createdAt) return +1
-        return -1
-    })
+        if(a.createdAt < b.createdAt) return +1;
+        return -1;
+    });
 
     const commentsPreparing = comments.map(e => {
         e.createdAt = `${e.createdAt.getDate() > 9 ?
@@ -66,13 +66,13 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
       ${e.createdAt.getMonth() > 9 ? e.createdAt.getMonth() : "0"+e.createdAt.getMonth()}.
       ${e.createdAt.getFullYear().toString().slice(2)} у 
       ${e.createdAt.getHours() > 9 ? e.createdAt.getHours() :
-        "0"+e.createdAt.getHours()}:${e.createdAt.getMinutes() > 9 ? e.createdAt.getMinutes() : "0"+e.createdAt.getMinutes()}`
-        return e
-    })
-    const commentsParsed = JSON.parse(JSON.stringify(commentsPreparing))
+        "0"+e.createdAt.getHours()}:${e.createdAt.getMinutes() > 9 ? e.createdAt.getMinutes() : "0"+e.createdAt.getMinutes()}`;
+        return e;
+    });
+    const commentsParsed = JSON.parse(JSON.stringify(commentsPreparing));
 
-    const author = await prisma.user.getUserById(postParsed.userId)
-    const authorParsed = JSON.parse(JSON.stringify(author))
+    const author = await prisma.user.getUserById(postParsed.userId);
+    const authorParsed = JSON.parse(JSON.stringify(author));
 
     return {
         props: {
@@ -80,5 +80,5 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
             postComments: commentsParsed,
             author: authorParsed
         }
-    }
-}
+    };
+};

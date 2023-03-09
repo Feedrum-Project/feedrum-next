@@ -11,25 +11,25 @@ import { use } from "next-api-middleware";
 const handler: NextApiHandler = async (req, res) => {
     switch (req.method) {
     case "POST":
-        await voteUser(req, res)
+        await voteUser(req, res);
         break;
     case "DELETE":
-        await unvoteUser(req, res)
+        await unvoteUser(req, res);
         break;
     }
 };
 
 const voteUser: NextApiHandler = async (req, res) => {
-    const comment = await UserController.vote(req.id, req.user.id, req.body.score)
+    const comment = await UserController.vote(req.id, req.user.id, req.body.score);
 
-    success(res, comment)
-}
+    success(res, comment);
+};
 
 const unvoteUser: NextApiHandler = async (req, res) => {
-    const comment = await UserController.unvote(req.id, req.user.id)
+    const comment = await UserController.unvote(req.id, req.user.id);
 
-    success(res, comment)
-}
+    success(res, comment);
+};
 
 export default use(
     errorMiddleware,

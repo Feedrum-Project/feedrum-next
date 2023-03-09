@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Header from "../../module/Header/Header";
-import { ThemeProvider } from "styled-components"
+import { ThemeProvider } from "styled-components";
 import theme from "styles/theme";
-import styles from "./layout.module.sass"
+import styles from "./layout.module.sass";
 
 type Props = { children: React.ReactNode };
 
@@ -18,5 +18,5 @@ export default function Layout({ children }: Props) {
                 <main className={styles.main}>{children}</main>
             </ThemeProvider>
         </>
-    )
+    );
 }

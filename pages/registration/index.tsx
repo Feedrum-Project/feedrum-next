@@ -1,7 +1,7 @@
-import RegistrationForm from "module/RegistrationForm/RegistrationForm"
+import RegistrationForm from "module/RegistrationForm/RegistrationForm";
 
-import Link from "next/link"
-import styles from "./registration.module.sass"
+import Link from "next/link";
+import styles from "./registration.module.sass";
 
 export default function Registration() {
     return (
@@ -20,5 +20,5 @@ export default function Registration() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

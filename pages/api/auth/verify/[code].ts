@@ -8,10 +8,10 @@ import InvalidQueryParamError from "errors/InvalidQueryParam";
 import success from "helpers/success.helper";
 
 const handler: NextApiHandler = async (req, res) => {
-    const code = Array.isArray(req.query.code) ? req.query.code[0] : req.query.code
-    if (code === undefined) throw new InvalidQueryParamError("code")
+    const code = Array.isArray(req.query.code) ? req.query.code[0] : req.query.code;
+    if (code === undefined) throw new InvalidQueryParamError("code");
 
-    success(res, await AuthController.verifyEmail(code))
+    success(res, await AuthController.verifyEmail(code));
 };
 
 export default use(

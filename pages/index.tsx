@@ -12,14 +12,14 @@ interface HomeProps {
 
 export default function Home({ posts }: HomeProps) {
 
-    const [postsSorted, setPostsSorted] = useState(posts)
+    const [postsSorted, setPostsSorted] = useState(posts);
 
     function setSortingBest() {
         const buffer = postsSorted.sort((a,b):any => {
-            if(a.rank<b.rank) return a.rank+b.rank
-            return a.rank-b.rank
-        })
-        setPostsSorted(buffer)
+            if(a.rank<b.rank) return a.rank+b.rank;
+            return a.rank-b.rank;
+        });
+        setPostsSorted(buffer);
     }
 
     return (
@@ -42,15 +42,15 @@ export default function Home({ posts }: HomeProps) {
                 <Aside/>
             </div>
         </>
-    )
+    );
 }
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
-    const posts = await PostController.getAll(0, 20)
+    const posts = await PostController.getAll(0, 20);
 
     return {
         props: {
             posts: JSON.parse(JSON.stringify(posts)) // It breaks without this json fuckery
         }
-    }
-}
+    };
+};
