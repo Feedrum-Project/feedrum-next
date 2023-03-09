@@ -3,6 +3,7 @@
   "rules": {
     "quotes":["warn", "double"],
     "indent":["warn", 4],
-    "jsx-quotes":["warn", "prefer-double"]
+    "jsx-quotes":["warn", "prefer-double"],
+    "semi": "warn"
   }
 }

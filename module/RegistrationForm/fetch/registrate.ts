@@ -1,8 +1,8 @@
 interface bodyObj {
     name:string
     email:string
-    password1:string
-    password2:string
+    password1:string | undefined
+    password2:string | undefined
 }
 
 interface bodyPreparing {
@@ -12,21 +12,23 @@ interface bodyPreparing {
     password1:undefined
     password2:undefined
 }
-
 export default async function registrate(body:bodyObj) {
 
-    if(body.password1 !== body.password2) return "mistake"
+    if(body.password1 !== body.password2) return "mistake";
     
-    const form = new FormData()
-    const newBody:bodyPreparing = {...body, password1: undefined, password2: undefined, password: body.password1}
-    form.append("json", JSON.stringify(newBody))
-    
+    const newBody = {...body, password: body.password1} as bodyPreparing & BodyInit;
+
+    delete newBody.password1; delete newBody.password2;
+
     const result = await fetch("http://localhost:3000/api/auth/register", {
         method:"POST",
-        body: form
+        body: JSON.stringify(newBody),
+        // headers: {
+        //     "Content-Type":"application/json"
+        // }
     })
         .then(res => res.json())
-        .then(e => console.log(e))
+        .then(e => console.log(e));
     
-    return result
+    return result;
 }
