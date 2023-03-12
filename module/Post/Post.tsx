@@ -19,8 +19,6 @@ interface IPost {
 }
 
 export default function Post({postData}: {postData: IPost}){
-    console.log(postData);
-    const data = new Date(Date.parse(postData.createdAt));
     return (
         <div className={styles.post}>
             <div className={styles.postTop}>
