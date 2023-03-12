@@ -1,5 +1,5 @@
-import BestsPosts from "./Components/BestsPosts"
-import Sponsors from "./Components/Sponsors"
+import BestsPosts from "./Components/BestsPosts";
+import Sponsors from "./Components/Sponsors";
 
 export default function Aside() {
 
@@ -12,5 +12,5 @@ export default function Aside() {
                 </>
             }
         </aside>
-    )
+    );
 }

@@ -7,23 +7,26 @@ import Rank from "module/Aside/Components/Rank";
 import avatar from "images/avatar.svg";
 import styles from "./profile.module.sass";
 import message from "images/message.svg";
+
 import star from "images/star.svg";
+import starG from "images/star-green.svg";
+import starR from "images/star-red.svg";
 
 interface UserProps {
   userInformation: {
-    id:number,
-    name:string,
-    rank:number,
-    createdAt:string,
-    isVerified:boolean
+    id:number;
+    name:string;
+    rank:number;
+    createdAt:string;
+    isVerified:boolean;
   },
   userPosts: {
-    id:number,
-    body:string,
-    title:string,
-    rank:number,
-    createdAt:string,
-    userId:number
+    id:number;
+    body:string;
+    title:string;
+    rank:number;
+    createdAt:string;
+    userId:number;
   }[]
 }
 
@@ -47,32 +50,36 @@ export default function User({userInformation, userPosts}:UserProps) {
                 </div>
                 <div className={styles.profileContent}>
                     {
-                        userPosts.map((e:any) => {
-                            return (
-                                <div key={e.id} className={styles.post}>
-                                    <div className={styles.postTime}>{e.createdAt}</div>
-                                    <div className={styles.postContent}>
-                                        <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: "none", color:"white"}}>
-                                            <div className={styles.postTitle}>{e.title}</div>
-                                        </Link>
-                                        <div className={styles.postBody}>{e.body}</div>
-                                    </div>
-                                    <div className={styles.postBottom}>
-                                        <div className={styles.postComments}>
-                                            <Image width="14" height="13" src={message} alt="Повідомлення"/>
-                                            <span>6</span>
+                        userPosts.length <= 1 ?
+                            <div>
+                                <h1 style={{width:"20rem"}}>У&nbsp;користувача відсутні свої статті.</h1>
+                            </div>
+                            : userPosts.map((e: any) => {
+                                return (
+                                    <div key={e.id} className={styles.post}>
+                                        <div className={styles.postTime}>{e.createdAt}</div>
+                                        <div className={styles.postContent}>
+                                            <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: "none", color:"white"}}>
+                                                <div className={styles.postTitle}>{e.title}</div>
+                                            </Link>
+                                            <div className={styles.postBody}>{e.body}</div>
                                         </div>
-                                        <div className={styles.postRank}>
-                                            <Image width="13" height="14" src={star} alt="Зірка"/>
-                                            <span
-                                                className={e.rank > 0 ? styles.green : e.rank < 0 ? styles.red : styles.gray}>
-                                                {e.rank}
-                                            </span>
+                                        <div className={styles.postBottom}>
+                                            <div className={styles.postComments}>
+                                                <Image width="14" height="13" src={message} alt="Повідомлення"/>
+                                                <span>6</span>
+                                            </div>
+                                            <div className={styles.postRank}>
+                                                <Image width="13" height="14" src={e.rank > 0 ? starG : e.rank === 0 ? star : starR} alt="Зірка"/>
+                                                <span
+                                                    className={e.rank > 0 ? styles.green : e.rank < 0 ? styles.red : styles.gray}>
+                                                    {e.rank}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            );
-                        })
+                                );
+                            })
                     }
                 </div>
             </div>
