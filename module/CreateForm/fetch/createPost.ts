@@ -1,16 +1,25 @@
-interface bodyObj {
-    body: string
-    author:string
+interface IBody {
+    body: {
+        title: string;
+        body: string;
+        // userId: number;
+    };
+    user: {
+        id: number;
+        email: string;
+        name: string;
+        iat: number;
+        exp: number;
+    }
 }
 
-export default async function createPost({body}:bodyObj) {
-    const form = new FormData();
-    form.append("json", JSON.stringify(body))
+export default async function createPost(body: IBody) {
+    
     const result = await fetch("http://localhost:3000/api/posts", {
         method:"POST",
-        body: form
+        body: JSON.stringify(body)
     })
-        .then(res => res.json())
+        .then(res => res.json());
     
-    return result
+    return result;
 }

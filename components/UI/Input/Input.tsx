@@ -7,7 +7,7 @@ interface InputProps {
   type?:string;
   placeholder?:string;
   name:string;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 export default function Input({type="text", name, placeholder, disabled=false}:InputProps) {

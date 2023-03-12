@@ -3,18 +3,38 @@ import Panel from "./Components/Panel";
 import createPost from "./fetch/createPost";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import { Input } from "components/UI";
+import { FormEvent } from "react";
+
+interface IBody {
+    body: {
+        title: string;
+        body: string;
+    };
+    user: {
+        id: number;
+        email: string;
+        name: string;
+        iat: number;
+        exp: number;
+    }
+}
 
 export default function CreateForm() {
 
     const user = useSelector((state: any) => state.user);
     
-    function prepare(event:any) {
+    function prepare(event: FormEvent & { target: { body: { value: string }, Title: {value: string}}}) {
         event.preventDefault();
-        const body = {
-            body: event["body"],
-            author: "someone"
+        const body: IBody = {
+            body: {
+                title: event.target.Title.value,
+                body: event.target.body.value,
+            },
+            user: user
         };
-        createPost(body);
+        createPost(body)
+            .then(result => console.log(result));
     }
 
     if(user.id === -1) {
@@ -29,19 +49,28 @@ export default function CreateForm() {
 
     return (
         <>
-            <form onClick={(e:any) => prepare(e)}>
-                <h1 style={{color: "white"}}>Створити Пост</h1>
-                <div className={styles.form}>
-                    <Panel/>
+            <h1 style={{color: "white"}}>Створити Пост</h1>
+            <div className={styles.form}>
+                <Panel/>
+                <form onSubmit={(e: any) => prepare(e)}>
                     <div className="text">
-                        <textarea name="body" className={styles.textarea}></textarea>
+
+                        <Input name="Title"/>
+
+                        <textarea
+                            minLength={50}
+                            placeholder="Пишіть сюди свій текст, це тіло вашої статті."
+                            name="body"
+                            className={styles.textarea}>
+
+                        </textarea>
                     </div>
                     <div className={styles.sectionSubmit}>
                         <div className={styles.centrilizer}></div>
                         <input className={styles.submit} type="submit" value="Submit" />
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </>
     );
 }

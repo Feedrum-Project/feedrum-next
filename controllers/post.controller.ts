@@ -38,6 +38,7 @@ export default class PostController {
     }
 
     static async create(newPost: PostType, userId: number) {
+        
         await PostUpdate.parseAsync(newPost);
 
         return prisma.post.createPost(newPost, userId);

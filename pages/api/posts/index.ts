@@ -8,6 +8,9 @@ import validMethodsMiddleware from "middlewares/validMethods.middleware";
 import success from "helpers/success.helper";
 
 const handler: NextApiHandler = async (req, res) => {
+    
+    req.body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+
     switch (req.method) {
     case "GET":
         await getPosts(req, res);
@@ -29,7 +32,7 @@ const getPosts: NextApiHandler = async (req, res) => {
 };
 
 const createPost: NextApiHandler = async (req, res) => {
-    const post = await PostController.create(req.body, req.user.id);
+    const post = await PostController.create(req.body.body, req.body.user.id);
 
     return success(res, post);
 };

@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 
 export default function Navigation() {
     const user = useSelector((state: any) => state.user);
-    console.log(user);
 
     let Logged;
     if( user.id !== -1 ) {
