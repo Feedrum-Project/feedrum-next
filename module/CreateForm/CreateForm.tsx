@@ -4,8 +4,8 @@ import createPost from "./fetch/createPost";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import { Input } from "components/UI";
-import { FormEvent, useEffect, useState } from "react";
-import { useRef } from "react";
+import { FormEvent} from "react";
+import Editor from "module/Editor/Editor";
 
 interface IBody {
     body: {
@@ -26,6 +26,9 @@ export default function CreateForm() {
     
     function prepare(event: FormEvent & { target: { body: { value: string }, Title: {value: string}}}) {
         event.preventDefault();
+
+        if(!event.target || !event.target.body) return;
+
         const body: IBody = {
             body: {
                 title: event.target.Title.value,
@@ -37,32 +40,14 @@ export default function CreateForm() {
             .then(result => console.log(result));
     }
 
-
-    let editor = useRef<HTMLDivElement | null>(null);
-    
-    const count = useState<number>(0);
-    if(editor.current) {
-        window.addEventListener("click", (event: MouseEvent) => {
-            const target = event.target as Element;
-
-            if(target === null || target.className === null) return;
-            if(target.className === "editor")
-            {
-                editor.current?.addEventListener("click", (editorEvent: MouseEvent) => {
-                    console.log(editorEvent);
-                    console.log(count[1](count[0]+1));
-                });
-            }
-        });
-    } else {
-        console.log(editor);
-    };
-
     if(user.id === -1) {
         return (
             <div>
                 <h1 style={{color: "#fff"}}>
-                    Ви маєте <Link href="/login">увійти</Link> або <Link href="/registration">зареєструватися</Link>.
+                    Ви маєте
+                    <Link href="/login">увійти</Link>
+                    або
+                    <Link href="/registration">зареєструватися</Link>.
                 </h1>
             </div>
         );
@@ -75,19 +60,8 @@ export default function CreateForm() {
                 <Panel/>
                 <form onSubmit={(e: any) => prepare(e)}>
                     <div className="text">
-
                         <Input name="Title"/>
-
-                        <textarea
-                            minLength={50}
-                            placeholder="Пишіть сюди свій текст, це тіло вашої статті."
-                            name="body"
-                            className={styles.textarea}>
-                        </textarea>
-
-                        <div className="editor" ref={editor}>
-                            Try edit
-                        </div>
+                        <Editor/>
                     </div>
                     <div className={styles.sectionSubmit}>
                         <div className={styles.centrilizer}></div>
