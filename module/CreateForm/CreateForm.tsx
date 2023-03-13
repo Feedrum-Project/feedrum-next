@@ -24,14 +24,14 @@ interface IBody {
 export default function CreateForm() {
     const user = useSelector((state: any) => state.user);
     
-    function prepare(event: FormEvent & { target: { body: { value: string }, Title: {value: string}}}) {
+    function prepare(event: FormEvent & { target: { body: { value: string }, "Назва": {value: string}}}) {
         event.preventDefault();
 
         if(!event.target || !event.target.body) return;
 
         const body: IBody = {
             body: {
-                title: event.target.Title.value,
+                title: event.target["Назва"].value,
                 body: event.target.body.value
             },
             user: user
@@ -60,7 +60,7 @@ export default function CreateForm() {
                 <Panel/>
                 <form onSubmit={(e: any) => prepare(e)}>
                     <div className="text">
-                        <Input name="Title"/>
+                        <Input name="Назва" placeholder="Назва статті"/>
                         <Editor/>
                     </div>
                     <div className={styles.sectionSubmit}>

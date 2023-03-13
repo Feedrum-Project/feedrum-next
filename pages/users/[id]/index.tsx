@@ -57,7 +57,10 @@ export default function User({userInformation, userPosts}:UserProps) {
                             : userPosts.map((e: any) => {
                                 return (
                                     <div key={e.id} className={styles.post}>
-                                        <div className={styles.postTime}>{e.createdAt}</div>
+                                        <div className={styles.postTime}>
+                                            {new Date(e.createdAt).toLocaleDateString()},&nbsp;
+                                            {new Date(e.createdAt).toLocaleTimeString()}
+                                        </div>
                                         <div className={styles.postContent}>
                                             <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: "none", color:"white"}}>
                                                 <div className={styles.postTitle}>{e.title}</div>

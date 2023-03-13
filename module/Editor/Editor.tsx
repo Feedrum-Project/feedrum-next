@@ -1,9 +1,11 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, MutableRefObject } from "react";
 import { Button } from "components/UI";
 import styles from "./styles/editor.module.sass";
+import { createMono, createParagragh, createTitle } from "./helpers/text";
 
 export default function VisualEditor() {
     let editor = useRef<HTMLDivElement | null>(null);
+    let paragraph = useRef<HTMLDivElement | null>(null);
     let [editorType, setEditorType] = useState<"visual" | "source">("visual");
 
     useEffect(() => {
@@ -17,7 +19,7 @@ export default function VisualEditor() {
                 if(target.className.includes("editor"))
                 {
                     current.addEventListener("click", (editorEvent: MouseEvent) => {
-                        console.log(editorEvent);
+                        // console.log(editorEvent.target);
                     });
                 }
             });
@@ -33,7 +35,7 @@ export default function VisualEditor() {
                     onClick={() => {
                         setEditorType("visual");
                     }}>
-                    Visual Editor
+                    Візуальний редактор
                 </Button>
                 <Button
                     Style="purple"
@@ -41,7 +43,7 @@ export default function VisualEditor() {
                     onClick={() => {
                         setEditorType("source");
                     }}>
-                    Source Editor
+                    Текстовий редактор
                 </Button>
             </div>
             {
@@ -49,13 +51,28 @@ export default function VisualEditor() {
                     <div
                         id="editor"
                         className={styles.editor} ref={editor}>
-                        Try edit
+                        
+                        <div ref={paragraph} className="textField">
+                            <p id="1">
+                                Спробуй змінити мене :Р
+                            </p>
+                        </div>
+                        <div className={styles.addParagraph}>
+                            <div className={styles.addParagraphLeft} onClick={() => createParagragh(paragraph)}>
+                                <div className={styles.addParagraphPlus}>+</div>
+                                <p>Додати параграф, або інше поле?</p>
+                            </div>
+                            <div className={styles.addParagraphRight}>
+                                <div className="h1" onClick={() => createTitle(paragraph)}>Заг.</div>
+                                <div className="h1" onClick={() => createMono(paragraph)}>Мон.</div>
+                            </div>
+                        </div>
                     </div>
                     :
                     <>
-                        <br />
                         <textarea
                             className={styles.textarea}
+                            name="body"
                             placeholder="Очікуємо на ваш текст, панове!"
                         >
 

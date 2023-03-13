@@ -1,11 +1,11 @@
-import Image from "next/image"
-import styles from "../styles/form.module.sass"
+import Image from "next/image";
+import styles from "../styles/form.module.sass";
 
-import left from "images/createPost/left.png"
-import center from "images/createPost/center.png"
-import right from "images/createPost/right.png"
-import justify from "images/createPost/justify.png"
-import list from "images/createPost/list.png"
+import left from "images/createPost/left.png";
+import center from "images/createPost/center.png";
+import right from "images/createPost/right.png";
+import justify from "images/createPost/justify.png";
+import list from "images/createPost/list.png";
 
 export default function Panel() {
     return (
@@ -58,5 +58,5 @@ export default function Panel() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

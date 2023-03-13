@@ -14,7 +14,7 @@ interface IPost {
     body: string;
     title: string;
     rank: number;
-    createdAt: string;
+    createdAt: Date;
     userId: number;
 }
 
@@ -45,7 +45,7 @@ export default function Post({postData}: {postData: IPost}){
                     <span className={styles.postCommentsCount}>12</span>
                 </div>
                 <div className={styles.postRank}
-                    style={{color: postData.rank > 0 ? "#6AEA3D" : "#F36A6A"}}>
+                    style={{color: postData.rank > 0 ? "#6AEA3D" : postData.rank === 0 ? "#BEBEBE" : "#F36A6A"}}>
                     <Image
                         src={postData.rank > 0 ? starG : postData.rank === 0 ? star : starR}
                         alt="Зіронька, репутація"
