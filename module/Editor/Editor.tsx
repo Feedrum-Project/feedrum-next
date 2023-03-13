@@ -6,6 +6,7 @@ import { createMono, createParagragh, createTitle } from "./helpers/text";
 export default function VisualEditor() {
     let editor = useRef<HTMLDivElement | null>(null);
     let paragraph = useRef<HTMLDivElement | null>(null);
+    let [Focus, setFocus] = useState<{index: number, position: number, target: any} | null>(null);
     let [editorType, setEditorType] = useState<"visual" | "source">("visual");
 
     useEffect(() => {
@@ -18,13 +19,28 @@ export default function VisualEditor() {
                 if(current === null) return;
                 if(target.className.includes("editor"))
                 {
-                    current.addEventListener("click", (editorEvent: MouseEvent) => {
-                        // console.log(editorEvent.target);
+                    current.addEventListener("click", (editorEvent: MouseEvent & any) => {
+                        const target = editorEvent.target;
+                        if(target === null || target.id === "") return;
+                        setFocus({index: target.id, position: target.innerText.length, target: target});
+                        
                     });
                 }
             });
+            window.addEventListener("keydown", (event: KeyboardEvent) => {
+                if(event.key === "Backspace") {
+                    if(!Focus) return;
+                    if(!paragraph || !paragraph.current) return;
+                    Focus.target.innerText = Focus.target.innerText.slice(0, Focus.position-1);
+                    setFocus({...Focus, position: Focus.position});
+                    console.log(Focus);
+                } else {
+
+                };
+            });
         }
-    }, [editorType]);
+    }, [Focus]);
+    
 
     return (
         <>
@@ -52,7 +68,7 @@ export default function VisualEditor() {
                         id="editor"
                         className={styles.editor} ref={editor}>
                         
-                        <div ref={paragraph} className="textField">
+                        <div ref={paragraph} className={styles.textField}>
                             <p id="1">
                                 Спробуй змінити мене :Р
                             </p>
