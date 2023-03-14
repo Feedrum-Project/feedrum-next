@@ -1,6 +1,6 @@
-import styles from "./aside.module.sass"
-import Button from "../../components/UI/Button/Button"
-import Rank from "./Rank"
+import styles from "./aside.module.sass";
+import { Button } from "../../../components/UI/index";
+import Rank from "./Rank";
 
 interface AsideUserProps {
   userRank:number

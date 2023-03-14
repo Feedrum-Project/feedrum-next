@@ -1,46 +1,40 @@
-import { useRef, useState, useEffect, MutableRefObject } from "react";
 import { Button } from "components/UI";
 import styles from "./styles/editor.module.sass";
 import { createMono, createParagragh, createTitle } from "./helpers/text";
+import { useEffect, useRef, useState } from "react";
+import { parserHTMLtoJSON } from "./helpers/parser";
 
 export default function VisualEditor() {
-    let editor = useRef<HTMLDivElement | null>(null);
-    let paragraph = useRef<HTMLDivElement | null>(null);
-    let [Focus, setFocus] = useState<{index: number, position: number, target: any} | null>(null);
+    const paragraph = useRef<HTMLDivElement | null>(null);
+    let [Focus, setFocus] = useState<any>(null);
     let [editorType, setEditorType] = useState<"visual" | "source">("visual");
-
+    
     useEffect(() => {
 
-        if(editor.current !== null) {
-            window.addEventListener("click", (event: MouseEvent) => {
-                const target = event.target as Element;
-                const current = editor.current;
-                if(target === null || target.className === null) return;
-                if(current === null) return;
-                if(target.className.includes("editor"))
-                {
-                    current.addEventListener("click", (editorEvent: MouseEvent & any) => {
-                        const target = editorEvent.target;
-                        if(target === null || target.id === "") return;
-                        setFocus({index: target.id, position: target.innerText.length, target: target});
-                        
-                    });
-                }
-            });
-            window.addEventListener("keydown", (event: KeyboardEvent) => {
-                if(event.key === "Backspace") {
-                    if(!Focus) return;
-                    if(!paragraph || !paragraph.current) return;
-                    Focus.target.innerText = Focus.target.innerText.slice(0, Focus.position-1);
-                    setFocus({...Focus, position: Focus.position});
-                    console.log(Focus);
-                } else {
+        // for right way using it, tap on button "source" and
+        // "visual", it will reboot function, and will work correct.
+        // same about next useEffect.
+        
+        if(!paragraph || !paragraph.current) return;
 
-                };
-            });
+        const current = paragraph.current;
+        current.addEventListener("click", (e: MouseEvent) => {
+            const target = e.target as EventTarget;
+            if(!target) return;
+            setFocus(target);
+        });
+
+    }, [editorType]);
+
+    useEffect(() => {
+        function listenerFunc(e: KeyboardEvent) {
+            if(!paragraph.current) return;
+            const array = parserHTMLtoJSON(paragraph.current.innerHTML, []);
+            console.log(array);
+            window.removeEventListener("keypress", listenerFunc, false);
         }
+        window.addEventListener("keypress", listenerFunc);
     }, [Focus]);
-    
 
     return (
         <>
@@ -66,12 +60,10 @@ export default function VisualEditor() {
                 editorType === "visual" ? 
                     <div
                         id="editor"
-                        className={styles.editor} ref={editor}>
-                        
+                        className={styles.editor}>
+                        <button onClick={() => console.log(Focus)}>Показати на кому фокус</button>
                         <div ref={paragraph} className={styles.textField}>
-                            <p id="1">
-                                Спробуй змінити мене :Р
-                            </p>
+                            
                         </div>
                         <div className={styles.addParagraph}>
                             <div className={styles.addParagraphLeft} onClick={() => createParagragh(paragraph)}>

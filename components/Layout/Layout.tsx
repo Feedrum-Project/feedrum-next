@@ -17,7 +17,7 @@ export default function Layout({ children }: Props) {
         })
             .then(res => res.json())
             .then(e => dispatch({type: "set", payload: e}));
-    }, []);
+    }, [dispatch]);
 
     return (
         <>
