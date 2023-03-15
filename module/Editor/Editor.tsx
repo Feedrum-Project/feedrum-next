@@ -2,7 +2,7 @@ import { Button } from "components/UI";
 import styles from "./styles/editor.module.sass";
 import { createMono, createParagragh, createTitle } from "./helpers/text";
 import { useEffect, useRef, useState } from "react";
-import { MDtoHTML, parserHTMLtoJSON, parserJSONtoMD } from "./helpers/parser";
+import { parserMDtoHTML, parserHTMLtoJSON, parserJSONtoMD } from "./helpers/parser";
 
 export default function VisualEditor() {
     const paragraph = useRef<HTMLDivElement | null>(null);
@@ -36,9 +36,8 @@ export default function VisualEditor() {
             window.removeEventListener("keypress", listenerFunc, false);
         }
         setText(parserJSONtoMD(parserHTMLtoJSON(paragraph.current.innerHTML, [])));
-        console.log(MDtoHTML(text));
         return () => window.addEventListener("keypress", listenerFunc);
-    }, [text, Focus]);
+    }, [Focus]);
 
     return (
         <>
@@ -46,10 +45,11 @@ export default function VisualEditor() {
                 <Button
                     Style="purple"
                     disabled={editorType === "visual" ? true : false}
-                    onClick={() => {
+                    onClick={async () => {
                         setEditorType("visual");
+                        await setTimeout(() => {}, 250);
                         if(!paragraph.current) return;
-                        // setText();
+                        paragraph.current.innerHTML = parserMDtoHTML(text);
                     }}>
                     Візуальний редактор
                 </Button>
@@ -70,8 +70,9 @@ export default function VisualEditor() {
                         id="editor"
                         className={styles.editor}>
                         <button onClick={() => console.log(Focus)}>Показати на кому фокус</button>
+                        <button onClick={() => console.log(text)}>text</button>
                         <div ref={paragraph} className={styles.textField}>
-                            
+
                         </div>
                         <div className={styles.addParagraph}>
                             <div className={styles.addParagraphLeft} onClick={() => createParagragh(paragraph)}>

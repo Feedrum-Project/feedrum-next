@@ -48,27 +48,32 @@ export function parserJSONtoMD(JSON:object): string {
     return result;
 }
 
-export function MDtoHTML(MD:string, count: number=0): string {
+export function parserMDtoHTML(MD:string, count: number=-1): string {
+
     const prolog = MD.slice(0, MD.indexOf(" "));
-    const piece = MD.slice(0, MD.indexOf("\n"));
+    let piece = MD.slice(0, MD.indexOf("\n"));
+    
     let result: string = "";
 
-    if(!piece) return result;
     if(MD === undefined) return result;
-    const next = MD.slice(MD.indexOf("\n"));
-    console.log(next);
+    const next = MD.slice(MD.indexOf("\n")+1);
 
-    if(prolog.endsWith("")) {
-        count+=1;
-        MDtoHTML(piece, count);
+    if(prolog) {
+        count++;
         switch(prolog) {
         case "":
-            return "<p id=\""+count+"\">"+piece+"</p>";
+            result += "<p id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+piece+"</p>"+parserMDtoHTML(next, count);
+            return result;
         case "#":
-            return "<h1 id=\""+count+"\">"+MD.slice(2, MD.indexOf("\n"))+"</h1>";
+            result += "<h1 id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+MD.slice(2, MD.indexOf("\n"))+"</h1>"+parserMDtoHTML(next, count);
+            return result;
+        case ">":
+            result += "<pre id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+MD.slice(2, MD.indexOf("\n"))+"</pre>"+parserMDtoHTML(next, count);
+            return result;
         default:
-            return "<p id=\""+count+"\">"+piece+"</p>";
+            result += "<p id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+piece+"</p>"+parserMDtoHTML(next, count);
+            return result;
         }
     };
-    return prolog;
+    return "";
 }
