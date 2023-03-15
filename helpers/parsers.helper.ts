@@ -1,9 +1,8 @@
-// Parser HTML to JSON
-
 /*
-parserHTMLtoJSON,
+HTMLtoJSON,
 params:
-  HTML its innterHTML childs and
+  HTML:
+    its the innterHTML childs and
     text inside possible paragraph. Childs
     mustn't to have childs, in another way
     will be mistakes.
@@ -12,6 +11,28 @@ params:
     Just specify empty array.
 
 use it for parse HTML content to JSON.
+*/
+
+/*
+JSONtoMD
+params:
+  JSON:
+    object. It mostly specified usually
+    instantly from HTMLtoJSON.
+
+use it for parse JSON object to MD
+*/
+
+/*
+MDtoHTML:
+params:
+  MD:
+    text in MarkDown format.
+  count?:
+    recommendly dont specify it field,
+    used only for recursive.
+
+and it, use for transform MD to HTML.
 */
 
 enum eMD {
@@ -25,7 +46,7 @@ enum eMD {
   "pre"="> "
 }
 
-export function parserHTMLtoJSON(HTML:string, tags:{tag: string, value: string}[] ): {tag: string, value: string}[] {
+export function HTMLtoJSON(HTML:string, tags:{tag: string, value: string}[] ): {tag: string, value: string}[] {
     const tag = HTML.slice(1,HTML.indexOf(" "));
     const index1 = HTML.slice(HTML.indexOf(">")+1);
     const index2 = index1.slice(0, index1.indexOf("<"));
@@ -33,12 +54,11 @@ export function parserHTMLtoJSON(HTML:string, tags:{tag: string, value: string}[
     tags.push({tag: tag, value: index2});
 
     if(!next) return tags;
-    parserHTMLtoJSON(next, tags);
+    HTMLtoJSON(next, tags);
     return tags;
 }
 
-// Parser JSON to MarkDown
-export function parserJSONtoMD(JSON:object): string {
+export function JSONtoMD(JSON:object): string {
     const list: {tag: string, value: string}[] = Object.values(JSON);
     let result: string = "";
 
@@ -48,7 +68,9 @@ export function parserJSONtoMD(JSON:object): string {
     return result;
 }
 
-export function parserMDtoHTML(MD:string, count: number=-1): string {
+export function MDtoHTML(MD:string, count: number=-1): string {
+
+    if(count >= 10) return MD; // Its something like fuse :)
 
     const prolog = MD.slice(0, MD.indexOf(" "));
     let piece = MD.slice(0, MD.indexOf("\n"));
@@ -62,18 +84,26 @@ export function parserMDtoHTML(MD:string, count: number=-1): string {
         count++;
         switch(prolog) {
         case "":
-            result += "<p id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+piece+"</p>"+parserMDtoHTML(next, count);
+            result += "<p id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+piece+"</p>"+MDtoHTML(next, count);
             return result;
         case "#":
-            result += "<h1 id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+MD.slice(2, MD.indexOf("\n"))+"</h1>"+parserMDtoHTML(next, count);
+            result += "<h1 id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+MD.slice(2, MD.indexOf("\n"))+"</h1>"+MDtoHTML(next, count);
             return result;
         case ">":
-            result += "<pre id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+MD.slice(2, MD.indexOf("\n"))+"</pre>"+parserMDtoHTML(next, count);
+            result += "<pre id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+MD.slice(2, MD.indexOf("\n"))+"</pre>"+MDtoHTML(next, count);
             return result;
         default:
-            result += "<p id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+piece+"</p>"+parserMDtoHTML(next, count);
+            result += "<p id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+piece+"</p>"+MDtoHTML(next, count);
             return result;
         }
     };
     return "";
 }
+
+const parser = {
+    HTMLtoJSON: HTMLtoJSON,
+    JSONtoMD: JSONtoMD,
+    MDtoHTML: MDtoHTML
+};
+
+export default parser;

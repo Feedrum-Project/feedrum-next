@@ -2,7 +2,7 @@ import { Button } from "components/UI";
 import styles from "./styles/editor.module.sass";
 import { createMono, createParagragh, createTitle } from "./helpers/text";
 import { useEffect, useRef, useState } from "react";
-import { parserMDtoHTML, parserHTMLtoJSON, parserJSONtoMD } from "./helpers/parser";
+import {HTMLtoJSON, JSONtoMD, MDtoHTML} from "helpers/parsers.helper";
 
 export default function VisualEditor() {
     const paragraph = useRef<HTMLDivElement | null>(null);
@@ -32,7 +32,7 @@ export default function VisualEditor() {
         if(!paragraph.current) return;
         function listenerFunc(e: KeyboardEvent) {
             if(!paragraph.current) return;
-            setText(parserJSONtoMD(parserHTMLtoJSON(paragraph.current.innerHTML, [])));
+            setText(JSONtoMD(HTMLtoJSON(paragraph.current.innerHTML, [])));
             window.removeEventListener("keypress", listenerFunc, false);
         }
         return () => window.addEventListener("keypress", listenerFunc);
@@ -48,7 +48,7 @@ export default function VisualEditor() {
                         setEditorType("visual");
                         await setTimeout(() => {}, 250);
                         if(!paragraph.current) return;
-                        paragraph.current.innerHTML = parserMDtoHTML(text+"\n");
+                        paragraph.current.innerHTML = MDtoHTML(text+"\n");
                     }}>
                     Візуальний редактор
                 </Button>
@@ -58,7 +58,7 @@ export default function VisualEditor() {
                     onClick={() => {
                         setEditorType("source");
                         if(!paragraph.current) return;
-                        const prepareText = parserJSONtoMD(parserHTMLtoJSON(paragraph.current.innerHTML, []));
+                        const prepareText = JSONtoMD(HTMLtoJSON(paragraph.current.innerHTML, []));
 
                         prepareText === "undefined\n" || prepareText === undefined ?
                             setText("")

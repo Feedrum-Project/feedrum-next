@@ -21,7 +21,7 @@ export default function SimilarPosts() {
                             <Image src={comments} alt="коментарі"/> 12
                         </div>
                         <div className={styles.articleReputation}>
-                            <Image src={star} alt="репутація"/> 34
+                            <Image src={starG} alt="репутація"/> 34
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@ export default function SimilarPosts() {
                             <Image src={comments} alt="коментарі"/> 12
                         </div>
                         <div className={styles.articleReputation}>
-                            <Image src={star} alt="репутація"/> 34
+                            <Image src={starG} alt="репутація"/> 34
                         </div>
                     </div>
                 </div>
