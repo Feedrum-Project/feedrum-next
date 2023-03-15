@@ -15,8 +15,8 @@
     color: $white
     min-width: calc(100% - .25rem)
     max-width: calc(100% - .25rem)
-    min-height: 25rem
-    max-height: 50rem
+    min-height: 9rem
+    max-height: 9rem
     margin: 0 1rem 0 0
     padding: 1rem
     border: none
@@ -33,6 +33,7 @@
 .addParagraph
     color: $background
     transition: 0
+    box-sizing: border-box
     padding: 0 2rem
     display: flex
     align-items: center
@@ -43,8 +44,8 @@
         transition-timing-function: easy-in
         transition: .5s
         color: $white
+        padding: 0 2rem
         border: 1px dashed $gray
-        box-sizing: border-box
 
     &Left
         display: flex
@@ -57,14 +58,20 @@
 
     &Right
         display: flex
+
+        &>*
     &:hover &Right > *
         display: flex
         align-items: center
         justify-content: center
-        background: $border
+
+        background-color: $block
+        border: 1px solid $border
         border-radius: .5rem
+        
         padding: 1rem 2rem
         margin: .25rem 0 .25rem 2rem
+        
         transition: .2s
         width: 1.5rem
         user-select: none

@@ -2,7 +2,6 @@ interface IBody {
     body: {
         title: string;
         body: string;
-        // userId: number;
     };
     user: {
         id: number;

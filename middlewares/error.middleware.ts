@@ -15,6 +15,7 @@ const errorMiddleware: Middleware = async (req, res, next) => {
     try {
         await next();
     } catch (e) {
+        console.log(e);
         if (!(e instanceof Error)) return console.log("B");
 
         const errorMap: ErrorMap = {

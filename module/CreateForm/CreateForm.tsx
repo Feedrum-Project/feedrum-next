@@ -24,11 +24,11 @@ interface IBody {
 export default function CreateForm() {
     const user = useSelector((state: any) => state.user);
     
-    function prepare(event: FormEvent & { target: { body: { value: string }, "Назва": {value: string}}}) {
+    function prepare(event: FormEvent & { target: { body: { value: string }, "Назва": {value: string}} & HTMLElement}) {
         event.preventDefault();
 
         if(!event.target || !event.target.body) return;
-
+        
         const body: IBody = {
             body: {
                 title: event.target["Назва"].value,

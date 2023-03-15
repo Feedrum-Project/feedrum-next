@@ -35,9 +35,8 @@ export default function VisualEditor() {
             setText(parserJSONtoMD(parserHTMLtoJSON(paragraph.current.innerHTML, [])));
             window.removeEventListener("keypress", listenerFunc, false);
         }
-        setText(parserJSONtoMD(parserHTMLtoJSON(paragraph.current.innerHTML, [])));
         return () => window.addEventListener("keypress", listenerFunc);
-    }, [Focus]);
+    }, [text, Focus]);
 
     return (
         <>
@@ -49,7 +48,7 @@ export default function VisualEditor() {
                         setEditorType("visual");
                         await setTimeout(() => {}, 250);
                         if(!paragraph.current) return;
-                        paragraph.current.innerHTML = parserMDtoHTML(text);
+                        paragraph.current.innerHTML = parserMDtoHTML(text+"\n");
                     }}>
                     Візуальний редактор
                 </Button>
@@ -59,7 +58,12 @@ export default function VisualEditor() {
                     onClick={() => {
                         setEditorType("source");
                         if(!paragraph.current) return;
-                        setText(parserJSONtoMD(parserHTMLtoJSON(paragraph.current.innerHTML, [])));
+                        const prepareText = parserJSONtoMD(parserHTMLtoJSON(paragraph.current.innerHTML, []));
+
+                        prepareText === "undefined\n" || prepareText === undefined ?
+                            setText("")
+                            :
+                            setText(prepareText);
                     }}>
                     Текстовий редактор
                 </Button>
@@ -69,11 +73,12 @@ export default function VisualEditor() {
                     <div
                         id="editor"
                         className={styles.editor}>
-                        <button onClick={() => console.log(Focus)}>Показати на кому фокус</button>
-                        <button onClick={() => console.log(text)}>text</button>
                         <div ref={paragraph} className={styles.textField}>
 
                         </div>
+                        <textarea name="body" value={text} readOnly >
+                            
+                        </textarea>
                         <div className={styles.addParagraph}>
                             <div className={styles.addParagraphLeft} onClick={() => createParagragh(paragraph)}>
                                 <div className={styles.addParagraphPlus}>+</div>
@@ -81,7 +86,7 @@ export default function VisualEditor() {
                             </div>
                             <div className={styles.addParagraphRight}>
                                 <div className="h1" onClick={() => createTitle(paragraph)}>Заг.</div>
-                                <div className="h1" onClick={() => createMono(paragraph)}>Мон.</div>
+                                <div className="mono" onClick={() => createMono(paragraph)}>Мон.</div>
                             </div>
                         </div>
                     </div>
