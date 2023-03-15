@@ -2,12 +2,14 @@ import { Button } from "components/UI";
 import styles from "./styles/editor.module.sass";
 import { createMono, createParagragh, createTitle } from "./helpers/text";
 import { useEffect, useRef, useState } from "react";
-import { parserHTMLtoJSON } from "./helpers/parser";
+import { MDtoHTML, parserHTMLtoJSON, parserJSONtoMD } from "./helpers/parser";
 
 export default function VisualEditor() {
     const paragraph = useRef<HTMLDivElement | null>(null);
     let [Focus, setFocus] = useState<any>(null);
     let [editorType, setEditorType] = useState<"visual" | "source">("visual");
+
+    let [text, setText] = useState<string>("");
     
     useEffect(() => {
 
@@ -27,14 +29,16 @@ export default function VisualEditor() {
     }, [editorType]);
 
     useEffect(() => {
+        if(!paragraph.current) return;
         function listenerFunc(e: KeyboardEvent) {
             if(!paragraph.current) return;
-            const array = parserHTMLtoJSON(paragraph.current.innerHTML, []);
-            console.log(array);
+            setText(parserJSONtoMD(parserHTMLtoJSON(paragraph.current.innerHTML, [])));
             window.removeEventListener("keypress", listenerFunc, false);
         }
-        window.addEventListener("keypress", listenerFunc);
-    }, [Focus]);
+        setText(parserJSONtoMD(parserHTMLtoJSON(paragraph.current.innerHTML, [])));
+        console.log(MDtoHTML(text));
+        return () => window.addEventListener("keypress", listenerFunc);
+    }, [text, Focus]);
 
     return (
         <>
@@ -44,6 +48,8 @@ export default function VisualEditor() {
                     disabled={editorType === "visual" ? true : false}
                     onClick={() => {
                         setEditorType("visual");
+                        if(!paragraph.current) return;
+                        // setText();
                     }}>
                     Візуальний редактор
                 </Button>
@@ -52,6 +58,8 @@ export default function VisualEditor() {
                     disabled={editorType === "source" ? true : false}
                     onClick={() => {
                         setEditorType("source");
+                        if(!paragraph.current) return;
+                        setText(parserJSONtoMD(parserHTMLtoJSON(paragraph.current.innerHTML, [])));
                     }}>
                     Текстовий редактор
                 </Button>
@@ -82,6 +90,8 @@ export default function VisualEditor() {
                             className={styles.textarea}
                             name="body"
                             placeholder="Очікуємо на ваш текст, панове!"
+                            value={text}
+                            onChange={(e: any) => { setText(e.target.value);}}
                         >
 
                         </textarea>

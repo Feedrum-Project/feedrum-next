@@ -63,7 +63,6 @@ function createMono(ref: MutableRefObject<HTMLDivElement | null>) {
     } else {
         id = Number(Object.entries(current.children)[current.children.length-1][1].id) + 1;
     }
-        
     pre.id = id.toString();
 
     current.append(pre);
