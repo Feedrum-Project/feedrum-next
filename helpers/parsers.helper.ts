@@ -68,8 +68,8 @@ export function JSONtoMD(JSON:object): string {
     return result;
 }
 
-export function MDtoHTML(MD:string, count: number=-1): string {
-
+export function MDtoHTML(MD:string, editable:boolean=false, count: number=-1): string {
+  
     if(count >= 10) return MD; // Its something like fuse :)
 
     const prolog = MD.slice(0, MD.indexOf(" "));
@@ -84,16 +84,16 @@ export function MDtoHTML(MD:string, count: number=-1): string {
         count++;
         switch(prolog) {
         case "":
-            result += "<p id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+piece+"</p>"+MDtoHTML(next, count);
+            result += "<p id=\""+count+"\" style=\"outline: none\" contenteditable=\"" + editable + "\">" + piece+"</p>"+MDtoHTML(next, editable, count);
             return result;
         case "#":
-            result += "<h1 id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+MD.slice(2, MD.indexOf("\n"))+"</h1>"+MDtoHTML(next, count);
+            result += "<h1 id=\""+count+"\" style=\"outline: none\" contenteditable=\"" + editable + "\">"+MD.slice(2, MD.indexOf("\n"))+"</h1>"+MDtoHTML(next, editable, count);
             return result;
         case ">":
-            result += "<pre id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+MD.slice(2, MD.indexOf("\n"))+"</pre>"+MDtoHTML(next, count);
+            result += "<pre id=\""+count+"\" style=\"outline: none\" contenteditable=\" + " + editable + "\">"+MD.slice(2, MD.indexOf("\n"))+"</pre>"+MDtoHTML(next, editable, count);
             return result;
         default:
-            result += "<p id=\""+count+"\" style=\"outline: none\" contenteditable=\"true\">"+piece+"</p>"+MDtoHTML(next, count);
+            result += "<p id=\""+count+"\" style=\"outline: none\" contenteditable=\"" + editable + "\">" + piece+"</p>"+MDtoHTML(next, editable, count);
             return result;
         }
     };

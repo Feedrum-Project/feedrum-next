@@ -48,7 +48,7 @@ export default function VisualEditor() {
                         setEditorType("visual");
                         await setTimeout(() => {}, 250);
                         if(!paragraph.current) return;
-                        paragraph.current.innerHTML = MDtoHTML(text+"\n");
+                        paragraph.current.innerHTML = MDtoHTML(text+"\n", false);
                     }}>
                     Візуальний редактор
                 </Button>
@@ -76,7 +76,7 @@ export default function VisualEditor() {
                         <div ref={paragraph} className={styles.textField}>
 
                         </div>
-                        <textarea name="body" value={text} readOnly >
+                        <textarea name="body" value={text} readOnly style={{display:"none"}}>
                             
                         </textarea>
                         <div className={styles.addParagraph}>

@@ -7,9 +7,10 @@ interface ButtonProps {
   style?: any;
   onClick?: undefined | (() => void);
   disabled?: boolean;
+  type: "button" | "reset" | "submit";
 }
 
-export default function Button({Style, children, className=undefined, style, onClick=undefined, disabled=false}:ButtonProps) {
+export default function Button({Style, children, className=undefined, style, onClick=undefined, disabled=false, type="button"}:ButtonProps) {
     const Class = [styles[Style], styles.button].join(" ");
     return (
         <button
@@ -17,7 +18,7 @@ export default function Button({Style, children, className=undefined, style, onC
             style={style}
             onClick={onClick}
             disabled={disabled}
-            type="button"
+            type={type}
         >
             {children}
         </button>

@@ -1,32 +1,51 @@
 import styles from "./post.module.sass";
 import prisma from "@database";
 import { GetServerSideProps } from "next";
-import { useEffect, useRef } from "react";
+import { FormEvent, useEffect, useRef } from "react";
 
 import Image from "next/image";
 import AsideProfile from "module/Aside/Components/AsideProfile";
 import SimilarPosts from "module/Aside/Components/SimilarPosts";
 import Comment from "components/comment/Comment";
+import { Button } from "components/UI";
+
 import message from "images/message.svg";
 import parser from "helpers/parsers.helper";
-import IPost, { IComment } from "types/Post";
+import { IComment, IPost } from "types/Post";
+import { useSelector } from "react-redux";
 
 export default function Post({postContent, postComments, author}:any) {
-
-
+    const user = useSelector((state: any) => state.user);
+    
     let content = useRef<null | HTMLDivElement>(null);
+
+    function sub(e: FormEvent) {
+        e.preventDefault();
+        const target = e.target as EventTarget & { comment: HTMLInputElement};
+        const body = {
+            body: target.comment.value,
+            postId: postContent.id
+        };
+        
+        fetch("http://localhost:3000/api/comments", {
+            method:"post",
+            body: JSON.stringify(body)
+        })
+            .then(res => res.json())
+            .then(e => console.log(e));
+    }
     
     useEffect(() => {
-        const post_content = parser.MDtoHTML(postContent.body+"\n");
+        const post_content = parser.MDtoHTML(postContent.body+"\n", false);
         if(content && content.current) {
             content.current.innerHTML = post_content;
         }
-    },[]);
+    },[postContent.body]);
+
     return (
         <div className={styles.main}>
             <div className={styles.post}>
                 <h1 className={styles.title}>{postContent.title}</h1>
-
                 <div className={styles.content} ref={content}></div>
 
                 <div className={styles.comments}>
@@ -47,6 +66,38 @@ export default function Post({postContent, postComments, author}:any) {
                                     );
                                 })
                             }
+                            <div className={styles.comment}>
+                                <form onSubmit={(e: FormEvent) => sub(e)}>
+                                    <label>
+                                        <h2>Залишити коментар</h2>
+                                    </label>
+                                    <br />
+                                    <textarea
+                                        name="comment"
+                                        placeholder="Зміст коментарю."
+                                        style={
+                                            {
+                                                background:"#292929",
+                                                color:"#fff",
+                                                padding:".75rem",
+                                                margin:"0 0 1rem 2.875rem",
+                                                maxWidth:"17.25rem",
+                                                minWidth:"17.25rem",
+                                                maxHeight:"5.125rem",
+                                                minHeight:"5.125rem"
+                                            }
+                                        }
+                                    ></textarea>
+                                    <br />
+                                    <Button
+                                        Style="purple"
+                                        type="submit"
+                                        style={{margin:"0 0 0 2.875rem"}}
+                                    >
+                                        Залишити
+                                    </Button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
