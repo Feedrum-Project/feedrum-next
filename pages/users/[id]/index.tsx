@@ -11,7 +11,7 @@ import message from "images/message.svg";
 import star from "images/star.svg";
 import starG from "images/star-green.svg";
 import starR from "images/star-red.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface UserProps {
   userInformation: {
@@ -33,6 +33,7 @@ interface UserProps {
 
 export default function User({userInformation, userPosts}:UserProps) {
     const user = useSelector((state: any) => state.user);
+    const dispatch = useDispatch();
 
     return (
         <div className={styles.main}>
@@ -96,8 +97,19 @@ export default function User({userInformation, userPosts}:UserProps) {
                         Style="purple"
                         onClick={
                             () => fetch("http://localhost:3000/api/auth/eraseToken")
-                                .then(res => res.json)
-                                .then(e => console.log(e))
+                                .then(res => res.json())
+                                .then(e => {
+                                    console.log(e);
+                                    if(e.message === "cookies deleted")
+                                        dispatch(
+                                            {
+                                                type:"set",
+                                                payload: {
+                                                    id: -1
+                                                }
+                                            }
+                                        );
+                                })
                         }
                     >
                                 Erase token
