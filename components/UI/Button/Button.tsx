@@ -7,7 +7,7 @@ interface ButtonProps {
   style?: any;
   onClick?: undefined | (() => void);
   disabled?: boolean;
-  type: "button" | "reset" | "submit";
+  type?: "button" | "reset" | "submit";
 }
 
 export default function Button({Style, children, className=undefined, style, onClick=undefined, disabled=false, type="button"}:ButtonProps) {

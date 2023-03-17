@@ -53,7 +53,7 @@ export default function LoginForm() {
                     <Link href="/forgetPassword" className={styles.forgetPassword}>Забув&nbsp;пароль?</Link>
                 </div>
                 <div className={styles.loginBottom}>
-                    <Button Style="purple">Увійти</Button>
+                    <Button Style="purple" type="submit">Увійти</Button>
                 </div>
             </form>
         </>

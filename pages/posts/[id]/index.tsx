@@ -13,10 +13,12 @@ import message from "images/message.svg";
 import parser from "helpers/parsers.helper";
 import { IComment, IPost } from "types/Post";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function Post({postContent, postComments, author}:any) {
     const user = useSelector((state: any) => state.user);
-    
+    const [attention, setAttention] = useState<{code: number, message: string} | null   >(null);
+
     let content = useRef<null | HTMLDivElement>(null);
 
     function sub(e: FormEvent) {
@@ -32,7 +34,10 @@ export default function Post({postContent, postComments, author}:any) {
             body: JSON.stringify(body)
         })
             .then(res => res.json())
-            .then(e => console.log(e));
+            .then(e => {
+                console.log(e);
+                setAttention(e);
+            });
     }
     
     useEffect(() => {
@@ -72,6 +77,7 @@ export default function Post({postContent, postComments, author}:any) {
                                         <h2>Залишити коментар</h2>
                                     </label>
                                     <br />
+                                    <h2 style={{color: attention && attention.code !== 200 ? "#F36A6A" : "#6AEA3D"}}>{ attention ? attention.message : null}</h2>
                                     <textarea
                                         name="comment"
                                         placeholder="Зміст коментарю."

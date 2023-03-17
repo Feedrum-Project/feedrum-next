@@ -24,7 +24,6 @@ export default function Navigation() {
     } else {
         Logged = (
             <>
-                {user.id}
                 <Link href="/registration">
                     <Button Style="purple">Зареєструватись</Button>
                 </Link>
@@ -41,7 +40,7 @@ export default function Navigation() {
             <div className={styles.navSearch}>
                 <Search Placeholder="Пошук" className="input"/>
             </div>
-            {Logged}      
+            {Logged}
         </nav>
     );
 }
