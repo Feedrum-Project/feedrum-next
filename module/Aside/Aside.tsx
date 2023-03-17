@@ -1,14 +1,22 @@
-import BestsPosts from "./Components/BestsPosts";
-import Sponsors from "./Components/Sponsors";
+import AsideComponents from "./Components/Components";
 
-export default function Aside() {
+interface IAside {
+    AsideProfile?: boolean;
+    AsideUser?: boolean;
+    BestsPosts?: boolean;
+    Rank?: boolean;
+    SimilarPosts?: boolean;
+    Sponsors?: boolean;
+}
+
+export default function Aside(asideComponents: IAside) {
 
     return (
         <aside>
             {
                 <>
-                    <BestsPosts/>
-                    <Sponsors/>
+                    { asideComponents.BestsPosts ? <AsideComponents.BestPosts/> : null }
+                    { asideComponents.Sponsors ? <AsideComponents.Sponsors/> : null }
                 </>
             }
         </aside>

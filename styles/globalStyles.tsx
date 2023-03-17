@@ -9,6 +9,7 @@ const firaSans = Fira_Sans({
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
+    font-family: ${firaSans.style.fontFamily}
   }
 
   body {
@@ -16,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     
     background: #1b1b1b;
-    font-family: ${firaSans.style.fontFamily};
+    font-family: ${firaSans.style.fontFamily}
     font-weight: 500;
   }
 `;

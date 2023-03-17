@@ -1,13 +1,13 @@
-import styles from "../styles/rank.module.sass"
-import Image from "next/image"
-import arrowTop from "images/arrow-top.svg"
-import arrowBottom from "images/arrow-bottom.svg"
+import styles from "../styles/rank.module.sass";
+import Image from "next/image";
+import arrowTop from "images/arrow-top.svg";
+import arrowBottom from "images/arrow-bottom.svg";
 
 interface RankProps {
-  userRank:number
+  rank:number
 }
 
-export default function Rank({userRank=0}:RankProps) {
+export default function Rank({rank=0}:RankProps) {
     return (
         <div className={styles.rank}>
             <button className={styles.growReputation}>
@@ -15,13 +15,13 @@ export default function Rank({userRank=0}:RankProps) {
             </button>
             <div
                 className="rankCount"
-                style={{color: userRank > 0 ? "#6AEA3D" : userRank < 0 ? "#F36A6A" : "#BEBEBE"}}
+                style={{color: rank > 0 ? "#6AEA3D" : rank < 0 ? "#F36A6A" : "#BEBEBE"}}
             >
-                {userRank > 0 ? "+" : null}{userRank}
+                {rank > 0 ? "+" : null}{rank}
             </div>
             <button className={styles.reduceReputation}>
                 <Image src={arrowBottom} alt="Знизити репутацію"/>
             </button>
         </div>
-    )
+    );
 }

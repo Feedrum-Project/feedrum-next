@@ -19,8 +19,8 @@ export default function AsideProfile({userName, userId}:AsideProfileProps) {
                 </Link>
             </div>
             <div className="right">
-                <Button Style={"purple"}>Підписатися</Button>
+                <Button Style="purple">Підписатися</Button>
             </div>
         </div>
-    )
+    );
 }

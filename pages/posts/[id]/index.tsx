@@ -6,6 +6,7 @@ import { FormEvent, useEffect, useRef } from "react";
 import Image from "next/image";
 import AsideProfile from "module/Aside/Components/AsideProfile";
 import SimilarPosts from "module/Aside/Components/SimilarPosts";
+import Rank from "module/Aside/Components/Rank";
 import Comment from "components/comment/Comment";
 import { Button } from "components/UI";
 
@@ -112,6 +113,9 @@ export default function Post({postContent, postComments, author}:any) {
             <div className="aside">
                 <AsideProfile userName={author.name} userId={author.id}/>
                 <SimilarPosts/>
+                <div style={{width: "fit-content"}}>
+                    <Rank rank={postContent.rank} />
+                </div>
             </div>
         </div>
     );
@@ -124,8 +128,8 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
     const postParsed = JSON.parse(JSON.stringify(post));
 
     let comments: IComment[] = await prisma.post.getPostComments(id);
-    console.log(comments);
-    comments = comments.sort((a:any,b:any) => {
+    
+    comments = comments.sort((a: IComment,b: IComment) => {
         if(a.createdAt < b.createdAt) return +1;
         return -1;
     });

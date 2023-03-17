@@ -39,7 +39,7 @@ export default function Home({ posts }: HomeProps) {
                         }
                     </div>
                 </article>
-                <Aside/>
+                <Aside BestsPosts Sponsors/>
             </div>
         </>
     );
