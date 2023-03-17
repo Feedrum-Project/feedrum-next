@@ -11,6 +11,7 @@ import message from "images/message.svg";
 import star from "images/star.svg";
 import starG from "images/star-green.svg";
 import starR from "images/star-red.svg";
+import { useSelector } from "react-redux";
 
 interface UserProps {
   userInformation: {
@@ -31,6 +32,8 @@ interface UserProps {
 }
 
 export default function User({userInformation, userPosts}:UserProps) {
+    const user = useSelector((state: any) => state.user);
+
     return (
         <div className={styles.main}>
             <div className={styles.profile}>
@@ -86,6 +89,21 @@ export default function User({userInformation, userPosts}:UserProps) {
                     }
                 </div>
             </div>
+            {
+                user.id && user.id === userInformation.id
+                    ?
+                    <Button
+                        Style="purple"
+                        onClick={
+                            () => fetch("http://localhost:3000/api/auth/eraseToken")
+                                .then(res => res.json)
+                                .then(e => console.log(e))
+                        }
+                    >
+                                Erase token
+                    </Button>
+                    : null
+            }
         </div>
     );
 }

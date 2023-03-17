@@ -22,5 +22,15 @@
   flex-direction: column
   align-items: center
   min-width: 2rem
+
+  &>button
+    border: none
+    border-radius: .25rem
+    background: none
+    cursor: pointer
+
+    &:disabled
+      cursor: not-allowed
+      background: $border
   &Count
     margin: .5rem 0

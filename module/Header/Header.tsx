@@ -16,5 +16,5 @@ export default function Header()  {
             </Link>
             <Navigation/>
         </header>
-    )
+    );
 }
