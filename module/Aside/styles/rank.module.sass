@@ -7,10 +7,15 @@
   background: $block
   border: 1px solid $border
   border-radius: .3125rem
-  padding: .625rem
   &>*:nth-child(2)
     margin: 0 1rem
 
 .growReputation, .reduceReputation
   border: none
   background: none
+  padding: .625rem
+  cursor: pointer
+
+  &:disabled
+    background: $border
+    cursor: not-allowed

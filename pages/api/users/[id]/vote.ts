@@ -20,6 +20,8 @@ const handler: NextApiHandler = async (req, res) => {
 };
 
 const voteUser: NextApiHandler = async (req, res) => {
+    typeof req.body === "string" ? req.body = JSON.parse(req.body) : null;
+
     const comment = await UserController.vote(req.id, req.user.id, req.body.score);
 
     success(res, comment);

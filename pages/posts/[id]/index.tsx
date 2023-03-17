@@ -114,7 +114,7 @@ export default function Post({postContent, postComments, author}:any) {
                 <AsideProfile userName={author.name} userId={author.id}/>
                 <SimilarPosts/>
                 <div style={{width: "fit-content"}}>
-                    <Rank rank={postContent.rank} />
+                    <Rank info={postContent}/>
                 </div>
             </div>
         </div>

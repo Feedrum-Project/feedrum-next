@@ -41,7 +41,7 @@ export default function User({userInformation, userPosts}:UserProps) {
                     </div>
                     <div className={styles.profileAside}>
                         <Button Style="purple">Підписатися</Button>
-                        <Rank userRank={userInformation.rank}></Rank>
+                        <Rank info={userInformation}/>
                     </div>
                 </div>
                 <div className={styles.sort}>
