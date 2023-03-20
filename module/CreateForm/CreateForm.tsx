@@ -20,11 +20,12 @@ interface IBody {
         exp: number;
     }
 }
+type IForm = FormEvent<HTMLFormElement> & { target: { body: { value: string }, "Назва": {value: string}} & HTMLElement};
 
 export default function CreateForm() {
     const user = useSelector((state: any) => state.user);
     
-    function prepare(event: FormEvent & { target: { body: { value: string }, "Назва": {value: string}} & HTMLElement}) {
+    function prepare(event: IForm) {
         event.preventDefault();
 
         if(!event.target || !event.target.body) return;
@@ -58,7 +59,7 @@ export default function CreateForm() {
             <h1 style={{color: "white"}}>Створити Пост</h1>
             <div className={styles.form}>
                 <Panel/>
-                <form onSubmit={(e: any) => prepare(e)}>
+                <form onSubmit={(e: IForm) => prepare(e)}>
                     <div className="text">
                         <Input name="Назва" placeholder="Назва статті"/>
                         <Editor/>

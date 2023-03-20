@@ -30,7 +30,7 @@ export default class AuthController {
     }
 
     static setCookieToken(res: NextApiResponse, token: string) {
-        res.setHeader("Set-Cookie", `token=${token}; Path=/api/`)
+        res.setHeader("Set-Cookie", `token=${token}; Path=/api/`);
     }
 
     static sign(user: JwtUser) {

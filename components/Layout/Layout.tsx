@@ -1,7 +1,5 @@
 import Head from "next/head";
 import Header from "../../module/Header/Header";
-import { ThemeProvider } from "styled-components";
-import theme from "styles/theme";
 import styles from "./layout.module.sass";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -25,10 +23,8 @@ export default function Layout({ children }: Props) {
                 <title>Feedrum</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
             </Head>
-            <ThemeProvider theme={theme}>
-                <Header />
-                <main className={styles.main}>{children}</main>
-            </ThemeProvider>
+            <Header />
+            <main className={styles.main}>{children}</main>
         </>
     );
 }

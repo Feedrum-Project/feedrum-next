@@ -95,24 +95,12 @@ export default function User({userInformation, userPosts}:UserProps) {
                     ?
                     <Button
                         Style="purple"
-                        onClick={
-                            () => fetch("http://localhost:3000/api/auth/eraseToken")
-                                .then(res => res.json())
-                                .then(e => {
-                                    console.log(e);
-                                    if(e.message === "cookies deleted")
-                                        dispatch(
-                                            {
-                                                type:"set",
-                                                payload: {
-                                                    id: -1
-                                                }
-                                            }
-                                        );
-                                })
-                        }
+                        onClick={() => {
+                            document.cookie = "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                            dispatch({type: "set", payload: null});
+                        }}
                     >
-                                Erase token
+                                Вийти з облікового запису
                     </Button>
                     : null
             }

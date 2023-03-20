@@ -45,7 +45,7 @@ export default function LoginForm() {
                 </div>
                 {
                     message === false ? null
-                        : message?.code === 400 ? <h1 style={{color: "#F36A6A"}}>{message.message}</h1> : <h1 style={{color:"#6AEA3D"}}>You logged in</h1>
+                        : message?.code === 400 ? <h1 style={{color: "#F36A6A"}}>{message.message}</h1> : <h1 style={{color:"#6AEA3D"}}>Ви увійшли в обліковий запис.</h1>
                 }
                 <div className={styles.loginMiddle}>
                     <Input disabled={user.id !== -1} type="text" name="Пошта" placeholder="Пошта"/>

@@ -2,7 +2,7 @@ import { Button } from "components/UI";
 import styles from "./styles/editor.module.sass";
 import { createMono, createParagragh, createTitle } from "./helpers/text";
 import { useEffect, useRef, useState } from "react";
-import {HTMLtoJSON, JSONtoMD, MDtoHTML} from "helpers/parsers.helper";
+import {HTMLtoMD, MDtoHTML} from "helpers/parsers.helper";
 
 export default function VisualEditor() {
     const paragraph = useRef<HTMLDivElement | null>(null);
@@ -30,9 +30,10 @@ export default function VisualEditor() {
 
     useEffect(() => {
         if(!paragraph.current) return;
-        function listenerFunc(e: KeyboardEvent) {
+
+        function listenerFunc() {
             if(!paragraph.current) return;
-            setText(JSONtoMD(HTMLtoJSON(paragraph.current.innerHTML, [])));
+            setText(HTMLtoMD(paragraph.current.innerHTML));
             window.removeEventListener("keypress", listenerFunc, false);
         }
         return () => window.addEventListener("keypress", listenerFunc);
@@ -47,8 +48,9 @@ export default function VisualEditor() {
                     onClick={async () => {
                         setEditorType("visual");
                         await setTimeout(() => {}, 250);
-                        if(!paragraph.current) return;
-                        paragraph.current.innerHTML = MDtoHTML(text+"\n", false);
+                        // without this line, doesnt work next.
+                        if(!paragraph.current) return console.log(paragraph);
+                        paragraph.current.innerHTML = MDtoHTML(text);
                     }}>
                     Візуальний редактор
                 </Button>
@@ -58,7 +60,7 @@ export default function VisualEditor() {
                     onClick={() => {
                         setEditorType("source");
                         if(!paragraph.current) return;
-                        const prepareText = JSONtoMD(HTMLtoJSON(paragraph.current.innerHTML, []));
+                        const prepareText = HTMLtoMD(paragraph.current.innerHTML);
 
                         prepareText === "undefined\n" || prepareText === undefined ?
                             setText("")
