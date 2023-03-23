@@ -23,6 +23,7 @@
  * Node.js
  * Prisma
  * Next.js 
+ * Redux
  * TypeScript
  * Eslint
  * Nodemailer
@@ -70,7 +71,7 @@
    * ~~Дописати Header~~
    * ~~Дописати posts~~
    * ~~Фроентендер має вивчити Next/ReactJS і TS.~~
-   * Переписати Aside
+   * ~~Переписати Aside~~
    * Зробити **createPost**
    * * Візуальний редактор
-   * * Редактор тексту
+   * * ~~Редактор тексту~~

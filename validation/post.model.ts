@@ -3,9 +3,9 @@ import { CustomErrorParams, object, string, z } from "zod";
 import id from "./general/id";
 
 const Post = object({
-    body: string().regex(/(.*?)/).min(8).max(64),
+    body: string().regex(/(.*?)/).min(8).max(2048),
     userId: id,
-    title: string().regex(/(.*?)/).min(8).max(1024),
+    title: string().regex(/(.*?)/).min(8).max(64),
 }).strict();
 
 const PostUpdate = Post.omit({

@@ -66,7 +66,7 @@ export default function RegistrationForm() {
                 <Input type="password" name="Підтвердіть пароль" placeholder="Підтвердіть пароль"/>
             </div>
             <div className={styles.registrationBottom}>
-                <Button Style="purple">Зареєструватися</Button>
+                <Button Style="purple" type="submit">Зареєструватися</Button>
             </div>
         </form>
     );

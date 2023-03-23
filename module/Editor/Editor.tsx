@@ -30,7 +30,6 @@ export default function VisualEditor() {
 
     useEffect(() => {
         if(!paragraph.current) return;
-
         function listenerFunc() {
             if(!paragraph.current) return;
             setText(HTMLtoMD(paragraph.current.innerHTML));
