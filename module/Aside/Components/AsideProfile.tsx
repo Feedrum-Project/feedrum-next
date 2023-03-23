@@ -3,6 +3,8 @@ import Button from "components/UI/Button/Button";
 import Link from "next/link";
 import Image from "next/image";
 import avatar from "images/avatar.svg";
+import { useSelector } from "react-redux";
+import { IUser } from "types/User";
 
 interface AsideProfileProps {
   userName: string,
@@ -10,6 +12,7 @@ interface AsideProfileProps {
 }
 
 export default function AsideProfile({userName, userId}:AsideProfileProps) {
+    const user = useSelector((state: {user: IUser}) => state.user);
     return (
         <div className={styles.AsideProfile}>
             <div className={styles.left}>
@@ -19,7 +22,7 @@ export default function AsideProfile({userName, userId}:AsideProfileProps) {
                 </Link>
             </div>
             <div className="right">
-                <Button Style="purple">Підписатися</Button>
+                <Button Style="purple" disabled={user.id === userId}>Підписатися</Button>
             </div>
         </div>
     );

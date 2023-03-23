@@ -8,15 +8,7 @@ import message from "images/message.svg";
 import star from "images/star.svg";
 import starG from "images/star-green.svg";
 import starR from "images/star-red.svg";
-
-interface IPost {
-    id: number;
-    body: string;
-    title: string;
-    rank: number;
-    createdAt: Date;
-    userId: number;
-}
+import { IPost } from "types/Post";
 
 export default function Post({postData}: {postData: IPost}){
     return (

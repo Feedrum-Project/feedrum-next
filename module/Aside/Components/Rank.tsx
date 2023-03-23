@@ -5,17 +5,19 @@ import arrowBottom from "images/arrow-bottom.svg";
 import { useSelector } from "react-redux";
 
 interface RankProps {
-  info: {
-    rank: number;
-    id: number;
-    title?: string
-    type?: "posts" | "users";
-};
+    info: {
+        rank: number;
+        id: number;
+        title?: string
+        type?: "posts" | "users";
+        };
+    disabled?: boolean
 }
 
-export default function Rank({info}:RankProps) {
+export default function Rank({info, disabled=false}:RankProps) {
     const user = useSelector((state: any) => state.user);
-    const isUser = user.id !== -1;
+    let isUser = user.id !== -1;
+    if(disabled) isUser = false;
 
     info.type = "users";
     if(info.title) info.type = "posts";
@@ -43,10 +45,11 @@ export default function Rank({info}:RankProps) {
                 <Image src={arrowTop} alt="Підняти репутацію"/>
             </button>
             <div
-                className="rankCount"
+                className={styles.rankCount}
                 style={{color: info.rank > 0 ? "#6AEA3D" : info.rank < 0 ? "#F36A6A" : "#BEBEBE"}}
             >
-                {info && info.rank > 0 ? "+" : null}{info.rank}
+                {info && info.rank > 0 ? "+" : null}
+                {info.rank}
             </div>
             <button
                 className={styles.reduceReputation}

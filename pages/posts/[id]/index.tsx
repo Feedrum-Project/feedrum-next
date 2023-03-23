@@ -13,11 +13,19 @@ import { Button } from "components/UI";
 import message from "images/message.svg";
 import parser from "helpers/parsers.helper";
 import { IComment, IPost } from "types/Post";
+import { IUser } from "types/User";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
-export default function Post({postContent, postComments, author}:any) {
-    const user = useSelector((state: any) => state.user);
+interface IPostPage {
+    postComments: IComment[];
+    postContent: IPost;
+    author: IUser;
+}
+
+export default function Post({postContent, postComments, author}:IPostPage) {
+    
+    const user = useSelector((state: {user: IUser}) => state.user);
     const [attention, setAttention] = useState<{code: number, message: string} | null   >(null);
 
     let content = useRef<null | HTMLDivElement>(null);
@@ -40,9 +48,8 @@ export default function Post({postContent, postComments, author}:any) {
                 setAttention(e);
             });
     }
-    
     useEffect(() => {
-        const post_content = parser.MDtoHTML(postContent.body+"\n", false);
+        const post_content = parser.MDtoHTML(postContent.body+"\n");
         if(content && content.current) {
             content.current.innerHTML = post_content;
         }
@@ -51,6 +58,13 @@ export default function Post({postContent, postComments, author}:any) {
     return (
         <div className={styles.main}>
             <div className={styles.post}>
+                {
+                    user.id === postContent.userId ?
+                        <div className={styles.author}>
+                            <Button Style="purple">Редагувати</Button>
+                        </div>
+                        : null
+                }
                 <h1 className={styles.title}>{postContent.title}</h1>
                 <div className={styles.content} ref={content}></div>
 
@@ -64,10 +78,14 @@ export default function Post({postContent, postComments, author}:any) {
                         </div>
                         <div className={styles.commentsList}>
                             {
-                                postComments.map((e:any) => {
+                                postComments.map((e:IComment) => {
                                     return (
-                                        <div key={e.id} className={styles.comment}>
-                                            <Comment comment={e}/>
+                                        <div
+                                            key={e.id}
+                                            className={styles.comment}>
+                                            <Comment
+                                                comment={e}
+                                                disabled={e.userId === user.id}/>
                                         </div>
                                     );
                                 })
@@ -114,7 +132,7 @@ export default function Post({postContent, postComments, author}:any) {
                 <AsideProfile userName={author.name} userId={author.id}/>
                 <SimilarPosts/>
                 <div style={{width: "fit-content"}}>
-                    <Rank info={postContent}/>
+                    <Rank info={postContent} disabled={user.id === postContent.userId}/>
                 </div>
             </div>
         </div>

@@ -6,16 +6,17 @@ import { useSelector } from "react-redux";
 
 interface CommentObj {
     comment: {
-        id: number
-        rank: number
-        createdAt: any
-        body: string
-
-    }
+        id: number;
+        rank: number;
+        createdAt: any;
+        body: string;
+    };
+    disabled?: boolean;
 }
-export default function Comment({comment}:CommentObj) {
+export default function Comment({comment, disabled=false}:CommentObj) {
     const user = useSelector((state: any) => state.user);
-    const isUser = user.id !== -1;
+    let isUser = user.id !== -1;
+    if(disabled) isUser = false;
 
     function Vote(vote:"UPVOTE" | "DOWNVOTE") {
         const body = {
