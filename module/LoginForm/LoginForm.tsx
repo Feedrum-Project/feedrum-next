@@ -48,8 +48,8 @@ export default function LoginForm() {
                         : message?.code === 400 ? <h1 style={{color: "#F36A6A"}}>{message.message}</h1> : <h1 style={{color:"#6AEA3D"}}>Ви увійшли в обліковий запис.</h1>
                 }
                 <div className={styles.loginMiddle}>
-                    <Input disabled={user.id !== -1} type="text" name="Пошта" placeholder="Пошта"/>
-                    <Input disabled={user.id !== -1} type="password" name="Пароль" placeholder="Пароль"/>
+                    <Input disabled={user !== null && user.id !== -1} type="text" name="Пошта" placeholder="Пошта"/>
+                    <Input disabled={user !== null && user.id !== -1} type="password" name="Пароль" placeholder="Пароль"/>
                     <Link href="/forgetPassword" className={styles.forgetPassword}>Забув&nbsp;пароль?</Link>
                 </div>
                 <div className={styles.loginBottom}>

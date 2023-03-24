@@ -24,7 +24,6 @@ interface IPostPage {
 }
 
 export default function Post({postContent, postComments, author}:IPostPage) {
-    
     const user = useSelector((state: {user: IUser}) => state.user);
     const [attention, setAttention] = useState<{code: number, message: string} | null   >(null);
 
@@ -49,7 +48,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
             });
     }
     useEffect(() => {
-        const post_content = parser.MDtoHTML(postContent.body+"\n");
+        const post_content = parser.MDtoHTML(postContent.body+"\n", false);
         if(content && content.current) {
             content.current.innerHTML = post_content;
         }
@@ -148,7 +147,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
     let comments: IComment[] = await prisma.post.getPostComments(id);
     
     comments = comments.sort((a: IComment,b: IComment) => {
-        if(a.createdAt < b.createdAt) return +1;
+        if(new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()) return 1;
         return -1;
     });
 

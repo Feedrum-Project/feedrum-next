@@ -88,7 +88,7 @@ export default function User({userInformation, userPosts}:UserProps) {
                         Style="purple"
                         onClick={() => {
                             document.cookie = "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                            dispatch({type: "set", payload: null});
+                            dispatch({type: "set", payload: {id: -1}});
                         }}
                     >
                                 Вийти з облікового запису

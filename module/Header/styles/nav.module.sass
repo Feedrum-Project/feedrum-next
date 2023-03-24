@@ -27,3 +27,43 @@
 .centr
   display: flex
   align-items: center
+
+
+.panel
+  position: absolute
+  color: $white
+  border: 1px solid $border
+  border-radius: .375rem
+  padding: .625rem
+  background: $block
+  .top, .middle
+    border-bottom: 1px solid $border
+
+  .top
+    &>*
+      padding: 0 0 .5rem 0
+      color: $white
+      cursor: pointer
+      text-decoration: none
+      display: block
+  .middle
+    &>*
+      display: block
+      padding: 0 0 .5rem 0
+      width: 100%
+      color: $white
+      text-decoration: none
+      &:first-child
+        padding-top: .5rem
+  .bottom
+    &>*
+      display: block
+      padding: .5rem 0 0 0
+      width: 100%
+      color: $red
+      text-decoration: none
+  
+.office
+  background: none
+  border: none
+  cursor: pointer

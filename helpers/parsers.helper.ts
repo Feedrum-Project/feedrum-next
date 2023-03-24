@@ -4,23 +4,24 @@ import TurndownService from "turndown";
 const md = new MarkdownIt();
 const html = new TurndownService();
 
-export function MDtoHTML(text: string) {
-    // let rendered: (string | undefined)[] = md.render(text).split(">");
-    // rendered = rendered.map((e, i) => {
-    //     if(i === rendered.length-1){
-    //     } else {
-    //         if(i%2) {
-    //             return e+">";
-    //         } else {
-    //             return e+" contenteditable\"true\">";
-    //         }
-    //     }
-    // });
-    // const result: string = rendered.join("");
-    // console.log(result);
-
-    // its works, but need convert &gt; &lt; to > <
-    return md.render(text);
+export function MDtoHTML(text: string, isEditable:boolean=true) {
+    let result;
+    if(isEditable) {
+        let rendered: (string | undefined)[] = md.render(text).split(">");
+        rendered = rendered.splice(0, rendered.length-1);
+        rendered = rendered.map((e, i) => {
+            let res;
+            i%2 ?
+                res = e+">"
+                :
+                res = e+" contenteditable=\"true\">";
+            return res;
+        });
+        result = rendered.join("");
+    } else {
+        result = md.render(text);
+    }
+    return result;
 };
 export function HTMLtoMD(text: string) {
     return html.turndown(text);
