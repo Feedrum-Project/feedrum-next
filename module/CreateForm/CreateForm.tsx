@@ -6,19 +6,14 @@ import Link from "next/link";
 import { Input } from "components/UI";
 import { FormEvent} from "react";
 import Editor from "module/Editor/Editor";
+import { IUser } from "types/User";
 
 interface IBody {
     body: {
         title: string;
         body: string;
     };
-    user: {
-        id: number;
-        email: string;
-        name: string;
-        iat: number;
-        exp: number;
-    }
+    user: IUser;
 }
 type IForm = FormEvent<HTMLFormElement> & { target: { body: { value: string }, "Назва": {value: string}} & HTMLElement};
 

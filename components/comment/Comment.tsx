@@ -3,14 +3,10 @@ import styles from "./comment.module.sass";
 import arrowTop from "images/arrow-top.svg";
 import arrowBottom from "images/arrow-bottom.svg";
 import { useSelector } from "react-redux";
+import { IComment } from "types/Post";
 
 interface CommentObj {
-    comment: {
-        id: number;
-        rank: number;
-        createdAt: any;
-        body: string;
-    };
+    comment: IComment;
     disabled?: boolean;
 }
 export default function Comment({comment, disabled=false}:CommentObj) {
@@ -57,7 +53,7 @@ export default function Comment({comment, disabled=false}:CommentObj) {
             <div className={styles.commentContent}>
                 <div className={styles.commentTop}>
                     <div className="commentLeft">{comment.id}</div>
-                    <div className="commentRight">{comment.createdAt}</div>
+                    <div className="commentRight">{comment.createdAt.toString()}</div>
                 </div>
                 <div className="commentcomment">{comment.body}</div>
             </div>

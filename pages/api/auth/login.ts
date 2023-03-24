@@ -10,6 +10,7 @@ const handler: NextApiHandler = async (req, res) => {
 
     const user = await AuthController.login(req.body);
 
+    res.setHeader("Access-Control-Allow-Origin", "*"); // ITS JUST CORS!
     AuthController.sendUser(res, user);
 };
 

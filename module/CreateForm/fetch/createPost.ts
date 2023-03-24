@@ -1,15 +1,11 @@
+import { IUser } from "types/User";
+
 interface IBody {
     body: {
         title: string;
         body: string;
     };
-    user: {
-        id: number;
-        email: string;
-        name: string;
-        iat: number;
-        exp: number;
-    }
+    user: IUser;
 }
 
 export default async function createPost(body: IBody) {

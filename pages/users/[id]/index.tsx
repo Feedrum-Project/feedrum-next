@@ -12,23 +12,12 @@ import star from "images/star.svg";
 import starG from "images/star-green.svg";
 import starR from "images/star-red.svg";
 import { useDispatch, useSelector } from "react-redux";
+import { IUser } from "types/User";
+import { IPost } from "types/Post";
 
 interface UserProps {
-  userInformation: {
-    id:number;
-    name:string;
-    rank:number;
-    createdAt:string;
-    isVerified:boolean;
-  },
-  userPosts: {
-    id:number;
-    body:string;
-    title:string;
-    rank:number;
-    createdAt:string;
-    userId:number;
-  }[]
+  userInformation: IUser,
+  userPosts: IPost[]
 }
 
 export default function User({userInformation, userPosts}:UserProps) {
@@ -45,7 +34,9 @@ export default function User({userInformation, userPosts}:UserProps) {
                     </div>
                     <div className={styles.profileAside}>
                         <Button Style="purple">Підписатися</Button>
-                        <Rank info={userInformation}/>
+                        <Rank
+                            info={userInformation}
+                            disabled={user.id === userInformation.id}/>
                     </div>
                 </div>
                 <div className={styles.sort}>
