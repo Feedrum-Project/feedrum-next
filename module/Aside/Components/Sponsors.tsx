@@ -1,22 +1,56 @@
 import styles from "../styles/aside.module.sass";
 import avatar from "images/avatar.svg";
 import Image from "next/image";
+import Link from "next/link";
+import { IUser } from "types/User";
 
-const sponsors = [
-    {id:1, name:"Oleža", moneys:"254$"},
-    {id:2, name:"Autist", moneys:"60$"},
-    {id:3, name:"Bebra", moneys:"10$"}
+interface ISponsor extends IUser{
+    moneys: string;
+}
+
+const sponsors: ISponsor[] = [
+    {
+        id:6,
+        email:"123",
+        rank:200,
+        createdAt:"123",
+        name:"admini",
+        moneys:"254$"
+    },
+    {
+        id:26,
+        email:"4",
+        rank:10,
+        createdAt:"123",
+        name:"Hellod",
+        moneys:"22$"
+    },
+    {
+        id:24,
+        email:"1",
+        rank:100,
+        createdAt:"123",
+        name:"dcolflwas",
+        moneys:"22$"
+    },
 ];
 
-const list = sponsors.map(e => (
+const list = sponsors.map((e,i) => (
     <div key={e.id} className={styles.sponsor}>
         <div className={styles.sponsorTop}>
             <span className={styles.sponsorNumber}>
-                {e.id}
+                {i+1}
             </span>.
             <span className={styles.sponsorName}>
-                <Image src={avatar} alt="Аватар" style={{margin:"0 .375rem 0 .875rem"}} />
-                {e.name}
+                <Image
+                    src={avatar} alt="Аватар"
+                    style={{margin:"0 .375rem 0 .875rem"}}
+                />
+                <Link
+                    className={styles.link}
+                    href={"/users/"+e.id}>
+                    {e.name}
+                </Link>
             </span>
         </div>
         <div className={styles.moneys}>{e.moneys}</div>

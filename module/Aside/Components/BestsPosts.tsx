@@ -4,13 +4,35 @@ import star from "images/star.svg";
 import starG from "images/star-green.svg";
 import starR from "images/star-red.svg";
 import Image from "next/image";
+import { IPost } from "types/Post";
+
+interface IBestPosts extends IPost {
+    comments: number
+}
 
 export default function BestPosts() {
 
-    const bestPosts = [
-        {id:1, title:"Скільки років мовам програмування?", comments:12, rank:-2},
-        {id:2, title:"Чому твій портфоліо нікому не цікавий", comments:12, rank:5}
-    ];
+    const bestPosts: IBestPosts[] = [
+        {
+            id:1,
+            title:"Скільки років мовам програмування?",
+            createdAt: "",
+            userId: 1,
+            body:"",
+            comments: 111, 
+            rank:288
+        },
+        {
+            id:2,
+            title:"Чому твоє портфоліо нікому не цікаве",
+            createdAt: "",
+            userId: 6,
+            body:"",
+            comments:72,
+            rank: 50
+        }
+    ]; // Could be better here if add result from
+    // prismas query? As "take.. order by desc".
   
     const parse = bestPosts.map(e => (
         <div key={e.id}>
