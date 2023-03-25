@@ -4,4 +4,5 @@ export interface IUser {
   email: string;
   rank: number;
   createdAt: string | Date;
+  isVerified: boolean;
 }
