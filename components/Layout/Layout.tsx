@@ -14,7 +14,10 @@ export default function Layout({ children }: Props) {
             method: "post"
         })
             .then(res => res.json())
-            .then(e => dispatch({type: "set", payload: e}));
+            .then(res => dispatch({type: "set", payload: res}))
+            .catch(() => {
+                document.cookie = "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            });
     }, [dispatch]);
 
     return (
