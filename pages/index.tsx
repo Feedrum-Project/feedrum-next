@@ -4,7 +4,7 @@ import { GetServerSideProps } from "next";
 import PostComponent from "module/Post/Post";
 import styles from "./home.module.sass";
 import Aside from "module/Aside/Aside";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface HomeProps {
     posts: IPost[]
@@ -20,7 +20,6 @@ export default function Home({ posts }: HomeProps) {
             if(a.rank<b.rank) return a.rank+b.rank;
             return a.rank-b.rank;
         });
-        console.log(buffer);
         setPostsSorted(buffer);
     }
     function setSortingNewest() {
@@ -31,7 +30,6 @@ export default function Home({ posts }: HomeProps) {
             if(a.createdAt.getTime() < b.createdAt.getTime()) return a.createdAt < b.createdAt;
             return a.createdAt > b.createdAt;
         });
-        console.log(buffer);
         setPostsSorted(buffer);
     }
 

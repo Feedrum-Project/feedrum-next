@@ -30,9 +30,6 @@ export default function Navigation() {
 
                     <button
                         className={styles.office}
-                        style={
-                            {padding:"1rem 1rem 1rem 0", margin:"0 0 0 1rem"}
-                        }
                         onClick={(e) => {
                             panel ? setPanel(null) : setPanel({
                                 user: user,
@@ -47,9 +44,6 @@ export default function Navigation() {
                     {
                         panel ? <UserPanel user={panel.user} coors={panel.coors}/> : null
                     }
-                    {/* <Link className="office" href={"/users/"+user.id} style={{padding:"1rem 1rem 1rem 0", margin:"0 0 0 1rem"}}>
-                        <Image src={avatar} alt="Ваш аватар" height="28" width="28"/>
-                    </Link> */}
                 </div>
             </>
         );

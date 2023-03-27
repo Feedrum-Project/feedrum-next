@@ -36,13 +36,15 @@ export default function Post({postData}: {postData: IPost}){
                     <Image src={message} alt="Іконка повідомлень" />
                     <span className={styles.postCommentsCount}>12</span>
                 </div>
-                <div className={styles.postRank}
-                    style={{color: postData.rank > 0 ? "#6AEA3D" : postData.rank === 0 ? "#BEBEBE" : "#F36A6A"}}>
+                <div className={styles.postRank}>
                     <Image
                         src={postData.rank > 0 ? starG : postData.rank === 0 ? star : starR}
                         alt="Зіронька, репутація"
                     />
-                    <span className={styles.postRankCount}>{postData.rank}</span>
+                    <span
+                        className={styles.postRankCount}
+                        style={{color: postData.rank > 0 ? "#6AEA3D" : postData.rank === 0 ? "#BEBEBE" : "#F36A6A"}}
+                    >{postData.rank}</span>
                 </div>
             </div>
         </div>

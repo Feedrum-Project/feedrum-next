@@ -30,17 +30,13 @@ export default function VisualEditor() {
 
     useEffect(() => {
         if(!paragraph.current) return;
-        function listenerFunc() {
-            if(!paragraph.current) return;
-            setText(HTMLtoMD(paragraph.current.innerHTML));
-            window.removeEventListener("keypress", listenerFunc, false);
-        }
-        return () => window.addEventListener("keypress", listenerFunc);
+        setText(HTMLtoMD(paragraph.current.innerHTML));
     }, [text, Focus]);
 
     return (
         <>
             <div className={styles.panelEditorType}>
+                <Button Style="purple" onClick={() => console.log(text)}>Show text</Button>
                 <Button
                     Style="purple"
                     disabled={editorType === "visual" ? true : false}
@@ -60,7 +56,7 @@ export default function VisualEditor() {
                         setEditorType("source");
                         if(!paragraph.current) return;
                         const prepareText = HTMLtoMD(paragraph.current.innerHTML);
-
+                        console.log(prepareText);
                         prepareText === "undefined\n" || prepareText === undefined ?
                             setText("")
                             :

@@ -15,7 +15,9 @@ export default function UserPanel({user, coors}: UserPanel) {
     const dispatch = useDispatch();
     
     return (
-        <div className={styles.panel} style={{left: coors.x, top: coors.y}}>
+        <div
+            className={styles.panel}
+            style={window.innerWidth > 640 ? {left: coors.x, top: coors.y} : undefined}>
             <div className={styles.top}>
                 <Link href={"/users/"+user.id}>
                       @{user.name}
