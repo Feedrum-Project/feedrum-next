@@ -2,10 +2,25 @@ import { MutableRefObject } from "react";
 
 const enum ElementType {
     p="p",
-    bold="b",
+    bold="strong",
+    strong="strong",
+    italic="i",
+    i="i",
+    sup="sup",
+    sub="sub",
+    del="del",
+    strike="del",
+    u="u",
     h1="h1",
     h2="h2",
     mono="pre"
+}
+
+export function specify(element: string) {
+    const selection = window.getSelection();
+
+    const spec = document.createElement(ElementType[element]);
+    selection?.getRangeAt(0).surroundContents(spec);
 }
 
 export function createElement(ref: MutableRefObject<HTMLDivElement | null>, type: string) {
@@ -30,5 +45,5 @@ export function createElement(ref: MutableRefObject<HTMLDivElement | null>, type
     current.append(elem);
 }
 
-const text = {createElement};
+const text = {createElement, specify};
 export default text;

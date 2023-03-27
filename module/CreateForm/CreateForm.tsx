@@ -61,7 +61,7 @@ export default function CreateForm() {
                     </div>
                     <div className={styles.sectionSubmit}>
                         <div className={styles.centrilizer}></div>
-                        <input className={styles.submit} type="submit" value="Submit" />
+                        <input className={styles.submit} type="submit" value="Прийняти" />
                     </div>
                 </form>
             </div>

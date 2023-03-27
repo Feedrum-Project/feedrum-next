@@ -77,9 +77,6 @@ export default function VisualEditor() {
                         <div ref={paragraph} className={styles.textField}>
 
                         </div>
-                        <Button Style="purple" onClick={() => {
-                            createElement(paragraph, "bold");
-                        }}>Add elem</Button>
                         <textarea name="body" value={text} readOnly style={{display:"none"}}>
                             
                         </textarea>
