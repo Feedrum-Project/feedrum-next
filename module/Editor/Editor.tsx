@@ -1,6 +1,6 @@
 import { Button } from "components/UI";
 import styles from "./styles/editor.module.sass";
-import { createMono, createParagragh, createTitle } from "./helpers/text";
+import { createElement } from "./helpers/text";
 import { useEffect, useRef, useState } from "react";
 import {HTMLtoMD, MDtoHTML} from "helpers/parsers.helper";
 
@@ -77,17 +77,20 @@ export default function VisualEditor() {
                         <div ref={paragraph} className={styles.textField}>
 
                         </div>
+                        <Button Style="purple" onClick={() => {
+                            createElement(paragraph, "bold");
+                        }}>Add elem</Button>
                         <textarea name="body" value={text} readOnly style={{display:"none"}}>
                             
                         </textarea>
                         <div className={styles.addParagraph}>
-                            <div className={styles.addParagraphLeft} onClick={() => createParagragh(paragraph)}>
+                            <div className={styles.addParagraphLeft} onClick={() => createElement(paragraph, "p")}>
                                 <div className={styles.addParagraphPlus}>+</div>
                                 <p>Додати параграф, або інше поле?</p>
                             </div>
                             <div className={styles.addParagraphRight}>
-                                <div className="h1" onClick={() => createTitle(paragraph)}>Заг.</div>
-                                <div className="mono" onClick={() => createMono(paragraph)}>Мон.</div>
+                                <div className="h1" onClick={() => createElement(paragraph, "h1")}>Заг.</div>
+                                <div className="mono" onClick={() => createElement(paragraph, "mono")}>Мон.</div>
                             </div>
                         </div>
                     </div>

@@ -29,7 +29,14 @@ export default function Panel() {
                 <button
                     className="bold"
                     onClick={() => {
-                        console.log(window.getSelection());
+                        const elem = window.getSelection()?.anchorNode?.parentNode as HTMLElement;
+                        console.log(elem);
+                        const [start, end] = [window.getSelection()?.focusOffset, window.getSelection()?.anchorOffset];
+                        if(!elem) return;
+                        let text = elem.innerHTML;
+                        text = text.slice(0, start) + "<b>" + text.slice(start, end) + "</b>" + text.slice(end);
+                        console.log(text);
+                        // elem.innerHTML = text;
                     }}>
                     <b>B</b>
                 </button>

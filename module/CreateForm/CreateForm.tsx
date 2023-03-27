@@ -40,9 +40,9 @@ export default function CreateForm() {
         return (
             <div>
                 <h1 style={{color: "#fff"}}>
-                    Ви маєте
-                    <Link href="/login">увійти</Link>
-                    або
+                    Ви маєте&nbsp;
+                    <Link href="/login">увійти</Link>&nbsp;
+                    або&nbsp;
                     <Link href="/registration">зареєструватися</Link>.
                 </h1>
             </div>
