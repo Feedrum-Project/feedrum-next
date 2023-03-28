@@ -1,7 +1,7 @@
 import styles from "./button.module.sass";
 
 interface ButtonProps {
-  Style: "standart" | "purple" | "Unborder";
+  Style: "standart" | "purple" | "Unborder" | "red";
   children: any;
   className?: string | undefined;
   style?: any;
@@ -11,7 +11,7 @@ interface ButtonProps {
 }
 
 export default function Button({Style, children, className=undefined, style, onClick=undefined, disabled=false, type="button"}:ButtonProps) {
-    const Class = [styles[Style], styles.button].join(" ");
+    const Class = [styles[Style], styles.button, className].join(" ");
     return (
         <button
             className={Style !== "Unborder" ? Class : Class.split(" ")[0]}

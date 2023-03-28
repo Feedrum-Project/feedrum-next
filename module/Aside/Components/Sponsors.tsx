@@ -15,7 +15,8 @@ const sponsors: ISponsor[] = [
         rank:200,
         createdAt:"123",
         name:"admini",
-        moneys:"254$"
+        moneys:"254$",
+        isVerified: true,
     },
     {
         id:26,
@@ -23,7 +24,8 @@ const sponsors: ISponsor[] = [
         rank:10,
         createdAt:"123",
         name:"Hellod",
-        moneys:"22$"
+        moneys:"22$",
+        isVerified: true,
     },
     {
         id:24,
@@ -31,7 +33,8 @@ const sponsors: ISponsor[] = [
         rank:100,
         createdAt:"123",
         name:"dcolflwas",
-        moneys:"22$"
+        moneys:"22$",
+        isVerified: true,
     },
 ];
 

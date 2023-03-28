@@ -1,13 +1,56 @@
 @import ../styles/variables
 
+.settings
+    display: flex
+
+.chapters
+    border: 1px solid $border
+    border-radius: 0.5625rem
+    background: $block
+    width: 19.375rem
+    height: 13.375rem
+    margin: 0 4.75rem 0 0
+    padding: 1.25rem
+
+    &Bottom
+        margin: 1.5625rem 0 0 0
+        user-select: none
+    &Bottom>*
+        width: 100%
+        height: 2.375rem
+        border-radius: .4375rem
+        display: flex
+        align-items: center
+        padding: .625rem .5rem
+
+        &:hover
+            background: $background
+
 .boxs
     display: flex
     flex-wrap: wrap
     justify-content: space-between
     align-content: space-between
+    width: 47.375rem
 
-.input
-    width: 20rem
 
-.admit
-    float: right
+.checkbox
+    display: flex
+    user-select: none
+.checkbox input
+    display: none
+
+.checkbox input:checked ~ .checkmark
+        background: $purple
+        border: 1px solid $pink
+
+.checkmark
+    display: block
+    width: 1.25rem
+    height: 1.25rem
+    background: $block
+    border: 1px solid $border
+    border-radius: .1875rem
+
+.labelText
+    margin: 0 0 1.625rem .875rem

@@ -1,71 +1,105 @@
 import styles from "./settings.module.sass";
 import Box from "components/UI/Box/Box";
+import Link from "next/link";
 import { Input, Button } from "components/UI";
 import { useSelector } from "react-redux";
-import { IUser } from "types/User";
 import { useState } from "react";
+import { IUser } from "types/User";
 
 export default function Settings() {
     const user = useSelector(
         (state: {user: IUser}) => state.user
     );
-    const [userAPI, setUser] = useState<IUser | null>(null);
+    const [chapter, setChapter] = useState<"profile" | "dev" | "del">("profile");
     if(!user || user.id === -1) return <div>Увійдіть в аккаунт.</div>;
-    
-    fetch("http://localhost:3000/api/users/"+user.id, {
-        method:"GET"
-    })
-        .then(res => res.json())
-        .then(res => {
-            setUser(res.data);
-        });
     return (
-        <div className="settings">
-            <h1>Налаштування</h1>
-            <br/>
+        <div className={styles.settings}>
+            
+            <div className={styles.chapters}>
+                <h1>Розділи</h1>
+                <div className={styles.chaptersBottom}>
+                    <div
+                        onClick={() => setChapter("profile")}
+                        style={
+                            chapter === "profile" ?
+                                {background:"#1B1B1B"}
+                                : undefined
+                        }>Профіль</div>
+                    <div
+                        onClick={() => setChapter("dev")}
+                        style={
+                            chapter === "dev" ?
+                                {background:"#1B1B1B"}
+                                : undefined
+                        }>Інформація для розробників</div>
+                    <div
+                        onClick={() => setChapter("del")}
+                        style={
+                            chapter === "del" ?
+                                {background:"#1B1B1B"}
+                                : undefined
+                        }>Видалення аккаунту</div>
+                </div>
+            </div>
             <div className={styles.boxs}>
-                <Box title="Налаштування користувача">
-                    <div className={styles.input}>
-                        <Input value={user.name} name="Ім'я" placeholder="Ім'я"/>
-                        <Input value={user.email} name="Електрона пошта" placeholder="E-mail"/>
-                        <Input name="Пароль 1" placeholder="password 1" type="password"/>
-                        <Input name="Пароль 2" placeholder="password 2" type="password"/>
-                    </div>
-                    <div className={styles.admit}>
-                        <Button Style="purple" type="submit">Прийняти зміни</Button>
-                    </div>
-                </Box>
                 {
-                    userAPI ?
-                        <Box title="Інформація користувача">
-                            <Input
-                                name="Створено"
-                                disabled
-                                value={userAPI.createdAt.toString()}/>
-                            <Input
-                                name="Репутація"
-                                disabled
-                                value={userAPI.rank.toString()}/>
-                            <Input
-                                name="Підтверджено"
-                                disabled
-                                value={
-                                    userAPI.isVerified ?
-                                        "Так" : "Ні"
-                                }/>
-                        </Box>
-                        :null
+                    chapter === "profile" ?
+                        <>
+                            <Box title="Профіль">
+                                <div className={styles.input}>
+                                    <Input value={user.name} name="Ім'я" placeholder="Ім'я"/>
+                                    <Input value={user.email} name="Пошта" placeholder="E-mail"/>
+
+                                    <div className={styles.checkbox}>
+                                        <label className={styles.checkbox}>
+                                            <input type="checkbox"/>
+                                            <span className={styles.checkmark}></span>
+                                            <span className={styles.labelText}>Відображати пошту у публічному профілі</span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div className={styles.admit}>
+                                    <Button Style="purple" type="submit">Зберегти</Button>
+                                </div>
+                            </Box>
+                            <Box title="Про себе">
+                                <Input
+                                    placeholder="Інформація про себе"
+                                    name="Трохи про себе"/>
+                                <Input
+                                    placeholder="https://feedrum.com"
+                                    name="Вебсайт"/>
+                                <Input
+                                    placeholder="Feedrum"
+                                    name="Організаці"/>
+                                <div className={styles.admit}>
+                                    <Button Style="purple" type="submit">Зберегти</Button>
+                                </div>
+                            </Box>
+                        </>
+                        : chapter === "dev" ?
+                            <>
+                                <Box title="API">
+                                    <Link href="/api">Посилання на API</Link>
+                                    <div className={styles.checkbox}>
+                                        <label className={styles.checkbox}>
+                                            <input type="checkbox"/>
+                                            <span className={styles.checkmark}></span>
+                                            <span className={styles.labelText}>Увімкнути режим розробника</span>
+                                        </label>
+                                    </div>
+                                </Box>
+                            </>
+                            :
+                            <>
+                                <Box title="Видалити аккаунт">
+                                    <Button Style="red">
+                                        Видалити аккаунт
+                                    </Button>
+                                </Box>
+                            </>
                 }
-                <Box title="Налаштування клієнта">
-                    <select name="Інтерфейс" id="1" style={{color:"black"}}>
-                        <option value="black">Чорний</option>
-                        <option value="white">Білий</option>
-                        <option value="contrast">Контрастний</option>
-                    </select>
-                    <div className={styles.admit}>
-                        <Button Style="purple">Змінити</Button>
-                    </div>
-                </Box>
             </div>
         </div>
     );
