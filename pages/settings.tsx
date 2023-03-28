@@ -1,5 +1,6 @@
 import styles from "./settings.module.sass";
 import Box from "components/UI/Box/Box";
+import Checkbox from "components/UI/Checkbox/Checkbox";
 import Link from "next/link";
 import { Input, Button } from "components/UI";
 import { useSelector } from "react-redux";
@@ -10,7 +11,7 @@ export default function Settings() {
     const user = useSelector(
         (state: {user: IUser}) => state.user
     );
-    const [chapter, setChapter] = useState<"profile" | "dev" | "del">("profile");
+    const [chapter, setChapter] = useState<"profile" | "dev" | "safe">("profile");
     if(!user || user.id === -1) return <div>Увійдіть в аккаунт.</div>;
     return (
         <div className={styles.settings}>
@@ -33,12 +34,12 @@ export default function Settings() {
                                 : undefined
                         }>Інформація для розробників</div>
                     <div
-                        onClick={() => setChapter("del")}
+                        onClick={() => setChapter("safe")}
                         style={
-                            chapter === "del" ?
+                            chapter === "safe" ?
                                 {background:"#1B1B1B"}
                                 : undefined
-                        }>Видалення аккаунту</div>
+                        }>Безпека</div>
                 </div>
             </div>
             <div className={styles.boxs}>
@@ -49,14 +50,9 @@ export default function Settings() {
                                 <div className={styles.input}>
                                     <Input value={user.name} name="Ім'я" placeholder="Ім'я"/>
                                     <Input value={user.email} name="Пошта" placeholder="E-mail"/>
-
-                                    <div className={styles.checkbox}>
-                                        <label className={styles.checkbox}>
-                                            <input type="checkbox"/>
-                                            <span className={styles.checkmark}></span>
-                                            <span className={styles.labelText}>Відображати пошту у публічному профілі</span>
-                                        </label>
-                                    </div>
+                                    <Checkbox>
+                                        Відображати пошту у публічному профілі
+                                    </Checkbox>
 
                                 </div>
                                 <div className={styles.admit}>
@@ -73,6 +69,10 @@ export default function Settings() {
                                 <Input
                                     placeholder="Feedrum"
                                     name="Організаці"/>
+                                <Input
+                                    placeholder="Feedrum"
+                                    name="Країна"
+                                    value="Україна"/>
                                 <div className={styles.admit}>
                                     <Button Style="purple" type="submit">Зберегти</Button>
                                 </div>
@@ -82,20 +82,24 @@ export default function Settings() {
                             <>
                                 <Box title="API">
                                     <Link href="/api">Посилання на API</Link>
-                                    <div className={styles.checkbox}>
-                                        <label className={styles.checkbox}>
-                                            <input type="checkbox"/>
-                                            <span className={styles.checkmark}></span>
-                                            <span className={styles.labelText}>Увімкнути режим розробника</span>
-                                        </label>
-                                    </div>
+                                    <Checkbox>
+                                        Увімкнути режим розробника
+                                    </Checkbox>
                                 </Box>
                             </>
                             :
                             <>
-                                <Box title="Видалити аккаунт">
-                                    <Button Style="red">
+                                <Box title="Зміна паролю">
+                                    <Input name="Старий пароль" />
+                                    <Input name="Новий пароль" />
+                                    <Input name="Підтвердити новий пароль" />
+                                </Box>
+                                <Box title="Видалення аккаунту">
+                                    <Button Style="unbackground">
                                         Видалити аккаунт
+                                    </Button>
+                                    <Button Style="unbackground" className={styles.mg10}>
+                                        Вимкнути аккаунт
                                     </Button>
                                 </Box>
                             </>

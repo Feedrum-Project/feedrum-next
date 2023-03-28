@@ -1,0 +1,39 @@
+@import ../../../styles/variables
+
+.footer
+    color: $gray
+    display: flex
+    align-items: center
+    flex-direction: column
+    &Top
+        display: flex
+        align-items: center
+
+    &Middle
+        margin: 1.875rem 0 0 0
+        &>ul
+            display: flex
+            list-style: none
+            &>li
+                margin: 0 0 0 1.375rem
+                &>a
+                    text-decoration: none
+                    color: $gray
+
+    &Bottom
+        margin: 0 0 6.25rem
+
+.dots
+    display: flex
+    justify-content: center
+    margin: 1.625rem 0 1.875rem 0
+    &>*
+        width: 1.5625rem
+        height: 1.5625rem
+        background: $gray
+        border-radius: 10rem
+        margin: 0 0 0 1.875rem
+
+.desc
+    text-align: right
+    width: 17.875rem
