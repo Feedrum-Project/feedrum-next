@@ -10,50 +10,15 @@
 
 .panel
     display: flex
-    align-items: center
-    justify-content: space-between
-    padding: 0 2rem 0 0
-    color: white
-
-    &Elements
+    &>*
+        margin: 0 0 0 .5rem
         display: flex
-        justify-content: space-between
-        flex-wrap: wrap
-        margin: 1rem 0
-        &>*
-            box-sizing: content-box
-            display: flex
-            align-items: center
-            justify-content: center
-            flex-wrap: wrap
-            border: none
-            background: $border
-            border-radius: .5rem
-            padding: .5rem
-            margin: .25rem 0 .25rem 2rem
-            transition: .2s
-            width: 1.5rem
-            user-select: none
-            &:disabled:hover
-                background: $red
-            &:hover
-                transition: .5s
-                background: $pink
-                cursor: pointer
+        align-items: center
+        justify-content: center
+        background: none
+        border: none
+        border-radius: .25rem
 
-.sectionSubmit
-    display: flex
-    justify-content: space-between
-
-.submit
-    margin: 1rem 1rem
-    padding: 0.6875rem 1.25rem
-    color: $white
-    border: 1px solid $pink
-    background-color: $purple
-    font-weight: 500
-    border-radius: 5px
-    cursor: pointer
-
-.centrilizer
-    height: 1rem
+        &:focus
+            background: $purple
+            border: 1px solid $pink

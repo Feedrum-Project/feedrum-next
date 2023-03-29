@@ -20,7 +20,7 @@ export default function Input({type="text", name, placeholder, disabled=false, v
         <div className={styles.inputSquare}>
             <div className={styles.inputSquareName}>{name}
                 {type === "password" ?
-                    <button onClick={() => setShowPassword(!showPassword)}><Image src={eye} alt="show password"/></button> : null}
+                    <button type="button" onClick={() => setShowPassword(!showPassword)}><Image src={eye} alt="show password"/></button> : null}
             </div>
             <input
                 onChange={(e) => {
