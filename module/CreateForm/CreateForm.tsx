@@ -1,9 +1,12 @@
 import createPost from "./fetch/createPost";
 import Panel from "./Components/Panel";
-import { useSelector } from "react-redux";
+import Editor from "./Components/Editor";
 import Link from "next/link";
-import { FormEvent} from "react";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { FormEvent } from "react";
 import { IUser } from "types/User";
+import parser from "helpers/parsers.helper";
 
 interface IBody {
     body: {
@@ -14,7 +17,7 @@ interface IBody {
 }
 type IForm = FormEvent<HTMLFormElement> & { target: { body: { value: string }, "Назва": {value: string}} & HTMLElement};
 
-export default function CreateForm() {
+export default function CreateForm({texts: [texts, setText]}: any) {
     const user = useSelector((state: any) => state.user);
     
     function prepare(event: IForm) {
@@ -49,6 +52,7 @@ export default function CreateForm() {
     return (
         <>
             <Panel/>
+            <Editor text={[texts, setText]}/>
         </>
     );
 }

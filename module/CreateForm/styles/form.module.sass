@@ -1,6 +1,5 @@
 @import ../../../styles/variables
 
-
 .form
     color: $white
     background: $block
@@ -10,6 +9,7 @@
 
 .panel
     display: flex
+    margin: 1rem 0 1.875rem 0
     &>*
         margin: 0 0 0 .5rem
         display: flex
@@ -18,7 +18,23 @@
         background: none
         border: none
         border-radius: .25rem
+        border: 1px solid rgba(0, 0, 0, 0)
 
         &:focus
             background: $purple
             border: 1px solid $pink
+
+.editor
+    background: $block
+    border: 1px solid $border
+    border-radius: .5625rem
+    color: $white
+    padding: .625rem
+
+    &Info
+        display: flex
+        justify-content: space-between
+        color: $gray
+
+        &>*:nth-child(2)
+            font-size: .875rem

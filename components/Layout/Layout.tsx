@@ -16,8 +16,9 @@ export default function Layout({ children }: Props) {
         })
             .then(res => res.json())
             .then(res => dispatch({type: "set", payload: res}))
-            .catch(() => {
-                document.cookie = "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            .catch((e) => {
+                console.error(e);
+                // document.cookie = "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
             });
     }, [dispatch]);
 
