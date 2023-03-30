@@ -1,12 +1,17 @@
 import CreateForm from "module/CreateForm/CreateForm";
 import styles from "../styles/create.module.sass";
 import { Input } from "components/UI";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import parser from "helpers/parsers.helper";
 
 export default function CreatePost() {
     const [chapter, setChapter] = useState<"editor" | "view">("editor");
     const [texts, setText] = useState<string>("");
+
+    useEffect(() => {
+        const item = localStorage.getItem("article");
+        setText(item === null ? "" : item);
+    }, []);
     return (
         <>
             <div className={styles.main}>

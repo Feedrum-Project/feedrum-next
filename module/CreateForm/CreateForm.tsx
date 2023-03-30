@@ -2,11 +2,10 @@ import createPost from "./fetch/createPost";
 import Panel from "./Components/Panel";
 import Editor from "./Components/Editor";
 import Link from "next/link";
+import { Button } from "components/UI";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import { FormEvent } from "react";
 import { IUser } from "types/User";
-import parser from "helpers/parsers.helper";
 
 interface IBody {
     body: {
@@ -53,6 +52,10 @@ export default function CreateForm({texts: [texts, setText]}: any) {
         <>
             <Panel/>
             <Editor text={[texts, setText]}/>
+            <div className="buttons">
+                <Button Style="purple">Оприлюдити</Button>
+                <Button Style="standart">Зберегти як чорнетка</Button>
+            </div>
         </>
     );
 }

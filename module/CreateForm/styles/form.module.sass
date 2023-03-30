@@ -20,6 +20,8 @@
         border-radius: .25rem
         border: 1px solid rgba(0, 0, 0, 0)
 
+        &:hover
+            background: $block
         &:focus
             background: $purple
             border: 1px solid $pink
@@ -38,3 +40,10 @@
 
         &>*:nth-child(2)
             font-size: .875rem
+
+    &Content>*
+        width: 100%
+        &:hover
+            background: $background
+        &:focus
+            background: $background

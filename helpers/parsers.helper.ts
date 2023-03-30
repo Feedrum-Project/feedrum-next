@@ -1,5 +1,4 @@
 import MarkdownIt from "markdown-it";
-import { render } from "react-dom";
 import TurndownService from "turndown";
 const md = new MarkdownIt();
 const html = new TurndownService();
@@ -14,7 +13,7 @@ export function MDtoHTML(text: string, isEditable:boolean=true) {
             i%2 ?
                 res = e+">"
                 :
-                res = e+" contenteditable=\"true\">";
+                res = e+" style=\"outline: none;\" contenteditable=\"true\">";
             return res;
         });
         result = rendered.join("");
