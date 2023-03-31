@@ -27,16 +27,21 @@
             border: 1px solid $pink
 
 .editor
+    display: flex
+    flex-direction: column
+    justify-content: space-between
     background: $block
     border: 1px solid $border
     border-radius: .5625rem
     color: $white
     padding: .625rem
+    min-height: 10.5rem
 
     &Info
         display: flex
         justify-content: space-between
         color: $gray
+        margin: 0 0 .25rem 0
 
         &>*:nth-child(2)
             font-size: .875rem
@@ -47,3 +52,16 @@
             background: $background
         &:focus
             background: $background
+
+.buttons
+    margin: 1.625rem 0 0 0
+
+    &>*
+        margin: 0 1.25rem 0 0
+
+.darkText
+    color: $background
+
+.selected
+    background: $purple
+    border: 1px solid $pink
