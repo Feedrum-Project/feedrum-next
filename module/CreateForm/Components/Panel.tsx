@@ -5,6 +5,7 @@ import Italic from "../../../images/createPost/Italic.svg";
 import Linked from "../../../images/createPost/Link.svg";
 import Bold from "../../../images/createPost/Bold.svg";
 import Imagged from "../../../images/createPost/Image.svg";
+import text from "../helpers/text";
 
 interface ISelects {
     header?: boolean;
@@ -18,12 +19,14 @@ export default function Panel({selects}: {selects:[ISelects, any]}) {
         <div className={styles.panel}>
             <button className={
                 selects[0].header ? styles.selected : undefined
-            }>
+            }
+            onClick={() => text.specify("h1")}>
                 <Image src={Heading} alt="Заголовок"/>
             </button>
             <button className={
                 selects[0].italic ? styles.selected : undefined
-            }>
+            }
+            onClick={() => text.specify("i")}>
                 <Image src={Italic} alt="Курсивно"/>
             </button>
             <button className={
@@ -33,7 +36,8 @@ export default function Panel({selects}: {selects:[ISelects, any]}) {
             </button>
             <button className={
                 selects[0].bold ? styles.selected : undefined
-            }>
+            }
+            onClick={() => text.specify("b")}>
                 <Image src={Bold} alt="Товстий"/>
             </button>
             <button>

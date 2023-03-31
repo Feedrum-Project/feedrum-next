@@ -3,6 +3,7 @@ import { MutableRefObject } from "react";
 const enum ElementType {
     p="p",
     bold="strong",
+    b="strong",
     strong="strong",
     italic="i",
     i="i",

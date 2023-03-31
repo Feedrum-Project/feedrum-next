@@ -45,10 +45,33 @@ export default function CreateForm({texts: [texts, setText]}: any) {
                         italic: false,
                         link: false
                     });
+                case "em":
+                case "i":
+                    return selects[1]({
+                        header: false,
+                        bold: false,
+                        italic: true,
+                        link: false
+                    });
+                case "a":
+                    return selects[1]({
+                        header: false,
+                        bold: false,
+                        italic: false,
+                        link: true
+                    });
+                default:
+                    return selects[1]({
+                        header: false,
+                        bold: false,
+                        italic: false,
+                        link: false
+                    });
                 }
             }, 25);
+
         });
-    },[]);
+    });
 
     if(user === null || user.id === -1) {
         return (
