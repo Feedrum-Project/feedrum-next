@@ -1,8 +1,8 @@
 import styles from "./settings.module.sass";
 import Box from "components/UI/Box/Box";
 import Checkbox from "components/UI/Checkbox/Checkbox";
+import { Input, Button, Select } from "components/UI";
 import Link from "next/link";
-import { Input, Button } from "components/UI";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { IUser } from "types/User";
@@ -69,10 +69,7 @@ export default function Settings() {
                                     <Input
                                         placeholder="Feedrum"
                                         name="Організаці"/>
-                                    <Input
-                                        placeholder="Feedrum"
-                                        name="Країна"
-                                        value="Україна"/>
+                                    <Select name="Країна" values={["Україна","Польща","Словакія"]}/>
                                     <div className={styles.admit}>
                                         <Button Style="purple" type="submit">Зберегти</Button>
                                     </div>
