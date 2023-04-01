@@ -50,31 +50,32 @@ export default function Settings() {
                                 <div className={styles.input}>
                                     <Input value={user.name} name="Ім'я" placeholder="Ім'я"/>
                                     <Input value={user.email} name="Пошта" placeholder="E-mail"/>
-                                    <Checkbox>
-                                        Відображати пошту у публічному профілі
-                                    </Checkbox>
-
                                 </div>
+                                <Checkbox>
+                                    Відображати пошту у публічному профілі
+                                </Checkbox>
                                 <div className={styles.admit}>
                                     <Button Style="purple" type="submit">Зберегти</Button>
                                 </div>
                             </Box>
                             <Box title="Про себе">
-                                <Input
-                                    placeholder="Інформація про себе"
-                                    name="Трохи про себе"/>
-                                <Input
-                                    placeholder="https://feedrum.com"
-                                    name="Вебсайт"/>
-                                <Input
-                                    placeholder="Feedrum"
-                                    name="Організаці"/>
-                                <Input
-                                    placeholder="Feedrum"
-                                    name="Країна"
-                                    value="Україна"/>
-                                <div className={styles.admit}>
-                                    <Button Style="purple" type="submit">Зберегти</Button>
+                                <div className={styles.input}>
+                                    <Input
+                                        placeholder="Інформація про себе"
+                                        name="Трохи про себе"/>
+                                    <Input
+                                        placeholder="https://feedrum.com"
+                                        name="Вебсайт"/>
+                                    <Input
+                                        placeholder="Feedrum"
+                                        name="Організаці"/>
+                                    <Input
+                                        placeholder="Feedrum"
+                                        name="Країна"
+                                        value="Україна"/>
+                                    <div className={styles.admit}>
+                                        <Button Style="purple" type="submit">Зберегти</Button>
+                                    </div>
                                 </div>
                             </Box>
                         </>
@@ -90,15 +91,17 @@ export default function Settings() {
                             :
                             <>
                                 <Box title="Зміна паролю">
-                                    <Input name="Старий пароль" />
-                                    <Input name="Новий пароль" />
-                                    <Input name="Підтвердити новий пароль" />
+                                    <div className={styles.input}>
+                                        <Input type="password" name="Старий пароль" />
+                                        <Input type="password" name="Новий пароль" />
+                                        <Input type="password" name="Підтвердити новий пароль" />
+                                    </div>
                                 </Box>
                                 <Box title="Видалення аккаунту">
-                                    <Button Style="unbackground">
+                                    <Button Style="red">
                                         Видалити аккаунт
                                     </Button>
-                                    <Button Style="unbackground" className={styles.mg10}>
+                                    <Button Style="red" className={styles.mg10}>
                                         Вимкнути аккаунт
                                     </Button>
                                 </Box>

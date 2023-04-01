@@ -10,7 +10,7 @@ export default function Box({title, children}:IBox) {
             <div className={styles.boxTop}>
                 <h1>{title}</h1>
             </div>
-            <div className="middle">
+            <div className={styles.middle}>
                 {children}
             </div>
         </div>
