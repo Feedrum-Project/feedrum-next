@@ -50,7 +50,7 @@ export default function Select({name, values, info="Інформація від�
                         values.map(e => {
                             return <div
                                 key={e}
-                                style={e === choosed ? { fontWeight: "600", color: "#fff"} : undefined}
+                                style={e === choosed ? { color: "#fff"} : undefined}
                                 onClick={() => {
                                     setChoosed(e);
                                 }}>

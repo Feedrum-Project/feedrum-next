@@ -21,7 +21,7 @@ export default function Input(
         placeholder,
         disabled=false,
         value="",
-        info="Інформація відсутня"
+        info
     }:InputProps) {
 
     const [show, setShow] = useState<{show: boolean, coords: {x: number, y: number}}>({show: false, coords: {x: 0, y: 0}});
@@ -42,7 +42,9 @@ export default function Input(
                     onMouseLeave={() => {
                         setShow({show: false, coords: {x: 0, y: 0}});
                     }}>
-                    <Image src={question} alt="Запитання."/>
+                    {
+                        info ? <Image src={question} alt="Запитання."/> : null
+                    }
                 </div>
             </div>
             <div className={styles.inputSquareBottom}>
@@ -65,7 +67,7 @@ export default function Input(
                 }
             </div>
             {
-                show.show ? <PopUp info={info} coords={show.coords} /> : null
+                show.show && info !== undefined ? <PopUp info={info} coords={show.coords} /> : null
             }
         </div>
     );

@@ -18,10 +18,19 @@ export default function Search({Type, Placeholder, className}:InputProps) {
   
     return (
         <div onClick={onFocus} className={styles[className]}>
-            <input ref={ref} type={Type} placeholder={Placeholder} className={styles.inputInside} />
-            <button className={styles.inputButton}>
-                <Image src={search} alt="Пошук" />
-            </button>
+            <form action="/search" method="get">
+                <input
+                    name="q"
+                    ref={ref}
+                    type={Type}
+                    placeholder={Placeholder}
+                    className={styles.inputInside}
+                />
+                <button
+                    className={styles.inputButton}>
+                    <Image src={search} alt="Пошук" />
+                </button>
+            </form>
         </div>
     );
 }

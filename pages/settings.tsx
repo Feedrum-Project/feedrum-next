@@ -16,7 +16,7 @@ export default function Settings() {
     return (
         <div className={styles.settings}>
             
-            <div className={styles.chapters}>
+            <aside className={styles.chapters}>
                 <h1>Розділи</h1>
                 <div className={styles.chaptersBottom}>
                     <div
@@ -41,7 +41,7 @@ export default function Settings() {
                                 : undefined
                         }>Безпека</div>
                 </div>
-            </div>
+            </aside>
             <div className={styles.boxs}>
                 {
                     chapter === "profile" ?
@@ -82,7 +82,7 @@ export default function Settings() {
                                         info="Де ви працюєте?"/>
                                     <Select
                                         name="Країна"
-                                        values={["Україна","Польща","Словакія"]}
+                                        values={["Україна","Польща","Словаччина"]}
                                         info="Оберіть країну в якій ви наразі."/>
                                     <div className={styles.admit}>
                                         <Button Style="purple" type="submit">Змінити</Button>
