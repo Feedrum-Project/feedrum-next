@@ -48,30 +48,44 @@ export default function Settings() {
                         <>
                             <Box title="Профіль">
                                 <div className={styles.input}>
-                                    <Input value={user.name} name="Ім'я" placeholder="Ім'я"/>
-                                    <Input value={user.email} name="Пошта" placeholder="E-mail"/>
+                                    <Input
+                                        value={user.name}
+                                        name="Ім'я"
+                                        placeholder="Ім'я"
+                                        info="Ваше ім'я."/>
+                                    <Input
+                                        value={user.email}
+                                        name="Пошта"
+                                        placeholder="E-mail"
+                                        info="Поштова скринька."/>
                                 </div>
                                 <Checkbox>
                                     Відображати пошту у публічному профілі
                                 </Checkbox>
                                 <div className={styles.admit}>
-                                    <Button Style="purple" type="submit">Зберегти</Button>
+                                    <Button Style="purple" type="submit">Змінити</Button>
                                 </div>
                             </Box>
                             <Box title="Про себе">
                                 <div className={styles.input}>
                                     <Input
                                         placeholder="Інформація про себе"
-                                        name="Трохи про себе"/>
+                                        name="Трохи про себе"
+                                        info="Ваш опс, можливо автобіобрафія."/>
                                     <Input
                                         placeholder="https://feedrum.com"
-                                        name="Вебсайт"/>
+                                        name="Вебсайт"
+                                        info="Ваша сторінка."/>
                                     <Input
                                         placeholder="Feedrum"
-                                        name="Організаці"/>
-                                    <Select name="Країна" values={["Україна","Польща","Словакія"]}/>
+                                        name="Організаці"
+                                        info="Де ви працюєте?"/>
+                                    <Select
+                                        name="Країна"
+                                        values={["Україна","Польща","Словакія"]}
+                                        info="Оберіть країну в якій ви наразі."/>
                                     <div className={styles.admit}>
-                                        <Button Style="purple" type="submit">Зберегти</Button>
+                                        <Button Style="purple" type="submit">Змінити</Button>
                                     </div>
                                 </div>
                             </Box>
@@ -89,9 +103,15 @@ export default function Settings() {
                             <>
                                 <Box title="Зміна паролю">
                                     <div className={styles.input}>
-                                        <Input type="password" name="Старий пароль" />
-                                        <Input type="password" name="Новий пароль" />
-                                        <Input type="password" name="Підтвердити новий пароль" />
+                                        <Input
+                                            type="password"
+                                            name="Старий пароль" />
+                                        <Input
+                                            type="password"
+                                            name="Новий пароль" />
+                                        <Input
+                                            type="password"
+                                            name="Підтвердити новий пароль" />
                                     </div>
                                 </Box>
                                 <Box title="Видалення аккаунту">

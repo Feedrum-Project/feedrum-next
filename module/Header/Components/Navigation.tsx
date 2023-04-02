@@ -50,14 +50,16 @@ export default function Navigation() {
     } else {
         Logged = (
             <>
-                <Link href="/registration">
-                    <Button Style="purple">Зареєструватись</Button>
-                </Link>
-                <Link href="/login">
-                    <div className={styles.navLogin}>
-                        <Button className={styles.navLogin} Style="standart">Увійти</Button>
-                    </div>
-                </Link>
+                <div className={styles.centr}>
+                    <Link href="/registration">
+                        <Button Style="purple">Зареєструватись</Button>
+                    </Link>
+                    <Link href="/login">
+                        <div className={styles.navLogin}>
+                            <Button className={styles.navLogin} Style="standart">Увійти</Button>
+                        </div>
+                    </Link>
+                </div>
             </>
         );
     }

@@ -10,6 +10,9 @@
     display: flex
     align-items: center
     justify-content: space-between
+    
+    &>.info
+        user-select: none
 
 .name
     font-weight: 400
@@ -19,10 +22,19 @@
 .field
     padding: .375rem .625rem .625rem .625rem
 
+    &>*.value
+        display: flex
+        justify-content: space-between
+        user-select: none
+
 .list
     background: 0
     border: 0
     color: $white
+    margin: 1.25rem 0 0 0
 
     &>*
-        background: red
+        margin: 0 0 .625rem 0
+        color: $gray
+        font-size: .875rem
+        user-select: none
