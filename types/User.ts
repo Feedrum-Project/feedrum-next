@@ -6,3 +6,8 @@ export interface IUser {
   createdAt: string | Date;
   isVerified: boolean;
 }
+
+export interface IUserExtended extends IUser {
+  description: string;
+  subscribers: number;
+}

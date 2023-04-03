@@ -1,13 +1,14 @@
 import styles from "../styles/search.module.sass";
 import { IPost, IComment } from "types/Post";
-import { IUser } from "types/User";
+import { IUserExtended } from "types/User";
 import { useState } from "react";
 import Post from "module/Post/Post";
+import User from "components/User/User";
 
 interface IResult {
-    posts: IPost[] | null;
-    users: IUser[] | null;
-    comments: IComment[] | null;
+    posts: IPost[];
+    users: IUserExtended[];
+    comments: IComment[];
 }
 
 export default function Search({result}:{result: IResult}) {
@@ -25,16 +26,25 @@ export default function Search({result}:{result: IResult}) {
                                 <button>Абеткувати</button>
                             </div>
                             {
-                                result.posts ? result.posts.map(e => {
+                                result.posts.length !== 0 ? result.posts.map(e => {
                                     return (
                                         <Post key={e.id} postData={e}/>
                                     );
-                                }) : null
+                                }) : <h1>Ми не знайшли статті :(</h1>
                             }
                         </>
                         : chapter === "users" ?
                             <>
-                                <h1>users</h1>
+                                <div className={styles.sort}>
+                                    <button>Найновіщі</button>
+                                    <button>Найкращі</button>
+                                    <button>Абеткувати</button>
+                                </div>
+                                {
+                                    result.users.length !== 0 ? result.users.map(e => {
+                                        return <User user={e as any} key={e.id}/>;
+                                    }) : <h1>Ми не знайшли користувачів :(</h1>
+                                }
                             </> :
                             <>
                                 <h1>comments</h1>
@@ -86,7 +96,28 @@ export function getServerSideProps(ctx: any) {
             },
             
         ],
-        users: [],
+        users: [
+            {
+                id: 1,
+                name: "Elias",
+                email: "elias@feedrum.com",
+                createdAt: new Date(Math.random() * 1000000000000).toString(),
+                rank:506,
+                isVerified:true,
+                description: "Житомир - це найкраще місце на усій планеті. Саме там я і народився і жив довго та цікаво",
+                subscribers: 231
+            },
+            {
+                id: 77,
+                name: "Elias2.0",
+                email: "elias2@feedrum.com",
+                createdAt: new Date(Math.random() * 1000000000000).toString(),
+                rank:-72,
+                isVerified:true,
+                description: "Житомир - це найкраще місце на усій планеті. Саме там я і народився і жив довго та цікаво",
+                subscribers: 2
+            },
+        ],
         comments: []
     };
     return {

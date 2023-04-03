@@ -24,6 +24,8 @@ interface IPostPage {
 }
 
 export default function Post({postContent, postComments, author}:IPostPage) {
+    if(!postContent) return <h1 style={{color:"#eee"}}>Статті не було знайдено</h1>;
+
     const user = useSelector((state: {user: IUser}) => state.user);
     const [attention, setAttention] = useState<{code: number, message: string} | null   >(null);
 
@@ -163,6 +165,13 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
     });
     const commentsParsed = JSON.parse(JSON.stringify(commentsPreparing));
 
+    if(postParsed === null) {
+        return {
+            props: {
+    
+            }
+        };
+    }
     const author = await prisma.user.getUserById(postParsed.userId);
     const authorParsed = JSON.parse(JSON.stringify(author));
 

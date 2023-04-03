@@ -1,0 +1,38 @@
+@import ../../../styles/variables
+
+.user
+    display: flex
+    align-items: center
+    justify-content: space-between
+    background: $block
+    border: 1px solid $border
+    border-radius: .5625rem
+    padding: 1rem
+    color: $white
+    width: 100%
+    margin: 0 0 1.25rem 0
+
+    &Left
+        display: flex
+        align-items: center
+        justify-content: space-between
+        width: 23.25rem
+        height: 5.25rem
+
+        &>.details
+            display: flex
+            flex-direction: column
+            // justify-content: space-between
+            width: 18.25rem
+            height: 100%
+
+            &>.nickname
+                margin: 0 0 .875rem 0
+                &>*:first-child
+                    font-size: 1.25rem
+                    font-weight: 600
+                    margin: 0 .625rem 0 0
+
+            &>.description
+                font-size: .875rem
+                color: $gray
