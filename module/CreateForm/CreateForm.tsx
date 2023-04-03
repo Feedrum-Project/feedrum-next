@@ -4,7 +4,7 @@ import Editor from "./Components/Editor";
 import Link from "next/link";
 import { Button } from "components/UI";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 interface ISelects {
     header?: boolean;
@@ -20,7 +20,11 @@ export default function CreateForm({texts: [texts, setText]}: any) {
     useEffect(() => {
         window.addEventListener("keydown", (e) => {
             setTimeout(() => {
-                const tag = window.getSelection()?.focusNode?.parentNode.tagName.toLowerCase();
+                const parent = window.getSelection()?.focusNode as HTMLElement;
+                if(!parent || !parent.parentNode) return;
+                const tagName = parent.parentNode as HTMLElement;
+                const tag = tagName.tagName.toLowerCase();
+
                 if(!tag) return;
                 switch(tag) {
                 case "p":
@@ -86,14 +90,23 @@ export default function CreateForm({texts: [texts, setText]}: any) {
         );
     }
 
+    function sub(e: FormEvent & {target: {data: any}}) {
+        e.preventDefault();
+        const data: HTMLTextAreaElement = e.target.data;
+
+        console.log(data.value);
+    }
+
     return (
         <>
             <Panel selects={selects}/>
-            <Editor selects={selects} text={[texts, setText]}/>
-            <div className={styles.buttons}>
-                <Button Style="purple">Оприлюднити</Button>
-                <Button Style="standart">Зберегти як чорнетка</Button>
-            </div>
+            <form method="post" onSubmit={(e: any) => sub(e)}>
+                <Editor selects={selects} text={[texts, setText]}/>
+                <div className={styles.buttons}>
+                    <Button type="submit" Style="purple">Оприлюднити</Button>
+                    <Button Style="standart">Зберегти як чорнетка</Button>
+                </div>
+            </form>
         </>
     );
 }

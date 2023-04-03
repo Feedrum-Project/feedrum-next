@@ -33,9 +33,10 @@ export default function Editor(
                 parser.HTMLtoMD(target.innerText) === "" ? target.remove() : null;
                 localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
                 setValue(parser.HTMLtoMD(current.innerHTML));
+                setText(value);
             }, 25);
         });
-    }, []);
+    });
 
     return (
         <div className={styles.editor}>
@@ -51,6 +52,11 @@ export default function Editor(
                         {__html: parser.MDtoHTML(texts)}}
                 >
                 </div>
+                <textarea
+                    name="data"
+                    value={value}
+                    readOnly={true}
+                    style={{display:"none"}}></textarea>
             </div>
             {
                 value.length === 0 ?
