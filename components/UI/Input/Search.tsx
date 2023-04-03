@@ -9,7 +9,7 @@ interface InputProps {
   className:string
 }
 
-export default function Search({Type, Placeholder, className}:InputProps) {
+export default function Search({Type, Placeholder, className}: InputProps) {
 
     const ref:any = useRef(null);
     function onFocus() {
@@ -25,6 +25,7 @@ export default function Search({Type, Placeholder, className}:InputProps) {
                     type={Type}
                     placeholder={Placeholder}
                     className={styles.inputInside}
+                    maxLength={24}
                 />
                 <button
                     className={styles.inputButton}>

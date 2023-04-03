@@ -36,7 +36,7 @@ export default function Select({name, values, info="Інформація від�
                 className={styles.field}>
                 <div className={styles.value}
                     onClick={() => setOpened(pr => !pr)}>
-                    <span>{choosed}</span>
+                    <button className={styles.choosed}>{choosed}</button>
                     <div className="symbol">
                         {
                             opened ? <Image src={arrowTop} alt="Відкрити список"/> : <Image src={arrowBottom} alt="Зачинити список"/>
@@ -48,14 +48,14 @@ export default function Select({name, values, info="Інформація від�
                     className={styles.list}>
                     {
                         values.map(e => {
-                            return <div
+                            return <button
                                 key={e}
                                 style={e === choosed ? { color: "#fff"} : undefined}
                                 onClick={() => {
                                     setChoosed(e);
                                 }}>
                                 {e}
-                            </div>;
+                            </button>;
                         })
                     }
                 </div>

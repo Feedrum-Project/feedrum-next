@@ -24,15 +24,15 @@ export default function Footer() {
                     <li><Link href="/register">Реєстрація</Link></li>
                 </ul>
                 <div className={styles.dots}>
-                    <div className="dot">
+                    <button>
                         <Image src={telegram} alt="telegram"/>
-                    </div>
-                    <div className="dot">
+                    </button>
+                    <button>
                         <Image src={youtube} alt="youtube"/>
-                    </div>
-                    <div className="dot">
+                    </button>
+                    <button>
                         <Image src={discord} alt="discord"/>
-                    </div>
+                    </button>
                 </div>
             </div>
             <div className={styles.footerBottom}>

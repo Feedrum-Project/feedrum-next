@@ -36,8 +36,7 @@ export default function Search({result}:{result: IResult}) {
                         : chapter === "users" ?
                             <>
                                 <div className={styles.sort}>
-                                    <button>Найновіщі</button>
-                                    <button>Найкращі</button>
+                                    <button>Популярні</button>
                                     <button>Абеткувати</button>
                                 </div>
                                 {
@@ -47,7 +46,13 @@ export default function Search({result}:{result: IResult}) {
                                 }
                             </> :
                             <>
-                                <h1>comments</h1>
+                                <div className={styles.sort}>
+                                    <button>Популярні</button>
+                                    <button>Абеткувати</button>
+                                </div>
+                                <h1 style={{color: "#fff"}}>
+                                    Без коментарів
+                                </h1>
                             </>
                 }
             </div>
@@ -55,15 +60,15 @@ export default function Search({result}:{result: IResult}) {
                 <h1 className={styles.chaptersTop}>Тип</h1>
                 <div className={styles.chaptersBottom}>
                     <button 
-                        className={[styles.chapter, chapter === "posts" ? styles.selected : undefined].join("")}
+                        className={[styles.chapter, chapter === "posts" ? styles.selected : undefined].join(" ")}
                         onClick={() => setChapter("posts")}
                         id="1">Пости</button>
                     <button 
-                        className={[styles.chapter, chapter === "users" ? styles.selected : undefined].join("")}
+                        className={[styles.chapter, chapter === "users" ? styles.selected : undefined].join(" ")}
                         onClick={() => setChapter("users")}
                         id="2">Користувачі</button>
                     <button 
-                        className={[styles.chapter, chapter === "comments" ? styles.selected : undefined].join("")}
+                        className={[styles.chapter, chapter === "comments" ? styles.selected : undefined].join(" ")}
                         onClick={() => setChapter("comments")}
                         id="3">Коментарі</button>
                 </div>
