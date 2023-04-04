@@ -15,11 +15,11 @@ export default function LoginForm() {
     const user = useSelector((state: any) => state.user);
     const dispatch = useDispatch();
 
-    function prepare(event: FormEvent & {target: {"Пошта": {value: string}, "Пароль": {value: string} }}) {
+    function prepare(event: FormEvent & {target: {email: {value: string}, password: {value: string} }}) {
         event.preventDefault();
         const body:bodyObj = {
-            email: event.target["Пошта"].value,
-            password: event.target["Пароль"].value
+            email: event.target.email.value,
+            password: event.target.password.value
         };
         login(body)
             .then(e => {
@@ -48,8 +48,20 @@ export default function LoginForm() {
                         : message?.code === 400 ? <h1 style={{color: "#F36A6A"}}>{message.message}</h1> : <h1 style={{color:"#6AEA3D"}}>Ви увійшли в обліковий запис.</h1>
                 }
                 <div className={styles.loginMiddle}>
-                    <Input disabled={user !== null && user.id !== -1} type="text" name="Пошта" placeholder="Пошта"/>
-                    <Input disabled={user !== null && user.id !== -1} type="password" name="Пароль" placeholder="Пароль"/>
+                    <Input
+                        disabled={user !== null && user.id !== -1}
+                        type="text"
+                        name="email"
+                        Name="Пошта"
+                        placeholder="Пошта"
+                    />
+                    <Input
+                        disabled={user !== null && user.id !== -1}
+                        type="password"
+                        name="password"
+                        Name="Пароль"
+                        placeholder="Пароль"
+                    />
                     <Link href="/forgetPassword" className={styles.forgetPassword}>Забув&nbsp;пароль?</Link>
                 </div>
                 <div className={styles.loginBottom}>

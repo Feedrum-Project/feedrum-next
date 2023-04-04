@@ -50,12 +50,12 @@ export default function Settings() {
                                 <div className={styles.input}>
                                     <Input
                                         value={user.name}
-                                        name="Ім'я"
+                                        Name="Ім'я"
                                         placeholder="Ім'я"
                                         info="Ваше ім'я."/>
                                     <Input
                                         value={user.email}
-                                        name="Пошта"
+                                        Name="Пошта"
                                         placeholder="E-mail"
                                         info="Поштова скринька."/>
                                 </div>
@@ -70,15 +70,15 @@ export default function Settings() {
                                 <div className={styles.input}>
                                     <Input
                                         placeholder="Інформація про себе"
-                                        name="Трохи про себе"
+                                        Name="Трохи про себе"
                                         info="Ваш опс, можливо автобіобрафія."/>
                                     <Input
                                         placeholder="https://feedrum.com"
-                                        name="Вебсайт"
+                                        Name="Вебсайт"
                                         info="Ваша сторінка."/>
                                     <Input
                                         placeholder="Feedrum"
-                                        name="Організаці"
+                                        Name="Організаці"
                                         info="Де ви працюєте?"/>
                                     <Select
                                         name="Країна"
@@ -105,13 +105,13 @@ export default function Settings() {
                                     <div className={styles.input}>
                                         <Input
                                             type="password"
-                                            name="Старий пароль" />
+                                            Name="Старий пароль" />
                                         <Input
                                             type="password"
-                                            name="Новий пароль" />
+                                            Name="Новий пароль" />
                                         <Input
                                             type="password"
-                                            name="Підтвердити новий пароль" />
+                                            Name="Підтвердити новий пароль" />
                                     </div>
                                 </Box>
                                 <Box title="Видалення аккаунту">

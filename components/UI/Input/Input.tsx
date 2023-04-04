@@ -8,7 +8,8 @@ import { useState } from "react";
 interface InputProps {
   type?:string;
   placeholder?:string;
-  name:string;
+  Name: string;
+  name?:string;
   disabled?: boolean;
   value?: string;
   info?: string;
@@ -17,6 +18,7 @@ interface InputProps {
 export default function Input(
     {
         type="text",
+        Name,
         name,
         placeholder,
         disabled=false,
@@ -26,13 +28,13 @@ export default function Input(
 
     const [show, setShow] = useState<{show: boolean, coords: {x: number, y: number}}>({show: false, coords: {x: 0, y: 0}});
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [valueInp, setValue] = useState(value);
+    const [valueInp, setValue] = useState<string>(value);
 
     return (
         <div className={styles.inputSquare}>
             <div className={styles.inputSquareName}>
                 <span>
-                    {name}
+                    {Name}
                 </span>
                 <div
                     className={styles.info}

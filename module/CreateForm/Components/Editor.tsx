@@ -33,7 +33,6 @@ export default function Editor(
                 parser.HTMLtoMD(target.innerText) === "" ? target.remove() : null;
                 localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
                 setValue(parser.HTMLtoMD(current.innerHTML));
-                setText(value);
             }, 25);
         });
     });

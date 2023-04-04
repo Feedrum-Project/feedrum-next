@@ -13,10 +13,10 @@ interface bodyObj {
 
 interface IFormExtneder {
     target: {
-        "Ім'я": { value: string };
-        "Пошта": { value: string };
-        "Пароль": { value: string };
-        "Підтвердіть пароль": { value: string };
+        name: { value: string };
+        email: { value: string };
+        password1: { value: string };
+        password2: { value: string };
     }
 }
 
@@ -27,10 +27,10 @@ export default function RegistrationForm() {
     async function prepare(e: FormEvent & IFormExtneder) {
         e.preventDefault();
         const body:bodyObj = {
-            "name": e.target["Ім'я"].value,
-            "email": e.target["Пошта"].value,
-            "password1": e.target["Пароль"].value,
-            "password2": e.target["Підтвердіть пароль"].value
+            name: e.target.name.value,
+            email: e.target.email.value,
+            password1: e.target.password1.value,
+            password2: e.target.password2.value
         };
         const user = await registrate(body);
         if(user.code === 200) {
@@ -60,10 +60,10 @@ export default function RegistrationForm() {
                     </>
             }
             <div className={styles.registrationMiddle}>
-                <Input type="email" name="Пошта" placeholder="Пошта"/>
-                <Input type="text" name="Ім'я" placeholder="Ім'я"/>
-                <Input type="password" name="Пароль" placeholder="Пароль"/>
-                <Input type="password" name="Підтвердіть пароль" placeholder="Підтвердіть пароль"/>
+                <Input type="email" name="email" Name="Пошта" placeholder="Пошта"/>
+                <Input type="text" name="name" Name="Ім'я" placeholder="Ім'я"/>
+                <Input type="password" name="password1" Name="Пароль" placeholder="Пароль"/>
+                <Input type="password" name="password2" Name="Підтвердіть пароль" placeholder="Підтвердіть пароль"/>
             </div>
             <div className={styles.registrationBottom}>
                 <Button Style="purple" type="submit">Зареєструватися</Button>

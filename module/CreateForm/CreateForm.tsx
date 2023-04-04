@@ -90,23 +90,14 @@ export default function CreateForm({texts: [texts, setText]}: any) {
         );
     }
 
-    function sub(e: FormEvent & {target: {data: any}}) {
-        e.preventDefault();
-        const data: HTMLTextAreaElement = e.target.data;
-
-        console.log(data.value);
-    }
-
     return (
         <>
             <Panel selects={selects}/>
-            <form method="post" onSubmit={(e: any) => sub(e)}>
-                <Editor selects={selects} text={[texts, setText]}/>
-                <div className={styles.buttons}>
-                    <Button type="submit" Style="purple">Оприлюднити</Button>
-                    <Button Style="standart">Зберегти як чорнетка</Button>
-                </div>
-            </form>
+            <Editor selects={selects} text={[texts, setText]}/>
+            <div className={styles.buttons}>
+                <Button type="submit" Style="purple">Оприлюднити</Button>
+                <Button Style="standart">Зберегти як чорнетка</Button>
+            </div>
         </>
     );
 }
