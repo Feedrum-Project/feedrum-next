@@ -1,10 +1,10 @@
 import styles from "../styles/form.module.sass";
 import Image from "next/image";
-import Heading from "../../../images/createPost/Heading.svg";
-import Italic from "../../../images/createPost/Italic.svg";
-import Linked from "../../../images/createPost/Link.svg";
-import Bold from "../../../images/createPost/Bold.svg";
-import Imagged from "../../../images/createPost/Image.svg";
+import Heading from "images/createPost/Heading.svg";
+import Italic from "images/createPost/Italic.svg";
+import Linked from "images/createPost/Link.svg";
+import Bold from "images/createPost/Bold.svg";
+import Imagged from "images/createPost/Image.svg";
 import text from "../helpers/text";
 
 interface ISelects {

@@ -70,7 +70,7 @@ export default function Editor(
                 <Button
                     Style="purple"
                     onClick={() => {
-                        text.createElement(textField,"p");
+                        text.createElement(textField, "p");
                         if(!textField.current) return;
                         const current = textField.current as HTMLElement;
                         localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
@@ -81,7 +81,7 @@ export default function Editor(
                 <Button
                     Style="purple"
                     onClick={() => {
-                        text.createElement(textField,"h1");
+                        text.createElement(textField, "h1");
                         if(!textField.current) return;
                         const current = textField.current as HTMLElement;
                         localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));

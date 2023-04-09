@@ -1,26 +1,26 @@
-import { MutableRefObject } from "react";
+import { ElementType, MutableRefObject } from "react";
 
-const enum ElementType {
-    p="p",
-    bold="strong",
-    b="strong",
-    strong="strong",
-    italic="i",
-    i="i",
-    sup="sup",
-    sub="sub",
-    del="del",
-    strike="del",
-    u="u",
-    h1="h1",
-    h2="h2",
-    mono="pre"
-}
+const ElementType = {
+    p: "p",
+    bold: "strong",
+    b: "strong",
+    strong: "strong",
+    italic: "i",
+    i: "i",
+    sup: "sup",
+    sub: "sub",
+    del: "del",
+    strike: "del",
+    u: "u",
+    h1: "h1",
+    h2: "h2",
+    mono: "pre"
+};
 
 export function specify(element: string) {
     const selection = window.getSelection();
 
-    const spec = document.createElement(ElementType[element]);
+    const spec = document.createElement(ElementType[element as keyof ElementType]);
     selection?.getRangeAt(0).surroundContents(spec);
 }
 
@@ -30,7 +30,7 @@ export function createElement(ref: MutableRefObject<HTMLDivElement | null>, type
     const current = ref.current;
     if(!current) return;
 
-    const elem = document.createElement(ElementType[type] === undefined ? "p" : ElementType[type]);
+    const elem: HTMLElement = document.createElement(ElementType[type as keyof ElementType]);
     elem.textContent = "Новий елемент";
     elem.contentEditable = "true";
     elem.style.outline = "none";

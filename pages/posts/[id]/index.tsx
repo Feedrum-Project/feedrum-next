@@ -24,7 +24,6 @@ interface IPostPage {
 }
 
 export default function Post({postContent, postComments, author}:IPostPage) {
-    if(!postContent) return <h1 style={{color:"#eee"}}>Статті не було знайдено</h1>;
 
     const user = useSelector((state: {user: IUser}) => state.user);
     const [attention, setAttention] = useState<{code: number, message: string} | null   >(null);
@@ -56,6 +55,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
         }
     },[postContent.body]);
 
+    if(author.id === -1) return <h1 style={{color:"#eee"}}>Статті не було знайдено</h1>;
     return (
         <div className={styles.main}>
             <div className={styles.post}>
@@ -168,7 +168,11 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
     if(postParsed === null) {
         return {
             props: {
-    
+                postContent: {
+                    body: "We didnt found it"
+                },
+                postComments: 0,
+                author: {id: -1}
             }
         };
     }
