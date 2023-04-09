@@ -30,7 +30,6 @@ export default function Editor(
             const target = e.target as HTMLElement;
 
             setTimeout(() => {
-                parser.HTMLtoMD(target.innerText) === "" ? target.remove() : null;
                 localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
                 setValue(parser.HTMLtoMD(current.innerHTML));
             }, 25);
@@ -46,16 +45,18 @@ export default function Editor(
                 </div>
                 <div
                     className={styles.editorContent}
-                    ref={textField}
+                    ref={textField} // here problem, soon has to fix it.
                     dangerouslySetInnerHTML={
-                        {__html: parser.MDtoHTML(texts)}}
+                        {__html: parser.MDtoHTML(texts)}
+                    }
                 >
                 </div>
                 <textarea
                     name="data"
                     value={value}
                     readOnly={true}
-                    style={{display:"none"}}></textarea>
+                    style={{display:"none"}}>
+                </textarea>
             </div>
             {
                 value.length === 0 ?

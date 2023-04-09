@@ -1,10 +1,8 @@
 import styles from "./styles/form.module.sass";
 import Panel from "./Components/Panel";
 import Editor from "./Components/Editor";
-import Link from "next/link";
 import { Button } from "components/UI";
-import { useSelector } from "react-redux";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ISelects {
     header?: boolean;
@@ -14,7 +12,6 @@ interface ISelects {
 }
 
 export default function CreateForm({texts: [texts, setText]}: any) {
-    const user = useSelector((state: any) => state.user);
     const selects = useState<ISelects>({header: false});
 
     useEffect(() => {
@@ -76,19 +73,6 @@ export default function CreateForm({texts: [texts, setText]}: any) {
 
         });
     });
-
-    if(user === null || user.id === -1) {
-        return (
-            <div>
-                <h1 style={{color: "#fff"}}>
-                    Ви маєте&nbsp;
-                    <Link href="/login">увійти</Link>&nbsp;
-                    або&nbsp;
-                    <Link href="/registration">зареєструватися</Link>.
-                </h1>
-            </div>
-        );
-    }
 
     return (
         <>

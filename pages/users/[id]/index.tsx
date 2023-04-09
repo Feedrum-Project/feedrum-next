@@ -33,10 +33,10 @@ export default function User({userInformation, userPosts}:UserProps) {
                         <span className={styles.nameNick}>{userInformation.name}</span>
                     </div>
                     <div className={styles.profileAside}>
-                        <Button Style="purple">Підписатися</Button>
                         <Rank
                             info={userInformation}
                             disabled={user.id === userInformation.id}/>
+                        <Button Style="purple">Підписатися</Button>
                     </div>
                 </div>
                 <div className={styles.sort}>

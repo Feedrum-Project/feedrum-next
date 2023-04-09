@@ -1,12 +1,17 @@
 import CreateForm from "module/CreateForm/CreateForm";
 import styles from "../styles/create.module.sass";
 import { Input } from "components/UI";
+import Link from "next/link";
+import Script from "next/script";
 import { FormEvent, useEffect, useState } from "react";
 import parser from "helpers/parsers.helper";
+import { useSelector } from "react-redux";
+import { IUser } from "types/User";
 
 export default function CreatePost() {
     const [chapter, setChapter] = useState<"editor" | "view">("editor");
     const [texts, setText] = useState<string>("");
+    const user = useSelector((state:{user: IUser}) => state.user);
 
     useEffect(() => {
         const item = localStorage.getItem("article");
@@ -18,6 +23,14 @@ export default function CreatePost() {
         const { value }: HTMLTextAreaElement = e.target.data;
         console.log(e.target);
         if(value.length < 100) return;
+    }
+
+    if(user === null || user.id === -1) {
+        return (
+            <Script id="0">
+                location.href = &#34;/login&#34;
+            </Script>
+        );
     }
 
     return (
