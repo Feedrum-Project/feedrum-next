@@ -1,7 +1,6 @@
 import CreateForm from "module/CreateForm/CreateForm";
 import styles from "../styles/create.module.sass";
 import { Input } from "components/UI";
-import Link from "next/link";
 import Script from "next/script";
 import { FormEvent, useEffect, useState } from "react";
 import parser from "helpers/parsers.helper";
@@ -25,7 +24,7 @@ export default function CreatePost() {
         if(value.length < 100) return;
     }
 
-    if(user === null || user.id === -1) {
+    if(user.id === -1) {
         return (
             <Script id="0">
                 location.href = &#34;/login&#34;

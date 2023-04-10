@@ -21,20 +21,23 @@ export default function Editor(
         text: any;
     }) {
     const textField = useRef(null);
-    const [value, setValue] = useState(texts);
+    const [value, setValue] = useState<string>(texts);
 
     useEffect(() => {
+        setValue(localStorage.getItem("article") !== null ? localStorage.getItem("article") : texts);
+
         window.addEventListener("keydown", (e) => {
             if(!textField.current) return;
             const current = textField.current as HTMLElement;
             const target = e.target as HTMLElement;
-
             setTimeout(() => {
+                target.innerText.length <= 1 && target.localName !== "input" ? target.remove() : null;
                 localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
                 setValue(parser.HTMLtoMD(current.innerHTML));
+                setText(parser.HTMLtoMD(current.innerHTML));
             }, 25);
         });
-    });
+    }, []);
 
     return (
         <div className={styles.editor}>
@@ -45,9 +48,11 @@ export default function Editor(
                 </div>
                 <div
                     className={styles.editorContent}
-                    ref={textField} // here problem, soon has to fix it.
+                    ref={textField}
                     dangerouslySetInnerHTML={
-                        {__html: parser.MDtoHTML(texts)}
+                        {
+                            __html: parser.MDtoHTML(value)
+                        }
                     }
                 >
                 </div>
