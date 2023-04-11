@@ -31,6 +31,7 @@ const votePost: NextApiHandler = async (req, res) => {
 const unvotePost: NextApiHandler = async (req, res) => {
     
     const post = await PostController.unvote(req.id, req.user.id);
+    if(!post) throw new Error("Didnt found post");
 
     success(res, post);
 };

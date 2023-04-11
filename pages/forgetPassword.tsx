@@ -7,7 +7,7 @@ export default function Forget() {
                 <div className={styles.top}>
                     <h1>Забув пароль?</h1>
                 </div>
-                <Input name="Пошта" placeholder="Ласка, ваша пошта."/>
+                <Input Name="Пошта" name="Пошта" placeholder="Ласка, ваша пошта."/>
                 <div className={styles.bottom}>
                     <Button Style="standart">Назад</Button>
                     <Button Style="purple">Надіслати верифікацію</Button>

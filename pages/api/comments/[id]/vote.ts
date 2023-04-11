@@ -29,6 +29,7 @@ const voteComment: NextApiHandler = async (req, res) => {
 
 const unvoteComment: NextApiHandler = async (req, res) => {
     const comment = await CommentController.unvote(req.id, req.user.id);
+    if(!comment) throw new Error("Didnt found comment");
 
     success(res, comment);
 };
