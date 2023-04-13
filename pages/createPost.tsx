@@ -10,6 +10,8 @@ import { IUser } from "types/User";
 export default function CreatePost() {
     const [chapter, setChapter] = useState<"editor" | "view">("editor");
     const [texts, setText] = useState<string>("");
+    const [articleName, setName] = useState<string>("");
+
     const user = useSelector((state:{user: IUser}) => state.user);
 
     useEffect(() => {
@@ -44,26 +46,35 @@ export default function CreatePost() {
                                     name="name"
                                     placeholder="Назва вашої статті"
                                     info="Назва вашої статті"
+                                    value={articleName}
+                                    onChange={(e) => {setName(e.target.value);}}
                                 />
                                 <CreateForm texts={[texts, setText]}/>
                             </div>
                             :
-                            <div
-                                style={{color: "#fff"}}
-                                dangerouslySetInnerHTML={{__html: parser.MDtoHTML(localStorage.getItem("article")!, false)}}>
-                            </div>
+                            <>
+                                <div className="name">
+                                    <h1 style={{fontSize:"3rem", color:"#fff"}}>
+                                        {articleName === "" ? "Безвісна стаття" : articleName}
+                                    </h1>
+                                    <div
+                                        style={{color: "#fff"}}
+                                        dangerouslySetInnerHTML={{__html: parser.MDtoHTML(localStorage.getItem("article")!, false)}}>
+                                    </div>
+                                </div>
+                            </>
                     }
                     <aside className={styles.aside}>
                         <div className={styles.boxMode}>
                             <div
-                                className="edit"
+                                className={chapter === "editor" ? [styles.choosed,"edit"].join(" ") : "edit"}
                                 onClick={() => setChapter("editor")}
                                 style={chapter === "editor" ? {background:"#1b1b1b"} : undefined}
                             >
                                 Редагування
                             </div>
                             <div
-                                className="look"
+                                className={chapter === "view" ? [styles.choosed,"look"].join(" ") : "look"}
                                 onClick={() => setChapter("view")}
                                 style={chapter === "view" ? {background:"#1b1b1b"} : undefined}
                             >

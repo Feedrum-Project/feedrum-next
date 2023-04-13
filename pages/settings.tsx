@@ -20,6 +20,7 @@ export default function Settings() {
                 <h1>Розділи</h1>
                 <div className={styles.chaptersBottom}>
                     <div
+                        className={chapter === "profile" ? styles.choosed : ""}
                         onClick={() => setChapter("profile")}
                         style={
                             chapter === "profile" ?
@@ -27,6 +28,7 @@ export default function Settings() {
                                 : undefined
                         }>Профіль</div>
                     <div
+                        className={chapter === "dev" ? styles.choosed : ""}
                         onClick={() => setChapter("dev")}
                         style={
                             chapter === "dev" ?
@@ -34,6 +36,7 @@ export default function Settings() {
                                 : undefined
                         }>Інформація для розробників</div>
                     <div
+                        className={chapter === "safe" ? styles.choosed : ""}
                         onClick={() => setChapter("safe")}
                         style={
                             chapter === "safe" ?

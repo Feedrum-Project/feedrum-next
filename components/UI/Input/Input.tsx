@@ -13,6 +13,7 @@ interface InputProps {
   disabled?: boolean;
   value?: string;
   info?: string;
+  onChange?: ((e: any) => void);
 }
 
 export default function Input(
@@ -23,7 +24,8 @@ export default function Input(
         placeholder,
         disabled=false,
         value="",
-        info
+        info,
+        onChange
     }:InputProps) {
 
     const [show, setShow] = useState<{show: boolean, coords: {x: number, y: number}}>({show: false, coords: {x: 0, y: 0}});
@@ -53,6 +55,7 @@ export default function Input(
                 <input
                     onChange={(e) => {
                         setValue(e.target.value);
+                        onChange !== undefined ? onChange(e) : null;
                     }}
                     value={valueInp}
                     disabled={disabled}
