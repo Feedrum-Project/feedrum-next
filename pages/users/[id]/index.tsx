@@ -7,6 +7,7 @@ import Rank from "module/Aside/Components/Rank";
 import avatar from "images/avatar.svg";
 import styles from "./profile.module.sass";
 import message from "images/message.svg";
+import AsideInfo from "module/Aside/Components/AsideInfo";
 
 import star from "images/star.svg";
 import starG from "images/star-green.svg";
@@ -16,8 +17,8 @@ import { IUser } from "types/User";
 import { IPost } from "types/Post";
 
 interface UserProps {
-  userInformation: IUser,
-  userPosts: IPost[]
+  userInformation: IUser;
+  userPosts: IPost[];
 }
 
 export default function User({userInformation, userPosts}:UserProps) {
@@ -25,61 +26,77 @@ export default function User({userInformation, userPosts}:UserProps) {
     const dispatch = useDispatch();
 
     return (
-        <div className={styles.main}>
-            <div className={styles.profile}>
-                <div className={styles.profileTop}>
-                    <div className={styles.name}>
-                        <Image width="41" height="41" src={avatar} alt="Аватар"/>
-                        <span className={styles.nameNick}>{userInformation.name}</span>
+        <>
+            <div className={styles.main}>
+                <div className={styles.profile}>
+                    <div>
+                        <div className={styles.name}>
+                            <Image width="41" height="41" src={avatar} alt="Аватар"/>
+                            <span className={styles.nameNick}>{userInformation.name}</span>
+                        </div>
+                        {/* <div className={styles.profileAside}>
+                            <Rank
+                                info={userInformation}
+                                disabled={user.id === userInformation.id}/>
+                            <Button Style="purple">Підписатися</Button>
+                        </div> */}
                     </div>
+                    <div className={styles.sort}>
+                        <div className="post">Пости</div>
+                        <div className={styles.comments}>Коментарі</div>
+                    </div>
+                    <div className={styles.profileContent}>
+                        {
+                            userPosts.length <= 1 ?
+                                <div>
+                                    <h1 style={{width:"20rem"}}>У&nbsp;користувача відсутні свої статті.</h1>
+                                </div>
+                                : userPosts.map((e: any) => {
+                                    return (
+                                        <div key={e.id} className={styles.post}>
+                                            <div className={styles.postTime}>
+                                                {new Date(e.createdAt).toLocaleDateString()},&nbsp;
+                                                {new Date(e.createdAt).toLocaleTimeString()}
+                                            </div>
+                                            <div className={styles.postContent}>
+                                                <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: "none", color:"white"}}>
+                                                    <div className={styles.postTitle}>{e.title}</div>
+                                                </Link>
+                                                <div className={styles.postBody}>{e.body}</div>
+                                            </div>
+                                            <div className={styles.postBottom}>
+                                                <div className={styles.postComments}>
+                                                    <Image width="14" height="13" src={message} alt="Повідомлення"/>
+                                                    <span>6</span>
+                                                </div>
+                                                <div className={styles.postRank}>
+                                                    <Image width="13" height="14" src={e.rank > 0 ? starG : e.rank === 0 ? star : starR} alt="Зірка"/>
+                                                    <span
+                                                        className={e.rank > 0 ? styles.green : e.rank < 0 ? styles.red : styles.gray}>
+                                                        {e.rank}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                        }
+                    </div>
+                </div>
+                <aside className={styles.aside}>
                     <div className={styles.profileAside}>
                         <Rank
                             info={userInformation}
                             disabled={user.id === userInformation.id}/>
                         <Button Style="purple">Підписатися</Button>
                     </div>
-                </div>
-                <div className={styles.sort}>
-                    <div className="post">Пости</div>
-                    <div className={styles.comments}>Коментарі</div>
-                </div>
-                <div className={styles.profileContent}>
-                    {
-                        userPosts.length <= 1 ?
-                            <div>
-                                <h1 style={{width:"20rem"}}>У&nbsp;користувача відсутні свої статті.</h1>
-                            </div>
-                            : userPosts.map((e: any) => {
-                                return (
-                                    <div key={e.id} className={styles.post}>
-                                        <div className={styles.postTime}>
-                                            {new Date(e.createdAt).toLocaleDateString()},&nbsp;
-                                            {new Date(e.createdAt).toLocaleTimeString()}
-                                        </div>
-                                        <div className={styles.postContent}>
-                                            <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: "none", color:"white"}}>
-                                                <div className={styles.postTitle}>{e.title}</div>
-                                            </Link>
-                                            <div className={styles.postBody}>{e.body}</div>
-                                        </div>
-                                        <div className={styles.postBottom}>
-                                            <div className={styles.postComments}>
-                                                <Image width="14" height="13" src={message} alt="Повідомлення"/>
-                                                <span>6</span>
-                                            </div>
-                                            <div className={styles.postRank}>
-                                                <Image width="13" height="14" src={e.rank > 0 ? starG : e.rank === 0 ? star : starR} alt="Зірка"/>
-                                                <span
-                                                    className={e.rank > 0 ? styles.green : e.rank < 0 ? styles.red : styles.gray}>
-                                                    {e.rank}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                );
-                            })
-                    }
-                </div>
+                    <AsideInfo
+                        organisation="Щось і Колись"
+                        createdAt="23 серпня 2021"
+                        country="Україна"
+                        description="Житомир - це найкраще місце на усій планеті. Саме там я і народився"
+                    />
+                </aside>
             </div>
             {
                 user.id && user.id === userInformation.id
@@ -95,7 +112,7 @@ export default function User({userInformation, userPosts}:UserProps) {
                     </Button>
                     : null
             }
-        </div>
+        </>
     );
 }
 

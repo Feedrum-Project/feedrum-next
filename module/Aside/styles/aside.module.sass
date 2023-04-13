@@ -107,3 +107,19 @@
 @media screen and (max-width: 1305px)
   .asideUser
     margin: 0
+
+
+.aside
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+.asideInfo
+  display: flex
+  flex-wrap: wrap
+
+  &>div
+    margin: 1rem 0
+    padding: 0 .5rem
+    &>p
+      color: $gray
+      font-size: .9375rem
