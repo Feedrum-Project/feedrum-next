@@ -20,22 +20,22 @@ export default function Panel({selects}: {selects:[ISelects, any]}) {
                 selects={selects}
                 img={Heading}
                 info="Заголовок"
-                specy="h1"/>
+                specy="header"/>
             <PanelButton
                 selects={selects}
                 img={Italic}
                 info="Похилий"
-                specy="i"/>
+                specy="italic"/>
             <PanelButton
                 selects={selects}
                 img={Linked}
                 info="Посилання"
-                specy="a"/>
+                specy="link"/>
             <PanelButton
                 selects={selects}
                 img={Bold}
                 info="Товский"
-                specy="b"/>
+                specy="bold"/>
             <PanelButton
                 selects={selects}
                 img={Imagged}

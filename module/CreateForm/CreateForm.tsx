@@ -21,7 +21,6 @@ export default function CreateForm({texts: [texts, setText]}: any) {
                 if(!parent || !parent.parentNode) return;
                 const tagName = parent.parentNode as HTMLElement;
                 const tag = tagName.tagName.toLowerCase();
-
                 if(!tag) return;
                 switch(tag) {
                 case "p":

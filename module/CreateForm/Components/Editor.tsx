@@ -24,7 +24,6 @@ export default function Editor(
     const [value, setValue] = useState<string>(texts);
 
     useEffect(() => {
-        setValue(localStorage.getItem("article") !== null ? localStorage.getItem("article") : texts);
 
         window.addEventListener("keydown", (e) => {
             if(!textField.current) return;
@@ -33,7 +32,6 @@ export default function Editor(
             setTimeout(() => {
                 target.innerText.length <= 1 && target.localName !== "input" ? target.remove() : null;
                 localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
-                setValue(parser.HTMLtoMD(current.innerHTML));
                 setText(parser.HTMLtoMD(current.innerHTML));
             }, 25);
         });
@@ -44,7 +42,7 @@ export default function Editor(
             <div>
                 <div className={styles.editorInfo}>
                     <span>Контент</span>
-                    <span>{value.length} / 100 символів</span>
+                    <span>{texts.length} / 100 символів</span>
                 </div>
                 <div
                     className={styles.editorContent}

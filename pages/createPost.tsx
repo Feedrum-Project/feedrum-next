@@ -26,13 +26,13 @@ export default function CreatePost() {
         if(value.length < 100) return;
     }
 
-    if(user.id === -1) {
-        return (
-            <Script id="0">
-                location.href = &#34;/login&#34;
-            </Script>
-        );
-    }
+    // if(user.id === -1) {
+    //     return (
+    //         <Script id="0">
+    //             location.href = &#34;/login&#34;
+    //         </Script>
+    //     );
+    // }
 
     return (
         <>
@@ -53,13 +53,19 @@ export default function CreatePost() {
                             </div>
                             :
                             <>
-                                <div className="name">
-                                    <h1 style={{fontSize:"3rem", color:"#fff"}}>
+                                <div className={styles.example}>
+                                    <h1
+                                        className={styles.exampleTitle}>
                                         {articleName === "" ? "Безвісна стаття" : articleName}
                                     </h1>
                                     <div
-                                        style={{color: "#fff"}}
-                                        dangerouslySetInnerHTML={{__html: parser.MDtoHTML(localStorage.getItem("article")!, false)}}>
+                                        className={styles.exampleContent}
+                                        dangerouslySetInnerHTML={
+                                            {
+                                                __html: localStorage.getItem("article")!.length > 1 ?
+                                                    parser.MDtoHTML(localStorage.getItem("article")!, false)
+                                                    : "<p>Ви маєте ввести принаймні 100 символів.</p>"
+                                            }}>
                                     </div>
                                 </div>
                             </>
