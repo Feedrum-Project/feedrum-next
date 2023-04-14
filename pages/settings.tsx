@@ -92,6 +92,7 @@ export default function Settings() {
                                     </div>
                                 </div>
                             </Box>
+                            <Button Style="standart">Профіль</Button>
                         </>
                         : chapter === "dev" ?
                             <>

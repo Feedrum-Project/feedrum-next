@@ -14,7 +14,8 @@ const ElementType = {
     u: "u",
     h1: "h1",
     h2: "h2",
-    mono: "pre"
+    mono: "pre",
+    a: "a"
 };
 
 export function specify(element: string) {

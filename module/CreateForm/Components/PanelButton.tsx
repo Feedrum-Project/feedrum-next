@@ -4,14 +4,18 @@ import { useState } from "react";
 import Image from "next/image";
 import PopUp from "components/UI/PopUp/PopUp";
 
-interface ISelects {
-    header?: boolean;
-    italic?: boolean;
-    link?: boolean;
-    bold?: boolean;
-}
 
-export default function PanelButton({selects, img, info, specy}: any) {
+const selectsText = {
+    header: "h1",
+    italic: "i",
+    link:   "a",
+    bold:   "strong",
+    img:    "img"
+};
+
+export default function PanelButton(
+    {selects, img, info, specy}:
+    {specy: "header" | "italic" | "link" | "bold" | "img", selects: any, img: any, info: any}) {
     const [show, setShow] = useState<{show: boolean, coords: {x: number, y: number}}>({show: false, coords: {x: 0, y: 0}});
     let objs = Object.entries(selects[0]).filter((e: any) => {
         if(e[1] === true) {
@@ -23,9 +27,11 @@ export default function PanelButton({selects, img, info, specy}: any) {
     return (
         <>
             <button className={
-                objs.length < 1 ? undefined : objs[0][0] === specy ? styles.selected : undefined
+                objs.length < 1 ? styles.hovered : objs[0][0] === specy ? styles.selected : styles.hovered
             }
-            onClick={() => text.specify(specy)}
+            onClick={() => {
+                text.specify(selectsText[specy]);
+            }}
             onMouseEnter={(e) => {
                 setShow({show: true, coords: {x: e.pageX, y: e.pageY+10}});
             }}

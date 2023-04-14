@@ -24,13 +24,17 @@ export default function Editor(
     const [value, setValue] = useState<string>(texts);
 
     useEffect(() => {
-
+        setValue(localStorage.getItem("article")!);
+        console.log(value);
         window.addEventListener("keydown", (e) => {
             if(!textField.current) return;
             const current = textField.current as HTMLElement;
             const target = e.target as HTMLElement;
             setTimeout(() => {
-                target.innerText.length <= 1 && target.localName !== "input" ? target.remove() : null;
+                target.innerText.length <= 1
+                    && target.parentElement
+                    && target.parentElement.id === "editor" ?
+                    target.remove() : null;
                 localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
                 setText(parser.HTMLtoMD(current.innerHTML));
             }, 25);
@@ -42,9 +46,13 @@ export default function Editor(
             <div>
                 <div className={styles.editorInfo}>
                     <span>Контент</span>
-                    <span>{texts.length} / 100 символів</span>
+                    <span
+                        className={texts.length < 100 ? styles.red : texts.length > 500 ? styles.green : styles.orange}>
+                        {texts.length} / 100 символів
+                    </span>
                 </div>
                 <div
+                    id="editor"
                     className={styles.editorContent}
                     ref={textField}
                     dangerouslySetInnerHTML={
@@ -62,7 +70,7 @@ export default function Editor(
                 </textarea>
             </div>
             {
-                value.length === 0 ?
+                texts.length < 1 ?
                     <div>
                         <h1 className={styles.darkText}>Пусто</h1>
                         <p>Щоб додати елемент, натисність знизу.</p>
@@ -77,7 +85,7 @@ export default function Editor(
                         if(!textField.current) return;
                         const current = textField.current as HTMLElement;
                         localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
-                        setValue(parser.HTMLtoMD(current.innerHTML));
+                        setText(parser.HTMLtoMD(current.innerHTML));
                     }}>
                         Додати елемент
                 </Button>
@@ -88,7 +96,7 @@ export default function Editor(
                         if(!textField.current) return;
                         const current = textField.current as HTMLElement;
                         localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
-                        setValue(parser.HTMLtoMD(current.innerHTML));
+                        setText(parser.HTMLtoMD(current.innerHTML));
                     }}>
                         Додати заголовок
                 </Button>
