@@ -25,11 +25,11 @@ export default function Editor(
 
     useEffect(() => {
         setValue(localStorage.getItem("article")!);
-        console.log(value);
         window.addEventListener("keydown", (e) => {
             if(!textField.current) return;
             const current = textField.current as HTMLElement;
             const target = e.target as HTMLElement;
+
             setTimeout(() => {
                 target.innerText.length <= 1
                     && target.parentElement
@@ -44,13 +44,6 @@ export default function Editor(
     return (
         <div className={styles.editor}>
             <div>
-                <div className={styles.editorInfo}>
-                    <span>Контент</span>
-                    <span
-                        className={texts.length < 100 ? styles.red : texts.length > 500 ? styles.green : styles.orange}>
-                        {texts.length} / 100 символів
-                    </span>
-                </div>
                 <div
                     id="editor"
                     className={styles.editorContent}

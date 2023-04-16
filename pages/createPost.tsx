@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { IUser } from "types/User";
 
 export default function CreatePost() {
-    const [chapter, setChapter] = useState<"editor" | "view">("editor");
+    const [chapter, setChapter] = useState<"editor" | "view">("view");
     const [texts, setText] = useState<string>("");
     const [articleName, setName] = useState<string>("");
 
@@ -49,38 +49,31 @@ export default function CreatePost() {
                                     value={articleName}
                                     onChange={(e) => {setName(e.target.value);}}
                                 />
-                                <CreateForm texts={[texts, setText]}/>
+                                <div>123</div>
                             </div>
                             :
                             <>
                                 <div className={styles.example}>
                                     <h1
+                                        contentEditable="true"
                                         className={styles.exampleTitle}>
                                         {articleName === "" ? "Безвісна стаття" : articleName}
                                     </h1>
-                                    <div
-                                        className={styles.exampleContent}
-                                        dangerouslySetInnerHTML={
-                                            {
-                                                __html: localStorage.getItem("article")!.length > 1 ?
-                                                    parser.MDtoHTML(localStorage.getItem("article")!, false)
-                                                    : "<p>Ви маєте ввести принаймні 100 символів.</p>"
-                                            }}>
-                                    </div>
+                                    <CreateForm texts={[texts, setText]}/>
                                 </div>
                             </>
                     }
                     <aside className={styles.aside}>
                         <div className={styles.boxMode}>
                             <div
-                                className={chapter === "editor" ? [styles.choosed,"edit"].join(" ") : "edit"}
+                                className={"edit"}
                                 onClick={() => setChapter("editor")}
                                 style={chapter === "editor" ? {background:"#1b1b1b"} : undefined}
                             >
                                 Редагування
                             </div>
                             <div
-                                className={chapter === "view" ? [styles.choosed,"look"].join(" ") : "look"}
+                                className={"look"}
                                 onClick={() => setChapter("view")}
                                 style={chapter === "view" ? {background:"#1b1b1b"} : undefined}
                             >

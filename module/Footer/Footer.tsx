@@ -1,19 +1,15 @@
 import styles from "./styles/footer.module.sass";
 import Link from "next/link";
 import Image from "next/image";
-import telegram from "../../images/Telegram.svg";
-import youtube from "../../images/Youtube.svg";
-import discord from "../../images/Discord.svg";
+import telegram from "images/Telegram.svg";
+import youtube from "images/Youtube.svg";
+import discord from "images/Discord.svg";
+import logo from "images/logo.svg";
 
 export default function Footer() {
     return (
         <footer className={styles.footer}>
             <div className={styles.footerTop}>
-                <div className="logo">Feedrum</div>
-                <div className={styles.desc}>
-                    Соціальна платформа для
-                    україномовних девелоперів
-                </div>
             </div>
             <div className={styles.footerMiddle}>
                 <ul>
@@ -36,6 +32,16 @@ export default function Footer() {
                 </div>
             </div>
             <div className={styles.footerBottom}>
+                <div className={styles.footerBottomLeft}>
+                    <div className={styles.logo}>
+                        <Image src={logo} alt="logo"/>
+                        <span>Feedrum</span>
+                    </div>
+                    <div className={styles.desc}>
+                        Соціальна платформа для
+                        україномовних девелоперів
+                    </div>
+                </div>
                 <span>Feedrum Community © 2016 - 2023</span>
             </div>
         </footer>

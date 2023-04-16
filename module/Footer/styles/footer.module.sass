@@ -21,17 +21,32 @@
                     color: $gray
 
     &Bottom
+        display: flex
+        justify-content: space-between
+        align-items: center
         margin: 0 0 6.25rem
+
+        &Left
+            display: flex
+            flex-direction: column
+            align-items: flex-start
 
 .dots
     display: flex
     justify-content: center
-    margin: 1.625rem 0 1.875rem 0
+    margin: 2rem 0
     &>*
         margin: 0 0 0 1.875rem
         background: none
         border: none
 
 .desc
-    text-align: right
     width: 17.875rem
+
+.logo
+    display: flex
+    align-items: center
+    margin: 0 0 1rem 0
+
+    &>span
+        margin: 0 0 0 .625rem

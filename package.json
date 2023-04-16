@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^1.9.3",
     "bcryptjs": "^2.4.3",
     "formidable": "^2.1.1",
+    "highlight.js": "^11.7.0",
     "jsonwebtoken": "^8.5.1",
     "markdown-it": "^13.0.1",
     "mongodb": "^4.13.0",
