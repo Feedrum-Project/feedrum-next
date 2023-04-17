@@ -14,13 +14,14 @@ interface ISelects {
 export default function TextEditor() {
     const selects = useState<ISelects>({header: false});
     const article = localStorage.getItem("article")!;
-
     const [value, setValue] = useState<string>(article);
+
     useEffect(() => {
         window.addEventListener("keydown", ({target}: {target: HTMLElement & any}) => {
+            if(target.parentNode.id !== "editor") return;
+
             setTimeout(() => {
-                setValue(target.innerHTML);
-                console.log(value);
+                setValue(target.innerText);
             }, 10);
         });
     });
@@ -28,11 +29,11 @@ export default function TextEditor() {
     return (
         <>
             <Panel selects={selects}/>
-            <div className={[styles.editor, styles.form].join(" ")}>
+            <div className={[styles.editor, styles.form].join(" ")} id="editor">
                 <div className={styles.editorInfo}>
                     <p>Контент</p>
-                    <div className={article?.length < 100 ? styles.red : article.length > 500 ? styles.green : styles.orange}>
-                        {localStorage.getItem("article")?.length}&nbsp;
+                    <div className={value.length < 100 ? styles.red : value.length > 500 ? styles.green : styles.orange}>
+                        {value.length}&nbsp;
                         / 100
                     </div>
                 </div>

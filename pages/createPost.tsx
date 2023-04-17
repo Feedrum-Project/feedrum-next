@@ -3,7 +3,6 @@ import styles from "../styles/create.module.sass";
 import { Input } from "components/UI";
 import Script from "next/script";
 import { FormEvent, useEffect, useState } from "react";
-import parser from "helpers/parsers.helper";
 import { useSelector } from "react-redux";
 import { IUser } from "types/User";
 import TextEditor from "module/CreateForm/Components/TextEditor";

@@ -6,14 +6,19 @@ const md = new MarkdownIt();
 const html = new TurndownService();
 
 export function hightlight(text: string) {
-    let result = hljs.highlightAuto(text).value;
+    if(!text) return "";
+    let result = hljs.highlight(text, {language: "markdown"}).value;
+    result = result.replaceAll("\n\n", "<br/>");
     result = result.replaceAll("hljs-strong", "strong")
         .replaceAll("hljs-emphasis", "italic")
-        .replaceAll("hljs-meta", "meta");
+        .replaceAll("hljs-meta", "meta")
+        .replaceAll("hljs-section", "meta");
+    console.log(result);
     return result;
 }
 
 export function MDtoHTML(text: string, isEditable:boolean=true) {
+    if(!text) return "";
     let result;
     if(isEditable) {
         let rendered: (string | undefined)[] = md.render(text).split(">");
@@ -33,6 +38,7 @@ export function MDtoHTML(text: string, isEditable:boolean=true) {
     return result;
 };
 export function HTMLtoMD(text: string) {
+    if(!text) return "";
     return html.turndown(text);
 };
 const parser = {
