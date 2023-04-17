@@ -8,12 +8,18 @@ const html = new TurndownService();
 export function hightlight(text: string) {
     if(!text) return "";
     let result = hljs.highlight(text, {language: "markdown"}).value;
-    result = result.replaceAll("\n\n", "<br/>");
+    result = result.replaceAll("\n", "<br/>");
     result = result.replaceAll("hljs-strong", "strong")
         .replaceAll("hljs-emphasis", "italic")
         .replaceAll("hljs-meta", "meta")
+        .replaceAll("hljs-string", "string")
+        .replaceAll("hljs-link", "link")
+        .replaceAll("hljs-bullet", "bullet")
+        .replaceAll("hljs-quote", "quote")
+        .replaceAll("hljs-code", "code")
+        .replaceAll("hljs-symbol", "symbol")
+        .replaceAll("hljs-attr", "attr")
         .replaceAll("hljs-section", "meta");
-    console.log(result);
     return result;
 }
 
