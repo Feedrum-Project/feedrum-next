@@ -1,7 +1,17 @@
 import MarkdownIt from "markdown-it";
 import TurndownService from "turndown";
+import hljs from "highlight.js";
+
 const md = new MarkdownIt();
 const html = new TurndownService();
+
+export function hightlight(text: string) {
+    let result = hljs.highlightAuto(text).value;
+    result = result.replaceAll("hljs-strong", "strong")
+        .replaceAll("hljs-emphasis", "italic")
+        .replaceAll("hljs-meta", "meta");
+    return result;
+}
 
 export function MDtoHTML(text: string, isEditable:boolean=true) {
     let result;
@@ -27,7 +37,8 @@ export function HTMLtoMD(text: string) {
 };
 const parser = {
     MDtoHTML,
-    HTMLtoMD
+    HTMLtoMD,
+    hightlight
 };
 
 export default parser;

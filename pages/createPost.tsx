@@ -6,6 +6,7 @@ import { FormEvent, useEffect, useState } from "react";
 import parser from "helpers/parsers.helper";
 import { useSelector } from "react-redux";
 import { IUser } from "types/User";
+import TextEditor from "module/CreateForm/Components/TextEditor";
 
 export default function CreatePost() {
     const [chapter, setChapter] = useState<"editor" | "view">("view");
@@ -49,7 +50,7 @@ export default function CreatePost() {
                                     value={articleName}
                                     onChange={(e) => {setName(e.target.value);}}
                                 />
-                                <div>123</div>
+                                <TextEditor/>
                             </div>
                             :
                             <>
