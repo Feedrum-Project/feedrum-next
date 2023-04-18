@@ -4,10 +4,14 @@ import Footer from "../../module/Footer/Footer";
 import styles from "./layout.module.sass";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
+    const path = useRouter().pathname
+    const condition = path === "/registration" || path === "/login" || path === "/forgetPassword";
+    console.log(condition);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -28,9 +32,12 @@ export default function Layout({ children }: Props) {
                 <title>Feedrum</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
             </Head>
-            <Header />
+            {
+                condition ? null : <Header />
+            }
             <main className={styles.main}>{children}</main>
-            <Footer />
+            {
+                condition ? null : <Footer />}
         </>
     );
 }

@@ -1,12 +1,20 @@
 import LoginForm from "module/LoginForm/LoginForm";
+import Image from "next/image";
 import styles from "./login.module.sass";
+import logo from "images/logo.svg";
 
 export default function Login() {
     return (
         <div className={styles.main}>
-            <div className={styles.form}>
-                <div className={styles.login}>
-                    <LoginForm/>
+            <div>
+                <div className={styles.logo}>
+                    <Image src={logo} alt="Логотип" width={42}/>
+                    <p>Feedrum</p>
+                </div>
+                <div className={styles.form}>
+                    <div className={styles.login}>
+                        <LoginForm/>
+                    </div>
                 </div>
             </div>
         </div>

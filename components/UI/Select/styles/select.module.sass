@@ -37,12 +37,28 @@
         display: block
         background: none
         border: none
-        margin: 0 0 .625rem 0
+        padding: .312rem 0
         color: $gray
         font-size: .875rem
         user-select: none
+        width: 100%
+        text-align: left
+        outline: none
+        transition: .5s
+
+        &:focus
+            background: $border
 
 .choosed
     background: none
     border: none
     color: $white
+
+.value>*
+    background: none
+    border: none
+    color: $white
+    
+.search
+    width: 80%
+    outline: none

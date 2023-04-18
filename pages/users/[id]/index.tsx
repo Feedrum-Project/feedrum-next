@@ -85,10 +85,10 @@ export default function User({userInformation, userPosts}:UserProps) {
                 </div>
                 <aside className={styles.aside}>
                     <div className={styles.profileAside}>
+                        <Button Style="purple">Підписатися</Button>
                         <Rank
                             info={userInformation}
                             disabled={user.id === userInformation.id}/>
-                        <Button Style="purple">Підписатися</Button>
                     </div>
                     <AsideInfo
                         organisation="Щось і Колись"

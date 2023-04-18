@@ -85,7 +85,7 @@ export default function Settings() {
                                         info="Де ви працюєте?"/>
                                     <Select
                                         name="Країна"
-                                        values={["Україна","Польща","Словаччина"]}
+                                        values={["Україна","Українська Імперія","Українська Січ", "Українська Федерація", "Українське Королівство"]}
                                         info="Оберіть країну в якій ви наразі."/>
                                     <div className={styles.admit}>
                                         <Button Style="purple" type="submit">Змінити</Button>
@@ -119,12 +119,14 @@ export default function Settings() {
                                     </div>
                                 </Box>
                                 <Box title="Видалення аккаунту">
-                                    <Button Style="red">
-                                        Видалити аккаунт
-                                    </Button>
-                                    <Button Style="red" className={styles.mg10}>
-                                        Вимкнути аккаунт
-                                    </Button>
+                                    <div>
+                                        <Button Style="red">
+                                            Видалити аккаунт
+                                        </Button>
+                                        <Button Style="red" className={styles.mg10}>
+                                            Вимкнути аккаунт
+                                        </Button>
+                                    </div>
                                 </Box>
                             </>
                 }

@@ -36,13 +36,14 @@ export default function TextEditor() {
                 if(editor === null || editor.current === null) return;
                 setValue(editor.current.innerText);
             }, 10);
+            
             clearTimeout(timer);
             timer = setTimeout(() => {
-                console.log("edited");
                 if(editor === null || editor.current === null) return;
+                console.log("edited");
                 setValue(editor.current.innerText);
                 localStorage.setItem("article", editor.current.innerText);
-            }, 5000);
+            }, 1000);
             window.removeEventListener("keyup", listener as any);
         });
     }, []);

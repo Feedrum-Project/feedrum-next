@@ -13,10 +13,17 @@ interface ISelect {
 }
 
 export default function Select({name, values, info="Інформація відсутня"}: ISelect) {
+    const [search, setSearch] = useState("");
+
     const [show, setShow] = useState<{show: boolean, coords: {x: number, y: number}}>({show: false, coords: {x: 0, y: 0}});
     const [opened, setOpened] = useState<boolean>(false);
     const [choosed, setChoosed] = useState(values[0]);
 
+    function getList(list: string[], value: string) {
+        return list.filter(e => {
+            return e.includes(value) ? e : undefined;
+        });
+    }
     return (
         <div className={styles.select}>
             <div className={styles.top}>
@@ -34,25 +41,33 @@ export default function Select({name, values, info="Інформація від�
             </div>
             <div
                 className={styles.field}>
-                <div className={styles.value}
-                    onClick={() => setOpened(pr => !pr)}>
-                    <button className={styles.choosed}>{choosed}</button>
-                    <div className="symbol">
+                <div className={styles.value}>
+                    <input
+                        type="text"
+                        value={search}
+                        className={styles.search}
+                        onChange={e => setSearch(e.target.value)}
+                        onFocus={() => setOpened(true)}
+                        maxLength={32}
+                    />
+                    <button className="symbol"
+                        onClick={() => setOpened(pr => !pr)}>
                         {
                             opened ? <Image src={arrowTop} alt="Відкрити список"/> : <Image src={arrowBottom} alt="Зачинити список"/>
                         }
-                    </div>
+                    </button>
                 </div>
                 <div
                     style={{display: opened ? "block" : "none"}}
                     className={styles.list}>
                     {
-                        values.map(e => {
+                        getList(values, search).map(e => {
                             return <button
                                 key={e}
                                 style={e === choosed ? { color: "#fff"} : undefined}
                                 onClick={() => {
                                     setChoosed(e);
+                                    setSearch(e);
                                 }}>
                                 {e}
                             </button>;

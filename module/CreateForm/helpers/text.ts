@@ -22,6 +22,8 @@ export function specify(element: string) {
     const selection = window.getSelection();
 
     const spec = document.createElement(ElementType[element as keyof ElementType]);
+    // console.log(selection?.getRangeAt(0));
+    // return;
     selection?.getRangeAt(0).surroundContents(spec);
 }
 

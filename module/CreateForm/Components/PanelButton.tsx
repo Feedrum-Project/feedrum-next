@@ -26,7 +26,7 @@ export default function PanelButton(
 
     return (
         <>
-            <button className={
+            <button type="button" className={
                 objs.length < 1 ? styles.hovered : objs[0][0] === specy ? styles.selected : styles.hovered
             }
             onClick={() => {

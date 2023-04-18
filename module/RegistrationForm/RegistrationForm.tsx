@@ -35,10 +35,10 @@ export default function RegistrationForm() {
         const user = await registrate(body);
         if(user.code === 200) {
             setMessage({body: user, type:"succes"});
-            console.log(message);
+            console.error(message);
         } else {
             setMessage({body: user.message, type:"err"});
-            console.log(message);
+            console.error(message);
         }
     }
 
