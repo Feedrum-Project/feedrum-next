@@ -22,7 +22,6 @@ export default function CreatePost() {
     function sub(e: FormEvent & {target: {data: any}}) {
         e.preventDefault();
         const { value }: HTMLTextAreaElement = e.target.data;
-        console.log(e.target);
         if(value.length < 100) return;
     }
 

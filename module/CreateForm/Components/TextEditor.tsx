@@ -21,18 +21,29 @@ export default function TextEditor() {
         let timer: any;
         if(editor === null || editor.current === null) return;
 
-        window.addEventListener("keyup", () => {
+        let listener = window.addEventListener("keyup", (e) => {
+            const elem = window.getSelection()?.anchorNode?.parentNode as HTMLElement;
+            if(!elem) return;
 
+            selects[1]({});
+            elem.className === "hljs-strong" ? selects[1]({bold: true}) :
+                elem.className === "hljs-emphasis" ? selects[1]({italic: true}) :
+                    elem.className === "hljs-meta" || elem.className === "hljs-section"
+                        ? selects[1]({header: true}) :
+                        elem.className === "hljs-link" ? selects[1]({link: true}) : null;
+            
             setTimeout(() => {
                 if(editor === null || editor.current === null) return;
                 setValue(editor.current.innerText);
             }, 10);
             clearTimeout(timer);
             timer = setTimeout(() => {
+                console.log("edited");
                 if(editor === null || editor.current === null) return;
                 setValue(editor.current.innerText);
                 localStorage.setItem("article", editor.current.innerText);
             }, 5000);
+            window.removeEventListener("keyup", listener as any);
         });
     }, []);
 
