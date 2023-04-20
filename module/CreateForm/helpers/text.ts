@@ -18,19 +18,17 @@ const ElementType = {
     a: "a"
 };
 
-export function specify(element: string) {
-    const selection = window.getSelection();
+export function specify(element: string, selection: Selection | null) {
+    if(!selection) return;
 
     const spec = document.createElement(ElementType[element as keyof ElementType]);
-    // console.log(selection?.getRangeAt(0));
-    // return;
     selection?.getRangeAt(0).surroundContents(spec);
 }
 
-export function createElement(ref: MutableRefObject<HTMLDivElement | null>, type: string) {
+export function createElement(ref: MutableRefObject<HTMLDivElement | null> | HTMLDivElement, type: string) {
     if(ref === null) return;
 
-    const current = ref.current;
+    const current = "current" in ref ? ref.current : ref;
     if(!current) return;
 
     const elem: HTMLElement = document.createElement(ElementType[type as keyof ElementType]);

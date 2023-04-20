@@ -30,7 +30,13 @@ export default function PanelButton(
                 objs.length < 1 ? styles.hovered : objs[0][0] === specy ? styles.selected : styles.hovered
             }
             onClick={() => {
-                text.specify(selectsText[specy]);
+                const parent = window.getSelection()?.anchorNode?.parentNode as HTMLElement;
+                if(parent.id !== "editor") {
+                    const editor = document.getElementById("editor");
+                    text.createElement(editor as HTMLDivElement, selectsText[specy]);
+                } else {
+                    text.specify(selectsText[specy], window.getSelection());
+                }
             }}
             onMouseEnter={(e) => {
                 setShow({show: true, coords: {x: e.pageX, y: e.pageY+10}});

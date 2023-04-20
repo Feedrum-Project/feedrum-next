@@ -51,7 +51,7 @@ export default function TextEditor() {
     return (
         <>
             <Panel selects={selects}/>
-            <div className={[styles.editor, styles.form].join(" ")} id="editor">
+            <div className={[styles.editor, styles.form].join(" ")} id="text-editor">
                 <div className={styles.editorInfo}>
                     <p>Контент</p>
                     <div className={value.length < 100 ? styles.red : value.length > 500 ? styles.green : styles.orange}>

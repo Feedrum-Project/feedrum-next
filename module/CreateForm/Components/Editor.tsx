@@ -1,6 +1,4 @@
 import styles from "../styles/form.module.sass";
-import { Button } from "components/UI";
-import text from "../helpers/text";
 import { useEffect, useRef, useState } from "react";
 import parser from "helpers/parsers.helper";
 
@@ -69,32 +67,7 @@ export default function Editor(
                         <p>Щоб додати елемент, натисність знизу.</p>
                     </div>
                     : null
-            }
-            <div>
-                <Button
-                    Style="purple"
-                    onClick={() => {
-                        text.createElement(textField, "p");
-                        if(!textField.current) return;
-                        const current = textField.current as HTMLElement;
-                        localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
-                        setText(parser.HTMLtoMD(current.innerHTML));
-                    }}>
-                        Додати елемент
-                </Button>
-                <Button
-                    Style="purple"
-                    onClick={() => {
-                        text.createElement(textField, "h1");
-                        if(!textField.current) return;
-                        const current = textField.current as HTMLElement;
-                        localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
-                        setText(parser.HTMLtoMD(current.innerHTML));
-                    }}>
-                        Додати заголовок
-                </Button>
-                
-            </div>
+            }   
         </div>
     );
 }

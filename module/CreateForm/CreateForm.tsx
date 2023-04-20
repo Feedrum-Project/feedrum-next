@@ -15,59 +15,57 @@ export default function CreateForm({texts: [texts, setText]}: any) {
     const selects = useState<ISelects>({header: false});
 
     useEffect(() => {
-        window.addEventListener("keydown", (e) => {
+        window.addEventListener("keydown", () => {
             setTimeout(() => {
-                const parent = window.getSelection()?.focusNode as HTMLElement;
-                if(!parent || !parent.parentNode) return;
-                const tagName = parent.parentNode as HTMLElement;
-                const tag = tagName.tagName.toLowerCase();
-                if(!tag) return;
-                switch(tag) {
-                case "p":
-                    return selects[1]({
-                        header: false,
-                        bold: false,
-                        italic: false,
-                        link: false
-                    });
-                case "h1":
-                    return selects[1]({
-                        header: true,
-                        bold: false,
-                        italic: false,
-                        link: false
-                    });
-                case "b":
-                case "strong":
-                    return selects[1]({
-                        header: false,
-                        bold: true,
-                        italic: false,
-                        link: false
-                    });
-                case "em":
-                case "i":
-                    return selects[1]({
-                        header: false,
-                        bold: false,
-                        italic: true,
-                        link: false
-                    });
-                case "a":
-                    return selects[1]({
-                        header: false,
-                        bold: false,
-                        italic: false,
-                        link: true
-                    });
-                default:
-                    return selects[1]({
-                        header: false,
-                        bold: false,
-                        italic: false,
-                        link: false
-                    });
+                function check(parent: HTMLDivElement, count: number) {
+                    if(count > 3 || count < 0) return;
+                    if(parent.localName === "div") return;
+                    if(!parent || !parent.parentNode) return;
+                    const tagName = parent.parentNode as HTMLElement;
+                    const tag = tagName.tagName.toLowerCase();
+                    check(parent.parentNode as HTMLDivElement, count-1);
+
+                    console.log(parent);
+
+                    switch(tag) {
+                    case "p":
+                        return selects[1]((pr) => pr = {
+                            header: false,
+                            bold: false,
+                            italic: false,
+                            link: false
+                        });
+                    case "h1":
+                        return selects[1]((pr) => pr = {
+                            ...pr,
+                            header: true
+                        });
+                    case "b":
+                    case "strong":
+                        return selects[1]((pr) => pr = {...pr, bold: true});
+                    case "em":
+                    case "i":
+                        return selects[1]((pr) => pr = {
+                            ...pr,
+                            italic: true
+                        });
+                    case "a":
+                        return selects[1]((pr) => pr = {
+                            ...pr,
+                            link: true
+                        });
+                    default:
+                        return selects[1]((pr) => pr = {
+                            header: false,
+                            bold: false,
+                            italic: false,
+                            link: false
+                        });
+                    }
                 }
+                
+                const parent = window.getSelection()?.focusNode as HTMLDivElement;
+                check(parent, 3);
             }, 25);
 
         });
