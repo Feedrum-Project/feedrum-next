@@ -19,13 +19,11 @@ export default function CreateForm({texts: [texts, setText]}: any) {
             setTimeout(() => {
                 function check(parent: HTMLDivElement, count: number) {
                     if(count > 3 || count < 0) return;
+                    if(parent === null || !parent.parentNode) return;
                     if(parent.localName === "div") return;
-                    if(!parent || !parent.parentNode) return;
                     const tagName = parent.parentNode as HTMLElement;
                     const tag = tagName.tagName.toLowerCase();
                     check(parent.parentNode as HTMLDivElement, count-1);
-
-                    console.log(parent);
 
                     switch(tag) {
                     case "p":

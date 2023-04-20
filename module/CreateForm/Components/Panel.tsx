@@ -14,30 +14,48 @@ interface ISelects {
 }
 
 export default function Panel({selects}: {selects:[ISelects, any]}) {
+    let objs = Object.entries(selects[0]).filter((e: any) => {
+        if(e[1] === true) {
+            return e[0];
+        }
+        return;
+    });
+    console.log(objs);
+
     return (
         <div className={styles.panel}>
             <PanelButton
-                selects={selects}
+                isActive={
+                    objs.find(e => e[0] === "header")
+                }
                 img={Heading}
                 info="Заголовок"
                 specy="header"/>
             <PanelButton
-                selects={selects}
+                isActive={
+                    objs.find(e => e[0] === "italic")
+                }
                 img={Italic}
                 info="Похилий"
                 specy="italic"/>
             <PanelButton
-                selects={selects}
+                isActive={
+                    objs.find(e => e[0] === "link")
+                }
                 img={Linked}
                 info="Посилання"
                 specy="link"/>
             <PanelButton
-                selects={selects}
+                isActive={
+                    objs.find(e => e[0] === "bold")
+                }
                 img={Bold}
                 info="Товский"
                 specy="bold"/>
             <PanelButton
-                selects={selects}
+                isActive={
+                    objs.find(e => e[0] === "img")
+                }
                 img={Imagged}
                 info="Малюнок"
                 specy="img"/>
