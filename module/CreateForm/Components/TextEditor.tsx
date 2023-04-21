@@ -22,15 +22,24 @@ export default function TextEditor() {
         if(editor === null || editor.current === null) return;
 
         let listener = window.addEventListener("keyup", (e) => {
-            const elem = window.getSelection()?.anchorNode?.parentNode as HTMLElement;
+            const elem = window.getSelection()?.anchorNode?.parentNode as HTMLDivElement;
             if(!elem) return;
 
-            selects[1]({});
-            elem.className === "hljs-strong" ? selects[1]({bold: true}) :
-                elem.className === "hljs-emphasis" ? selects[1]({italic: true}) :
-                    elem.className === "hljs-meta" || elem.className === "hljs-section"
-                        ? selects[1]({header: true}) :
-                        elem.className === "hljs-link" ? selects[1]({link: true}) : null;
+            function check(parent: HTMLDivElement, count: number=3) {
+                if(count > 3 || count < 0) return;
+                if(parent === null || !parent.parentNode) return;
+                if(parent.localName === "div") return;
+
+                selects[1]({});
+                parent.className === "hljs-strong" ? selects[1]({bold: true}) :
+                    parent.className === "hljs-emphasis" ? selects[1]({italic: true}) :
+                        parent.className === "hljs-meta" || parent.className === "hljs-section"
+                            ? selects[1]({header: true}) :
+                            parent.className === "hljs-link" ? selects[1]({link: true}) : null;
+
+                check(parent.parentNode as HTMLDivElement, count-1);
+            }
+            check(elem);
             
             setTimeout(() => {
                 if(editor === null || editor.current === null) return;

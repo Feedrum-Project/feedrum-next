@@ -15,7 +15,7 @@ export default function Editor(
         text: [texts, setText]
     }:
     {
-        selects: [ISelects, any];
+        selects: [ISelects, (pr: any) => void];
         text: any;
     }) {
     const textField = useRef(null);
@@ -35,6 +35,55 @@ export default function Editor(
                     target.remove() : null;
                 localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
                 setText(parser.HTMLtoMD(current.innerHTML));
+                
+                function check(parent: HTMLDivElement, count: number=3) {
+                    if(count > 3 || count < 0) return;
+                    if(parent === null || !parent.parentNode) return;
+                    if(parent.localName === "div") return;
+                    const tagName = parent.parentNode as HTMLElement;
+                    const tag = tagName.tagName.toLowerCase();
+
+                    check(parent.parentNode as HTMLDivElement, count-1);
+
+                    switch(tag) {
+                    case "p":
+                        return selects[1]((pr: ISelects) => pr = {
+                            header: false,
+                            bold: false,
+                            italic: false,
+                            link: false
+                        });
+                    case "h1":
+                        return selects[1]((pr: ISelects) => pr = {
+                            ...pr,
+                            header: true
+                        });
+                    case "b":
+                    case "strong":
+                        return selects[1]((pr: ISelects) => pr = {...pr, bold: true});
+                    case "em":
+                    case "i":
+                        return selects[1]((pr: ISelects) => pr = {
+                            ...pr,
+                            italic: true
+                        });
+                    case "a":
+                        return selects[1]((pr: ISelects) => pr = {
+                            ...pr,
+                            link: true
+                        });
+                    default:
+                        return selects[1]((pr: ISelects) => pr = {
+                            header: false,
+                            bold: false,
+                            italic: false,
+                            link: false
+                        });
+                    }
+                }
+                
+                const parent = window.getSelection()?.focusNode as HTMLDivElement;
+                check(parent);
             }, 25);
         });
     }, []);

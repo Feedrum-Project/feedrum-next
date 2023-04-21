@@ -28,7 +28,8 @@ export default function PanelButton(
                 className={isActive !== undefined ? styles.selected : styles.hovered}
                 onClick={() => {
                     const parent = window.getSelection()?.anchorNode?.parentNode as HTMLElement;
-                    if(parent.id !== "editor") {
+                    // if(!parent) return;
+                    if(!parent || parent.id !== "editor") {
                         const editor = document.getElementById("editor");
                         text.createElement(editor as HTMLDivElement, selectsText[specy]);
                     } else {

@@ -20,7 +20,6 @@ export default function Panel({selects}: {selects:[ISelects, any]}) {
         }
         return;
     });
-    console.log(objs);
 
     return (
         <div className={styles.panel}>
