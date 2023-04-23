@@ -19,19 +19,24 @@ export default function CreatePost() {
         setText(item === null ? "" : item);
     }, []);
 
-    function sub(e: FormEvent & {target: {data: any}}) {
+    function sub(e: FormEvent & {target: {data: HTMLTextAreaElement, name: HTMLInputElement}}) {
         e.preventDefault();
-        const { value }: HTMLTextAreaElement = e.target.data;
+        if(!e || !e.target) return;
+        const target = e.target;
+
+        const { value: name } = target.name;
+        const { value }: HTMLTextAreaElement = target.data;
         if(value.length < 100) return;
+        console.log(name, value);
     }
 
-    // if(user.id === -1) {
-    //     return (
-    //         <Script id="0">
-    //             location.href = &#34;/login&#34;
-    //         </Script>
-    //     );
-    // }
+    if(user === null || user.id === 0) {
+        return (
+            <Script id="0">
+                location.href = &#34;/login&#34;
+            </Script>
+        );
+    }
 
     return (
         <>
@@ -58,6 +63,7 @@ export default function CreatePost() {
                                         className={styles.exampleTitle}>
                                         {articleName === "" ? "Безвісна стаття" : articleName}
                                     </h1>
+                                    <input type="text" name="name" value={articleName} hidden readOnly/>
                                     <CreateForm texts={[texts, setText]}/>
                                 </div>
                             </>

@@ -2,7 +2,7 @@ import styles from "./styles/form.module.sass";
 import Panel from "./Components/Panel";
 import Editor from "./Components/Editor";
 import { Button } from "components/UI";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface ISelects {
     header?: boolean;

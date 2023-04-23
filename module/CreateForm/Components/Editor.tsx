@@ -41,6 +41,8 @@ export default function Editor(
                     if(parent === null || !parent.parentNode) return;
                     if(parent.localName === "div") return;
                     const tagName = parent.parentNode as HTMLElement;
+                    if(!tagName) return;
+                    
                     const tag = tagName.tagName.toLowerCase();
 
                     check(parent.parentNode as HTMLDivElement, count-1);
@@ -105,7 +107,7 @@ export default function Editor(
                 <textarea
                     name="data"
                     value={value}
-                    readOnly={true}
+                    readOnly
                     style={{display:"none"}}>
                 </textarea>
             </div>

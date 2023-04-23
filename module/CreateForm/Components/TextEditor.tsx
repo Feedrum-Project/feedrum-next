@@ -1,5 +1,6 @@
 import styles from "../styles/form.module.sass";
 import { useEffect, useState } from "react";
+import { Button } from "components/UI";
 import Panel from "./Panel";
 import parser from "helpers/parsers.helper";
 import { useRef } from "react";
@@ -25,17 +26,17 @@ export default function TextEditor() {
             const elem = window.getSelection()?.anchorNode?.parentNode as HTMLDivElement;
             if(!elem) return;
 
+            selects[1]({});
             function check(parent: HTMLDivElement, count: number=3) {
                 if(count > 3 || count < 0) return;
                 if(parent === null || !parent.parentNode) return;
                 if(parent.localName === "div") return;
 
-                selects[1]({});
-                parent.className === "hljs-strong" ? selects[1]({bold: true}) :
-                    parent.className === "hljs-emphasis" ? selects[1]({italic: true}) :
+                parent.className === "hljs-strong" ? selects[1](pr => pr = {...pr, bold: true}) :
+                    parent.className === "hljs-emphasis" ? selects[1](pr => pr = {...pr, italic: true}) :
                         parent.className === "hljs-meta" || parent.className === "hljs-section"
-                            ? selects[1]({header: true}) :
-                            parent.className === "hljs-link" ? selects[1]({link: true}) : null;
+                            ? selects[1](pr => pr = {...pr, header: true}) :
+                            parent.className === "hljs-link" ? selects[1](pr => pr = {...pr, link: true}) : null;
 
                 check(parent.parentNode as HTMLDivElement, count-1);
             }
@@ -52,7 +53,7 @@ export default function TextEditor() {
                 console.log("edited");
                 setValue(editor.current.innerText);
                 localStorage.setItem("article", editor.current.innerText);
-            }, 1000);
+            }, 10000);
             window.removeEventListener("keyup", listener as any);
         });
     }, []);
@@ -77,7 +78,17 @@ export default function TextEditor() {
                     ref={editor}
                 >
                 </div>
+                <textarea
+                    name="data"
+                    value={value}
+                    readOnly={true}
+                    style={{display:"none"}}>
+                </textarea>
                 <button type="button" onClick={() => localStorage.setItem("article", value)}>Зберегти</button>
+                <div className={styles.buttons}>
+                    <Button type="submit" Style="purple">Оприлюднити</Button>
+                    <Button Style="standart">Зберегти як чорнетка</Button>
+                </div>
             </div>
         </>
     );
