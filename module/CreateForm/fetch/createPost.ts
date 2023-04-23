@@ -9,7 +9,6 @@ interface IBody {
 }
 
 export default async function createPost(body: IBody) {
-    
     const result = await fetch("http://localhost:3000/api/posts", {
         method:"POST",
         body: JSON.stringify(body)

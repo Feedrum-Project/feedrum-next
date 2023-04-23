@@ -2,6 +2,7 @@ import CreateForm from "module/CreateForm/CreateForm";
 import styles from "../styles/create.module.sass";
 import { Input } from "components/UI";
 import Script from "next/script";
+import createPost from "module/CreateForm/fetch/createPost";
 import { FormEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IUser } from "types/User";
@@ -24,10 +25,12 @@ export default function CreatePost() {
         if(!e || !e.target) return;
         const target = e.target;
 
-        const { value: name } = target.name;
-        const { value }: HTMLTextAreaElement = target.data;
-        if(value.length < 100) return;
-        console.log(name, value);
+        const { value: title }: HTMLInputElement = target.name;
+        const { value: content }: HTMLTextAreaElement = target.data;
+        const body = {title, body: content};
+        if(content.length < 100) return;
+        
+        createPost({body, user});
     }
 
     if(user === null || user.id === 0) {
