@@ -40,7 +40,7 @@ export default function LoginForm() {
                         Увійти
                     </div>
                     <div className={styles.register}>
-                        або <u><Link href="/registration" style={{color:"white"}}>зареєструватися</Link></u>
+                        або <u><Link href="/registration">зареєструватися</Link></u>
                     </div>
                 </div>
                 {

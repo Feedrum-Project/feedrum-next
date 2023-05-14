@@ -1,8 +1,8 @@
 import Image from "next/image";
 import PopUp from "../PopUp/PopUp";
-import styles from "./input.module.sass";
-import eye from "../../../images/eye.svg";
-import question from "../../../images/Question.svg";
+import styles from "./styles/input.module.sass";
+import eye from "images/eye.svg";
+import question from "images/Question.svg";
 import { useState } from "react";
 
 interface InputProps {

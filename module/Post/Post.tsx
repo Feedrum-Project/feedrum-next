@@ -27,7 +27,7 @@ export default function Post({postData}: {postData: IPost}){
             </div>
             <div className={styles.postMiddle}>
                 <Link href={`/posts/${postData.id}`} style={{ textDecoration: "none", color:"#fff" }}>
-                    <div className={styles.postTitle}>{postData.title}</div>
+                    <h1 className={styles.postTitle}>{postData.title}</h1>
                 </Link>
                 <div className={styles.postBody}>{postData.body.length >= 234 ? postData.body.slice(0,234)+"...." : postData.body}</div>  
             </div>

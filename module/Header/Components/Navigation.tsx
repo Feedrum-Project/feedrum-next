@@ -66,7 +66,7 @@ export default function Navigation() {
     return (
         <nav className={styles.nav}>
             <div className={styles.navSearch}>
-                <Search Placeholder="Пошук" className="input"/>
+                <Search Placeholder="Пошук"/>
             </div>
             {Logged}
         </nav>

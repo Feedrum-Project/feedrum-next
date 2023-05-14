@@ -1,6 +1,7 @@
 import Image from "next/image";
-import styles from "./comment.module.sass";
+import styles from "./styles/comment.module.sass";
 import arrowTop from "images/arrow-top.svg";
+import avatar from 'images/avatar.svg';
 import arrowBottom from "images/arrow-bottom.svg";
 import { useSelector } from "react-redux";
 import { IComment } from "types/Post";
@@ -29,7 +30,7 @@ export default function Comment({comment, disabled=false}:CommentObj) {
     }
 
     return (
-        <>
+        <div className={styles.comment}>
             <div className={styles.rank}>
                 <button disabled={!isUser} onClick={() => Vote("UPVOTE")}>
                     <Image
@@ -52,11 +53,17 @@ export default function Comment({comment, disabled=false}:CommentObj) {
             </div>
             <div className={styles.commentContent}>
                 <div className={styles.commentTop}>
-                    <div className="commentLeft">{comment.id}</div>
+                    <div className={styles.commentLeft}>
+                        <Image
+                        src={avatar}
+                        alt="Аватар"
+                        />
+                        <p>{comment.id}</p>
+                    </div>
                     <div className="commentRight">{comment.createdAt.toString()}</div>
                 </div>
                 <div className="commentcomment">{comment.body}</div>
             </div>
-        </>
+        </div>
     );
 }

@@ -1,4 +1,22 @@
-@import ../../../styles/variables
+@import ../../../../styles/variables
+
+.search
+  background: $block
+  border-radius: 99px
+  padding: .6875rem 1.25rem
+  cursor: text
+  &Inside
+    background: none
+    border: none
+    outline: none
+    color: $white
+  &Button
+    background: none
+    border: none
+    color: $white
+    cursor: pointer
+    width: 1.2rem
+    height: 1.2rem
 
 .input
   background: $block
@@ -20,9 +38,8 @@
     height: 1.2rem
 
 @media screen and (max-width: 55rem)
-  .input
+  .search
     background: none
-    border: none
     padding: 0 .875rem
     &Inside
       display: none

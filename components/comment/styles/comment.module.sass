@@ -1,20 +1,30 @@
-@import ../../styles/variables
+@import ../../../styles/variables
 
 .comment
   display: flex
   align-items: center
   margin: 0 0 1.125rem 0
+  padding: 1.75rem
+  width: 100%
   &Top
     display: flex
     justify-content: space-between
+    align-items: center
     margin: 0 0 1rem 0
   &Content
     padding: .75rem
     margin: 0 0 0 .875rem
     background: $block
-    border: .0625rem solid $border
     border-radius: .375rem
     min-width: 17.25rem
+    width: 100%
+
+  &Left
+    display: flex
+    align-items: center
+
+    &>p
+      margin: 0 0 0 .5rem
 
 .rank
   display: flex
@@ -34,3 +44,4 @@
       background: $border
   &Count
     margin: .5rem 0
+    font-weight: 600

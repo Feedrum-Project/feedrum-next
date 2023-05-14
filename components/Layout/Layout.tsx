@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Header from "../../module/Header/Header";
 import Footer from "../../module/Footer/Footer";
-import styles from "./layout.module.sass";
+import styles from "./styles/layout.module.sass";
 import { useEffect } from "react";
 import { useDispatch, useStore } from "react-redux";
 import { useRouter } from "next/router";

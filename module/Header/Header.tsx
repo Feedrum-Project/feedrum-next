@@ -8,12 +8,10 @@ export default function Header()  {
     
     return (
         <header className={styles.header}>
-            <Link href="/" style={{textDecoration: "none"}}>
-                <div className={styles.logo}>
-                    <Image src={logo} alt="Логотип" />
-                    <span className={styles.logoText}>Feedrum</span>
-                </div>
-            </Link>
+            <div className={styles.logo}>
+                <Image src={logo} alt="Логотип" />
+                <Link href="/" className={styles.logoText}>Feedrum</Link>
+            </div>
             <Navigation/>
         </header>
     );
