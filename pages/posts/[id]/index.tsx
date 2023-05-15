@@ -1,21 +1,22 @@
 import styles from "./post.module.sass";
 import prisma from "@database";
 import { GetServerSideProps } from "next";
-import { FormEvent, useEffect, useRef } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import AsideProfile from "module/Aside/Components/AsideProfile";
 import SimilarPosts from "module/Aside/Components/SimilarPosts";
 import Rank from "module/Aside/Components/Rank";
 import Comment from "components/comment/Comment";
+import Textarea from "components/UI/Textarea/Textarea";
 import { Button } from "components/UI";
 
 import message from "images/message.svg";
+import avatar from "images/avatar.svg";
 import parser from "helpers/parsers.helper";
 import { IComment, IPost } from "types/Post";
 import { IUser } from "types/User";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 
 interface IPostPage {
     postComments: IComment[];
@@ -77,53 +78,30 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                 Коментарі - {postComments.length}
                             </span>
                         </div>
+                                <h2
+                                    style={
+                                        {color: attention && attention.code !== 200 ? "#F36A6A" : "#6AEA3D"}
+                                    }>
+                                    { attention ? attention.message : null}
+                                </h2>
+                            <form onSubmit={(e: FormEvent) => sub(e)} className={styles.comment}>
+                                <div className={styles.commentLeft}>
+                                    <Image alt="Аватар" src={avatar} width={40} height={40}/>
+                                </div>
+                                <div className={styles.commentRight}>
+                                    <Textarea name="Коментар" maxCount={2048}/>
+                                </div>
+                            </form>
                         <div className={styles.commentsList}>
                             {
                                 postComments.map((e:IComment) => {
                                     return (
-                                        <div
-                                            key={e.id}
-                                            className={styles.comment}>
-                                            <Comment
-                                                comment={e}
-                                                disabled={e.userId === user.id}/>
-                                        </div>
+                                        <Comment
+                                            comment={e}
+                                            disabled={e.userId === user.id}/>
                                     );
                                 })
                             }
-                            <div className={styles.comment}>
-                                <form onSubmit={(e: FormEvent) => sub(e)}>
-                                    <label>
-                                        <h2>Залишити коментар</h2>
-                                    </label>
-                                    <br />
-                                    <h2 style={{color: attention && attention.code !== 200 ? "#F36A6A" : "#6AEA3D"}}>{ attention ? attention.message : null}</h2>
-                                    <textarea
-                                        name="comment"
-                                        placeholder="Зміст коментарю."
-                                        style={
-                                            {
-                                                background:"#292929",
-                                                color:"#fff",
-                                                padding:".75rem",
-                                                margin:"0 0 1rem 2.875rem",
-                                                maxWidth:"17.25rem",
-                                                minWidth:"17.25rem",
-                                                maxHeight:"5.125rem",
-                                                minHeight:"5.125rem"
-                                            }
-                                        }
-                                    ></textarea>
-                                    <br />
-                                    <Button
-                                        Style="purple"
-                                        type="submit"
-                                        style={{margin:"0 0 0 2.875rem"}}
-                                    >
-                                        Залишити
-                                    </Button>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,7 +125,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
     const postParsed = JSON.parse(JSON.stringify(post));
 
     let comments: IComment[] = await prisma.post.getPostComments(id);
-    
+
     comments = comments.sort((a: IComment,b: IComment) => {
         if(new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()) return 1;
         return -1;
@@ -156,9 +134,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
     const commentsPreparing = comments.map(e => {
         typeof e.createdAt === "string" ? null :
             e.createdAt = `${e.createdAt.getDate() > 9 ?
-                e.createdAt.getDate() : "0"+e.createdAt.getDate()}.
-        ${e.createdAt.getMonth() > 9 ? e.createdAt.getMonth() : "0"+e.createdAt.getMonth()}.
-        ${e.createdAt.getFullYear().toString().slice(2)} у 
+                e.createdAt.getDate() : "0"+e.createdAt.getDate()}.${e.createdAt.getMonth() > 9 ? e.createdAt.getMonth() : "0"+e.createdAt.getMonth()}.${e.createdAt.getFullYear().toString().slice(2)} у 
         ${e.createdAt.getHours() > 9 ? e.createdAt.getHours() :
         "0"+e.createdAt.getHours()}:${e.createdAt.getMinutes() > 9 ? e.createdAt.getMinutes() : "0"+e.createdAt.getMinutes()}`;
         return e;
@@ -169,7 +145,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
         return {
             props: {
                 postContent: {
-                    body: "We didnt found it"
+                    body: "We haven't been found it"
                 },
                 postComments: 0,
                 author: {id: -1}
@@ -178,7 +154,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
     }
     const author = await prisma.user.getUserById(postParsed.userId);
     const authorParsed = JSON.parse(JSON.stringify(author));
-
+    
     return {
         props: {
             postContent: postParsed,

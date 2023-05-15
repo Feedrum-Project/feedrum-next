@@ -30,7 +30,7 @@ export default function Comment({comment, disabled=false}:CommentObj) {
     }
 
     return (
-        <div className={styles.comment}>
+        <div className={styles.comment} key={comment.id}>
             <div className={styles.rank}>
                 <button disabled={!isUser} onClick={() => Vote("UPVOTE")}>
                     <Image

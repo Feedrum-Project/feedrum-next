@@ -2,9 +2,8 @@
 
 .comment
   display: flex
-  align-items: center
-  margin: 0 0 1.125rem 0
-  padding: 1.75rem
+  align-items: flex-start
+  margin: 0 0 1.875rem 0
   width: 100%
   &Top
     display: flex
@@ -28,7 +27,6 @@
 
 .rank
   display: flex
-  justify-content: flex-start
   flex-direction: column
   align-items: center
   min-width: 2rem
@@ -38,10 +36,12 @@
     border-radius: .25rem
     background: none
     cursor: pointer
+    width: 1.125rem
+    height: 1.125rem
 
     &:disabled
       cursor: not-allowed
       background: $border
   &Count
-    margin: .5rem 0
+    margin: .1875rem 0
     font-weight: 600
