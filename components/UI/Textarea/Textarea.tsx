@@ -24,6 +24,7 @@ export default function Textarea({name, maxCount}: ITextarea) {
                 <textarea
                 className={styles.textareaContent}
                 value={content}
+                maxLength={maxCount}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Місце для вашого коментаря.">
 

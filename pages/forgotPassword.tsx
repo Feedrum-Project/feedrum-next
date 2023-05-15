@@ -3,7 +3,7 @@ import styles from "../styles/forget.module.sass";
 import { Input, Button } from "components/UI";
 import logo from "images/logo.svg";
 
-export default function Forget() {
+export default function Forgot() {
     return (
         <div className={styles.centr}>
             <div>
@@ -17,11 +17,15 @@ export default function Forget() {
                     </div>
                     <Input Name="Пошта" name="Пошта" placeholder="Ласка, ваша пошта."/>
                     <div className={styles.bottom}>
-                        <Button Style="standart"
-                            onClick={
-                                () => history.back()
-                            }>Назад</Button>
-                        <Button Style="purple">Надіслати верифікацію</Button>
+                        <div>
+                            <Button Style="standart"
+                                onClick={
+                                    () => history.back()
+                                }>Назад</Button>
+                        </div>
+                        <div>
+                            <Button Style="purple">Надіслати верифікацію</Button>
+                        </div>
                     </div>
                 </div>
             </div>

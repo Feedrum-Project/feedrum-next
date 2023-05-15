@@ -21,7 +21,6 @@ interface IFormExtneder {
 }
 
 export default function RegistrationForm() {
-
     const [ message, setMessage ] = useState<any | {body: {data: {id: number, email: string, name: string}}, type: string}>(false);
 
     async function prepare(e: FormEvent & IFormExtneder) {

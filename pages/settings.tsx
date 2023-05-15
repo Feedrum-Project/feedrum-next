@@ -88,11 +88,13 @@ export default function Settings() {
                                         values={["Україна","Українська Імперія","Українська Січ", "Українська Федерація", "Українське Королівство"]}
                                         info="Оберіть країну в якій ви наразі."/>
                                     <div className={styles.admit}>
-                                        <Button Style="purple" type="submit">Змінити</Button>
+                                        <Button Style="purple" type="submit">Зберегти</Button>
                                     </div>
                                 </div>
                             </Box>
-                            <Button Style="standart">Профіль</Button>
+                            <div>
+                                <Button Style="standart">Профіль</Button>
+                            </div>
                         </>
                         : chapter === "dev" ?
                             <>
@@ -120,12 +122,14 @@ export default function Settings() {
                                 </Box>
                                 <Box title="Видалення аккаунту">
                                     <div>
-                                        <Button Style="red">
-                                            Видалити аккаунт
-                                        </Button>
-                                        <Button Style="red" className={styles.mg10}>
-                                            Вимкнути аккаунт
-                                        </Button>
+                                        <div className={styles.stratcher}>
+                                            <Button Style="red">
+                                                Видалити&nbsp;аккаунт
+                                            </Button>
+                                            <Button Style="red" className={styles.mg10}>
+                                                Вимкнути&nbsp;аккаунт
+                                            </Button>
+                                        </div>
                                     </div>
                                 </Box>
                             </>
