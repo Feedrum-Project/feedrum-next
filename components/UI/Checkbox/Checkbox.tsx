@@ -1,15 +1,17 @@
+import { useState } from "react";
 import styles from "./styles/checkbox.module.sass";
 
 export default function Checkbox({children}: {children: string}) {
+    const [isChecked, setChecked] = useState<boolean>(false);
     return (
         <div className={styles.checkbox}>
-            <label className={styles.checkbox}>
-                <input type="checkbox"/>
-                <span className={styles.checkmark}>
+            <div className={styles.checkbox} onClick={() => setChecked(pr => !pr)}>
+                <input type="checkbox" checked={isChecked} readOnly/>
+                <button className={styles.checkmark}>
                     <span className={styles.isChecked}></span>
-                </span>
+                </button>
                 <span className={styles.labelText}>{children}</span>
-            </label>
+            </div>
         </div>
     );
 }

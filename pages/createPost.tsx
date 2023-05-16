@@ -3,7 +3,7 @@ import styles from "../styles/create.module.sass";
 import { Input } from "components/UI";
 import Script from "next/script";
 import createPost from "module/CreateForm/fetch/createPost";
-import { FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IUser } from "types/User";
 import TextEditor from "module/CreateForm/Components/TextEditor";
@@ -33,6 +33,12 @@ export default function CreatePost() {
         createPost({body, user});
     }
 
+    function upload(e: ChangeEvent<HTMLInputElement>) {
+        const { files } = e.target;
+        
+        console.log(files);
+    }
+
     if(user === null || user.id === 0) {
         return (
             <Script id="0">
@@ -48,6 +54,15 @@ export default function CreatePost() {
                     {
                         chapter === "editor" ?
                             <div className={styles.editor}>
+                                <div className={styles.images}>
+                                        <div className={styles.imagesList}></div>
+                                        <label
+                                            className={styles.imagesAddImage}>
+                                            <input type="file" hidden onChange={e => upload(e)}/>
+                                            <div className={styles.imagesPlus}>+</div>
+                                            <h1 className={styles.imagesText}>Додати зображення</h1>
+                                        </label>
+                                    </div>
                                 <Input
                                     Name="Назва"
                                     name="name"
@@ -61,7 +76,11 @@ export default function CreatePost() {
                             :
                             <>
                                 <div className={styles.example}>
+                                    <div className={styles.images}>
+                                        <div className="imagesList"></div>
+                                    </div>
                                     <h1
+                                        suppressContentEditableWarning
                                         contentEditable="true"
                                         className={styles.exampleTitle}>
                                         {articleName === "" ? "Безвісна стаття" : articleName}
