@@ -12,6 +12,7 @@ export default function CreatePost() {
     const [chapter, setChapter] = useState<"editor" | "view">("view");
     const [texts, setText] = useState<string>("");
     const [articleName, setName] = useState<string>("");
+    const [files, setFiles]= useState<File[]>();
 
     const user = useSelector((state:{user: IUser}) => state.user);
 
@@ -35,8 +36,8 @@ export default function CreatePost() {
 
     function upload(e: ChangeEvent<HTMLInputElement>) {
         const { files } = e.target;
-        
-        console.log(files);
+        if(!files) return;
+        setFiles(Array.from(files));
     }
 
     if(user === null || user.id === 0) {
@@ -55,13 +56,34 @@ export default function CreatePost() {
                         chapter === "editor" ?
                             <div className={styles.editor}>
                                 <div className={styles.images}>
-                                        <div className={styles.imagesList}></div>
-                                        <label
-                                            className={styles.imagesAddImage}>
-                                            <input type="file" hidden onChange={e => upload(e)}/>
-                                            <div className={styles.imagesPlus}>+</div>
-                                            <h1 className={styles.imagesText}>Додати зображення</h1>
-                                        </label>
+                                        <div className={styles.imagesList}>
+                                            {
+                                                files?.map((file, index) => {
+                                                    return (
+                                                            <div
+                                                                key={index}
+                                                                className={styles.imagesImage}
+                                                                style={
+                                                                    {
+                                                                        background: 'url('+URL.createObjectURL(file)+')',
+                                                                        backgroundRepeat: 'no-repeat'
+                                                                    }
+                                                                }></div>
+                                                    )
+                                                })
+                                            }
+                                            <label
+                                                className={styles.imagesAddImage}>
+                                                <input
+                                                    type="file"
+                                                    onChange={e => upload(e)}
+                                                    hidden
+                                                    multiple
+                                                />
+                                                <div className={styles.imagesPlus}>+</div>
+                                                <h1 className={styles.imagesText}>Додати зображення</h1>
+                                            </label>
+                                        </div>
                                     </div>
                                 <Input
                                     Name="Назва"

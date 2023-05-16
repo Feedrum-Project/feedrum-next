@@ -63,7 +63,12 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                 {
                     user.id === postContent.userId ?
                         <div className={styles.author}>
-                            <Button Style="purple">Редагувати</Button>
+                            <Button
+                                Style="purple"
+                                to={"./"+postContent.id+"/edit"}
+                                >
+                                    Редагувати
+                            </Button>
                         </div>
                         : null
                 }

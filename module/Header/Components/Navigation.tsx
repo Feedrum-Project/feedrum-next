@@ -51,14 +51,11 @@ export default function Navigation() {
         Logged = (
             <>
                 <div className={styles.centr}>
-                    <Link href="/registration">
-                        <Button Style="purple">Зареєструватись</Button>
-                    </Link>
-                    <Link href="/login">
-                        <div className={styles.navLogin}>
-                            <Button className={styles.navLogin} Style="standart">Увійти</Button>
-                        </div>
-                    </Link>
+                    <Button Style="purple" to="/registration">Зареєструватись</Button>
+                    <Button
+                        className={styles.navLogin}
+                        Style="standart"
+                        to="/login">Увійти</Button>
                 </div>
             </>
         );

@@ -34,12 +34,6 @@ export default function User({userInformation, userPosts}:UserProps) {
                             <Image width="41" height="41" src={avatar} alt="Аватар"/>
                             <span className={styles.nameNick}>{userInformation.name}</span>
                         </div>
-                        {/* <div className={styles.profileAside}>
-                            <Rank
-                                info={userInformation}
-                                disabled={user.id === userInformation.id}/>
-                            <Button Style="purple">Підписатися</Button>
-                        </div> */}
                     </div>
                     <div className={styles.sort}>
                         <div className="post">Пости</div>
@@ -55,13 +49,15 @@ export default function User({userInformation, userPosts}:UserProps) {
                                     return (
                                         <div key={e.id} className={styles.post}>
                                             <div className={styles.postTime}>
-                                                {new Date(e.createdAt).toLocaleDateString()},&nbsp;
-                                                {new Date(e.createdAt).toLocaleTimeString()}
+                                                <span>{new Date(e.createdAt).toLocaleDateString("en-US")},&nbsp;</span>
+                                                <span>{new Date(e.createdAt).toLocaleTimeString("en-US")}</span>
                                             </div>
                                             <div className={styles.postContent}>
-                                                <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: "none", color:"white"}}>
-                                                    <div className={styles.postTitle}>{e.title}</div>
-                                                </Link>
+                                                <div className={styles.postTitle}>
+                                                    <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: "none", color:"white"}}>
+                                                        {e.title}
+                                                    </Link>
+                                                </div>
                                                 <div className={styles.postBody}>{e.body}</div>
                                             </div>
                                             <div className={styles.postBottom}>

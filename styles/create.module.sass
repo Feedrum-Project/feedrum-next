@@ -63,7 +63,6 @@
         line-height: 2.125rem
 
 .images
-    max-height: 9.75rem
     margin-bottom: 1.625rem
 
     &AddImage
@@ -86,3 +85,18 @@
         font-size: 1.125rem
         font-weight: 400
         width: 6.875rem
+
+    &List
+        display: flex
+        flex-wrap: wrap
+
+        &>*
+            margin: 0 1.25rem 1.25rem 0
+
+    &Image
+        border-radius: .625rem
+        background-size: contain
+        background-repeat: no-repeat
+        height: 9.75rem
+        width: 9.75rem
+        display: absolute

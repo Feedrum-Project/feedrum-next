@@ -15,20 +15,24 @@ export default function Post({postData}: {postData: IPost}){
         <div className={styles.post}>
             <div className={styles.postTop}>
                 <div className={styles.postAuthor}>
-                    <Link className={styles.postAuthor} href={`/users/${postData.userId}`} style={{ textDecoration: "none", color:"#fff" }}>
-                        <Image src={avatar} alt="Аватар" />
-                        <span className={styles.postAuthorname}>{postData.userId}</span>
-                    </Link>
+                    <Image src={avatar} alt="Аватар" />
+                    <span className={styles.postAuthorname}>
+                        <Link className={styles.postAuthor} href={`/users/${postData.userId}`} style={{ textDecoration: "none", color:"#fff" }}>
+                            {postData.userId}
+                        </Link>
+                    </span>
                 </div>
                 <div className={styles.postDate}>
-                    {new Date(postData.createdAt).toLocaleDateString()},&nbsp;
-                    {new Date(postData.createdAt).toLocaleTimeString()}
+                    {new Date(postData.createdAt).toLocaleDateString("en-US")},&nbsp;
+                    {new Date(postData.createdAt).toLocaleTimeString("en-US")}
                 </div>
             </div>
             <div className={styles.postMiddle}>
-                <Link href={`/posts/${postData.id}`} style={{ textDecoration: "none", color:"#fff" }}>
-                    <h1 className={styles.postTitle}>{postData.title}</h1>
-                </Link>
+                <h1 className={styles.postTitle}>
+                    <Link href={`/posts/${postData.id}`} style={{ textDecoration: "none", color:"#fff" }}>
+                        {postData.title}
+                    </Link>
+                </h1>
                 <div className={styles.postBody}>{postData.body.length >= 234 ? postData.body.slice(0,234)+"...." : postData.body}</div>  
             </div>
             <div className={styles.postBottom}>
