@@ -67,17 +67,18 @@
 
     &AddImage
         display: flex
-        justify-content: space-between
         align-items: center
+        justify-content: space-between
         background: $block
         color: $white
         border-radius: .625rem
         width: 14.75rem
         height: 9.75rem
         padding: 0 2.375rem
+        cursor: pointer
 
     &Plus
-        font-size: 3rem
+        font-size: 4rem
         font-weight: 400
         line-height: 1rem
 
@@ -95,8 +96,27 @@
 
     &Image
         border-radius: .625rem
+        overflow: hidden
         background-size: contain
         background-repeat: no-repeat
-        height: 9.75rem
         width: 9.75rem
-        display: absolute
+        height: 9.75rem
+        display: flex
+        justify-content: flex-end
+        padding: .125rem
+        
+
+        &>button
+            background: $block
+            border: none
+            border-radius: .25rem
+            width: min-content
+            height: min-content
+            margin: .5rem .5rem 0 0
+            padding: .375rem
+
+            display: flex
+            align-items: center
+            justify-content: center
+            cursor: pointer
+            user-select: none

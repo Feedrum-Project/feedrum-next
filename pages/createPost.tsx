@@ -1,12 +1,16 @@
-import CreateForm from "module/CreateForm/CreateForm";
 import styles from "../styles/create.module.sass";
-import { Input } from "components/UI";
+
 import Script from "next/script";
-import createPost from "module/CreateForm/fetch/createPost";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
 import { IUser } from "types/User";
+
+import CreateForm from "module/CreateForm/CreateForm";
 import TextEditor from "module/CreateForm/Components/TextEditor";
+import createPost from "module/CreateForm/fetch/createPost";
+import { Input } from "components/UI";
+import Images from "module/CreateForm/Components/Images";
 
 export default function CreatePost() {
     const [chapter, setChapter] = useState<"editor" | "view">("view");
@@ -34,12 +38,6 @@ export default function CreatePost() {
         createPost({body, user});
     }
 
-    function upload(e: ChangeEvent<HTMLInputElement>) {
-        const { files } = e.target;
-        if(!files) return;
-        setFiles(Array.from(files));
-    }
-
     if(user === null || user.id === 0) {
         return (
             <Script id="0">
@@ -55,36 +53,7 @@ export default function CreatePost() {
                     {
                         chapter === "editor" ?
                             <div className={styles.editor}>
-                                <div className={styles.images}>
-                                        <div className={styles.imagesList}>
-                                            {
-                                                files?.map((file, index) => {
-                                                    return (
-                                                            <div
-                                                                key={index}
-                                                                className={styles.imagesImage}
-                                                                style={
-                                                                    {
-                                                                        background: 'url('+URL.createObjectURL(file)+')',
-                                                                        backgroundRepeat: 'no-repeat'
-                                                                    }
-                                                                }></div>
-                                                    )
-                                                })
-                                            }
-                                            <label
-                                                className={styles.imagesAddImage}>
-                                                <input
-                                                    type="file"
-                                                    onChange={e => upload(e)}
-                                                    hidden
-                                                    multiple
-                                                />
-                                                <div className={styles.imagesPlus}>+</div>
-                                                <h1 className={styles.imagesText}>Додати зображення</h1>
-                                            </label>
-                                        </div>
-                                    </div>
+                                <Images files={files} setFiles={setFiles} showAdd/>
                                 <Input
                                     Name="Назва"
                                     name="name"
@@ -98,9 +67,7 @@ export default function CreatePost() {
                             :
                             <>
                                 <div className={styles.example}>
-                                    <div className={styles.images}>
-                                        <div className="imagesList"></div>
-                                    </div>
+                                    <Images files={files} setFiles={setFiles}/>
                                     <h1
                                         suppressContentEditableWarning
                                         contentEditable="true"
