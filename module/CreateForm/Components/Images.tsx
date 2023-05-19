@@ -1,14 +1,14 @@
 import styles from "styles/create.module.sass";
 
 import Image from "next/image";
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 
 import remove from "images/Remove.svg";
 import edit from "images/Edit.svg";
 
 interface IImages {
     files: File[] | undefined;
-    setFiles: (files: File[]) => any;
+    setFiles: Dispatch<SetStateAction<File[] | undefined>>;
     showAdd?: boolean;
 }
 
@@ -17,7 +17,8 @@ export default function Images({files, setFiles, showAdd=false}: IImages) {
     function upload(e: ChangeEvent<HTMLInputElement>) {
         const { files } = e.target;
         if(!files) return;
-        setFiles(Array.from(files));
+
+        setFiles((pr: File[]) =>  pr !== undefined ? pr.concat(Array.from(files)) : Array.from(files));
     }
 
     return (
@@ -29,19 +30,30 @@ export default function Images({files, setFiles, showAdd=false}: IImages) {
                             <>
                                 <div
                                     key={index}
-                                    className={styles.imagesImage}
-                                    style={
-                                        {
-                                            background: 'url('+URL.createObjectURL(file)+')',
-                                            backgroundRepeat: 'no-repeat',
-                                        }
-                                    }>
-                                    <button>
-                                        <Image src={edit} alt="Відредагувати" width={14}/>
-                                    </button>
-                                    <button>
-                                        <Image src={remove} alt="Видалити" width={14}/>
-                                    </button>
+                                    className={styles.imagesImage}>
+                                        <Image
+                                            src={URL.createObjectURL(file)}
+                                            alt="Завантажений малюнок"
+                                            width={9.75*16}
+                                            height={9.75*16}
+                                            className={styles.imagesBackground}/>
+                                    <div className={styles.board}>
+                                        <button>
+                                            <Image src={edit} alt="Відредагувати" width={14}/>
+                                        </button>
+                                        <button>
+                                            <Image
+                                                src={remove}
+                                                alt="Видалити" width={14}
+                                                onClick={() => {
+                                                    const newList = files.filter(e => {
+                                                        if(e === file ) return;
+                                                        return e;
+                                                    });
+                                                    setFiles(newList);
+                                                }}/>
+                                        </button>
+                                    </div>
                                 </div>
                             </>
                         )

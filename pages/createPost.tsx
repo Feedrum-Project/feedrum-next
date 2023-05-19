@@ -29,13 +29,27 @@ export default function CreatePost() {
         e.preventDefault();
         if(!e || !e.target) return;
         const target = e.target;
-
-        const { value: title }: HTMLInputElement = target.name;
-        const { value: content }: HTMLTextAreaElement = target.data;
-        const body = {title, body: content};
-        if(content.length < 100) return;
         
-        createPost({body, user});
+        const { value: title } = target.name;
+        const { value: body } = target.data;
+        if(body.length < 100) return;
+
+        if(files !== undefined && files.length > 1) {
+            const form = new FormData();
+            files?.forEach((e, i) => {
+                form.append("image-"+i, e);
+            });
+
+            fetch("/api/images/", {
+                method: "POST",
+                body: form
+            })
+                .then(res => res.json())
+                .then(res => console.log(res));
+        }
+        
+        createPost({body: {title, body, images: files}, user: user})
+            .then(res => console.log(res));
     }
 
     if(user === null || user.id === 0) {

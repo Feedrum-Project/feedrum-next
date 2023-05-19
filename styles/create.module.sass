@@ -65,6 +65,11 @@
 .images
     margin-bottom: 1.625rem
 
+    &Background
+        position: absolute
+        z-index: -999
+        border-radius: .625rem
+
     &AddImage
         display: flex
         align-items: center
@@ -106,17 +111,21 @@
         padding: .125rem
         
 
-        &>button
-            background: $block
-            border: none
-            border-radius: .25rem
-            width: min-content
-            height: min-content
-            margin: .5rem .5rem 0 0
-            padding: .375rem
-
+        &>.board
             display: flex
-            align-items: center
-            justify-content: center
-            cursor: pointer
-            user-select: none
+            justify-content: flex-end
+            
+            &>button
+                background: $block
+                border: none
+                border-radius: .25rem
+                width: min-content
+                height: min-content
+                margin: .5rem .5rem 0 0
+                padding: .375rem
+
+                display: flex
+                align-items: center
+                justify-content: center
+                cursor: pointer
+                user-select: none

@@ -24,9 +24,10 @@ export default function Layout({ children }: Props) {
                     dispatch({type: "set", payload: res});
             })
             .catch((e) => {
-                dispatch({type:"set", payload:{id: 0}});
+                console.log(e);
+                // dispatch({type:"set", payload:{id: 0}});
                 // document.cookie = "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                throw e;
+                // throw e;
             });
     }, [dispatch]);
 
