@@ -15,10 +15,10 @@ interface IPage {
 export default function EditPost({postContent, author}: IPage) {
     const user: IUser = useSelector((state: {user: IUser}) => state).user;
     if(author.id !== user.id) {
-        return <h1 style={{color: "white", width: '40rem'}}>
+        return <h1 style={{color: "white", width: "40rem"}}>
             Ви не маєте права на редугваня цієї сторінки,
             будемо вдячні якщо ви повернетеся <Link href="/" style={{color: "#AE80C3"}}>на головну</Link>.
-            </h1>;
+        </h1>;
     } else {
         return (
             <>
@@ -27,7 +27,7 @@ export default function EditPost({postContent, author}: IPage) {
                     {postContent.body}
                 </span>
             </>
-        )
+        );
     }
 }
 

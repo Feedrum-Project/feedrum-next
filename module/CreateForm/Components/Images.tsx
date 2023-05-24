@@ -18,7 +18,12 @@ export default function Images({files, setFiles, showAdd=false}: IImages) {
         const { files } = e.target;
         if(!files) return;
 
-        setFiles((pr: File[]) =>  pr !== undefined ? pr.concat(Array.from(files)) : Array.from(files));
+        setFiles((pr: File[] | undefined) =>  {
+            if(pr !== undefined) {
+                const buf = [...pr];
+                return buf.concat(Array.from(files));
+            } else return Array.from(files);
+        });
     }
 
     return (
@@ -31,12 +36,12 @@ export default function Images({files, setFiles, showAdd=false}: IImages) {
                                 <div
                                     key={index}
                                     className={styles.imagesImage}>
-                                        <Image
-                                            src={URL.createObjectURL(file)}
-                                            alt="Завантажений малюнок"
-                                            width={9.75*16}
-                                            height={9.75*16}
-                                            className={styles.imagesBackground}/>
+                                    <Image
+                                        src={URL.createObjectURL(file)}
+                                        alt="Завантажений малюнок"
+                                        width={9.75*16}
+                                        height={9.75*16}
+                                        className={styles.imagesBackground}/>
                                     <div className={styles.board}>
                                         <button>
                                             <Image src={edit} alt="Відредагувати" width={14}/>
@@ -56,25 +61,25 @@ export default function Images({files, setFiles, showAdd=false}: IImages) {
                                     </div>
                                 </div>
                             </>
-                        )
+                        );
                     })
                 }
                 {
                     showAdd ?
-                    <label
-                        className={styles.imagesAddImage}>
-                        <input
-                            type="file"
-                            onChange={e => upload(e)}
-                            hidden
-                            multiple
-                        />
-                        <div className={styles.imagesPlus}>+</div>
-                        <h1 className={styles.imagesText}>Додати зображення</h1>
-                    </label>
-                    : null
+                        <label
+                            className={styles.imagesAddImage}>
+                            <input
+                                type="file"
+                                onChange={e => upload(e)}
+                                hidden
+                                multiple
+                            />
+                            <div className={styles.imagesPlus}>+</div>
+                            <h1 className={styles.imagesText}>Додати зображення</h1>
+                        </label>
+                        : null
                 }
             </div>
         </div>
-    )
+    );
 }

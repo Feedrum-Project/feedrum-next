@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "./styles/comment.module.sass";
 import arrowTop from "images/arrow-top.svg";
-import avatar from 'images/avatar.svg';
+import avatar from "images/avatar.svg";
 import arrowBottom from "images/arrow-bottom.svg";
 import { useSelector } from "react-redux";
 import { IComment } from "types/Post";
@@ -55,8 +55,8 @@ export default function Comment({comment, disabled=false}:CommentObj) {
                 <div className={styles.commentTop}>
                     <div className={styles.commentLeft}>
                         <Image
-                        src={avatar}
-                        alt="Аватар"
+                            src={avatar}
+                            alt="Аватар"
                         />
                         <p>{comment.id}</p>
                     </div>

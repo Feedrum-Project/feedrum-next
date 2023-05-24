@@ -2,7 +2,7 @@
   "extends": "next/core-web-vitals",
   "rules": {
     "quotes":["warn", "double"],
-    "indent":["erorr", 4],
+    "indent":[2, 4],
     "jsx-quotes":["warn", "prefer-double"],
     "semi": "warn"
   }

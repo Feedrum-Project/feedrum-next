@@ -66,7 +66,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                             <Button
                                 Style="purple"
                                 to={"./"+postContent.id+"/edit"}
-                                >
+                            >
                                     Редагувати
                             </Button>
                         </div>
@@ -83,25 +83,26 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                 Коментарі - {postComments.length}
                             </span>
                         </div>
-                                <h2
-                                    style={
-                                        {color: attention && attention.code !== 200 ? "#F36A6A" : "#6AEA3D"}
-                                    }>
-                                    { attention ? attention.message : null}
-                                </h2>
-                            <form onSubmit={(e: FormEvent) => sub(e)} className={styles.comment}>
-                                <div className={styles.commentLeft}>
-                                    <Image alt="Аватар" src={avatar} width={40} height={40}/>
-                                </div>
-                                <div className={styles.commentRight}>
-                                    <Textarea name="Коментар" maxCount={2048}/>
-                                </div>
-                            </form>
+                        <h2
+                            style={
+                                {color: attention && attention.code !== 200 ? "#F36A6A" : "#6AEA3D"}
+                            }>
+                            { attention ? attention.message : null}
+                        </h2>
+                        <form onSubmit={(e: FormEvent) => sub(e)} className={styles.comment}>
+                            <div className={styles.commentLeft}>
+                                <Image alt="Аватар" src={avatar} width={40} height={40}/>
+                            </div>
+                            <div className={styles.commentRight}>
+                                <Textarea name="Коментар" maxCount={2048}/>
+                            </div>
+                        </form>
                         <div className={styles.commentsList}>
                             {
                                 postComments.map((e:IComment) => {
                                     return (
                                         <Comment
+                                            key={e.id}
                                             comment={e}
                                             disabled={e.userId === user.id}/>
                                     );
