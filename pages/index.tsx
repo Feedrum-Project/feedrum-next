@@ -2,7 +2,7 @@ import { IPost } from "types/Post";
 import PostController from "controllers/post.controller";
 import { GetServerSideProps } from "next";
 import PostComponent from "module/Post/Post";
-import styles from "./home.module.sass";
+import styles from "../styles/home.module.sass";
 import Aside from "module/Aside/Aside";
 import { useState } from "react";
 
@@ -12,7 +12,7 @@ interface HomeProps {
 
 export default function Home({ posts }: HomeProps) {
 
-    const [postsSorted, setPostsSorted] = useState<IPost[] | undefined>(posts);
+    const [postsSorted, setPostsSorted] = useState<IPost[] | []>(posts);
 
     function setSortingBest() {
         if(postsSorted === undefined) return;
@@ -55,9 +55,9 @@ export default function Home({ posts }: HomeProps) {
                     </div>
                     <div className={styles.posts}>
                         {
-                            postsSorted !== undefined ? postsSorted.map(post => (
+                            postsSorted.length ? postsSorted.map(post => (
                                 <PostComponent key={post.id} postData={post}/>
-                            )) : null
+                            )) : <h1>Постів немає, але тримайтесь!</h1>
                         }
                     </div>
                 </article>

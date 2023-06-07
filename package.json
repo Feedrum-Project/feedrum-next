@@ -14,7 +14,7 @@
     "generate": "prisma generate"
   },
   "dependencies": {
-    "@next/font": "^13.0.6",
+    "@next/font": "13.0.6",
     "@prisma/client": "^4.7.1",
     "@reduxjs/toolkit": "^1.9.3",
     "bcryptjs": "^2.4.3",

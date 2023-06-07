@@ -18,11 +18,16 @@ export default async function registrate(body:bodyObj) {
     const newBody = {...body, password: body.password1} as bodyPreparing & BodyInit;
     delete newBody.password1; delete newBody.password2;
 
-    const result = await fetch("http://localhost:3000/api/auth/register", {
+    const result = await fetch("/api/auth/register", {
         method:"POST",
-        body: JSON.stringify(newBody)
+        body: JSON.stringify(newBody),
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": ["http://192.168.0.29:3000", "https://feedrum.com"].join(", ")
+        },
     })
         .then(res => res.json());
+    console.log(result);
     
     return result;
 }

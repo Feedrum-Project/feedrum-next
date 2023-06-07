@@ -5,6 +5,7 @@ import { use } from "next-api-middleware";
 import missingBodyMiddleware from "middlewares/missingBody.middleware";
 import validMethodsMiddleware from "middlewares/validMethods.middleware";
 import errorMiddleware from "middlewares/error.middleware";
+import CORSable from "middlewares/cors.middleware";
 
 const handler: NextApiHandler = async (req, res) => {
 
@@ -18,5 +19,6 @@ const handler: NextApiHandler = async (req, res) => {
 export default use(
     errorMiddleware,
     missingBodyMiddleware,
-    validMethodsMiddleware("POST")
+    validMethodsMiddleware("POST"),
+    CORSable(["http://192.168.0.29:3000", "https://feedrum.com"])
 )(handler);

@@ -1,4 +1,4 @@
-import styles from "./settings.module.sass";
+import styles from "../styles/settings.module.sass";
 import Box from "components/UI/Box/Box";
 import Checkbox from "components/UI/Checkbox/Checkbox";
 import { Input, Button, Select } from "components/UI";

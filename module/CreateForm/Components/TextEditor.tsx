@@ -14,7 +14,12 @@ interface ISelects {
 
 export default function TextEditor() {
     const selects = useState<ISelects>({header: false});
-    const article = localStorage.getItem("article")!;
+    let article = localStorage.getItem("article");
+    if(article === null) {
+        localStorage.setItem("article", "");
+        article = "";
+    }
+
     const editor = useRef<any>(null);
     const [value, setValue] = useState<string>(article);
 
@@ -84,10 +89,9 @@ export default function TextEditor() {
                     readOnly={true}
                     style={{display:"none"}}>
                 </textarea>
-                <button type="button" onClick={() => localStorage.setItem("article", value)}>Зберегти</button>
                 <div className={styles.buttons}>
                     <Button type="submit" Style="purple">Оприлюднити</Button>
-                    <Button Style="standart">Зберегти як чорнетка</Button>
+                    <Button Style="standart" onClick={() => localStorage.setItem("article", value)}>Зберегти як чорнетка</Button>
                 </div>
             </div>
         </>

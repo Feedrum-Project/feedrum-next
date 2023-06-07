@@ -15,7 +15,7 @@ export default function Layout({ children }: Props) {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        fetch("http://localhost:3000/api/auth/me", {
+        fetch("/api/auth/me", {
             method: "post"
         })
             .then(res => res.json())

@@ -15,16 +15,22 @@ import starR from "images/star-red.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { IUser } from "types/User";
 import { IPost } from "types/Post";
+import { Post } from "@prisma/client";
 
 interface UserProps {
-  userInformation: IUser;
-  userPosts: IPost[];
+  userInformation: IUser | null;
+  userPosts: IPost[] | [];
 }
 
 export default function User({userInformation, userPosts}:UserProps) {
     const user = useSelector((state: any) => state.user);
     const dispatch = useDispatch();
 
+    if(!userInformation) return (
+        <div className={styles.main}>
+            <h1>Користувача не знайдено!</h1>
+        </div>
+    )
     return (
         <>
             <div className={styles.main}>
@@ -41,7 +47,7 @@ export default function User({userInformation, userPosts}:UserProps) {
                     </div>
                     <div className={styles.profileContent}>
                         {
-                            userPosts.length <= 1 ?
+                            !userPosts.length ?
                                 <div>
                                     <h1 style={{width:"20rem"}}>У&nbsp;користувача відсутні свої статті.</h1>
                                 </div>
@@ -113,8 +119,8 @@ export default function User({userInformation, userPosts}:UserProps) {
 }
 
 export const getServerSideProps:GetServerSideProps = async (context) => {
-    const userPosts:any = await prisma.user.getUserPosts(Number(context.query.id));
-    const userInformation:any = await prisma.user.getUserById(Number(context.query.id));
+    const userPosts: Post[] | [] = await prisma.user.getUserPosts(Number(context.query.id));
+    const userInformation: IUser | null = await prisma.user.getUserById(Number(context.query.id));
 
     return {
         props: {
