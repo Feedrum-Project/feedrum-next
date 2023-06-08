@@ -30,7 +30,7 @@ export default function User({userInformation, userPosts}:UserProps) {
         <div className={styles.main}>
             <h1>Користувача не знайдено!</h1>
         </div>
-    )
+    );
     return (
         <>
             <div className={styles.main}>

@@ -11,7 +11,7 @@ interface InputProps {
   Name: string;
   name?:string;
   disabled?: boolean;
-  autoComplete: boolean;
+  autoComplete?: boolean;
   value?: string;
   info?: string;
   onChange?: ((e: any) => void);

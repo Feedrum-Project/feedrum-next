@@ -15,5 +15,5 @@ export default function Modal({children, setModal}: PropsWithChildren) {
                 {children}
             </div>
         </div>
-    )
+    );
 }

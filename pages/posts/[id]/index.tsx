@@ -26,12 +26,6 @@ interface IPostPage {
     author: IUser;
 }
 
-interface FormEventExt {
-    target: {
-        password: HTMLInputElement
-    }
-}
-
 export default function Post({postContent, postComments, author}:IPostPage) {
 
     const user = useSelector((state: {user: IUser}) => state.user);
@@ -62,14 +56,16 @@ export default function Post({postContent, postComments, author}:IPostPage) {
             });
     }
     
-    function onSubmit(event: FormEvent & FormEventExt) {
+    function onSubmit(event: FormEvent) {
         event.preventDefault();
+
+        const target = event.target as typeof event.target & {password: HTMLInputElement};
         
         const {email} = user;
         const body = JSON.stringify({
             postId: postContent.id,
             email,
-            password: event.target.password.value
+            password: target.password.value
         });
         
         fetch("/api/posts", {
@@ -127,7 +123,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                                                     </form>
                                                 </>
                                             }
-                                        )
+                                        );
                                     }
                                 }
                             >

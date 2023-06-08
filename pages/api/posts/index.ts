@@ -44,16 +44,16 @@ const createPost: NextApiHandler = async (req, res) => {
 };
 
 const deletePost: NextApiHandler = async (req, res) => {
-    if(!req.body.postId) return
+    if(!req.body.postId) return;
     const post = await PostController.delete(req.body.postId as number, req.user.id);
 
     return success(res, post);
-}
+};
 
 const updatePost: NextApiHandler = async (req, res) => {
-    const post = await PostController.update(req.body.id, req.body.post, req.user.id)
+    const post = await PostController.update(req.body.id, req.body.post, req.user.id);
 
     return success(res, post);
-}
+};
 
 export default use(errorMiddleware, validMethodsMiddleware(["GET", "POST", "DELETE", "PUT"]))(handler);
