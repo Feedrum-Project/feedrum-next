@@ -9,7 +9,8 @@ import SimilarPosts from "module/Aside/Components/SimilarPosts";
 import Rank from "module/Aside/Components/Rank";
 import Comment from "components/comment/Comment";
 import Textarea from "components/UI/Textarea/Textarea";
-import { Button } from "components/UI";
+import { Button, Input } from "components/UI";
+import Modal from "components/Modal/Modal";
 
 import message from "images/message.svg";
 import avatar from "images/avatar.svg";
@@ -17,6 +18,7 @@ import parser from "helpers/parsers.helper";
 import { IComment, IPost } from "types/Post";
 import { IUser } from "types/User";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 
 interface IPostPage {
     postComments: IComment[];
@@ -24,24 +26,34 @@ interface IPostPage {
     author: IUser;
 }
 
+interface FormEventExt {
+    target: {
+        password: HTMLInputElement
+    }
+}
+
 export default function Post({postContent, postComments, author}:IPostPage) {
 
     const user = useSelector((state: {user: IUser}) => state.user);
     const [attention, setAttention] = useState<{code: number, message: string} | null   >(null);
+    const [modal, setModal] = useState<{show: boolean, content: any}>({show: false, content: ""});
 
     let content = useRef<null | HTMLDivElement>(null);
 
     function sub(e: FormEvent) {
         e.preventDefault();
         const target = e.target as EventTarget & { comment: HTMLInputElement};
-        const body = {
+        const body = JSON.stringify({
             body: target.comment.value,
             postId: postContent.id
-        };
+        });
         
-        fetch("http://localhost:3000/api/comments", {
-            method:"post",
-            body: JSON.stringify(body)
+        fetch("/api/comments", {
+            method:"POST",
+            body,
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
             .then(res => res.json())
             .then(e => {
@@ -49,6 +61,30 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                 setAttention(e);
             });
     }
+    
+    function onSubmit(event: FormEvent & FormEventExt) {
+        event.preventDefault();
+        
+        const {email} = user;
+        const body = JSON.stringify({
+            postId: postContent.id,
+            email,
+            password: event.target.password.value
+        });
+        
+        fetch("/api/posts", {
+            method: "DELETE",
+            body,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => {
+                console.log(res);
+            });
+
+    }
+
     useEffect(() => {
         const post_content = parser.MDtoHTML(postContent.body+"\n", false);
         if(content && content.current) {
@@ -59,6 +95,13 @@ export default function Post({postContent, postComments, author}:IPostPage) {
     if(author.id === -1) return <h1 style={{color:"#eee"}}>Статті не було знайдено</h1>;
     return (
         <div className={styles.main}>
+            {
+                modal.show && modal.content !== undefined ?
+                    <Modal setModal={setModal}>
+                        {modal.content}
+                    </Modal>
+                    : null
+            }
             <div className={styles.post}>
                 {
                     user.id === postContent.userId ?
@@ -68,6 +111,27 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                                 to={"./"+postContent.id+"/edit"}
                             >
                                     Редагувати
+                            </Button>
+                            <Button
+                                Style="red"
+                                onClick={
+                                    () => {
+                                        setModal(
+                                            {
+                                                show: true, content: <>
+                                                    <form method="post" className={styles.window} onSubmit={onSubmit}>
+                                                        <h1 className={styles.headtext}>Видалити пост?</h1>
+                                                        <p className={styles.subtext}>Ця дія не відворотня, може хочете просто <Link className={styles.link} href={"./"+postContent.id+"/edit"}>редагувати</Link>?</p>
+                                                        <Input Name="Пароль" name="password" type="password" autoComplete={false} placeholder="Пароль вашого облікового запису"/>
+                                                        <Button Style="red" type="submit">Видалити</Button>
+                                                    </form>
+                                                </>
+                                            }
+                                        )
+                                    }
+                                }
+                            >
+                                Видалити
                             </Button>
                         </div>
                         : null
@@ -89,12 +153,12 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                             }>
                             { attention ? attention.message : null}
                         </h2>
-                        <form onSubmit={(e: FormEvent) => sub(e)} className={styles.comment}>
+                        <form onSubmit={sub} className={styles.comment}>
                             <div className={styles.commentLeft}>
                                 <Image alt="Аватар" src={avatar} width={40} height={40}/>
                             </div>
                             <div className={styles.commentRight}>
-                                <Textarea name="Коментар" maxCount={2048}/>
+                                <Textarea Name="Коментар" name="comment" maxCount={2048}/>
                             </div>
                         </form>
                         <div className={styles.commentsList}>

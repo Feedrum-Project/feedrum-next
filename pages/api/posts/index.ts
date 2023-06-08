@@ -18,6 +18,11 @@ const handler: NextApiHandler = async (req, res) => {
     case "POST":
         await use(authMiddleware, missingBodyMiddleware)(createPost)(req, res);
         break;
+    case "DELETE":
+        await use(authMiddleware, missingBodyMiddleware)(deletePost)(req, res);
+        break;
+    case "PUT":
+        await use(authMiddleware, missingBodyMiddleware)(updatePost)(req, res);
     }
 };
 
@@ -38,4 +43,17 @@ const createPost: NextApiHandler = async (req, res) => {
     return success(res, post);
 };
 
-export default use(errorMiddleware, validMethodsMiddleware(["GET", "POST"]))(handler);
+const deletePost: NextApiHandler = async (req, res) => {
+    if(!req.body.postId) return
+    const post = await PostController.delete(req.body.postId as number, req.user.id);
+
+    return success(res, post);
+}
+
+const updatePost: NextApiHandler = async (req, res) => {
+    const post = await PostController.update(req.body.id, req.body.post, req.user.id)
+
+    return success(res, post);
+}
+
+export default use(errorMiddleware, validMethodsMiddleware(["GET", "POST", "DELETE", "PUT"]))(handler);

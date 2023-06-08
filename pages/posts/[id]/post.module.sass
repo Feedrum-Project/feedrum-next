@@ -63,5 +63,46 @@
     margin: .5rem 0
 
 .author
-  width: min-content
+  display: flex
+  justify-content: flex-end
+
   margin-bottom: 1.25rem
+
+  &>*
+    width: min-content
+
+    &:last-child
+      margin-left: 1rem
+
+.window
+  display: flex
+  align-items: center
+  text-align: center
+  flex-direction: column
+
+  &>*
+    margin-bottom: 1.375rem
+
+  &>*:last-child
+    margin: 0
+
+.headtext
+  font-size: 1.5rem
+
+.subtext
+    color: $gray
+
+.link
+  color: $gray
+  text-decoration: underline
+
+.text
+  word-break: break-all
+  min-width: 100rem
+  min-height: 40rem
+  // max-width: 20rem
+  max-height: 40rem
+
+  line-height: 1rem
+  border: none
+  background: $background

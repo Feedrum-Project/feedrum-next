@@ -11,6 +11,7 @@ interface InputProps {
   Name: string;
   name?:string;
   disabled?: boolean;
+  autoComplete: boolean;
   value?: string;
   info?: string;
   onChange?: ((e: any) => void);
@@ -25,6 +26,7 @@ export default function Input(
         disabled=false,
         value="",
         info,
+        autoComplete,
         onChange
     }:InputProps) {
 
@@ -62,6 +64,7 @@ export default function Input(
                     type={showPassword !== true ? type : "text"}
                     placeholder={placeholder}
                     name={name}
+                    autoComplete={autoComplete ? "true" : "false"}
                     className={styles.inputSquareInput}
                 />
                 {

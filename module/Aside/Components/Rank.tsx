@@ -28,12 +28,12 @@ export default function Rank({info, disabled=false}:RankProps) {
             score: vote
         };
         
-        fetch("http://localhost:3000/api/" + info.type + "/" + info.id + "/vote", {
+        fetch("/api/" + info.type + "/" + info.id + "/vote", {
             method:"POST",
             body: JSON.stringify(body)
         })
             .then(res => res.json())
-            .then(e => console.log(e));
+            .then(console.log);
     }
 
     return (

@@ -1,11 +1,14 @@
 import Link from "next/link";
+import styles from "../post.module.sass";
 
 import { GetServerSideProps } from "next";
 import { IPost } from "types/Post";
 import { IUser } from "types/User";
+import { Button } from "components/UI";
 
 import prisma from "@database";
 import { useSelector } from "react-redux";
+import { FormEvent } from "react";
 
 interface IPage {
     postContent: IPost;
@@ -14,6 +17,31 @@ interface IPage {
 
 export default function EditPost({postContent, author}: IPage) {
     const user: IUser = useSelector((state: {user: IUser}) => state).user;
+
+    function submit(e: FormEvent) {
+        e.preventDefault();
+        const textBody = document.getElementById("text");
+        if(textBody === null) return;
+        
+        const body = JSON.stringify({
+            id: postContent.id,
+            post: {
+                title: postContent.title,
+                body: textBody.innerHTML.split("<br><br>").join("\n")
+            },
+        });
+
+        fetch("/api/posts", {
+            method: "PUT",
+            body,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => res.json())
+            .then(console.log);
+    }
+
     if(author.id !== user.id) {
         return <h1 style={{color: "white", width: "40rem"}}>
             Ви не маєте права на редугваня цієї сторінки,
@@ -22,10 +50,20 @@ export default function EditPost({postContent, author}: IPage) {
     } else {
         return (
             <>
-                <h1 style={{color: "white"}}>Редагування сторінки</h1>
-                <span style={{color: "white"}} contentEditable suppressContentEditableWarning>
-                    {postContent.body}
-                </span>
+                <h1>Редагування сторінки</h1>
+                <form method="post" onSubmit={submit}>
+                    <span
+                        id="text"
+                        className={styles.text}
+                        contentEditable
+                        suppressContentEditableWarning
+                        dangerouslySetInnerHTML={{__html: postContent.body.split("\n\n").join("<br/>")}}>
+                    </span>
+                    <br />
+                    <div className="minWidth">
+                        <Button Style="purple" type="submit">Edit</Button>
+                    </div>
+                </form>
             </>
         );
     }
