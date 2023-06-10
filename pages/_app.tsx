@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import "../styles/global.sass";
 import { Raleway } from "@next/font/google";
 import { Provider } from "react-redux";
-import store from "../store/user";
+import store from "../store/store";
 
 const raleway = Raleway(
     {

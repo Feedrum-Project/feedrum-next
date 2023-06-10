@@ -27,7 +27,6 @@ interface IPostPage {
 }
 
 export default function Post({postContent, postComments, author}:IPostPage) {
-
     const user = useSelector((state: {user: IUser}) => state.user);
     const [attention, setAttention] = useState<{code: number, message: string} | null   >(null);
     const [modal, setModal] = useState<{show: boolean, content: any}>({show: false, content: ""});

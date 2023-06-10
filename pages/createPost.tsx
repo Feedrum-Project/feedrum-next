@@ -49,7 +49,12 @@ export default function CreatePost() {
         }
         
         createPost({body: {title, body, images: files}, user: user})
-            .then(res => console.log(res));
+            .then(res => {
+                console.log(res);
+                if(res.code === 200) {
+                    location.href = "/posts/"+ res.data.id
+                }
+            });
     }
 
     if(user === null || user.id === 0) {

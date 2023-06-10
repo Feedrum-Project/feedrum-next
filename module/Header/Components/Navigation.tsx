@@ -18,11 +18,11 @@ interface Panel {
   }
 
 export default function Navigation() {
-    const user = useSelector((state: any) => state.user);
+    const {user} = useSelector((state: any) => state.user);
     const [panel, setPanel] = useState<Panel | null>(null);
 
     let Logged;
-    if( user !== null && user.id !== -1 ) {
+    if(user !== null && user.id !== 0) {
         Logged = (
             <>
                 <div className={styles.centr}>

@@ -6,6 +6,7 @@ export default Prisma.defineExtension((client: PrismaClient) => {
     const jwtUserSelectFields = {
         id: true,
         email: true,
+        isVerified: true,
         name: true,
         password: true,
     };

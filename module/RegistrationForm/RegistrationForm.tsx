@@ -59,10 +59,26 @@ export default function RegistrationForm() {
                     </>
             }
             <div className={styles.registrationMiddle}>
-                <Input type="email" name="email" Name="Пошта" placeholder="Пошта"/>
-                <Input type="text" name="name" Name="Ім'я" placeholder="Ім'я"/>
-                <Input type="password" name="password1" Name="Пароль" placeholder="Пароль"/>
-                <Input type="password" name="password2" Name="Підтвердіть пароль" placeholder="Підтвердіть пароль"/>
+                <Input
+                    type="email"
+                    name="email"
+                    Name="Пошта"
+                    placeholder="Пошта"/>
+                <Input
+                    type="text"
+                    name="name"
+                    Name="Ім'я"
+                    placeholder="Ім'я"/>
+                <Input
+                    type="password"
+                    name="password1"
+                    Name="Пароль"
+                    placeholder="Пароль"/>
+                <Input
+                    type="password"
+                    name="password2"
+                    Name="Підтвердіть пароль"
+                    placeholder="Підтвердіть пароль"/>
             </div>
             <div className={styles.registrationBottom}>
                 <Button Style="purple" type="submit">Зареєструватися</Button>

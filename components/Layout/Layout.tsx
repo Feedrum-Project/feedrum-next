@@ -3,8 +3,10 @@ import Header from "../../module/Header/Header";
 import Footer from "../../module/Footer/Footer";
 import styles from "./styles/layout.module.sass";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Notifications from "module/Notifications/notifications";
+import { IStore } from "store/store";
 
 type Props = { children: React.ReactNode };
 
@@ -12,7 +14,12 @@ export default function Layout({ children }: Props) {
     const path = useRouter().pathname;
     const condition = path === "/registration" || path === "/login" || path === "/forgetPassword";
 
+    const {notification} = useSelector((state: IStore) => state.notification);
+    const {user} = useSelector((state: IStore) => state.user);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+    }, [user])
     
     useEffect(() => {
         fetch("/api/auth/me", {
@@ -20,13 +27,43 @@ export default function Layout({ children }: Props) {
         })
             .then(res => res.json())
             .then(res => {
-                res.id === -1 ? dispatch({type: "set", payload: {id: 0}}) :
-                    dispatch({type: "set", payload: res});
+                res.id === -1 ? dispatch({type: "setUser", payload: {id: 0}}) :
+                    dispatch({type: "setUser", payload: res});
+
+                res?.isVerified ? null : dispatch(
+                    {
+                        type: "setNotification",
+                        payload: notification === null ? [
+                            {id: 0, type: "bad", title: "Ви не підтвердили свою пошту", text: "Перевірте свою скриньку на наявність верефікаційного листа"},
+                            
+                        ]
+                            : [
+                                ...notification,
+                                {
+                                    id: notification.length,
+                                    type: "bad",
+                                    title: "Ви не підтвердили свою пошту",
+                                    text: "Перевірте свою скриньку на наявність верефікаційного листа"
+                                }
+                            ]
+                    }
+                );
             })
             .catch((e) => {
                 console.log(e);
-                // dispatch({type:"set", payload:{id: 0}});
-                // document.cookie = "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                dispatch({type:"setUser", payload:{id: 0}});
+                dispatch(
+                    {
+                        type: "setNotification",
+                        payload: notification === null ? [
+                            {id: 0, type: "bad", title: "Ваша сесія застаріла", text: "Будь-ласка увійдіть знову"}
+                        ]
+                            : [
+                                ...notification,
+                                {id: notification.length, type: "bad", title: "Ваша сесія застаріла", text: "Будь-ласка увійдіть знову"}
+                            ]
+                    }
+                );
                 // throw e;
             });
     }, [dispatch]);
@@ -40,6 +77,7 @@ export default function Layout({ children }: Props) {
             {
                 condition ? null : <Header />
             }
+            <Notifications/>
             <main className={styles.main}>{children}</main>
             {
                 condition ? null : <Footer />}

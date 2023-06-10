@@ -22,12 +22,14 @@ export default function EditPost({postContent, author}: IPage) {
         e.preventDefault();
         const textBody = document.getElementById("text");
         if(textBody === null) return;
+
+        // return console.log(postContent.body.split("\n\n").join("<br/>"))
         
         const body = JSON.stringify({
             id: postContent.id,
             post: {
                 title: postContent.title,
-                body: textBody.innerHTML.split("<br><br>").join("\n")
+                body: textBody.innerHTML.split("<br>").join("\n")
             },
         });
 
@@ -57,7 +59,7 @@ export default function EditPost({postContent, author}: IPage) {
                         className={styles.text}
                         contentEditable
                         suppressContentEditableWarning
-                        dangerouslySetInnerHTML={{__html: postContent.body.split("\n\n").join("<br/>")}}>
+                        dangerouslySetInnerHTML={{__html: postContent.body.split("\n").join("<br/>")}}>
                     </span>
                     <br />
                     <div className="minWidth">

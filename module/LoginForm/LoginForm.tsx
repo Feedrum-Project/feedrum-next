@@ -12,7 +12,7 @@ interface bodyObj {
 
 export default function LoginForm() {
     const [message, setMessage] = useState<any>(false);
-    const user = useSelector((state: any) => state.user);
+    const { user } = useSelector((state: any) => state.user);
     const dispatch = useDispatch();
 
     function prepare(event: FormEvent & {target: {email: {value: string}, password: {value: string} }}) {
@@ -49,14 +49,14 @@ export default function LoginForm() {
                 }
                 <div className={styles.loginMiddle}>
                     <Input
-                        disabled={user !== null && user.id !== -1}
+                        disabled={user !== null && user.id !== 0}
                         type="text"
                         name="email"
                         Name="Пошта"
                         placeholder="Пошта"
                     />
                     <Input
-                        disabled={user !== null && user.id !== -1}
+                        disabled={user !== null && user.id !== 0}
                         type="password"
                         name="password"
                         Name="Пароль"
