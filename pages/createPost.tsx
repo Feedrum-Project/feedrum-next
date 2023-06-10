@@ -52,7 +52,7 @@ export default function CreatePost() {
             .then(res => {
                 console.log(res);
                 if(res.code === 200) {
-                    location.href = "/posts/"+ res.data.id
+                    location.href = "/posts/"+ res.data.id;
                 }
             });
     }

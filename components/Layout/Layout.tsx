@@ -15,11 +15,7 @@ export default function Layout({ children }: Props) {
     const condition = path === "/registration" || path === "/login" || path === "/forgetPassword";
 
     const {notification} = useSelector((state: IStore) => state.notification);
-    const {user} = useSelector((state: IStore) => state.user);
     const dispatch = useDispatch();
-
-    useEffect(() => {
-    }, [user])
     
     useEffect(() => {
         fetch("/api/auth/me", {
@@ -66,7 +62,7 @@ export default function Layout({ children }: Props) {
                 );
                 // throw e;
             });
-    }, [dispatch]);
+    }, []);
 
     return (
         <>
