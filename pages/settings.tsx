@@ -2,17 +2,34 @@ import styles from "../styles/settings.module.sass";
 import Box from "components/UI/Box/Box";
 import Checkbox from "components/UI/Checkbox/Checkbox";
 import { Input, Button, Select } from "components/UI";
-import Link from "next/link";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import { IUser } from "types/User";
+import Image from "next/image";
+import avatar from "images/avatar.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { FormEvent, useState } from "react";
+import Textarea from "components/UI/Textarea/Textarea";
+import { IStore } from "store/store";
 
 export default function Settings() {
-    const user = useSelector(
-        (state: {user: IUser}) => state.user
+    const { user } = useSelector(
+        (state: IStore) => {
+            return {user: state.user, notification: state.notification};
+        }
     );
+    const dispatch = useDispatch();
+
+    function save(e: FormEvent) {
+        e.preventDefault();
+
+        dispatch({type: "addNotification", payload: {
+            type: "good",
+            title: "Профіль збережено",
+            text: "Налаштування збережно"
+        }});
+    }
+
     const [chapter, setChapter] = useState<"profile" | "dev" | "safe">("profile");
-    if(!user || user.id === -1) return <div>Увійдіть в аккаунт.</div>;
+
+    if(user.user === null) return <div>Увійдіть в аккаунт.</div>;
     return (
         <div className={styles.settings}>
             
@@ -22,6 +39,7 @@ export default function Settings() {
                     <div
                         className={chapter === "profile" ? styles.choosed : ""}
                         onClick={() => setChapter("profile")}
+                        tabIndex={0}
                         style={
                             chapter === "profile" ?
                                 {background:"#1B1B1B"}
@@ -30,6 +48,7 @@ export default function Settings() {
                     <div
                         className={chapter === "dev" ? styles.choosed : ""}
                         onClick={() => setChapter("dev")}
+                        tabIndex={0}
                         style={
                             chapter === "dev" ?
                                 {background:"#1B1B1B"}
@@ -38,6 +57,7 @@ export default function Settings() {
                     <div
                         className={chapter === "safe" ? styles.choosed : ""}
                         onClick={() => setChapter("safe")}
+                        tabIndex={0}
                         style={
                             chapter === "safe" ?
                                 {background:"#1B1B1B"}
@@ -50,31 +70,34 @@ export default function Settings() {
                     chapter === "profile" ?
                         <>
                             <Box title="Профіль">
-                                <div className={styles.input}>
-                                    <Input
-                                        value={user.name}
-                                        Name="Ім'я"
-                                        placeholder="Ім'я"
-                                        info="Ваше ім'я."/>
-                                    <Input
-                                        value={user.email}
-                                        Name="Пошта"
-                                        placeholder="E-mail"
-                                        info="Поштова скринька."/>
-                                </div>
-                                <Checkbox>
-                                    Відображати пошту у публічному профілі
-                                </Checkbox>
-                                <div className={styles.admit}>
-                                    <Button Style="purple" type="submit">Змінити</Button>
-                                </div>
+                                <form action="" onSubmit={save}>
+                                    <div className={styles.centr}>
+                                        <Image src={avatar} alt="Ваш аватар" width="130"/>
+                                        <div className={styles.right}>
+                                            <Input
+                                                value={user.user.name}
+                                                Name="Ім'я"
+                                                placeholder="Ім'я"
+                                                info="Ваше ім'я."/>
+                                            <Input
+                                                value={user.user.email}
+                                                Name="Пошта"
+                                                placeholder="E-mail"
+                                                info="Поштова скринька."/>
+                                        </div>
+                                    </div>
+                                    <div className={styles.admit}>
+                                        <Button Style="purple" type="submit">Змінити</Button>
+                                    </div>
+                                </form>
                             </Box>
                             <Box title="Про себе">
-                                <div className={styles.input}>
-                                    <Input
-                                        placeholder="Інформація про себе"
-                                        Name="Трохи про себе"
-                                        info="Ваш опс, можливо автобіобрафія."/>
+                                <form onSubmit={save}>
+                                    <Textarea
+                                        name="description"
+                                        Name="О собі"
+                                        maxCount={100}
+                                        placeholder="Інформація стосовно себе"/>
                                     <Input
                                         placeholder="https://feedrum.com"
                                         Name="Вебсайт"
@@ -90,7 +113,7 @@ export default function Settings() {
                                     <div className={styles.admit}>
                                         <Button Style="purple" type="submit">Зберегти</Button>
                                     </div>
-                                </div>
+                                </form>
                             </Box>
                             <div>
                                 <Button Style="standart">Профіль</Button>
@@ -98,27 +121,33 @@ export default function Settings() {
                         </>
                         : chapter === "dev" ?
                             <>
-                                <Box title="API">
-                                    <Link href="/api">Посилання на API</Link>
+                                <Box title="Основні">
                                     <Checkbox>
-                                        Увімкнути режим розробника
+                                        Режим розробника
                                     </Checkbox>
+                                    <Checkbox>
+                                        Надсилати аналітику для покращення якості
+                                    </Checkbox>
+                                    <div className={["centrFlex", styles.admit].join(" ")}>
+                                        <Button Style="purple">Зберегти</Button>
+                                        <Button Style="standart">Скопіювати&nbsp;дебаг&nbsp;інформацію</Button>
+                                    </div>
+                                </Box>
+                                <Box title="API Ключі">
                                 </Box>
                             </>
                             :
                             <>
                                 <Box title="Зміна паролю">
-                                    <div className={styles.input}>
-                                        <Input
-                                            type="password"
-                                            Name="Старий пароль" />
-                                        <Input
-                                            type="password"
-                                            Name="Новий пароль" />
-                                        <Input
-                                            type="password"
-                                            Name="Підтвердити новий пароль" />
-                                    </div>
+                                    <Input
+                                        type="password"
+                                        Name="Старий пароль" />
+                                    <Input
+                                        type="password"
+                                        Name="Новий пароль" />
+                                    <Input
+                                        type="password"
+                                        Name="Підтвердити новий пароль" />
                                 </Box>
                                 <Box title="Видалення аккаунту">
                                     <div>

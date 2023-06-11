@@ -1,42 +1,38 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { IUser } from "types/User";
-import { Button } from "components/UI";
-import Link from "next/link";
+import Image from "next/image";
 import styles from "./submit.module.sass";
+import { Input, Button } from "components/UI";
+import logo from "images/logo.svg";
+import Link from "next/link";
 
-export default function SubmitEmail() {
-    const user = useSelector((state: {user: IUser}) => state.user);
-
-    if(user === null || user.id === -1) return <>Something went wrong.</>;
-
-    fetch("/api/users/"+user.id)
-        .then(res => res.json())
-        .then(res => user.isVerified = res.data.isVerified);
-
+export default function Forgot() {
     return (
-        <>
-            {
-                user.isVerified ? 
-                    <div>
-                        <h1>Все в порядку!</h1>
-                        <p>Ви вже пройшли авторизацію.</p>
-                        <Button Style="purple">Повернутися до облікового запису</Button>
-                    </div> :
-                    <div className={[styles.block, styles.red].join(" ")}>
-                        <h1>Запит надіслано!</h1>
+        <div className={styles.centr}>
+            <div>
+                <div className={styles.logo}>
+                    <Image src={logo} alt="Логотип" width={42}/>
+                    <Link href="/">Feedrum</Link>
+                </div>
+                <div className={styles.pushup}>
+                    <div className={styles.top}>
+                        <h1 className={styles.headerText}>Підтвердіть свою пошту</h1>
                         <p>
-                            На електрону пошту відправлино запит.<br/>
-                            Якщо ви не знайшли, або не прийло повідомлення,
-                            натисніть на кнопку нижче.
-                        </p>
-                        <Button Style="purple">Відправити&nbsp;перевірку</Button>
-                        <p>
-                            Якщо не допомгло,
-                            пишіть нам: <Link href="mailto:admin@feedrum.com" className={styles.link}>admin@feedrum.com</Link>
+                            Ми відправили вам листа на пошту <span className={styles.email}>elias@elias-dev.ml</span>.
+                            Якщо не зможете знайти, перевірте папку спаму
                         </p>
                     </div>
-            }
-        </>
+                    <div className={styles.bottom}>
+                        <div>
+                            <Button Style="standart"
+                                onClick={
+                                    () => history.back()
+                                }>Увійти</Button>
+                        </div>
+                        <div>
+                            <Button Style="purple">Відправити ще раз</Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }

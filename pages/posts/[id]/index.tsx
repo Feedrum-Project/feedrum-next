@@ -153,7 +153,15 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                                 <Image alt="Аватар" src={avatar} width={40} height={40}/>
                             </div>
                             <div className={styles.commentRight}>
-                                <Textarea Name="Коментар" name="comment" maxCount={2048}/>
+                                <Textarea Name="Комментар" name="comment" maxCount={2048} placeholder="Місце для вашого коментаря"/>
+                                <div className="minWidth">
+                                    <Button
+                                        Style="purple"
+                                        type="submit"
+                                    >
+                                        Підтвердити
+                                    </Button>
+                                </div>
                             </div>
                         </form>
                         <div className={styles.commentsList}>

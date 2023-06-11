@@ -1,18 +1,53 @@
 @import ../../styles/variables
 
-.link
-    color: $pink
+.centr
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 60vh
 
-.block
+.pushup
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
     background: $block
-    border-radius: .875rem
-    padding: .5rem
+    color: $white
+    border-radius: .5rem
+    width: 26.25rem
+    padding: 1.5625rem
 
+.top
+    margin: 0 0 1.375rem 0
+    display: flex
+    align-items: center
+    flex-direction: column
     &>*
-        margin: 1rem 0
+        text-align: center
+.bottom
+    display: flex
+    justify-content: space-between
+    width: 100%
+    margin: 1.375rem 0 0 0
 
-    &>button
-        width: min-content
+    &>*:last-child
+        width: 70%
 
-.red
-    border: 2px dashed $red
+.logo
+  color: $white
+  display: flex
+  align-items: center
+  justify-content: center
+  margin: 0 0 2rem 0
+  font-size: 1.625rem
+
+  &>*:first-child
+    margin: 0 1rem 0 0
+
+.email
+    text-decoration: underline
+
+.headerText
+    font-size: 1.5rem
+    font-weight: 600
+    margin-bottom: 1.125rem

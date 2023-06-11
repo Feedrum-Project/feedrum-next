@@ -1,14 +1,14 @@
 import styles from "./styles/textarea.module.sass";
-import Button from "../Button/Button";
 import { useState } from "react";
 
 interface ITextarea {
     name: string;
     Name: string;
     maxCount: number;
+    placeholder?: string;
 }
 
-export default function Textarea({name, Name, maxCount}: ITextarea) {
+export default function Textarea({name, Name, maxCount, placeholder}: ITextarea) {
     const [content, setContent] = useState<string>("");
     return (
         <>
@@ -28,18 +28,10 @@ export default function Textarea({name, Name, maxCount}: ITextarea) {
                         value={content}
                         maxLength={maxCount}
                         onChange={(e) => setContent(e.target.value)}
-                        placeholder="Місце для вашого коментаря.">
+                        placeholder={placeholder}>
 
                     </textarea>
                 </div>
-            </div>
-            <div className={styles.button}>
-                <Button
-                    Style="purple"
-                    type="submit"
-                >
-                    Підтвердити
-                </Button>
             </div>
         </>
     );

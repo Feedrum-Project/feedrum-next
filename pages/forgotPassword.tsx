@@ -1,7 +1,8 @@
 import Image from "next/image";
-import styles from "../styles/forget.module.sass";
+import styles from "../styles/forgot.module.sass";
 import { Input, Button } from "components/UI";
 import logo from "images/logo.svg";
+import Link from "next/link";
 
 export default function Forgot() {
     return (
@@ -9,7 +10,7 @@ export default function Forgot() {
             <div>
                 <div className={styles.logo}>
                     <Image src={logo} alt="Логотип" width={42}/>
-                    <p>Feedrum</p>
+                    <Link href="/">Feedrum</Link>
                 </div>
                 <div className={styles.pushup}>
                     <div className={styles.top}>

@@ -12,10 +12,19 @@ type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
     const path = useRouter().pathname;
-    const condition = path === "/registration" || path === "/login" || path === "/forgetPassword";
+    const condition = path === "/registration" || path === "/login" || path === "/forgetPassword" || path === "/users/submit";
 
-    const {notification} = useSelector((state: IStore) => state.notification);
+    const { notification: notifications } = useSelector((state: IStore) => state.notification);
     const dispatch = useDispatch();
+
+    function Notificate() {
+        console.log(notifications);
+        dispatch({type: "addNotification", payload: {
+            type: "bad",
+            title: "string",
+            text: "string"
+        }});
+    }
     
     useEffect(() => {
         fetch("/api/auth/me", {
@@ -26,41 +35,23 @@ export default function Layout({ children }: Props) {
                 res.id === -1 ? dispatch({type: "setUser", payload: {id: 0}}) :
                     dispatch({type: "setUser", payload: res});
 
-                res?.isVerified ? null : dispatch(
-                    {
-                        type: "setNotification",
-                        payload: notification === null ? [
-                            {id: 0, type: "bad", title: "Ви не підтвердили свою пошту", text: "Перевірте свою скриньку на наявність верефікаційного листа"},
-                            
-                        ]
-                            : [
-                                ...notification,
-                                {
-                                    id: notification.length,
-                                    type: "bad",
-                                    title: "Ви не підтвердили свою пошту",
-                                    text: "Перевірте свою скриньку на наявність верефікаційного листа"
-                                }
-                            ]
-                    }
-                );
+                res.isVerified ? null :
+                    dispatch({type: "addNotification", payload: {
+                        type: "bad",
+                        title: "Ви не підтвердили свою пошту",
+                        text: "Перевірте свою скриньку на наявність верефікаційного листа"
+                    }});
             })
             .catch((e) => {
                 console.log(e);
                 dispatch({type:"setUser", payload:{id: 0}});
-                dispatch(
-                    {
-                        type: "setNotification",
-                        payload: notification === null ? [
-                            {id: 0, type: "bad", title: "Ваша сесія застаріла", text: "Будь-ласка увійдіть знову"}
-                        ]
-                            : [
-                                ...notification,
-                                {id: notification.length, type: "bad", title: "Ваша сесія застаріла", text: "Будь-ласка увійдіть знову"}
-                            ]
-                    }
-                );
-                // throw e;
+
+                dispatch({type: "addNotification", payload: {
+                    type: "bad",
+                    title: "Ваша сесія застаріла",
+                    text: "Будь-ласка увійдіть знову"
+                }});
+                throw e;
             });
     }, []);
 

@@ -11,22 +11,22 @@ export default function Notifications() {
     useEffect(() => {
         console.log(notification);
         notification !== null ?
-        setTimeout(() => dispatch({type: "setNotification", payload: [...notification.slice(1)]}), 10000)
-        : null
-    }, [notification])
+            setTimeout(() => dispatch({type: "setNotification", payload: [...notification.slice(1)]}), 10000)
+            : null;
+    }, [notification, dispatch]);
     
     return (
         <div className={styles.list}>
             {
                 notification !== null ?
-                notification.map((n) => {
-                    return (
-                        <div key={n.id}>
-                            <Notification type={n.type} title={n.title} text={n.text}/>
-                        </div>
-                    )
-                })
-                : null
+                    notification.map((n) => {
+                        return (
+                            <div key={n.id}>
+                                <Notification type={n.type} title={n.title} text={n.text}/>
+                            </div>
+                        );
+                    })
+                    : null
             }
         </div>
     );

@@ -5,7 +5,6 @@
     color: $white
 
 .chapters
-    border: 1px solid $border
     border-radius: 0.5625rem
     background: $block
     width: 19.375rem
@@ -30,6 +29,17 @@
         &:hover
             background: $background
 
+.centr
+    display: flex
+    height: min-content
+
+    &>*:last-child
+        padding-left: 1.5rem
+        width: 100%
+
+.right>*:first-child
+    margin-bottom: .625rem
+
 .boxs
     display: flex
     flex-wrap: wrap
@@ -42,6 +52,9 @@
 
 .admit
     width: min-content
+    margin-top: .5rem
+    &>*:first-child
+        margin-right: .625rem
 
 .stratcher>*
     width: min-content

@@ -8,6 +8,8 @@
 
 body
     background: $background
+    max-width: 100vw
+    overflow-x: hidden
 
 a
     text-decoration: none
@@ -50,3 +52,12 @@ ol, ul > li
 
 .minWidth
     width: min-content
+
+.centrFlex
+    display: flex
+    align-items: center
+    &>*
+        width: min-content
+        
+    &>*:last-child
+        margin-left: .625rem
