@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async (context)
 
     return {
         props: {
-            posts: JSON.parse(JSON.stringify(posts)) // It breaks without this json fuckery
+            posts: JSON.parse(JSON.stringify(posts.reverse())) // It breaks without this json fuckery
         }
     };
 };

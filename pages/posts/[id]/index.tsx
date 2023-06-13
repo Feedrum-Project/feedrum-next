@@ -27,7 +27,7 @@ interface IPostPage {
 }
 
 export default function Post({postContent, postComments, author}:IPostPage) {
-    const user = useSelector((state: {user: IUser}) => state.user);
+    const { user } = useSelector((state: {user: {user:IUser}}) => state.user);
     const [attention, setAttention] = useState<{code: number, message: string} | null   >(null);
     const [modal, setModal] = useState<{show: boolean, content: any}>({show: false, content: ""});
 
@@ -92,14 +92,14 @@ export default function Post({postContent, postComments, author}:IPostPage) {
         <div className={styles.main}>
             {
                 modal.show && modal.content !== undefined ?
-                    <Modal setModal={setModal}>
+                    <Modal setModal={setModal} type="attention">
                         {modal.content}
                     </Modal>
                     : null
             }
             <div className={styles.post}>
                 {
-                    user.id === postContent.userId ?
+                    user !== null ? user.id === postContent.userId ?
                         <div className={styles.author}>
                             <Button
                                 Style="purple"
@@ -129,7 +129,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                                 Видалити
                             </Button>
                         </div>
-                        : null
+                        : null : null
                 }
                 <h1 className={styles.title}>{postContent.title}</h1>
                 <div className={styles.content} ref={content}></div>
@@ -184,7 +184,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                 <AsideProfile userName={author.name} userId={author.id}/>
                 <SimilarPosts/>
                 <div style={{width: "fit-content"}}>
-                    <Rank info={postContent} disabled={user.id === postContent.userId}/>
+                    <Rank info={postContent} disabled={user !== null ? user.id === postContent.userId : undefined}/>
                 </div>
             </div>
         </div>
