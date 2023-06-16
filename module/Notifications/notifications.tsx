@@ -21,7 +21,7 @@ export default function Notifications() {
                     notification.map((n) => {
                         return (
                             <div key={n.id}>
-                                <Notification type={n.type} title={n.title} text={n.text}/>
+                                <Notification key={n.id} notification={n}/>
                             </div>
                         );
                     })

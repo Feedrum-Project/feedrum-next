@@ -171,7 +171,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                                         <Comment
                                             key={e.id}
                                             comment={e}
-                                            disabled={e.userId === user.id}/>
+                                            disabled={user !== null && e.userId === user.id}/>
                                     );
                                 })
                             }
@@ -204,12 +204,9 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
         return -1;
     });
 
-    const commentsPreparing = comments.map(e => {
+    const commentsPreparing = comments.map((e: IComment) => {
         typeof e.createdAt === "string" ? null :
-            e.createdAt = `${e.createdAt.getDate() > 9 ?
-                e.createdAt.getDate() : "0"+e.createdAt.getDate()}.${e.createdAt.getMonth() > 9 ? e.createdAt.getMonth() : "0"+e.createdAt.getMonth()}.${e.createdAt.getFullYear().toString().slice(2)} у 
-        ${e.createdAt.getHours() > 9 ? e.createdAt.getHours() :
-        "0"+e.createdAt.getHours()}:${e.createdAt.getMinutes() > 9 ? e.createdAt.getMinutes() : "0"+e.createdAt.getMinutes()}`;
+            e.createdAt = e.createdAt.toLocaleString("uk-UA");
         return e;
     });
     const commentsParsed = JSON.parse(JSON.stringify(commentsPreparing));
