@@ -9,9 +9,9 @@ export default function Notifications() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        notification !== null ?
-            setTimeout(() => dispatch({type: "setNotification", payload: [...notification.slice(1)]}), 10000)
-            : null;
+        // notification !== null ?
+        //     setTimeout(() => dispatch({type: "setNotification", payload: [...notification.slice(1)]}), 10000)
+        //     : null;
     }, [notification, dispatch]);
     
     return (

@@ -16,20 +16,45 @@
 
 .notification
     display: flex
-    align-items: center
+    flex-direction: column
+    justify-content: space-between
     background: $background
     border-radius: .375rem
 
     min-height: 5.375rem
-    max-width: 23.625rem
-    padding: 1.375rem 1rem
+    max-width: 27.75rem
     margin-bottom: .625rem
 
-    &>*:last-child
-        margin-left: 1.25rem
+    overflow: hidden
 
 .bad
     border: 2px solid $red
 
+.badBackground
+    background: $red
+
 .good
     border: 2px solid $green
+
+.goodBackground
+    background: $green
+
+.center
+    display: flex
+    align-items: center
+    padding: 1.375rem 1rem
+
+    &Text
+        margin-left: 1.25rem
+
+        &>h3
+            margin-bottom: .5rem
+    
+.bar
+    max-width: 27.75rem
+    width: 100%
+
+.progress
+    border-top-right-radius: .75rem
+    height: .375rem
+    // width: 100%
