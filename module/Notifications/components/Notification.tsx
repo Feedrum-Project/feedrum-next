@@ -11,6 +11,7 @@ interface INotification {
         type: "bad" | "good"
         title: string
         text: string
+        createdAt: number
     }
 }
 
@@ -20,15 +21,15 @@ export default function Notification({notification}: INotification) {
 
     const dispatch = useDispatch();
 
-    let num = 0;
-    setInterval(() => {
+    let num = Date.now() - notification.createdAt;
+    const interval: any = setInterval(() => {
         if(num >= 10000) {
             dispatch({"type":"removeNotification", "payload": {id: notification.id}});
-            num = 0;
+            clearInterval(interval);
             return;
         }
-        if(progress.current === undefined || progress.current === null) return;
-        if(bar.current === undefined || bar.current === null) return;
+        if(progress.current === undefined || progress.current === null) return clearInterval(interval);
+        if(bar.current === undefined || bar.current === null) return clearInterval(interval);
         num+=10;
         const res = (10000-num)/100 + "%";
         progress.current.style.width = res;

@@ -3,4 +3,5 @@ export interface INotification {
     type: "bad" | "good"
     title: string
     text: string
+    createdAt: number
 }

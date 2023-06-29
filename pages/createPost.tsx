@@ -31,8 +31,9 @@ export default function CreatePost() {
         const target = e.target;
         
         const { value: title } = target.name;
-        const { value: body } = target.data;
-        if(body.length < 100) return;
+        console.log(target.name.value, articleName);
+        const body = localStorage.getItem("article")!;
+        if(body.length < 100 || title.length < 8) return;
 
         if(files !== undefined && files.length > 1) {
             const form = new FormData();
@@ -87,13 +88,14 @@ export default function CreatePost() {
                             <>
                                 <div className={styles.example}>
                                     <Images files={files} setFiles={setFiles}/>
-                                    <h1
-                                        suppressContentEditableWarning
-                                        contentEditable="true"
-                                        className={styles.exampleTitle}>
-                                        {articleName === "" ? "Безвісна стаття" : articleName}
-                                    </h1>
-                                    <input type="text" name="name" value={articleName} hidden readOnly/>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        min={8}
+                                        value={articleName}
+                                        className={styles.exampleTitle}
+                                        onChange={e => setName(e.target.value)}
+                                        placeholder="Безвісна стаття"/>
                                     <CreateForm texts={[texts, setText]}/>
                                 </div>
                             </>
