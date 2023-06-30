@@ -2,8 +2,9 @@ import styles from "../styles/notification.module.sass";
 import Image from "next/image";
 import bad from "images/bad.svg";
 import good from "images/good.svg";
+import remove from "images/Remove.svg";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface INotification {
     notification: {
@@ -38,7 +39,13 @@ export default function Notification({notification}: INotification) {
 
     return (
         <div className={[styles.notification, notification.type === "bad" ? styles.bad : styles.good].join(" ")}>
-            <div className="top"></div>
+            <div className={styles.top}>
+                <button onClick={() => {
+                    dispatch({"type":"removeNotification", "payload": {id: notification.id}});
+                }}>
+                    <Image src={remove} alt="remove notification"/>
+                </button>
+            </div>
 
             <div className={styles.center}>
                 {

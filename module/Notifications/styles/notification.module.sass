@@ -5,7 +5,7 @@
     top: 0
     right: 0
 
-    width: 27.75rem
+    width: 28.75rem
     max-height: 100vh
 
     padding: .5rem
@@ -22,7 +22,7 @@
     border-radius: .375rem
 
     min-height: 5.375rem
-    max-width: 27.75rem
+    max-width: max-content//27.75rem
     margin-bottom: .625rem
 
     overflow: hidden
@@ -39,10 +39,21 @@
 .goodBackground
     background: $green
 
+.top
+    display: flex
+    justify-content: right
+    margin: .5rem .6rem 0 .5rem
+    height: 2px
+
+    &>button
+        background: none
+        border: none
+        cursor: pointer
+
 .center
     display: flex
     align-items: center
-    padding: 1.375rem 1rem
+    padding: .6rem 1rem 1rem 1rem
 
     &Text
         margin-left: 1.25rem

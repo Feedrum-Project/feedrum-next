@@ -29,13 +29,15 @@ export const notification = (state=defaultValue, action: PayloadAction & IPayloa
             notification: value === null ? [action.payload] : [...value, {id, type, title, text, createdAt}]};
     }
     case "removeNotification": {
-        const id = state.notification === null ? 0 : state.notification.length;
-
+        if(state.notification === null) return;
+        
+        const id = state.notification?.length == 0 ? 0 : state.notification.length-1;
+        const notification = state.notification?.filter(e => {
+            return e.id !== id;
+        });
         return {
             ...state,
-            notification: state.notification?.filter(e => {
-                e.id !== id;
-            })
+            notification
         };
     }
 
