@@ -13,18 +13,7 @@ type Props = { children: React.ReactNode };
 export default function Layout({ children }: Props) {
     const path = useRouter().pathname;
     const condition = path === "/registration" || path === "/login" || path === "/forgetPassword" || path === "/users/submit";
-
-    const { notification: notifications } = useSelector((state: IStore) => state.notification);
     const dispatch = useDispatch();
-
-    function Notificate() {
-        console.log(notifications);
-        dispatch({type: "addNotification", payload: {
-            type: "bad",
-            title: "string",
-            text: "string"
-        }});
-    }
     
     useEffect(() => {
         fetch("/api/auth/me", {
@@ -53,7 +42,7 @@ export default function Layout({ children }: Props) {
                 }});
                 throw e;
             });
-    }, []);
+    }, [dispatch]);
 
     return (
         <>

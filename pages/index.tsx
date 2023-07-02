@@ -19,15 +19,13 @@ export default function Home({ posts }: HomeProps) {
         let buffer = [...postsSorted].sort((a,b) => {
             return a.rank > b.rank ? -1 : 1;
         });
-        buffer.forEach(console.log);
         setPostsSorted(buffer);
     }
     function setSortingNewest() {
         if(postsSorted === undefined) return;
         let buffer = [...postsSorted].sort((a,b) => {
-            return a.createdAt < b.createdAt ? -1 : 1;
+            return new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime() ? -1 : 1;
         });
-        buffer.forEach(console.log);
         setPostsSorted(buffer); 
     }
 

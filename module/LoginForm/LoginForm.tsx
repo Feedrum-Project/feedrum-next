@@ -4,6 +4,7 @@ import styles from "./styles/login.module.sass";
 import login from "./fetch/login";
 import { FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 interface bodyObj {
     email:string;
@@ -14,6 +15,7 @@ export default function LoginForm() {
     const [message, setMessage] = useState<any>(false);
     const { user } = useSelector((state: any) => state.user);
     const dispatch = useDispatch();
+    const { push } = useRouter();
 
     function prepare(event: FormEvent & {target: {email: {value: string}, password: {value: string} }}) {
         event.preventDefault();
@@ -23,9 +25,9 @@ export default function LoginForm() {
         };
         login(body)
             .then(e => {
-                console.log(e);
                 if(e.code === 200) {
                     dispatch({type:"set", payload: e.data});
+                    push("/");
                 }
                 setMessage(e);
             });
