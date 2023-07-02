@@ -4,7 +4,7 @@ import bad from "images/bad.svg";
 import good from "images/good.svg";
 import remove from "images/Remove.svg";
 import { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 interface INotification {
     notification: {

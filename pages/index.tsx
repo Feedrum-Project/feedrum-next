@@ -16,21 +16,19 @@ export default function Home({ posts }: HomeProps) {
 
     function setSortingBest() {
         if(postsSorted === undefined) return;
-        const buffer = [...postsSorted].sort((a,b):any => {
-            if(a.rank<b.rank) return 1;
-            return -1;
+        let buffer = [...postsSorted].sort((a,b) => {
+            return a.rank > b.rank ? -1 : 1;
         });
+        buffer.forEach(console.log);
         setPostsSorted(buffer);
     }
     function setSortingNewest() {
         if(postsSorted === undefined) return;
-        const buffer = [...postsSorted].sort((a,b):any => {
-            if(typeof a.createdAt === "string" || typeof b.createdAt === "string") return;
-            
-            if(a.createdAt.getTime() < b.createdAt.getTime()) return 1;
-            return -1;
+        let buffer = [...postsSorted].sort((a,b) => {
+            return a.createdAt < b.createdAt ? -1 : 1;
         });
-        setPostsSorted(buffer);
+        buffer.forEach(console.log);
+        setPostsSorted(buffer); 
     }
 
     return (
@@ -51,7 +49,7 @@ export default function Home({ posts }: HomeProps) {
                         <input 
                             type="button"
                             value="Популярні"
-                            className={styles.popular}/>
+                            className={styles.popular}/>    
                     </div>
                     <div className={styles.posts}>
                         {
