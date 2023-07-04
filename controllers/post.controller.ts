@@ -28,6 +28,16 @@ export default class PostController {
         return post;
     }
 
+    static async getBest() {
+        const posts = await prisma.post.findMany({
+            orderBy: {createdAt: "desc"},
+            take: 2
+        });
+        if (posts === null) throw new ObjectNotFoundError("Post");
+
+        return posts;
+    }
+
     static async delete(id: number, userId: number) {
         const post = await this.get(id);
         if (post.userId !== userId) throw new InvalidPermissionError();

@@ -8,9 +8,10 @@ import { useState } from "react";
 
 interface HomeProps {
     posts: IPost[]
+    best: IPost[]
 }
 
-export default function Home({ posts }: HomeProps) {
+export default function Home({ posts, best }: HomeProps) {
 
     const [postsSorted, setPostsSorted] = useState<IPost[] | []>(posts);
 
@@ -57,7 +58,7 @@ export default function Home({ posts }: HomeProps) {
                         }
                     </div>
                 </article>
-                <Aside BestsPosts Sponsors/>
+                <Aside BestsPosts={best} Sponsors/>
             </div>
         </>
     );
@@ -65,10 +66,12 @@ export default function Home({ posts }: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
     const posts = await PostController.getAll(0, 20);
+    const best = await PostController.getBest();
 
     return {
         props: {
-            posts: JSON.parse(JSON.stringify(posts.reverse())) // It breaks without this json fuckery
+            posts: JSON.parse(JSON.stringify(posts.reverse())), // It breaks without this json fuckery
+            best: JSON.parse(JSON.stringify(best))
         }
     };
 };

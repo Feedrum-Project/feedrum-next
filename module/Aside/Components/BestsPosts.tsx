@@ -5,36 +5,15 @@ import starG from "images/star-green.svg";
 import starR from "images/star-red.svg";
 import Image from "next/image";
 import { IPost } from "types/Post";
+import { useState } from "react";
 
 interface IBestPosts extends IPost {
     comments: number
 }
 
-export default function BestPosts() {
-
-    const bestPosts: IBestPosts[] = [
-        {
-            id:1,
-            title:"Скільки років мовам програмування?",
-            createdAt: "",
-            userId: 1,
-            body:"",
-            comments: 111, 
-            rank:288
-        },
-        {
-            id:2,
-            title:"Чому твоє портфоліо нікому не цікаве",
-            createdAt: "",
-            userId: 6,
-            body:"",
-            comments:72,
-            rank: 50
-        }
-    ]; // Could be better here if add result from
-    // prismas query? As "take.. order by desc".
+export default function BestPosts({posts}:{posts: IPost[]}) {
   
-    const parse = bestPosts.map(e => (
+    const parse = posts.map(e => (
         <div key={e.id}>
             <div className="title">
                 {e.title}
@@ -42,7 +21,7 @@ export default function BestPosts() {
             <div className={styles.elemBottom}>
                 <div className={styles.elemComments}>
                     <Image src={message} alt="Повідомлення"/>
-                    <span className={styles.elemCommentsCount}>{e.comments}</span>
+                    <span className={styles.elemCommentsCount}>{Math.round(Math.random()*100)}</span>
                 </div>
                 <div className={styles.elemRank}>
                     <Image src={e.rank > 0 ? starG : e.rank === 0 ? star : starR} alt="Зіронька, репутація статті"/>

@@ -3,10 +3,9 @@ import Header from "../../module/Header/Header";
 import Footer from "../../module/Footer/Footer";
 import styles from "./styles/layout.module.sass";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Notifications from "module/Notifications/notifications";
-import { IStore } from "store/store";
 
 type Props = { children: React.ReactNode };
 
