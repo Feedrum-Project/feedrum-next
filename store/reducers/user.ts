@@ -7,6 +7,7 @@ interface IUser {
       name: string
       iat: number
       exp: number
+    //   dev: false | true // Have I add it? It's developer options from settings.
     } | null
 }
 

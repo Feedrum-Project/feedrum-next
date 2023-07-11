@@ -5,11 +5,6 @@ import starG from "images/star-green.svg";
 import starR from "images/star-red.svg";
 import Image from "next/image";
 import { IPost } from "types/Post";
-import { useState } from "react";
-
-interface IBestPosts extends IPost {
-    comments: number
-}
 
 export default function BestPosts({posts}:{posts: IPost[]}) {
   
@@ -21,11 +16,18 @@ export default function BestPosts({posts}:{posts: IPost[]}) {
             <div className={styles.elemBottom}>
                 <div className={styles.elemComments}>
                     <Image src={message} alt="Повідомлення"/>
-                    <span className={styles.elemCommentsCount}>{Math.round(Math.random()*100)}</span>
+                    <span className={styles.elemCommentsCount}>10</span>
                 </div>
                 <div className={styles.elemRank}>
                     <Image src={e.rank > 0 ? starG : e.rank === 0 ? star : starR} alt="Зіронька, репутація статті"/>
-                    <span className={styles.elemRankCount} style={{color: e.rank > 0 ? "#6AEA3D" : e.rank === 0 ? "#BEBEBE" : "#F36A6A"}}>{e.rank}</span>
+                    <span
+                        className={styles.elemRankCount}
+                        style={
+                            {color: e.rank > 0 ? "#6AEA3D" : e.rank === 0 ? "#BEBEBE" : "#F36A6A"}
+                        }
+                    >
+                        {e.rank}
+                    </span>
                 </div>
             </div>
         </div>

@@ -1,110 +1,180 @@
 @import ../../../styles/variables
 
 .main
-  display: flex
+    display: flex
 
 @media screen and (max-width: 1300px)
-  .main
-    flex-direction: column-reverse
+    .main
+        flex-direction: column-reverse
 
 .profile
-  color: $white
-  width: 100vw
+    color: $white
+    width: 100vw
 
-  &Aside
-    width: 100%
-    display: flex
-    align-items: center
-    justify-content: flex-end
-    margin: 0 0 1rem
+    &Aside
+        width: 100%
+        display: flex
+        align-items: center
+        justify-content: flex-end
+        margin: 0 0 1rem
 
-    &>*:first-child
-      margin: 0 1rem 0 0
-
-  &Content
-    max-width: min-content
+        &>*:first-child
+            margin: 0 1rem 0 0
 
 @media screen and (max-width: 1300px)
-  .profile
-    width: min-content
+    .profile
+        width: min-content
 
 .name
-  display: flex
-  align-items: center
-  font-weight: 600
-  font-size: 1.5rem
-  line-height: 1.75rem
-
-  &Nick
-    margin: 0 0 0 1.25rem
-
-.sort
-  display: flex
-  margin: 2rem 0 1.375rem
-  color: $gray
-  font-weight: 500
-  font-size: 1.25rem
-  line-height: 1.5rem
-.comments
-  margin: 0 0 0 1.75rem
-
-.post
-  background: $block
-  border-radius: .75rem
-  padding: 1.25rem
-  margin: 0 0 1.125rem
-  width: 47.25rem
-
-  &Time
-    font-family: 'Raleway'
-    font-style: normal
-    font-weight: 400
-    font-size: 1rem
-    line-height: 1.25rem
-    color: $gray
-
-  &Content
-    margin: 1.25rem 0
-
-  &Title
-    font-family: 'Raleway'
-    font-style: normal
+    display: flex
+    align-items: center
     font-weight: 600
     font-size: 1.5rem
-    line-height: 2rem
+    line-height: 1.75rem
 
-  &Body
-    font-family: 'Raleway'
-    font-style: normal
-    font-weight: 400
-    font-size: 1rem
+    &Nick
+        margin: 0 0 0 1.25rem
+
+.sort
+    display: flex
+    margin: 2rem 0 1.375rem
     line-height: 1.5rem
+
+    &>button
+        font-weight: 500
+        margin-right: 1.75rem
+        background: none
+        border: none
+        cursor: pointer
+        font-size: 1.25rem
+        &:last-child
+            margin: 0
+.choosed
+    color: $white
+
+.unchoosed
     color: $gray
 
-  &Bottom
-    display: flex
-    align-items: center
+.post
+    background: $block
+    border-radius: .75rem
+    padding: 1.25rem
+    margin: 0 0 1.125rem
+    width: 47.25rem
 
-  &Rank
-    margin: 0 0 0 2rem
+    &Time
+        font-family: 'Raleway'
+        font-style: normal
+        font-weight: 400
+        font-size: 1rem
+        line-height: 1.25rem
+        color: $gray
 
-  &Rank, &Comments
-    display: flex
-    align-items: center
+    &Content
+        margin: 1.25rem 0
 
-    &>span
-      margin: 0 .375rem
+    &Title
+        font-family: 'Raleway'
+        font-style: normal
+        font-weight: 600
+        font-size: 1.5rem
+        line-height: 2rem
 
-.red
-  color: $red
-.green
-  color: $green
-.gray
-  color: $gray
+    &Body
+        font-family: 'Raleway'
+        font-style: normal
+        font-weight: 400
+        font-size: 1rem
+        line-height: 1.5rem
+        color: $gray
+        word-wrap: break-word
+
+    &Bottom
+        display: flex
+        align-items: center
+
+    &Rank
+        margin: 0 0 0 2rem
+
+    &Rank, &Comments
+        display: flex
+        align-items: center
+
+        &>span
+            margin: 0 .375rem
 
 .aside
-  display: flex
-  flex-direction: column
-  align-items: flex-start
-  max-width: 22.25rem
-  margin: 0 0 0 2rem
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    max-width: 22.25rem
+    margin: 0 0 0 2rem
+
+.type
+    background: $block
+    border-radius: .5rem
+    width: 100%
+    padding: 1.25rem 1.5rem
+
+.menu
+    margin-top: 1.5rem
+    display: flex
+    flex-direction: column
+    &>button
+        width: 100%
+        border: none
+        border-radius: .5rem
+        color: $gray
+        padding: .5rem .625rem
+        text-align: left
+        font-size: 1rem
+        cursor: pointer
+
+        margin-bottom: .375rem
+        &:last-child
+            margin-bottom: 0
+
+.selectedCategory
+    background: $background
+
+.unselectedCategory
+    background: none
+
+.comment
+    width: 100%
+    &Body
+        display: flex
+    &Rank
+        display: flex
+        align-items: center
+        flex-direction: column
+        margin-right: 1rem
+        &>span
+            height: 1.375rem
+            margin: .5rem 0
+            font-weight: 600
+
+    &Post
+        display: flex
+        justify-content: space-between
+        margin-bottom: .875rem
+        &Name
+        font-size: 1.25rem
+        font-weight: 500
+
+        &Author
+            display: flex
+            align-items: center
+
+    &Content
+        background: $block
+        width: 100%
+        border-radius: .375rem
+        padding: .75rem
+        &Top
+            margin-bottom: 1rem
+            display: flex
+            justify-content: space-between
+        &Author
+            display: flex
+            align-items: center

@@ -72,7 +72,14 @@ export default function Settings() {
                             <Box title="Профіль">
                                 <form action="" onSubmit={save}>
                                     <div className={styles.centr}>
-                                        <Image src={avatar} alt="Ваш аватар" width="130"/>
+                                        <label className={styles.avatar}>
+                                            <input
+                                                type="file"
+                                                name="avatar"
+                                                accept="image/png, image/jpeg"
+                                                hidden/>
+                                            <Image src={avatar} alt="Ваш аватар" width="130"/>
+                                        </label>
                                         <div className={styles.right}>
                                             <Input
                                                 value={user.user.name}
