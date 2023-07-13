@@ -67,31 +67,54 @@ export default function TextEditor() {
         <>
             <Panel selects={selects}/>
             <div className={[styles.editor, styles.form].join(" ")} id="text-editor">
-                <div className={styles.editorInfo}>
-                    <p>Контент</p>
-                    <div className={value.length < 100 ? styles.red : value.length > 500 ? styles.green : styles.orange}>
-                        {value.length}&nbsp;
-                        / 100
+                <div className={styles.formBackground}>
+                    <div className={styles.editorInfo}>
+                        <p>Контент</p>
+                        <div className={
+                            value.length < 100 ?
+                                styles.red :
+                                value.length > 500 ?
+                                    styles.green :
+                                    styles.orange
+                        }>
+                            {value.length}&nbsp;
+                            / 100
+                        </div>
                     </div>
+                    <div
+                        className={styles.editorContent}
+                        contentEditable="true"
+                        dangerouslySetInnerHTML={
+                            {__html: parser.hightlight(article)}
+                        }
+                        ref={editor}
+                    >
+                    </div>
+                    <textarea
+                        name="data"
+                        value={value}
+                        readOnly={true}
+                        style={{display:"none"}}>
+                    </textarea>
                 </div>
-                <div
-                    className={styles.editorContent}
-                    contentEditable="true"
-                    dangerouslySetInnerHTML={
-                        {__html: parser.hightlight(article)}
-                    }
-                    ref={editor}
-                >
-                </div>
-                <textarea
-                    name="data"
-                    value={value}
-                    readOnly={true}
-                    style={{display:"none"}}>
-                </textarea>
                 <div className={styles.buttons}>
-                    <Button type="submit" Style="purple">Оприлюднити</Button>
-                    <Button Style="standart" onClick={() => localStorage.setItem("article", value)}>Зберегти як чорнетка</Button>
+                    <Button
+                        type="submit"
+                        Style="purple"
+                    >
+                        Оприлюднити
+                    </Button>
+                    <Button
+                        Style="standart"
+                        onClick={() => localStorage.setItem("article", value)}
+                    >
+                        Зберегти як чорнетка
+                    </Button>
+                    <Button
+                        Style="red"
+                    >
+                        Видалити
+                    </Button>
                 </div>
             </div>
         </>

@@ -1,9 +1,12 @@
 import styles from "../styles/search.module.sass";
 import { IPost, IComment } from "types/Post";
-import { IUserExtended } from "types/User";
+import { IUser, IUserExtended } from "types/User";
 import { useState } from "react";
 import Post from "module/Post/Post";
 import User from "components/User/User";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 interface IResult {
     posts: IPost[];
@@ -23,7 +26,7 @@ export default function Search({result}:{result: IResult}) {
                             <div className={styles.sort}>
                                 <button>Найновіщі</button>
                                 <button>Найкращі</button>
-                                <button>Абеткувати</button>
+                                <button>Популярні</button>
                             </div>
                             {
                                 result.posts.length !== 0 ? result.posts.map(e => {
@@ -37,7 +40,7 @@ export default function Search({result}:{result: IResult}) {
                             <>
                                 <div className={styles.sort}>
                                     <button>Популярні</button>
-                                    <button>Абеткувати</button>
+                                    <button>За алфавітом</button>
                                 </div>
                                 {
                                     result.users.length !== 0 ? result.users.map(e => {
@@ -47,8 +50,8 @@ export default function Search({result}:{result: IResult}) {
                             </> :
                             <>
                                 <div className={styles.sort}>
+                                    <button>Найновіщі</button>
                                     <button>Популярні</button>
-                                    <button>Абеткувати</button>
                                 </div>
                                 <h1 style={{color: "#fff"}}>
                                     Без коментарів
@@ -77,9 +80,9 @@ export default function Search({result}:{result: IResult}) {
     );
 }
 
-export function getServerSideProps(ctx: any) {
+export async function getServerSideProps(ctx: any) {
     const quest = ctx.query.q;
-
+    
     // imitation
     const result:IResult = {
         posts: [
@@ -89,7 +92,9 @@ export function getServerSideProps(ctx: any) {
                 title:"Думка аматора",
                 rank:-6,
                 createdAt: new Date(Math.random() * 1000000000000).toString(),
-                userId:6,
+                author: await prisma.user.findUnique({
+                    where: {id: 1}
+                }).then(res => res) as IUser
             },
             {
                 id: 4,
@@ -97,7 +102,9 @@ export function getServerSideProps(ctx: any) {
                 title:"Зеленкувата трава",
                 rank:18,
                 createdAt: new Date(Math.random() * 1000000000000).toString(),
-                userId:2,
+                author: await prisma.user.findUnique({
+                    where: {id: 1}
+                }).then(res => res) as IUser
             },
             
         ],
@@ -126,6 +133,8 @@ export function getServerSideProps(ctx: any) {
         comments: []
     };
     return {
-        props: {result}
+        props: {
+            result: JSON.parse(JSON.stringify(result))
+        }
     };
 }

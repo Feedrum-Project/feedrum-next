@@ -51,26 +51,6 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                             <span className={styles.nameNick}>{userInformation.name}</span>
                         </div>
                     </div>
-                    <div className={styles.sort}>
-                        <button
-                            onClick={() => setSortPosts("new")}
-                            className={sortPosts === "new" ? styles.choosed : styles.unchoosed}
-                        >
-                            Найновіщі
-                        </button>
-                        <button
-                            onClick={() => setSortPosts("best")}
-                            className={sortPosts === "best" ? styles.choosed : styles.unchoosed}
-                        >
-                            Найкращі
-                        </button>
-                        <button
-                            onClick={() => setSortPosts("popular")}
-                            className={sortPosts === "popular" ? styles.choosed : styles.unchoosed}
-                        >
-                            Популярні
-                        </button>
-                    </div>
                     <div className={styles.profileContent}>
                         {
                             type === "posts" ?
@@ -78,37 +58,61 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                                     <div>
                                         <h1 style={{width:"20rem"}}>У&nbsp;користувача відсутні свої статті.</h1>
                                     </div>
-                                    : userPosts.map((e: any) => {
-                                        return (
-                                            <div key={e.id} className={styles.post}>
-                                                <div className={styles.postTime}>
-                                                    <span>{new Date(e.createdAt).toLocaleDateString("en-US")},&nbsp;</span>
-                                                    <span>{new Date(e.createdAt).toLocaleTimeString("en-US")}</span>
-                                                </div>
-                                                <div className={styles.postContent}>
-                                                    <div className={styles.postTitle}>
-                                                        <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: "none", color:"white"}}>
-                                                            {e.title}
-                                                        </Link>
+                                    : <>
+                                        <div className={styles.sort}>
+                                            <button
+                                                onClick={() => setSortPosts("new")}
+                                                className={sortPosts === "new" ? styles.choosed : styles.unchoosed}
+                                            >
+                                                Найновіщі
+                                            </button>
+                                            <button
+                                                onClick={() => setSortPosts("best")}
+                                                className={sortPosts === "best" ? styles.choosed : styles.unchoosed}
+                                            >
+                                                Найкращі
+                                            </button>
+                                            <button
+                                                onClick={() => setSortPosts("popular")}
+                                                className={sortPosts === "popular" ? styles.choosed : styles.unchoosed}
+                                            >
+                                                Популярні
+                                            </button>
+                                        </div>
+                                        {
+                                            userPosts.map((e: any) => {
+                                                return (
+                                                    <div key={e.id} className={styles.post}>
+                                                        <div className={styles.postTime}>
+                                                            <span>{new Date(e.createdAt).toLocaleDateString("en-US")},&nbsp;</span>
+                                                            <span>{new Date(e.createdAt).toLocaleTimeString("en-US")}</span>
+                                                        </div>
+                                                        <div className={styles.postContent}>
+                                                            <div className={styles.postTitle}>
+                                                                <Link href={`/posts/${e.id}`} key={e.id} style={{textDecoration: "none", color:"white"}}>
+                                                                    {e.title}
+                                                                </Link>
+                                                            </div>
+                                                            <div className={styles.postBody}>{e.body}</div>
+                                                        </div>
+                                                        <div className={styles.postBottom}>
+                                                            <div className={styles.postComments}>
+                                                                <Image width="14" height="13" src={message} alt="Повідомлення"/>
+                                                                <span>6</span>
+                                                            </div>
+                                                            <div className={styles.postRank}>
+                                                                <Image width="13" height="14" src={e.rank > 0 ? starG : e.rank === 0 ? star : starR} alt="Зірка"/>
+                                                                <span
+                                                                    className={e.rank > 0 ? "green" : e.rank < 0 ? "red" : "gray"}>
+                                                                    {e.rank}
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div className={styles.postBody}>{e.body}</div>
-                                                </div>
-                                                <div className={styles.postBottom}>
-                                                    <div className={styles.postComments}>
-                                                        <Image width="14" height="13" src={message} alt="Повідомлення"/>
-                                                        <span>6</span>
-                                                    </div>
-                                                    <div className={styles.postRank}>
-                                                        <Image width="13" height="14" src={e.rank > 0 ? starG : e.rank === 0 ? star : starR} alt="Зірка"/>
-                                                        <span
-                                                            className={e.rank > 0 ? "green" : e.rank < 0 ? "red" : "gray"}>
-                                                            {e.rank}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        );
-                                    })
+                                                );
+                                            })
+                                        }
+                                    </>
                                 : type === "comments" ? !userComments.length ?
                                     <h1 style={{width:"20rem"}}>У&nbsp;користувача відсутні свої коментарі.</h1>
                                     : <div style={{width: "100%"}}>
@@ -159,7 +163,11 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                                             })
                                         }
                                     </div>
-                                    : null
+                                    : <div>
+                                        <div className="list">
+                                            <h1>Порожній список</h1>
+                                        </div>
+                                    </div>
                         }
                     </div>
                 </div>

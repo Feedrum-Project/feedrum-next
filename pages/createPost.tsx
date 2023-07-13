@@ -31,7 +31,7 @@ export default function CreatePost() {
         const target = e.target;
         
         const { value: title } = target.name;
-        console.log(target.name.value, articleName);
+
         const body = localStorage.getItem("article")!;
         if(body.length < 100 || title.length < 8) return;
 
@@ -45,13 +45,11 @@ export default function CreatePost() {
                 method: "POST",
                 body: form
             })
-                .then(res => res.json())
-                .then(res => console.log(res));
+                .then(res => res.json());
         }
         
         createPost({body: {title, body, images: files}, user: user})
             .then(res => {
-                console.log(res);
                 if(res.code === 200) {
                     location.href = "/posts/"+ res.data.id;
                 }
