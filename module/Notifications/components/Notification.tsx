@@ -54,8 +54,8 @@ export default function Notification({notification}: INotification) {
                         <Image src={good} alt="good"/>
                 }
                 <div className={styles.centerText}>
-                    <h3>{notification.title}</h3>
-                    <p>{notification.text}</p>
+                    <h3 className={styles.headerText}>{notification.title}</h3>
+                    <p className={styles.descriptionText}>{notification.text}</p>
                 </div>
             </div>
             

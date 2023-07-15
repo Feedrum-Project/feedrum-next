@@ -1,12 +1,11 @@
-import { IUser } from "./User";
-
 export interface IPost {
   id: number;
   body: string;
   title: string;
   rank: number;
   createdAt: Date | string;
-  author: IUser;
+  userId: number
+  // author: IUser;
 };
 
 export interface IComment {

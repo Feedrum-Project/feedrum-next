@@ -11,18 +11,20 @@ import starR from "images/star-red.svg";
 import { IPost } from "types/Post";
 
 export default function Post({postData}: {postData: IPost}){
-    console.log(postData);
     return (
         <div className={styles.post}>
             <div className={styles.postTop}>
                 <div className={styles.postAuthor}>
                     <Image src={avatar} alt="Аватар" />
                     <span className={styles.postAuthorname}>
-                        {/* <Link className={styles.postAuthor} href={`/users/${postData.author.id}`} style={{ textDecoration: "none", color:"#fff" }}>
+                        <Link
+                            className={styles.postAuthor}
+                            href={`/users/${postData.userId}`}
+                            style={{ textDecoration: "none", color:"#fff" }}>
                             <span className="name">
-                                {postData.author.name}
+                                {postData.userId}
                             </span>
-                            <span className={
+                            {/* <span className={
                                 [
                                     styles.postAuthorRank,
                                     postData.author.rank > 0 ?
@@ -37,8 +39,8 @@ export default function Post({postData}: {postData: IPost}){
                                 }
                                 {postData.author.rank}
                                 )
-                            </span>
-                        </Link> */}
+                            </span> */}
+                        </Link>
                     </span>
                 </div>
                 <div className={styles.postDate}>

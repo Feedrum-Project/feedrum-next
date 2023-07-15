@@ -1,12 +1,9 @@
 import styles from "../styles/search.module.sass";
 import { IPost, IComment } from "types/Post";
-import { IUser, IUserExtended } from "types/User";
+import { IUserExtended } from "types/User";
 import { useState } from "react";
 import Post from "module/Post/Post";
 import User from "components/User/User";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
 
 interface IResult {
     posts: IPost[];
@@ -92,9 +89,7 @@ export async function getServerSideProps(ctx: any) {
                 title:"Думка аматора",
                 rank:-6,
                 createdAt: new Date(Math.random() * 1000000000000).toString(),
-                author: await prisma.user.findUnique({
-                    where: {id: 1}
-                }).then(res => res) as IUser
+                userId: 1
             },
             {
                 id: 4,
@@ -102,9 +97,7 @@ export async function getServerSideProps(ctx: any) {
                 title:"Зеленкувата трава",
                 rank:18,
                 createdAt: new Date(Math.random() * 1000000000000).toString(),
-                author: await prisma.user.findUnique({
-                    where: {id: 1}
-                }).then(res => res) as IUser
+                userId: 1
             },
             
         ],
