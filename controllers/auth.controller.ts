@@ -99,7 +99,7 @@ export default class AuthController {
             subject: "Please verify your email",
             letterName: "verify",
             options: {
-                link: `https://locahost:3000/api/auth/verify/${verifyCode.code}`
+                link: `https://localhost:3000/api/auth/verify/${verifyCode.code}`
             }
         });
 
