@@ -114,8 +114,8 @@ export default function Editor(
             {
                 texts.length < 1 ?
                     <div>
-                        <h1 className={styles.darkText}>Пусто</h1>
-                        <p>Щоб додати елемент, натисність знизу.</p>
+                        <h1>Пусто</h1>
+                        <p>Перейдіть у режим ʼредагуванняʼ і почніть редагувати сторінку</p>
                     </div>
                     : null
             }   
