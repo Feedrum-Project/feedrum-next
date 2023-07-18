@@ -1,7 +1,7 @@
 import styles from "styles/create.module.sass";
 
 import Image from "next/image";
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 import remove from "images/Remove.svg";
 import edit from "images/Edit.svg";

@@ -16,7 +16,7 @@ export default function BestPosts({posts}:{posts: IPost[]}) {
             <div className={styles.elemBottom}>
                 <div className={styles.elemComments}>
                     <Image src={message} alt="Повідомлення"/>
-                    <span className={styles.elemCommentsCount}>10</span>
+                    <span className={styles.elemCommentsCount}>{e._count?.Comments}</span>
                 </div>
                 <div className={styles.elemRank}>
                     <Image src={e.rank > 0 ? starG : e.rank === 0 ? star : starR} alt="Зіронька, репутація статті"/>

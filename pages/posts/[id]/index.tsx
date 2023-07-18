@@ -15,14 +15,14 @@ import Modal from "components/Modal/Modal";
 import message from "images/message.svg";
 import avatar from "images/avatar.svg";
 import parser from "helpers/parsers.helper";
-import { IComment, IPost } from "types/Post";
+import { IComment, IPost, IPostId } from "types/Post";
 import { IUser } from "types/User";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 
 interface IPostPage {
     postComments: IComment[];
-    postContent: IPost;
+    postContent: IPostId;
     author: IUser;
 }
 
@@ -194,7 +194,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
 export const getServerSideProps:GetServerSideProps = async (context) => {
 
     const id = Number(context.query.id);
-    const post: IPost | null = await prisma.post.getPostById(id);
+    const post: IPostId | null = await prisma.post.getPostById(id);
     const postParsed = JSON.parse(JSON.stringify(post));
 
     let comments: IComment[] = await prisma.post.getPostComments(id);

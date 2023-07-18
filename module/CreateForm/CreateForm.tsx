@@ -16,11 +16,23 @@ export default function CreateForm({texts: [texts, setText]}: any) {
 
     return (
         <>
-            <Panel selects={selects}/>
             <Editor selects={selects} text={[texts, setText]}/>
             <div className={styles.buttons}>
-                <Button type="submit" Style="purple">Оприлюднити</Button>
-                <Button Style="standart">Зберегти як чорнетка</Button>
+                <Button
+                    type="submit"
+                    Style="purple">
+                        Оприлюднити
+                </Button>
+                <Button
+                    Style="standart"
+                >
+                    Зберегти як чорнетка
+                </Button>
+                <Button
+                    Style="red"
+                >
+                        Видалити
+                </Button>
             </div>
         </>
     );

@@ -1,5 +1,5 @@
 import styles from "../styles/search.module.sass";
-import { IPost, IComment } from "types/Post";
+import { IComment, IPost } from "types/Post";
 import { IUserExtended } from "types/User";
 import { useState } from "react";
 import Post from "module/Post/Post";
@@ -89,7 +89,14 @@ export async function getServerSideProps(ctx: any) {
                 title:"Думка аматора",
                 rank:-6,
                 createdAt: new Date(Math.random() * 1000000000000).toString(),
-                userId: 1
+                User: {
+                    id: 1,
+                    name: "admin",
+                    email: "",
+                    rank: 5,
+                    createdAt: new Date(),
+                    isVerified: true,
+                }
             },
             {
                 id: 4,
@@ -97,7 +104,14 @@ export async function getServerSideProps(ctx: any) {
                 title:"Зеленкувата трава",
                 rank:18,
                 createdAt: new Date(Math.random() * 1000000000000).toString(),
-                userId: 1
+                User: {
+                    id: 2,
+                    name: "moder",
+                    email: "",
+                    rank: 2,
+                    createdAt: new Date(),
+                    isVerified: true,
+                }
             },
             
         ],

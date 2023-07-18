@@ -30,8 +30,18 @@ export default class PostController {
 
     static async getBest() {
         const posts = await prisma.post.findMany({
-            orderBy: {createdAt: "desc"},
-            take: 2
+            orderBy: {createdAt: "asc"},
+            take: 2,
+            select: {
+                id: true,
+                title: true,
+                rank: true,
+                _count: {
+                    select: {
+                        Comments: true
+                    }
+                }
+            }
         });
         if (posts === null) throw new ObjectNotFoundError("Post");
 

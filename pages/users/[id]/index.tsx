@@ -19,12 +19,12 @@ import arrowT from "images/arrow-top.svg";
 import arrowB from "images/arrow-bottom.svg";
 
 import { IUser } from "types/User";
-import { IPost } from "types/Post";
+import { IPostId } from "types/Post";
 import { Comment } from "@prisma/client";
 
 interface UserProps {
   userInformation: IUser | null;
-  userPosts: IPost[] | [];
+  userPosts: IPostId[] | [];
   userComments: Comment[]
 }
 
@@ -229,7 +229,7 @@ export default function User({userInformation, userPosts, userComments}:UserProp
 
 export const getServerSideProps:GetServerSideProps = async (context) => {
     const userInformation: IUser | null = await prisma.user.getUserById(Number(context.query.id));
-    const userPosts: IPost[] | [] = await prisma.user.getUserPosts(Number(context.query.id));
+    const userPosts: IPostId[] | [] = await prisma.user.getUserPosts(Number(context.query.id));
     const userComments: Comment[] = await prisma.user.getUserComments(Number(context.query.id));
 
     return {

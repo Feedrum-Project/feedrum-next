@@ -5,6 +5,7 @@ import PostComponent from "module/Post/Post";
 import styles from "../styles/home.module.sass";
 import Aside from "module/Aside/Aside";
 import { useState } from "react";
+import getRelative from "helpers/time.helper";
 
 interface HomeProps {
     posts: IPost[]
@@ -54,7 +55,7 @@ export default function Home({ posts, best }: HomeProps) {
                         {
                             postsSorted.length ? postsSorted.map(post => (
                                 <PostComponent key={post.id} postData={post}/>
-                            )) : <h1>Постів немає, але тримайтесь!</h1>
+                            )) : <h1 style={{color: "#FFF"}}>Постів немає, але тримайтесь!</h1>
                         }
                     </div>
                 </article>

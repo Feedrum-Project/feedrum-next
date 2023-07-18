@@ -2,7 +2,7 @@ import Link from "next/link";
 import styles from "../post.module.sass";
 
 import { GetServerSideProps } from "next";
-import { IPost } from "types/Post";
+import { IPost, IPostId } from "types/Post";
 import { IUser } from "types/User";
 import { Button } from "components/UI";
 
@@ -74,7 +74,7 @@ export default function EditPost({postContent, author}: IPage) {
 export const getServerSideProps:GetServerSideProps = async (context) => {
 
     const id = Number(context.query.id);
-    const post: IPost | null = await prisma.post.getPostById(id);
+    const post: IPostId | null  = await prisma.post.getPostById(id);
     const postParsed = JSON.parse(JSON.stringify(post));
 
     if(postParsed === null) {

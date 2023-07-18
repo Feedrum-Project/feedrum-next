@@ -19,33 +19,34 @@ export default function Post({postData}: {postData: IPost}){
                     <span className={styles.postAuthorname}>
                         <Link
                             className={styles.postAuthor}
-                            href={`/users/${postData.userId}`}
+                            href={`/users/${postData.User.id}`}
                             style={{ textDecoration: "none", color:"#fff" }}>
                             <span className="name">
-                                {postData.userId}
+                                {postData.User.name}
                             </span>
-                            {/* <span className={
+                            <span className={
                                 [
                                     styles.postAuthorRank,
-                                    postData.author.rank > 0 ?
-                                        "green" : postData.author.rank < 0
+                                    postData.User.rank > 0 ?
+                                        "green" : postData.User.rank < 0
                                             ? "red" : "gray"
                                 ].join(" ")}>
                                 (
                                 {
-                                    postData.author.rank > 0 ?
-                                        "+" : postData.author.rank < 0
+                                    postData.User.rank > 0 ?
+                                        "+" : postData.User.rank < 0
                                             ? "-" : ""
                                 }
-                                {postData.author.rank}
+                                {postData.User.rank}
                                 )
-                            </span> */}
+                            </span>
                         </Link>
                     </span>
                 </div>
                 <div className={styles.postDate}>
-                    {new Date(postData.createdAt).toLocaleDateString("en-US")},&nbsp;
-                    {new Date(postData.createdAt).toLocaleTimeString("en-US")}
+                    {new Date().toLocaleString("uk")}
+                    {/* {new Date(postData.createdAt).toLocaleDateString("en-US")},&nbsp;
+                    {new Date(postData.createdAt).toLocaleTimeString("en-US")} */}
                 </div>
             </div>
             <div className={styles.postMiddle}>
@@ -59,7 +60,7 @@ export default function Post({postData}: {postData: IPost}){
             <div className={styles.postBottom}>
                 <div className={styles.postComments}>
                     <Image src={message} alt="Іконка повідомлень" />
-                    <span className={styles.postCommentsCount}>12</span>
+                    <span className={styles.postCommentsCount}>{postData._count!.Comments}</span>
                 </div>
                 <div className={styles.postRank}>
                     <Image

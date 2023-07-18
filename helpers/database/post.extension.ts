@@ -1,6 +1,7 @@
 import { Comment, Post, Prisma, PrismaClient } from "@prisma/client";
 import { PostType, PostUpdateType } from "validation/post.model";
 import createVoteSystem from "./voteSystem";
+import { IPost } from "types/Post";
 
 
 export default Prisma.defineExtension((client: PrismaClient) => {
@@ -10,10 +11,33 @@ export default Prisma.defineExtension((client: PrismaClient) => {
         name: "Post",
         model: {
             post: {
-                async getAll(page: number, offset: number): Promise<Post[]> {
+                async getAll(page: number, offset: number): Promise<IPost[]> {
+
                     return client.post.findMany({
                         skip: page * offset,
                         take: offset,
+                        select: {
+                            id: true,
+                            body: true,
+                            title: true,
+                            rank: true,
+                            createdAt: true,
+                            User: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    email: true,
+                                    rank: true,
+                                    createdAt: true,
+                                    isVerified: true
+                                }
+                            },
+                            _count: {
+                                select: {
+                                    Comments: true
+                                }
+                            }
+                        }
                     });
                 },
                 async createPost(post: PostType, userId: number): Promise<Post> {
