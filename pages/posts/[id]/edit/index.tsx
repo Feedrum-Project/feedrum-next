@@ -8,7 +8,8 @@ import { Button } from "components/UI";
 
 import prisma from "@database";
 import { useSelector } from "react-redux";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
+import CreateForm from "module/CreateForm/CreateForm";
 
 interface IPage {
     postContent: IPost;
@@ -16,14 +17,13 @@ interface IPage {
 }
 
 export default function EditPost({postContent, author}: IPage) {
-    const user: IUser = useSelector((state: {user: IUser}) => state).user;
+    const {user} = useSelector((state: {user: {user: IUser}}) => state.user);
+    const [texts, setText] = useState<string>("");
 
     function submit(e: FormEvent) {
         e.preventDefault();
         const textBody = document.getElementById("text");
         if(textBody === null) return;
-
-        // return console.log(postContent.body.split("\n\n").join("<br/>"))
         
         const body = JSON.stringify({
             id: postContent.id,
@@ -44,6 +44,8 @@ export default function EditPost({postContent, author}: IPage) {
             .then(console.log);
     }
 
+    if(user === null) return;
+
     if(author.id !== user.id) {
         return <h1 style={{color: "white", width: "40rem"}}>
             Ви не маєте права на редугваня цієї сторінки,
@@ -51,7 +53,8 @@ export default function EditPost({postContent, author}: IPage) {
         </h1>;
     } else {
         return (
-            <>
+            <div className={styles.edit}>
+
                 <h1>Редагування сторінки</h1>
                 <form method="post" onSubmit={submit}>
                     <span
@@ -66,7 +69,8 @@ export default function EditPost({postContent, author}: IPage) {
                         <Button Style="purple" type="submit">Edit</Button>
                     </div>
                 </form>
-            </>
+                <CreateForm texts={[texts, setText]}/>
+            </div>
         );
     }
 }

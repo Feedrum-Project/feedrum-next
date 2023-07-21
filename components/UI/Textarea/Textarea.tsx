@@ -6,13 +6,16 @@ interface ITextarea {
     Name: string;
     maxCount: number;
     placeholder?: string;
+    minHeight?: number;
 }
 
-export default function Textarea({name, Name, maxCount, placeholder}: ITextarea) {
+export default function Textarea({name, Name, maxCount, placeholder, minHeight}: ITextarea) {
     const [content, setContent] = useState<string>("");
     return (
         <>
-            <div className={styles.textarea}>
+            <div
+                className={styles.textarea}
+                style={{minHeight: minHeight}}>
                 <div className={styles.textareaTop}>
                     <div className={styles.textareaLeft}>
                         {Name}

@@ -5,7 +5,6 @@ import PostComponent from "module/Post/Post";
 import styles from "../styles/home.module.sass";
 import Aside from "module/Aside/Aside";
 import { useState } from "react";
-import getRelative from "helpers/time.helper";
 
 interface HomeProps {
     posts: IPost[]

@@ -153,7 +153,12 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                                 <Image alt="Аватар" src={avatar} width={40} height={40}/>
                             </div>
                             <div className={styles.commentRight}>
-                                <Textarea Name="Комментар" name="comment" maxCount={2048} placeholder="Місце для вашого коментаря"/>
+                                <Textarea
+                                    Name="Комментар"
+                                    name="comment"
+                                    maxCount={2048} placeholder="Місце для вашого коментаря"
+                                    minHeight={130}
+                                />
                                 <div className="minWidth">
                                     <Button
                                         Style="purple"
@@ -171,7 +176,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                                         <Comment
                                             key={e.id}
                                             comment={e}
-                                            disabled={user !== null && e.userId === user.id}/>
+                                            disabled={user !== null && e.User.id === user.id}/>
                                     );
                                 })
                             }
@@ -204,12 +209,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
         return -1;
     });
 
-    const commentsPreparing = comments.map((e: IComment) => {
-        typeof e.createdAt === "string" ? null :
-            e.createdAt = e.createdAt.toLocaleString("uk-UA");
-        return e;
-    });
-    const commentsParsed = JSON.parse(JSON.stringify(commentsPreparing));
+    const commentsParsed = JSON.parse(JSON.stringify(comments));
 
     if(postParsed === null) {
         return {

@@ -60,6 +60,14 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                                 id,
                             },
                         },
+                        select: {
+                            id: true,
+                            body: true,
+                            rank: true,
+                            createdAt: true,
+                            Post: true,
+                            User: true
+                        }
                     });
                 },
                 async getUserPosts(id: number) {

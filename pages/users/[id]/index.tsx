@@ -19,13 +19,13 @@ import arrowT from "images/arrow-top.svg";
 import arrowB from "images/arrow-bottom.svg";
 
 import { IUser } from "types/User";
-import { IPostId } from "types/Post";
-import { Comment } from "@prisma/client";
+import { IComment, IPostId } from "types/Post";
+import getRelative from "helpers/time.helper";
 
 interface UserProps {
   userInformation: IUser | null;
   userPosts: IPostId[] | [];
-  userComments: Comment[]
+  userComments: IComment[]
 }
 
 export default function User({userInformation, userPosts, userComments}:UserProps) {
@@ -121,7 +121,7 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                                                 return <div key={comment.id} className={styles.comment}>
                                                     <div className={styles.commentPost}>
                                                         <span className={styles.commentPostName}>
-                                                            Name of Post{comment.postId}
+                                                            {comment.Post.title}
                                                         </span>
                                                         <div className={styles.commentPostAuthor}>
                                                             <Image
@@ -130,7 +130,7 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                                                                 width={18}
                                                             />
                                                             <span>
-                                                                {comment.postId}
+                                                                {comment.Post.userId}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -148,10 +148,23 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                                                                         alt="аватар"
                                                                         width={18}
                                                                     />
-                                                                    {comment.userId}
+                                                                    <span className={styles.commentAuthorName}>
+                                                                        {comment.User.name}
+                                                                    </span>
+                                                                    <span
+                                                                        className={[
+                                                                            styles.commentAuthorRank,
+                                                                            comment.User.rank > 0 ? "green" : comment.User.rank < 0 ? "red" : "gray"
+                                                                        ].join("")}
+                                                                    >
+                                                                        (
+                                                                        {comment.User.rank > 0 ? "+" : comment.User.rank < 0 ? "-" : null}
+                                                                        {comment.User.rank}
+                                                                        )
+                                                                    </span>
                                                                 </div>
                                                                 <div className="commentDate">
-                                                                    {comment.createdAt.toString()}
+                                                                    {getRelative(new Date(comment.createdAt))}
                                                                 </div>
                                                             </div>
                                                             <div className="bodyContent">
@@ -230,7 +243,9 @@ export default function User({userInformation, userPosts, userComments}:UserProp
 export const getServerSideProps:GetServerSideProps = async (context) => {
     const userInformation: IUser | null = await prisma.user.getUserById(Number(context.query.id));
     const userPosts: IPostId[] | [] = await prisma.user.getUserPosts(Number(context.query.id));
-    const userComments: Comment[] = await prisma.user.getUserComments(Number(context.query.id));
+    const userComments: IComment[] = await prisma.user.getUserComments(Number(context.query.id));
+
+    console.log(userComments);
 
     return {
         props: {

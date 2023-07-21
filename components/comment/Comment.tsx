@@ -5,6 +5,8 @@ import avatar from "images/avatar.svg";
 import arrowBottom from "images/arrow-bottom.svg";
 import { useSelector } from "react-redux";
 import { IComment } from "types/Post";
+import getRelative from "helpers/time.helper";
+import Link from "next/link";
 
 interface CommentObj {
     comment: IComment;
@@ -58,9 +60,23 @@ export default function Comment({comment, disabled=false}:CommentObj) {
                             src={avatar}
                             alt="Аватар"
                         />
-                        <p>{comment.id}</p>
+                        <Link href={"/users/"+comment.User.id}>
+                            <span className={styles.userName}>
+                                {comment.User.name}
+                            </span>
+                            <span className={
+                                [
+                                    "userRank",
+                                    comment.User.rank > 0 ?
+                                        "green" : comment.User.rank < 0 ?
+                                            "red" : "gray"
+                                ].join(" ")
+                            }>
+                                ({comment.User.rank > 0 ? "+" : null}{comment.User.rank})
+                            </span>
+                        </Link>
                     </div>
-                    <div className="commentRight">{comment.createdAt.toString()}</div>
+                    <div className="commentRight">{getRelative(new Date(comment.createdAt))}</div>
                 </div>
                 <div className="commentcomment">{comment.body}</div>
             </div>

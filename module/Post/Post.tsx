@@ -45,8 +45,6 @@ export default function Post({postData}: {postData: IPost}){
                 </div>
                 <div className={styles.postDate}>
                     {new Date(postData.createdAt).toLocaleString("uk")}
-                    {/* {new Date(postData.createdAt).toLocaleDateString("en-US")},&nbsp;
-                    {new Date(postData.createdAt).toLocaleTimeString("en-US")} */}
                 </div>
             </div>
             <div className={styles.postMiddle}>
