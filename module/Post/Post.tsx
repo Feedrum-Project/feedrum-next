@@ -9,6 +9,7 @@ import star from "images/star.svg";
 import starG from "images/star-green.svg";
 import starR from "images/star-red.svg";
 import { IPost } from "types/Post";
+import getRelative from "helpers/time.helper";
 
 export default function Post({postData}: {postData: IPost}){
     return (
@@ -44,7 +45,7 @@ export default function Post({postData}: {postData: IPost}){
                     </span>
                 </div>
                 <div className={styles.postDate}>
-                    {new Date(postData.createdAt).toLocaleString("uk")}
+                    {getRelative(new Date(postData.createdAt))}
                 </div>
             </div>
             <div className={styles.postMiddle}>

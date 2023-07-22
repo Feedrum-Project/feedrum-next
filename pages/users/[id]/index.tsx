@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
+import Head from "next/head";
 import Button from "components/UI/Button/Button";
 import Rank from "module/Aside/Components/Rank";
 import AsideInfo from "module/Aside/Components/AsideInfo";
@@ -43,6 +44,10 @@ export default function User({userInformation, userPosts, userComments}:UserProp
     );
     return (
         <>
+            <Head>
+                <meta name="description" content={"Обліковий запис користувача " + userInformation.name}/>
+                <meta name="author" content={userInformation.name}/>
+            </Head>
             <div className={styles.main}>
                 <div className={styles.profile}>
                     <div>
@@ -84,8 +89,7 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                                                 return (
                                                     <div key={e.id} className={styles.post}>
                                                         <div className={styles.postTime}>
-                                                            <span>{new Date(e.createdAt).toLocaleDateString("en-US")},&nbsp;</span>
-                                                            <span>{new Date(e.createdAt).toLocaleTimeString("en-US")}</span>
+                                                            <span>{getRelative(new Date(e.createdAt))}</span>
                                                         </div>
                                                         <div className={styles.postContent}>
                                                             <div className={styles.postTitle}>
@@ -121,7 +125,7 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                                                 return <div key={comment.id} className={styles.comment}>
                                                     <div className={styles.commentPost}>
                                                         <span className={styles.commentPostName}>
-                                                            {comment.Post.title}
+                                                            <Link href={"/posts/"+comment.Post.id}>{comment.Post.title}</Link>
                                                         </span>
                                                         <div className={styles.commentPostAuthor}>
                                                             <Image
@@ -244,8 +248,6 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
     const userInformation: IUser | null = await prisma.user.getUserById(Number(context.query.id));
     const userPosts: IPostId[] | [] = await prisma.user.getUserPosts(Number(context.query.id));
     const userComments: IComment[] = await prisma.user.getUserComments(Number(context.query.id));
-
-    console.log(userComments);
 
     return {
         props: {

@@ -35,6 +35,6 @@ export interface IComment {
     body: string;
     rank: number;
     createdAt: Date | string;
-    User: User;
+    User: IUser;
     Post: Post;
 }

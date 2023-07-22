@@ -66,7 +66,16 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                             rank: true,
                             createdAt: true,
                             Post: true,
-                            User: true
+                            User: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    email: true,
+                                    rank: true,
+                                    createdAt: true,
+                                    isVerified: true
+                                }
+                            }
                         }
                     });
                 },

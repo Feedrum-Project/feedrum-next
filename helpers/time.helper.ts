@@ -13,5 +13,5 @@ export default function getRelative(time: Date) {
             result === -1 ? "завтра в " + hm:
                 result === -2 ? "післязавтра в " + hm:
                     result === 0 ? "сьогодні в " + hm:
-                        new Date().toLocaleString("uk");
+                        time.toLocaleString("uk");
 }
