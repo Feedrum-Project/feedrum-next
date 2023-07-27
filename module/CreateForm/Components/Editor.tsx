@@ -1,124 +1,151 @@
-import styles from "../styles/form.module.sass";
-import { useEffect, useRef, useState } from "react";
-import parser from "helpers/parsers.helper";
+import styles from "styles/create.module.sass";
+import { Input } from "components/UI";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { HTMLtoMD, MDtoHTML } from "helpers/parsers.helper";
+import Panel from "./Panel";
 
-interface ISelects {
-    header?: boolean;
+interface IEditor {
+    articleSet: [
+        {
+            title: string;
+            content: string;
+        },
+        Dispatch<
+            SetStateAction<{
+                title: string;
+                content: string;
+            }>
+        >
+    ];
+}
+
+interface ISelectedPanel {
+    heading?: boolean;
     italic?: boolean;
     link?: boolean;
     bold?: boolean;
+    image?: boolean;
 }
-
-export default function Editor(
-    {
-        selects,
-        text: [texts, setText]
-    }:
-    {
-        selects: [ISelects, (pr: any) => void];
-        text: any;
-    }) {
-    const textField = useRef(null);
-    const [value, setValue] = useState<string>(texts);
+export default function Editor({ articleSet }: IEditor) {
+    const [article, setArticle] = articleSet;
+    const [tempContent, setTempContent] = useState<string>("");
+    const [selectedPanel, setSelected] = useState<ISelectedPanel>({
+        heading: false,
+        italic: false,
+        link: false,
+        bold: false,
+        image: false,
+    });
+    const editor = useRef<any>(null);
 
     useEffect(() => {
-        setValue(localStorage.getItem("article")!);
-        window.addEventListener("keydown", (e) => {
-            if(!textField.current) return;
-            const current = textField.current as HTMLElement;
-            const target = e.target as HTMLElement;
+        setTempContent(article.content);
 
-            setTimeout(() => {
-                target.innerText.length <= 1
-                    && target.parentElement
-                    && target.parentElement.id === "editor" ?
-                    target.remove() : null;
-                localStorage.setItem("article", parser.HTMLtoMD(current.innerHTML));
-                setText(parser.HTMLtoMD(current.innerHTML));
-                
-                function check(parent: HTMLDivElement, count: number=3) {
-                    if(count > 3 || count < 0) return;
-                    if(parent === null || !parent.parentNode) return;
-                    if(parent.localName === "div") return;
-                    const tagName = parent.parentNode as HTMLElement;
-                    if(!tagName) return;
-                    
-                    const tag = tagName.tagName.toLowerCase();
+        const el = document.getElementById("txt");
+        const range = document.createRange();
+        const sel = window.getSelection();
 
-                    check(parent.parentNode as HTMLDivElement, count-1);
+        document.addEventListener("keyup", (_) => {
+            const panelFields = sel?.anchorNode?.parentElement?.tagName;
+            switch (panelFields) {
+            case "P":
+                setSelected({});
+                break;
+            case "H1":
+            case "H2":
+            case "H3":
+            case "H4":
+            case "H5":
+            case "H6":
+                setSelected({
+                    heading: true,
+                });
+                break;
+            case "EM":
+            case "I":
+                return setSelected({
+                    italic: true,
+                });
+            case "A":
+                setSelected({
+                    link: true,
+                });
+                break;
+            case "BOLD":
+            case "B":
+            case "STRONG":
+                setSelected({
+                    bold: true,
+                });
+                break;
+            case "IMG":
+                setSelected({
+                    image: true,
+                });
+                break;
+            default:
+                break;
+            }
+            if (editor.current === null) return;
+            if (sel === null) return;
+            if (el === null) return;
+            if (sel.anchorNode === null) return;
 
-                    switch(tag) {
-                    case "p":
-                        return selects[1]((pr: ISelects) => pr = {
-                            header: false,
-                            bold: false,
-                            italic: false,
-                            link: false
-                        });
-                    case "h1":
-                        return selects[1]((pr: ISelects) => pr = {
-                            ...pr,
-                            header: true
-                        });
-                    case "b":
-                    case "strong":
-                        return selects[1]((pr: ISelects) => pr = {...pr, bold: true});
-                    case "em":
-                    case "i":
-                        return selects[1]((pr: ISelects) => pr = {
-                            ...pr,
-                            italic: true
-                        });
-                    case "a":
-                        return selects[1]((pr: ISelects) => pr = {
-                            ...pr,
-                            link: true
-                        });
-                    default:
-                        return selects[1]((pr: ISelects) => pr = {
-                            header: false,
-                            bold: false,
-                            italic: false,
-                            link: false
-                        });
-                    }
-                }
-                
-                const parent = window.getSelection()?.focusNode as HTMLDivElement;
-                check(parent);
-            }, 25);
+            try {
+                range.setStart(sel.anchorNode, sel.anchorOffset);
+                range.setEnd(sel.anchorNode, sel.focusOffset);
+            } catch (e) {}
+
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            const content = HTMLtoMD(editor.current.innerHTML);
+            if (content === article.content) return;
+            setTempContent(content);
         });
-    }, []);
+    }, [article.content]);
 
     return (
-        <div className={styles.editor}>
-            <div>
-                <div
-                    id="editor"
-                    className={styles.editorContent}
-                    ref={textField}
-                    dangerouslySetInnerHTML={
-                        {
-                            __html: parser.MDtoHTML(value)
-                        }
-                    }
-                >
-                </div>
-                <textarea
-                    name="data"
-                    value={value}
-                    readOnly
-                    style={{display:"none"}}>
-                </textarea>
-            </div>
-            {
-                texts.length < 1 ?
-                    <div>
-                        <h1>Пусто</h1>
-                        <p>Перейдіть у режим ʼредагуванняʼ і почніть редагувати сторінку</p>
+        <>
+            <Input
+                name="title"
+                Name="Назва"
+                info="Назва вашої статті, мінімум 4 символи"
+                minLength={4}
+                value={article.title}
+                onChange={(e) => setArticle(pr => {
+                    return {...pr, title: e.target.value};
+                })}
+            />
+            <Panel selected={selectedPanel} />
+            <div className={styles.textarea}>
+                <div className={styles.textareaTop}>
+                    <div className="name">Контент</div>
+                    <div
+                        className={[
+                            "symbols",
+                            tempContent.length < 100
+                                ? "red"
+                                : tempContent.length < 500
+                                    ? "orange"
+                                    : "green",
+                        ].join(" ")}
+                    >
+                        {tempContent.length} / 100
                     </div>
-                    : null
-            }   
-        </div>
+                </div>
+                <div
+                    className={styles.textareaBottom}
+                    contentEditable={true}
+                    dangerouslySetInnerHTML={{
+                        __html: article.content.length === 0 ?
+                            "<p contentEditable=\"true\"></p>" :
+                            MDtoHTML(article.content),
+                    }}
+                    ref={editor}
+                    id="txt"
+                ></div>
+            </div>
+        </>
     );
 }

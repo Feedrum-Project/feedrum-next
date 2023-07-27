@@ -1,11 +1,14 @@
 import Head from "next/head";
 import Header from "../../module/Header/Header";
 import Footer from "../../module/Footer/Footer";
+
 import styles from "./styles/layout.module.sass";
+
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Notifications from "module/Notifications/notifications";
+import favicon from "../../images/logo.svg";
 
 type Props = { children: React.ReactNode };
 
@@ -48,6 +51,7 @@ export default function Layout({ children }: Props) {
             <Head>
                 <title>Feedrum</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <link rel="icon" type="image/x-icon" href={favicon.src}/>
             </Head>
             {
                 condition ? null : <Header />

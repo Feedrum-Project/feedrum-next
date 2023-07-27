@@ -1,63 +1,65 @@
-import styles from "../styles/form.module.sass";
-import PanelButton from "./PanelButton";
-import Heading from "images/createPost/Heading.svg";
-import Italic from "images/createPost/Italic.svg";
-import Linked from "images/createPost/Link.svg";
-import Bold from "images/createPost/Bold.svg";
-import Imagged from "images/createPost/Image.svg";
+import Image from "next/image";
+import styles from "styles/create.module.sass";
 
-interface ISelects {
-    header?: boolean;
-    italic?: boolean;
-    link?: boolean;
-    bold?: boolean;
+import bold from "images/createPost/Bold.svg";
+import heading from "images/createPost/Heading.svg";
+import image from "images/createPost/Image.svg";
+import italic from "images/createPost/Italic.svg";
+import link from "images/createPost/Link.svg";
+
+interface IPanel {
+    selected: {
+        heading?: boolean;
+        italic?: boolean;
+        link?: boolean;
+        bold?: boolean;
+        image?: boolean;
+    };
 }
 
-export default function Panel({selects}: {selects:[ISelects, any]}) {
-    let objs = Object.entries(selects[0]).filter((e: any) => {
-        if(e[1] === true) {
-            return e[0];
-        }
-        return;
-    });
-
+export default function Panel({ selected }: IPanel) {
     return (
         <div className={styles.panel}>
-            <PanelButton
-                isActive={
-                    objs.find(e => e[0] === "header")
-                }
-                img={Heading}
-                info="Заголовок"
-                specy="header"/>
-            <PanelButton
-                isActive={
-                    objs.find(e => e[0] === "italic")
-                }
-                img={Italic}
-                info="Похилий"
-                specy="italic"/>
-            <PanelButton
-                isActive={
-                    objs.find(e => e[0] === "link")
-                }
-                img={Linked}
-                info="Посилання"
-                specy="link"/>
-            <PanelButton
-                isActive={
-                    objs.find(e => e[0] === "bold")
-                }
-                img={Bold}
-                info="Товский"
-                specy="bold"/>
-            <PanelButton
-                isActive={
-                    objs.find(e => e[0] === "img")
-                }
-                img={Imagged}
-                info="Малюнок"
-                specy="img"/>
+            <button
+                className={selected.heading ? styles.selected : styles.unselected}
+            >
+                <Image
+                    src={heading.src}
+                    alt="Заголовок"
+                    width={16}
+                    height={16}
+                />
+            </button>
+            <button
+                className={selected.italic ? styles.selected : styles.unselected}
+            >
+                <Image
+                    src={italic.src}
+                    alt="Похилий"
+                    width={16}
+                    height={16}
+                />
+            </button>
+            <button
+                className={selected.link ? styles.selected : styles.unselected}
+            >
+                <Image
+                    src={link.src}
+                    alt="Посилання"
+                    width={16}
+                    height={16}
+                />
+            </button>
+            <button
+                className={selected.bold ? styles.selected : styles.unselected}
+            >
+                <Image src={bold.src} alt="Товстий" width={16} height={16} />
+            </button>
+            <button
+                className={selected.image ? styles.selected : styles.unselected}
+            >
+                <Image src={image.src} alt="Малюнок" width={16} height={16} />
+            </button>
         </div>
     );
 }

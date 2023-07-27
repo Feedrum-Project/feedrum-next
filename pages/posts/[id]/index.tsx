@@ -104,7 +104,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                         </Modal>
                         : null
                 }
-                <div className={styles.post}>
+                <article className={styles.post}>
                     {
                         user !== null ? user.id === postContent.userId ?
                             <div className={styles.author}>
@@ -191,14 +191,14 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                         </div>
                     </div>
 
-                </div>
-                <div className="aside">
+                </article>
+                <aside className="aside">
                     <AsideProfile userName={author.name} userId={author.id}/>
                     <SimilarPosts/>
                     <div style={{width: "fit-content"}}>
                         <Rank info={postContent} disabled={user !== null ? user.id === postContent.userId : undefined}/>
                     </div>
-                </div>
+                </aside>
             </div>
         </>
     );

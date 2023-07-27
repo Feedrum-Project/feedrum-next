@@ -16,6 +16,7 @@ interface InputProps {
   info?: string;
   onChange?: ((e: any) => void);
   required?: boolean;
+  minLength?: number;
 }
 
 export default function Input(
@@ -30,6 +31,7 @@ export default function Input(
         autoComplete,
         onChange,
         required=false,
+        minLength,
     }:InputProps) {
 
     const [show, setShow] = useState<{show: boolean, coords: {x: number, y: number}}>({show: false, coords: {x: 0, y: 0}});
@@ -70,6 +72,7 @@ export default function Input(
                     autoComplete={autoComplete ? "true" : "false"}
                     className={styles.inputSquareInput}
                     required={required}
+                    min={minLength}
                 />
                 {
                     type === "password" ?
