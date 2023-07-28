@@ -9,6 +9,7 @@ import { Button } from "components/UI";
 import prisma from "@database";
 import { useSelector } from "react-redux";
 import { FormEvent, useState } from "react";
+import { Post } from "@prisma/client";
 // import CreateForm from "module/CreateForm/Components/";
 
 interface IPage {
@@ -78,7 +79,7 @@ export default function EditPost({postContent, author}: IPage) {
 export const getServerSideProps:GetServerSideProps = async (context) => {
 
     const id = Number(context.query.id);
-    const post: IPostId | null  = await prisma.post.getPostById(id);
+    const post: Post | null  = await prisma.post.getPostById(id);
     const postParsed = JSON.parse(JSON.stringify(post));
 
     if(postParsed === null) {

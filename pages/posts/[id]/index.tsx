@@ -16,10 +16,11 @@ import Modal from "components/Modal/Modal";
 import message from "images/message.svg";
 import avatar from "images/avatar.svg";
 import parser from "helpers/parsers.helper";
-import { IComment, IPost, IPostId } from "types/Post";
+import { IComment, IPostId } from "types/Post";
 import { IUser } from "types/User";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import { Post } from "@prisma/client";
 
 interface IPostPage {
     postComments: IComment[];
@@ -27,7 +28,7 @@ interface IPostPage {
     author: IUser;
 }
 
-export default function Post({postContent, postComments, author}:IPostPage) {
+export default function PostPage({postContent, postComments, author}:IPostPage) {
     const { user } = useSelector((state: {user: {user:IUser}}) => state.user);
     const [attention, setAttention] = useState<{code: number, message: string} | null   >(null);
     const [modal, setModal] = useState<{show: boolean, content: any}>({show: false, content: ""});
@@ -106,7 +107,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                 }
                 <article className={styles.post}>
                     {
-                        user !== null ? user.id === postContent.userId ?
+                        user !== null ? user.id === postContent.User.id ?
                             <div className={styles.author}>
                                 <Button
                                     Style="purple"
@@ -196,7 +197,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
                     <AsideProfile userName={author.name} userId={author.id}/>
                     <SimilarPosts/>
                     <div style={{width: "fit-content"}}>
-                        <Rank info={postContent} disabled={user !== null ? user.id === postContent.userId : undefined}/>
+                        <Rank info={postContent} disabled={user !== null ? user.id === postContent.User.id : undefined}/>
                     </div>
                 </aside>
             </div>
@@ -207,7 +208,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
 export const getServerSideProps:GetServerSideProps = async (context) => {
 
     const id = Number(context.query.id);
-    const post: IPostId | null = await prisma.post.getPostById(id);
+    const post: Post | null = await prisma.post.getPostById(id);
     const postParsed = JSON.parse(JSON.stringify(post));
 
     let comments: IComment[] = await prisma.post.getPostComments(id);
