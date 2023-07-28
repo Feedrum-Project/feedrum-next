@@ -2,41 +2,62 @@ import styles from "../styles/nav.module.sass";
 import { IUser } from "types/User";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
+import { Button } from "components/UI";
 
 interface UserPanel {
-  user: IUser;
-  coors: {
-    x: number;
-    y: number;
-  };
+    user: IUser | false;
+    coors: {
+        x: number;
+        y: number;
+    };
 }
 
-export default function UserPanel({user, coors}: UserPanel) {
+export default function UserPanel({ user, coors }: UserPanel) {
     const dispatch = useDispatch();
-    
+
     return (
         <div
             className={styles.panel}
-            style={window.innerWidth > 640 ? {left: coors.x, top: coors.y} : undefined}>
+            style={
+                window.innerWidth > 500
+                    ? { left: coors.x, top: coors.y }
+                    : {
+                        left: "0px",
+                        top: "0px",
+                    }
+            }
+        >
             <div className={styles.top}>
-                <Link href={"/users/"+user.id}>
-                      @{user.name}
-                </Link>
+                {user !== false ? (
+                    <Link href={"/users/" + user.id}>@{user.name}</Link>
+                ) : (
+                    <>
+                        <Button Style="purple">Зареєструватися</Button>
+                        <Button Style="secondary" to="/login">Увійти</Button>
+                    </>
+                )}
             </div>
             <div className={styles.middle}>
-                <Link href="/api" className="API">API</Link>
-                <Link href="/settings" className="settings">Налаштування</Link>
+                <Link href="/api" className="API">
+                    API
+                </Link>
+                <Link href="/settings" className="settings">
+                    Налаштування
+                </Link>
             </div>
             <div className={styles.bottom}>
                 <Link
                     href="#"
                     onClick={() => {
-                        document.cookie = "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                        dispatch({type: "set", payload: null});
+                        document.cookie =
+                            "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                        dispatch({ type: "set", payload: null });
                     }}
                     className="exit"
-                >Вийти</Link>
+                >
+                    Вийти
+                </Link>
             </div>
         </div>
     );
-};
+}

@@ -2,17 +2,33 @@
 
 .main
     display: flex
+    width: 100%
+
+.top
+    display: flex
+    justify-content: space-between
+    color: $white
+    &Avatar
+        width: 40px
+        height: 40px
+
 
 @media screen and (max-width: 1300px)
     .main
         flex-direction: column-reverse
+
+@media screen and (max-width: 500px)
+    .top
+        flex-direction: column
+        &Avatar
+            width: 120px
+            height: 120px
 
 .profile
     color: $white
     width: 100vw
 
     &Aside
-        width: 100%
         display: flex
         align-items: center
         justify-content: flex-end
@@ -27,6 +43,8 @@
 @media screen and (max-width: 1300px)
     .profile
         width: min-content
+        &Aside
+            margin: 0 2rem
 
 .name
     display: flex
@@ -36,8 +54,16 @@
     line-height: 1.75rem
 
     &Nick
-        margin: 0 0 0 1.25rem
+        margin-left: 1.25rem
 
+@media screen and (max-width: 500px)
+    .name
+        flex-direction: column
+        margin-bottom: 1.5rem
+        &Nick
+            margin: 0
+            margin-top: 1.25rem
+            font-size: 2rem
 .sort
     display: flex
     margin: 2rem 0 1.375rem
@@ -107,12 +133,29 @@
         &>span
             margin: 0 .375rem
 
+@media screen and (max-width: 500px)
+    .sort
+        margin: 0 1.75rem 1.5rem 1.75rem
+        justify-content: space-between
+        &>button
+            margin: 0
+    .post
+        width: 100vw
+        border-radius: 0
+        margin-bottom: .625rem
+        &Time
+            font-weight: 600
+            font-size: 1.125rem
+        &Title
+            font-weight: 600
+            font-size: 2rem
+
 .aside
     display: flex
     flex-direction: column
     align-items: flex-start
     max-width: 22.25rem
-    margin: 0 0 0 2rem
+    margin-left: 2rem
 
 .type
     background: $block
@@ -144,6 +187,38 @@
 
 .unselectedCategory
     background: none
+
+@media screen and (max-width: 500px)
+    .aside
+        margin: 0
+        flex-direction: column-reverse
+        width: 100vw
+        max-width: none
+
+    .type
+        border-radius: 0
+        padding: 1.125rem
+        &>h1
+            display: none
+
+    .menu
+        flex-direction: row
+        justify-content: space-between
+        margin: 0
+
+        &>button
+            width: min-content
+            background: none
+            color: $white
+            margin: 0
+
+    .selectedCategory
+        font-size: 1.125rem
+        font-weight: 700
+
+    .unselectedCategory
+        font-size: 1rem
+        background: none
 
 .comment
     margin-top: 1.5rem

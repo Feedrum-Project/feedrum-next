@@ -86,6 +86,24 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                                 id,
                             },
                         },
+                        select: {
+                            id: true,
+                            body: true,
+                            title: true,
+                            rank: true,
+                            createdAt: true,
+                            User: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                }
+                            },
+                            _count: {
+                                select: {
+                                    Comments: true,
+                                },
+                            },
+                        }
                     });
                 },
                 async getUserImages(id: number) {

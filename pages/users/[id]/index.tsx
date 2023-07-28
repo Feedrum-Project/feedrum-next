@@ -48,14 +48,24 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                 <meta name="description" content={"Обліковий запис користувача " + userInformation.name}/>
                 <meta name="author" content={userInformation.name}/>
             </Head>
+            <div className={styles.top}>
+                <div className={styles.name}>
+                    <Image
+                        src={avatar}
+                        alt="Аватар"
+                        className={styles.topAvatar}
+                    />
+                    <span className={styles.nameNick}>{userInformation.name}</span>
+                </div>
+                <div className={styles.profileAside}>
+                    <Button Style="purple">Підписатися</Button>
+                    <Rank
+                        info={userInformation}
+                        disabled={user.id === userInformation.id}/>
+                </div>
+            </div>
             <div className={styles.main}>
                 <div className={styles.profile}>
-                    <div>
-                        <div className={styles.name}>
-                            <Image width="41" height="41" src={avatar} alt="Аватар"/>
-                            <span className={styles.nameNick}>{userInformation.name}</span>
-                        </div>
-                    </div>
                     <div className={styles.profileContent}>
                         {
                             type === "posts" ?
@@ -102,7 +112,7 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                                                         <div className={styles.postBottom}>
                                                             <div className={styles.postComments}>
                                                                 <Image width="14" height="13" src={message} alt="Повідомлення"/>
-                                                                <span>6</span>
+                                                                <span>{e._count.Comments}</span>
                                                             </div>
                                                             <div className={styles.postRank}>
                                                                 <Image width="13" height="14" src={e.rank > 0 ? starG : e.rank === 0 ? star : starR} alt="Зірка"/>
@@ -189,12 +199,6 @@ export default function User({userInformation, userPosts, userComments}:UserProp
                     </div>
                 </div>
                 <aside className={styles.aside}>
-                    <div className={styles.profileAside}>
-                        <Button Style="purple">Підписатися</Button>
-                        <Rank
-                            info={userInformation}
-                            disabled={user.id === userInformation.id}/>
-                    </div>
                     <div className={styles.type}>
                         <h1>Тип</h1>
                         <div className={styles.menu}>

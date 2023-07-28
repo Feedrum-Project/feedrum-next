@@ -54,7 +54,7 @@ export default function CreatePost() {
             MDtoHTML(text.innerHTML)
         );
 
-        if (title.length < 8 || content.length < 100) return;
+        if (title.length < 8 || content.length < 100) throw new Error("not enough symbols");
 
         const body = { body: { title, body: content }, user: { id: 1 } };
 
@@ -66,7 +66,8 @@ export default function CreatePost() {
             },
         })
             .then((res) => res.json())
-            .then(console.log);
+            .then(console.log)
+            .catch(console.log);
 
         // if(files !== undefined && files.length > 1) {
         //     const form = new FormData();

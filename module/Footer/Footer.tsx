@@ -16,6 +16,7 @@ export default function Footer() {
                     <li><Link href="/api">API</Link></li>
                     <li><Link href="/">Головна</Link></li>
                     <li><Link href="/sponsors">Спонсори</Link></li>
+                    <li><Link href="/api">API</Link></li>
                     <li><Link href="/login">Вхід</Link></li>
                     <li><Link href="/register">Реєстрація</Link></li>
                 </ul>
@@ -38,8 +39,10 @@ export default function Footer() {
                         <span>Feedrum</span>
                     </div>
                     <div className={styles.desc}>
-                        Соціальна платформа для
-                        україномовних девелоперів
+                        <span>
+                            Соціальна платформа для
+                            україномовних девелоперів
+                        </span>
                     </div>
                 </div>
                 <span>Feedrum Community © 2016 - 2023</span>

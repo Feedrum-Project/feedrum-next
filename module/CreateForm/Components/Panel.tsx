@@ -51,15 +51,15 @@ export default function Panel({ selected }: IPanel) {
         const sel = window.getSelection()?.getRangeAt(0);
 
         if (!sel) return;
-        const { id } = sel?.commonAncestorContainer!.parentNode!
-            .parentNode! as HTMLElement;
-        if (id === "txt") sel.surroundContents(node);
+        const parent = sel?.commonAncestorContainer!.parentNode! as HTMLElement;
+        if (parent.id === "txt") sel.surroundContents(node);
         return;
     }
     return (
         <div className={styles.panel}>
             <button
                 id="header"
+                type="button"
                 onClick={(
                     e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
                         target: { id: string };

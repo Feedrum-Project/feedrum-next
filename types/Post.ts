@@ -27,7 +27,10 @@ export interface IPostId {
     title: string;
     rank: number;
     createdAt: Date | string;
-    userId: number;
+    User: {
+        id: number;
+        name: string;
+    }
 }
 
 export interface IComment {

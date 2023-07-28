@@ -5,12 +5,12 @@ import Link from "next/link";
 import styles from "../styles/nav.module.sass";
 import avatar from "images/avatar.svg";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IUser } from "types/User";
 import UserPanel from "./UserPanel";
 
 interface Panel {
-    user: IUser;
+    user: IUser | false;
     coors: {
       x: number;
       y: number;
@@ -25,6 +25,22 @@ export default function Navigation() {
     if(user !== null && user.id !== 0) {
         Logged = (
             <>
+                <div className={styles.centrMobile}>
+                    <button
+                        className={styles.office}
+                        onClick={(e) => {
+                            panel ? setPanel(null) : setPanel({
+                                user,
+                                coors: {
+                                    x: e.clientX,
+                                    y: e.clientY,
+                                }
+                            });
+                        }}
+                    >
+                        <Image src={avatar} alt="Ваш аватар" height="28" width="28"/>
+                    </button>
+                </div>
                 <div className={styles.centr}>
                     <Link className={styles.LinkInsteadButton} href="/createPost">Створити пост</Link>
 
@@ -32,7 +48,7 @@ export default function Navigation() {
                         className={styles.office}
                         onClick={(e) => {
                             panel ? setPanel(null) : setPanel({
-                                user: user,
+                                user,
                                 coors: {
                                     x: e.clientX,
                                     y: e.clientY,
@@ -41,15 +57,35 @@ export default function Navigation() {
                         }}>
                         <Image src={avatar} alt="Ваш аватар" height="28" width="28"/>
                     </button>
-                    {
-                        panel ? <UserPanel user={panel.user} coors={panel.coors}/> : null
-                    }
                 </div>
+                {
+                    panel ?
+                        <UserPanel
+                            user={panel.user}
+                            coors={panel.coors}
+                        /> : null
+                }
             </>
         );
     } else {
         Logged = (
             <>
+                <div className={styles.centrMobile}>
+                    <button
+                        className={styles.office}
+                        onClick={(e) => {
+                            panel ? setPanel(null) : setPanel({
+                                user: false,
+                                coors: {
+                                    x: e.clientX,
+                                    y: e.clientY,
+                                }
+                            });
+                        }}
+                    >
+                        <Image src={avatar} alt="Ваш аватар" height="28" width="28"/>
+                    </button>
+                </div>
                 <div className={styles.centr}>
                     <Button Style="purple" to="/registration">Зареєструватись</Button>
                     <Button
@@ -57,6 +93,13 @@ export default function Navigation() {
                         Style="standart"
                         to="/login">Увійти</Button>
                 </div>
+                {
+                    panel ?
+                        <UserPanel
+                            user={panel.user}
+                            coors={panel.coors}
+                        /> : null
+                }
             </>
         );
     }
