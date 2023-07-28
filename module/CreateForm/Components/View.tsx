@@ -26,7 +26,7 @@ export default function View({articleSet}: IView) {
                 className={styles.viewTitle}
                 placeholder="Беззвісна стаття"
             />
-            <p dangerouslySetInnerHTML={{__html: MDtoHTML(article.content, false)}}>
+            <p dangerouslySetInnerHTML={{__html: MDtoHTML(article.content)}}>
             </p>
         </div>
     );

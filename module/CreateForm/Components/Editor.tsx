@@ -23,7 +23,7 @@ interface IEditor {
 export default function Editor({ articleSet }: IEditor) {
     const [article, setArticle] = articleSet;
     const [tempContent, setTempContent] = useState<string>("");
-    const [selected, setSelect] = useSelected();
+    const [selected, setSelect]: any = useSelected();
     const editor = useRef<any>(null);
 
     useEffect(() => {
@@ -35,7 +35,7 @@ export default function Editor({ articleSet }: IEditor) {
             const panelFields = sel?.anchorNode?.parentElement?.tagName;
 
             setSelect(panelFields);
-            
+
             if (editor.current === null) return;
             if (sel === null) return;
 
@@ -53,9 +53,11 @@ export default function Editor({ articleSet }: IEditor) {
                 info="Назва вашої статті, мінімум 4 символи"
                 minLength={4}
                 value={article.title}
-                onChange={(e) => setArticle(pr => {
-                    return {...pr, title: e.target.value};
-                })}
+                onChange={(e) =>
+                    setArticle((pr) => {
+                        return { ...pr, title: e.target.value };
+                    })
+                }
             />
             <Panel selected={selected} />
             <div className={styles.textarea}>
@@ -78,9 +80,10 @@ export default function Editor({ articleSet }: IEditor) {
                     className={styles.textareaBottom}
                     contentEditable={true}
                     dangerouslySetInnerHTML={{
-                        __html: article.content.length === 0 ?
-                            "<p contentEditable=\"true\"></p>" :
-                            MDtoHTML(article.content),
+                        __html:
+                            article.content.length === 0
+                                ? '<p contentEditable="true"></p>'
+                                : MDtoHTML(article.content),
                     }}
                     ref={editor}
                     id="txt"

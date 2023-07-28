@@ -9,7 +9,7 @@ import { Button } from "components/UI";
 import prisma from "@database";
 import { useSelector } from "react-redux";
 import { FormEvent, useState } from "react";
-import CreateForm from "module/CreateForm/CreateForm";
+// import CreateForm from "module/CreateForm/Components/";
 
 interface IPage {
     postContent: IPost;
@@ -69,7 +69,7 @@ export default function EditPost({postContent, author}: IPage) {
                         <Button Style="purple" type="submit">Edit</Button>
                     </div>
                 </form>
-                <CreateForm texts={[texts, setText]}/>
+                {/* <CreateForm texts={[texts, setText]}/> */}
             </div>
         );
     }

@@ -82,7 +82,7 @@ export default function Post({postContent, postComments, author}:IPostPage) {
     }
 
     useEffect(() => {
-        const post_content = parser.MDtoHTML(postContent.body+"\n", false);
+        const post_content = parser.MDtoHTML(postContent.body+"\n");
         if(content && content.current) {
             content.current.innerHTML = post_content;
         }

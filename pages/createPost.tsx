@@ -49,8 +49,9 @@ export default function CreatePost() {
         const target = e.target;
 
         const { value: title } = target.title;
+        const text: any = document.getElementById("txt")?.firstChild!;
         const content = HTMLtoMD(
-            MDtoHTML(document.getElementById("txt")?.firstChild!.innerHTML)
+            MDtoHTML(text.innerHTML)
         );
 
         if (title.length < 8 || content.length < 100) return;
