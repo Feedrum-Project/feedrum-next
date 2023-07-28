@@ -12,23 +12,10 @@ export function hightlight(text: string) {
     return result;
 }
 
-export function MDtoHTML(text: string, isEditable: boolean = true) {
+export function MDtoHTML(text: string) {
     if (!text) return "";
     let result;
-    if (isEditable) {
-        let rendered: (string | undefined)[] = md.render(text).split(">");
-        rendered = rendered.splice(0, rendered.length - 1);
-        rendered = rendered.map((e, i) => {
-            let res;
-            i % 2
-                ? (res = e + ">")
-                : (res = e + ' style="outline: none;" contenteditable="true">');
-            return res;
-        });
-        result = rendered.join("");
-    } else {
-        result = md.render(text);
-    }
+    result = md.render(text);
     return result;
 }
 export function HTMLtoMD(text: string) {

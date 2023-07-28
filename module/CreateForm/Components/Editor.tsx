@@ -3,6 +3,7 @@ import { Input } from "components/UI";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { HTMLtoMD, MDtoHTML } from "helpers/parsers.helper";
 import Panel from "./Panel";
+import useSelected from "../hooks/useSelected";
 
 interface IEditor {
     articleSet: [
@@ -19,85 +20,24 @@ interface IEditor {
     ];
 }
 
-interface ISelectedPanel {
-    heading?: boolean;
-    italic?: boolean;
-    link?: boolean;
-    bold?: boolean;
-    image?: boolean;
-}
 export default function Editor({ articleSet }: IEditor) {
     const [article, setArticle] = articleSet;
     const [tempContent, setTempContent] = useState<string>("");
-    const [selectedPanel, setSelected] = useState<ISelectedPanel>({
-        heading: false,
-        italic: false,
-        link: false,
-        bold: false,
-        image: false,
-    });
+    const [selected, setSelect] = useSelected();
     const editor = useRef<any>(null);
 
     useEffect(() => {
         setTempContent(article.content);
 
-        const el = document.getElementById("txt");
-        const range = document.createRange();
         const sel = window.getSelection();
 
         document.addEventListener("keyup", (_) => {
             const panelFields = sel?.anchorNode?.parentElement?.tagName;
-            switch (panelFields) {
-            case "P":
-                setSelected({});
-                break;
-            case "H1":
-            case "H2":
-            case "H3":
-            case "H4":
-            case "H5":
-            case "H6":
-                setSelected({
-                    heading: true,
-                });
-                break;
-            case "EM":
-            case "I":
-                return setSelected({
-                    italic: true,
-                });
-            case "A":
-                setSelected({
-                    link: true,
-                });
-                break;
-            case "BOLD":
-            case "B":
-            case "STRONG":
-                setSelected({
-                    bold: true,
-                });
-                break;
-            case "IMG":
-                setSelected({
-                    image: true,
-                });
-                break;
-            default:
-                break;
-            }
+
+            setSelect(panelFields);
+            
             if (editor.current === null) return;
             if (sel === null) return;
-            if (el === null) return;
-            if (sel.anchorNode === null) return;
-
-            try {
-                range.setStart(sel.anchorNode, sel.anchorOffset);
-                range.setEnd(sel.anchorNode, sel.focusOffset);
-            } catch (e) {}
-
-            sel.removeAllRanges();
-            sel.addRange(range);
 
             const content = HTMLtoMD(editor.current.innerHTML);
             if (content === article.content) return;
@@ -117,7 +57,7 @@ export default function Editor({ articleSet }: IEditor) {
                     return {...pr, title: e.target.value};
                 })}
             />
-            <Panel selected={selectedPanel} />
+            <Panel selected={selected} />
             <div className={styles.textarea}>
                 <div className={styles.textareaTop}>
                     <div className="name">Контент</div>
