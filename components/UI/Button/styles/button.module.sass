@@ -21,7 +21,7 @@
     border: 1px solid $border
     color: $pink
 
-.red
+.danger
   background: none
   border: 2px solid $red
   color: $red
@@ -29,6 +29,17 @@
   &:hover
     background: $red
     color: $background
+
+.more_danger
+  background: $red
+  color: $background
+  border: 1px solid rgba(0, 0, 0, 0)
+  transition: .5s
+  &:hover
+    background: $background
+    color: $red
+    border: 1px solid $red
+    box-shadow: 0 0 .5rem $orange
 
 .secondary
   border: $border 1px solid

@@ -65,3 +65,13 @@
 
     &:hover
         background: $border
+
+.inline
+    display: flex
+    justify-content: space-between
+    align-items: center
+    &>*:first-child
+        width: 83%
+    &>*:last-child
+        height: min-content
+        width: min-content

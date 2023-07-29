@@ -3,7 +3,10 @@
 .main
   color: $white
   display: flex
-  font-family: 'Raleway'
+
+@media screen and (max-width: 500px)
+  .main
+    flex-direction: column
 
 .post
   width: 47.25rem

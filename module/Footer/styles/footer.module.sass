@@ -14,8 +14,8 @@
         &>ul
             display: flex
             list-style: none
+            justify-content: space-between
             &>li
-                margin: 0 0 0 1.375rem
                 &>a
                     text-decoration: none
                     color: $gray
@@ -40,8 +40,9 @@
             &>ul
                 justify-content: center
                 flex-wrap: wrap
-                width: 200px
+                width: 180px
                 &>li
+                    padding: 0 .5rem
                     margin-bottom: .625rem
                     &:nth-last-child(1)
                         display: none
@@ -64,6 +65,10 @@
     width: 17.875rem
 
 @media screen and (max-width: 500px)
+    .dots
+        justify-content: space-between
+        &>*
+            margin: 0
     .desc
         display: none
 

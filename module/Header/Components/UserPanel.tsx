@@ -41,23 +41,26 @@ export default function UserPanel({ user, coors }: UserPanel) {
                 <Link href="/api" className="API">
                     API
                 </Link>
-                <Link href="/settings" className="settings">
+                { user !== false ? <Link href="/settings" className="settings">
                     Налаштування
-                </Link>
+                </Link> : null
+                }
             </div>
-            <div className={styles.bottom}>
-                <Link
-                    href="#"
-                    onClick={() => {
-                        document.cookie =
-                            "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                        dispatch({ type: "set", payload: null });
-                    }}
-                    className="exit"
-                >
-                    Вийти
-                </Link>
-            </div>
+            {
+                user !== false ? <div className={styles.bottom}>
+                    <Link
+                        href="#"
+                        onClick={() => {
+                            document.cookie =
+                                "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                            dispatch({ type: "setUser", payload: null });
+                        }}
+                        className="exit"
+                    >
+                        Вийти
+                    </Link>
+                </div> : null
+            }
         </div>
     );
 }

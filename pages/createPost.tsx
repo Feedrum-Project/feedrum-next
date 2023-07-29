@@ -5,7 +5,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { IUser } from "types/User";
-import { Button, Input } from "components/UI";
+import { Button } from "components/UI";
 import Images from "module/CreateForm/Components/Images";
 import Editor from "module/CreateForm/Components/Editor";
 import { HTMLtoMD, MDtoHTML } from "helpers/parsers.helper";
@@ -115,7 +115,7 @@ export default function CreatePost() {
                             <Button Style="standart" onClick={saveToLocale}>
                                 Зберегти як чорнетка
                             </Button>
-                            <Button Style="red">Видалити</Button>
+                            <Button Style="danger">Видалити</Button>
                         </div>
                     </form>
                 </article>

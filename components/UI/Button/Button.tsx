@@ -1,7 +1,7 @@
 import styles from "./styles/button.module.sass";
 
 interface ButtonProps {
-  Style: "standart" | "purple" | "red" | "secondary";
+  Style: "standart" | "secondary" | "purple" | "danger" | "more_danger";
   children: any;
   className?: string | undefined;
   style?: any;

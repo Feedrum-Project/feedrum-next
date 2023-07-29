@@ -26,7 +26,7 @@ export default function LoginForm() {
         login(body)
             .then(e => {
                 if(e.code === 200) {
-                    dispatch({type:"set", payload: e.data});
+                    dispatch({type:"setUser", payload: e.data});
                     push("/");
                 }
                 setMessage(e);

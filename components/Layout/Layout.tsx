@@ -34,7 +34,6 @@ export default function Layout({ children }: Props) {
                     }});
             })
             .catch((e) => {
-                console.log(e);
                 dispatch({type:"setUser", payload:{id: 0}});
 
                 dispatch({type: "addNotification", payload: {
@@ -42,7 +41,6 @@ export default function Layout({ children }: Props) {
                     title: "Ваша сесія застаріла",
                     text: "Будь-ласка увійдіть знову"
                 }});
-                throw e;
             });
     }, [dispatch]);
 

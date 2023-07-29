@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { IUser } from "types/User";
 import UserPanel from "./UserPanel";
+import { IStore } from "store/store";
 
 interface Panel {
     user: IUser | false;
@@ -18,7 +19,7 @@ interface Panel {
   }
 
 export default function Navigation() {
-    const { user } = useSelector((state: any) => state.user);
+    const { user } = useSelector((state: IStore) => state.user);
     const [panel, setPanel] = useState<Panel | null>(null);
     
     let Logged;

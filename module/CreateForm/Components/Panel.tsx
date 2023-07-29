@@ -6,6 +6,9 @@ import heading from "images/createPost/Heading.svg";
 import image from "images/createPost/Image.svg";
 import italic from "images/createPost/Italic.svg";
 import link from "images/createPost/Link.svg";
+import { useState } from "react";
+import Modal from "components/Modal/Modal";
+import { Button, Input } from "components/UI";
 
 interface IPanel {
     selected: {
@@ -18,6 +21,11 @@ interface IPanel {
 }
 
 export default function Panel({ selected }: IPanel) {
+    const [modal, setModal] = useState<{
+        content: any;
+        show: boolean;
+    }>({content: "", show: false});
+
     function toSpecy(
         e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
             target: { id: string };
@@ -35,6 +43,16 @@ export default function Panel({ selected }: IPanel) {
             break;
         case "link":
             node = document.createElement("a");
+            modal.show ? null : setModal(
+                {
+                    content: <>
+                        <Input Name="Посилання"/>
+                        <br />
+                        <Button Style="purple">Зберегти</Button>
+                    </>,
+                    show: true
+                }
+            );
             break;
         case "bold":
             node = document.createElement("b");
@@ -57,6 +75,13 @@ export default function Panel({ selected }: IPanel) {
     }
     return (
         <div className={styles.panel}>
+            {modal.show ? (
+                <Modal setModal={setModal} type="message">
+                    {
+                        modal.content
+                    }
+                </Modal>
+            ) : null}
             <button
                 id="header"
                 type="button"
@@ -69,17 +94,16 @@ export default function Panel({ selected }: IPanel) {
                     selected.heading ? styles.selected : styles.unselected
                 }
             >
-                <p>
-                    <Image
-                        src={heading.src}
-                        alt="Заголовок"
-                        width={16}
-                        height={16}
-                    />
-                </p>
+                <Image
+                    src={heading.src}
+                    alt="Заголовок"
+                    width={16}
+                    height={16}
+                />
             </button>
             <button
                 id="italic"
+                type="button"
                 onClick={(
                     e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
                         target: { id: string };
@@ -93,6 +117,7 @@ export default function Panel({ selected }: IPanel) {
             </button>
             <button
                 id="link"
+                type="button"
                 onClick={(
                     e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
                         target: { id: string };
@@ -104,6 +129,7 @@ export default function Panel({ selected }: IPanel) {
             </button>
             <button
                 id="bold"
+                type="button"
                 onClick={(
                     e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
                         target: { id: string };
@@ -115,6 +141,7 @@ export default function Panel({ selected }: IPanel) {
             </button>
             <button
                 id="img"
+                type="button"
                 onClick={(
                     e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
                         target: { id: string };
