@@ -127,12 +127,15 @@
         outline: none
         overflow-y: scroll
         font-size: 1.125rem
+        &>*
+            &>a, &>*>a, &>*>*>a
+                color: $pink
 .txt
     min-height: 6.5rem
 
 .panel
     margin: 1.625rem 0
-    &>button
+    &>div>button
         border-radius: .25rem
         margin-right: .5rem
         padding: .625rem
@@ -155,3 +158,27 @@
         outline: none
         font-size: 3rem
         margin-bottom: 2rem
+
+.enabled
+    display: inline-block
+    position: absolute
+    background: $background
+    border: 1px solid $purple
+    border-radius: .625rem
+    // width: 10rem
+    padding: .5rem
+    &>*
+        margin-bottom: .25rem
+
+.disabled
+    display: inline-block
+
+.board
+    display: flex
+    justify-content: space-between
+    &>*
+        margin-right: 1rem
+        width: fit-content
+        height: min-content
+        &:last-child
+            margin-right: 0

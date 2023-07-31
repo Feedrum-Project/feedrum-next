@@ -5,7 +5,8 @@ interface ButtonProps {
   children: any;
   className?: string | undefined;
   style?: any;
-  onClick?: undefined | (() => void);
+  id?: string;
+  onClick?: undefined | ((e: React.MouseEvent<HTMLButtonElement> | any) => any);
   disabled?: boolean;
   type?: "button" | "reset" | "submit";
   to?: string | undefined;
@@ -17,6 +18,7 @@ export default function Button(
         children,
         className=undefined,
         style,
+        id=undefined,
         onClick=undefined,
         disabled=false,
         type="button",
@@ -43,6 +45,7 @@ export default function Button(
             onClick={onClick}
             disabled={disabled}
             type={type}
+            id={id}
         >
             {children}
         </button>

@@ -1,7 +1,7 @@
 import { IPost } from "types/Post";
 import PostController from "controllers/post.controller";
 import { GetServerSideProps } from "next";
-import PostComponent from "module/Post/Post";
+import PostComponent from "components/Post/Post";
 import styles from "../styles/home.module.sass";
 import Aside from "module/Aside/Aside";
 import { useState } from "react";

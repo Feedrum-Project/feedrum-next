@@ -194,7 +194,9 @@ export default function PostPage({
                     ) : null}
                     <h1 className={styles.title}>{postContent.title}</h1>
                     <div className={styles.content} ref={content}></div>
-
+                    <div className={styles.asideMobile}>
+                        <SimilarPosts />
+                    </div>
                     <div className={styles.comments}>
                         <div className="comments">
                             <div className={styles.commentsTitle}>
@@ -259,7 +261,7 @@ export default function PostPage({
                         </div>
                     </div>
                 </article>
-                <aside className="aside">
+                <aside className={styles.aside}>
                     <AsideProfile userName={author.name} userId={author.id} />
                     <SimilarPosts />
                     <div style={{ width: "fit-content" }}>

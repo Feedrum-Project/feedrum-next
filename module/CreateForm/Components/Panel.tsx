@@ -7,8 +7,9 @@ import image from "images/createPost/Image.svg";
 import italic from "images/createPost/Italic.svg";
 import link from "images/createPost/Link.svg";
 import { useState } from "react";
-import Modal from "components/Modal/Modal";
 import { Button, Input } from "components/UI";
+import PanelButton from "./PanelButton";
+import { toSpecy } from "../functions/toSpecy";
 
 interface IPanel {
     selected: {
@@ -21,124 +22,126 @@ interface IPanel {
 }
 
 export default function Panel({ selected }: IPanel) {
-    const [modal, setModal] = useState<{
-        content: any;
-        show: boolean;
-    }>({content: "", show: false});
-
-    function toSpecy(
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
-            target: { id: string };
-        }
-    ) {
-        if (e.target === null) return;
-        const { target } = e;
-        let node: Node;
-        switch (target.id) {
-        case "header":
-            node = document.createElement("h2");
-            break;
-        case "italic":
-            node = document.createElement("i");
-            break;
-        case "link":
-            node = document.createElement("a");
-            modal.show ? null : setModal(
-                {
-                    content: <>
-                        <Input Name="Посилання"/>
-                        <br />
-                        <Button Style="purple">Зберегти</Button>
-                    </>,
-                    show: true
-                }
-            );
-            break;
-        case "bold":
-            node = document.createElement("b");
-            break;
-        case "image":
-            node = document.createElement("img");
-            break;
-        default:
-            return;
-        }
-
-        if (node === undefined) return;
-
-        const sel = window.getSelection()?.getRangeAt(0);
-
-        if (!sel) return;
-        const parent = sel?.commonAncestorContainer!.parentNode! as HTMLElement;
-        if (parent.id === "txt") sel.surroundContents(node);
-        return;
-    }
+    const [enabled, setEnabled] = useState<{ id: string; content: any } | null>(
+        null
+    );
+    
     return (
         <div className={styles.panel}>
-            {modal.show ? (
-                <Modal setModal={setModal} type="message">
-                    {
-                        modal.content
-                    }
-                </Modal>
-            ) : null}
-            <button
-                id="header"
-                type="button"
-                onClick={(
-                    e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
-                        target: { id: string };
-                    }
-                ) => toSpecy(e)}
-                className={
-                    selected.heading ? styles.selected : styles.unselected
-                }
-            >
-                <Image
-                    src={heading.src}
-                    alt="Заголовок"
-                    width={16}
-                    height={16}
-                />
-            </button>
-            <button
+            <PanelButton
+                selected={selected}
+                id="heading"
+                img={heading}
+                enableArr={[enabled, setEnabled]}
+                content={(
+                    <>
+                        <div className={styles.board}>
+                            <Button
+                                id="h1"
+                                Style="standart"
+                                onClick={(e) => {
+                                    toSpecy(e);
+                                    setEnabled(null);
+                                }}
+                            >
+                                Заголовок 1
+                            </Button>
+                            <Button id="h4"
+                                Style="standart"
+                                onClick={(e) => {
+                                    toSpecy(e);
+                                    setEnabled(null);
+                                }}
+                            >
+                                Заголовок 4
+                            </Button>
+                        </div>
+                        <div className={styles.board}>
+                            <Button
+                                id="h2"
+                                Style="standart"
+                                onClick={(e) => {
+                                    toSpecy(e);
+                                    setEnabled(null);
+                                }}
+                            >
+                                Заголовок 2
+                            </Button>
+                            <Button
+                                id="h5"
+                                Style="standart"
+                                onClick={(e) => {
+                                    toSpecy(e);
+                                    setEnabled(null);
+                                }}
+                            >
+                                Заголовок 5
+                            </Button>
+                        </div>
+                        <div className={styles.board}>
+                            <Button
+                                id="h3"
+                                Style="standart"
+                                onClick={(e) => {
+                                    toSpecy(e);
+                                    setEnabled(null);
+                                }}
+                            >
+                                Заголовок 3
+                            </Button>
+                            <Button
+                                Style="danger"
+                                onClick={() => setEnabled(null)}>
+                                Відхилити
+                            </Button>
+                        </div>
+                        
+                    </>
+                )}
+            />  
+            <PanelButton
+                selected={selected}
                 id="italic"
-                type="button"
-                onClick={(
-                    e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
-                        target: { id: string };
-                    }
-                ) => toSpecy(e)}
-                className={
-                    selected.italic ? styles.selected : styles.unselected
-                }
-            >
-                <Image src={italic.src} alt="Похилий" width={16} height={16} />
-            </button>
-            <button
+                img={italic}
+                enableArr={[enabled, setEnabled]}
+            />
+            <PanelButton
+                selected={selected}
                 id="link"
-                type="button"
-                onClick={(
-                    e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
-                        target: { id: string };
-                    }
-                ) => toSpecy(e)}
-                className={selected.link ? styles.selected : styles.unselected}
-            >
-                <Image src={link.src} alt="Посилання" width={16} height={16} />
-            </button>
-            <button
+                img={link}
+                enableArr={[enabled, setEnabled]}
+                content={(
+                    <>
+                        <Input Name="Посилання" id="link_value"/>
+                        <div className={styles.board}>
+                            <Button
+                                Style="danger"
+                                onClick={() => setEnabled(null)}
+                            >
+                                Відхилити
+                            </Button>
+                            <Button
+                                Style="purple"
+                                id="link"
+                                onClick={(e) => {
+                                    const elem = document.getElementById("link_value")as HTMLInputElement;
+                                    if(!elem) return;
+                                    const {value} = elem;
+                                    toSpecy(e, value);
+                                }}
+                            >
+                                Прикріпити
+                            </Button>
+                        </div>
+                    </>
+                )}
+            />
+            <PanelButton
+                selected={selected}
                 id="bold"
-                type="button"
-                onClick={(
-                    e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
-                        target: { id: string };
-                    }
-                ) => toSpecy(e)}
-                className={selected.bold ? styles.selected : styles.unselected}
-            >
-                <Image src={bold.src} alt="Товстий" width={16} height={16} />
-            </button>
+                img={bold}
+                enableArr={[enabled, setEnabled]}
+            />
             <button
                 id="img"
                 type="button"
@@ -146,7 +149,9 @@ export default function Panel({ selected }: IPanel) {
                     e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
                         target: { id: string };
                     }
-                ) => toSpecy(e)}
+                ) => {
+                    // toSpecy(e);
+                }}
                 className={selected.image ? styles.selected : styles.unselected}
             >
                 <Image src={image.src} alt="Малюнок" width={16} height={16} />

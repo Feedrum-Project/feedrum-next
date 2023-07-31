@@ -6,35 +6,38 @@ import question from "images/Question.svg";
 import { useState } from "react";
 
 interface InputProps {
-  type?:string;
-  placeholder?:string;
-  Name: string;
-  name?:string;
-  disabled?: boolean;
-  autoComplete?: boolean;
-  value?: string;
-  info?: string;
-  onChange?: ((e: any) => void);
-  required?: boolean;
-  minLength?: number;
+    type?: string;
+    placeholder?: string;
+    Name: string;
+    name?: string;
+    disabled?: boolean;
+    autoComplete?: boolean;
+    value?: string;
+    info?: string;
+    id?: string;
+    onChange?: (e: any) => void;
+    required?: boolean;
+    minLength?: number;
 }
 
-export default function Input(
-    {
-        type="text",
-        Name,
-        name,
-        placeholder,
-        disabled=false,
-        value="",
-        info,
-        autoComplete,
-        onChange,
-        required=false,
-        minLength,
-    }:InputProps) {
-
-    const [show, setShow] = useState<{show: boolean, coords: {x: number, y: number}}>({show: false, coords: {x: 0, y: 0}});
+export default function Input({
+    type = "text",
+    Name,
+    name,
+    placeholder,
+    disabled = false,
+    value = "",
+    info,
+    id,
+    autoComplete,
+    onChange,
+    required = false,
+    minLength,
+}: InputProps) {
+    const [show, setShow] = useState<{
+        show: boolean;
+        coords: { x: number; y: number };
+    }>({ show: false, coords: { x: 0, y: 0 } });
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [valueInp, setValue] = useState<string>(value);
 
@@ -48,14 +51,16 @@ export default function Input(
                 <div
                     className={styles.info}
                     onMouseEnter={(e) => {
-                        setShow({show: true, coords: {x: e.pageX, y: e.pageY+10}});
+                        setShow({
+                            show: true,
+                            coords: { x: e.pageX, y: e.pageY + 10 },
+                        });
                     }}
                     onMouseLeave={() => {
-                        setShow({show: false, coords: {x: 0, y: 0}});
-                    }}>
-                    {
-                        info ? <Image src={question} alt="Запитання."/> : null
-                    }
+                        setShow({ show: false, coords: { x: 0, y: 0 } });
+                    }}
+                >
+                    {info ? <Image src={question} alt="Запитання." /> : null}
                 </div>
             </div>
             <div className={styles.inputSquareBottom}>
@@ -69,21 +74,24 @@ export default function Input(
                     type={showPassword !== true ? type : "text"}
                     placeholder={placeholder}
                     name={name}
+                    id={id}
                     autoComplete={autoComplete ? "true" : "false"}
                     className={styles.inputSquareInput}
                     required={required}
                     min={minLength}
                 />
-                {
-                    type === "password" ?
-                        <button type="button" onClick={() => setShowPassword(!showPassword)}>
-                            <Image src={eye} alt="show password"/></button>
-                        : null
-                }
+                {type === "password" ? (
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        <Image src={eye} alt="show password" />
+                    </button>
+                ) : null}
             </div>
-            {
-                show.show && info !== undefined ? <PopUp info={info} coords={show.coords} /> : null
-            }
+            {show.show && info !== undefined ? (
+                <PopUp info={info} coords={show.coords} />
+            ) : null}
         </div>
     );
 }

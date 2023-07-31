@@ -2,7 +2,7 @@ import styles from "../styles/search.module.sass";
 import { IComment, IPost } from "types/Post";
 import { IUserExtended } from "types/User";
 import { useState } from "react";
-import Post from "module/Post/Post";
+import Post from "components/Post/Post";
 import User from "components/User/User";
 
 interface IResult {

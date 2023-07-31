@@ -1,9 +1,7 @@
 import Image from "next/image";
 import styles from "../styles/aside.module.sass";
 import comments from "images/message.svg";
-import star from "images/star.svg";
 import starG from "images/star-green.svg";
-import starR from "images/star-red.svg";
 
 export default function SimilarPosts() {
     return (
