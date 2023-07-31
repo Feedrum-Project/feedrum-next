@@ -33,7 +33,7 @@ export default function Navigation() {
                             panel ? setPanel(null) : setPanel({
                                 user,
                                 coors: {
-                                    x: e.clientX,
+                                    x: e.clientX-135,
                                     y: e.clientY,
                                 }
                             });
@@ -51,8 +51,8 @@ export default function Navigation() {
                             panel ? setPanel(null) : setPanel({
                                 user,
                                 coors: {
-                                    x: e.clientX,
-                                    y: e.clientY,
+                                    x: e.clientX-124,
+                                    y: e.clientY+16,
                                 }
                             });
                         }}>
