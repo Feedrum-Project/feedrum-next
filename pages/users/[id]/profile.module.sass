@@ -2,6 +2,7 @@
 
 .main
     display: flex
+    gap: 1rem
     width: 100%
 
 .top
@@ -16,6 +17,8 @@
 @media screen and (max-width: 1300px)
     .main
         flex-direction: column-reverse
+    .top
+        margin-bottom: 1rem
 
 @media screen and (max-width: 500px)
     .top
@@ -32,10 +35,10 @@
         display: flex
         align-items: center
         justify-content: flex-end
-        margin: 0 0 1rem
+        gap: 1rem
+        margin-bottom: 1rem
 
         &>*:first-child
-            margin: 0 1rem 0 0
 
     &Content
         margin-top: 1.375rem
@@ -43,8 +46,7 @@
 @media screen and (max-width: 1300px)
     .profile
         width: min-content
-        &Aside
-            margin: 0 2rem
+
 
 .name
     display: flex
@@ -188,13 +190,16 @@
 .unselectedCategory
     background: none
 
-@media screen and (max-width: 500px)
+@media screen and (max-width: 1300px)
     .aside
         margin: 0
+        max-width: 100%
         flex-direction: column-reverse
-        width: 100vw
-        max-width: none
+    .type
+        &>h1
+            text-align: center
 
+@media screen and (max-width: 500px)
     .type
         border-radius: 0
         padding: 1.125rem

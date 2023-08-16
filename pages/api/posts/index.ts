@@ -37,8 +37,7 @@ const getPosts: NextApiHandler = async (req, res) => {
 };
 
 const createPost: NextApiHandler = async (req, res) => {
-    
-    const post = await PostController.create(req.body.body, req.body.user.id);
+    const post = await PostController.create(req.body.body, req.user.id);
 
     return success(res, post);
 };
