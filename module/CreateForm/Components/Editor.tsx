@@ -72,7 +72,7 @@ export default function Editor({ articleSet }: IEditor) {
                                 ? "red"
                                 : tempContent.length < 500
                                     ? "orange"
-                                    : "green",
+                                    : tempContent.length > 2000 ? "red" : "green",
                         ].join(" ")}
                     >
                         {tempContent.length} / 100

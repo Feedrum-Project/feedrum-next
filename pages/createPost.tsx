@@ -1,14 +1,14 @@
 import styles from "../styles/create.module.sass";
 
-import Script from "next/script";
 import { FormEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 import { IUser } from "types/User";
+import { HTMLtoMD, MDtoHTML } from "helpers/parsers.helper";
+
+import Script from "next/script";
 import { Button } from "components/UI";
 import Images from "module/CreateForm/Components/Images";
 import Editor from "module/CreateForm/Components/Editor";
-import { HTMLtoMD, MDtoHTML } from "helpers/parsers.helper";
 import View from "module/CreateForm/Components/View";
 
 export default function CreatePost() {
@@ -34,7 +34,6 @@ export default function CreatePost() {
         if (!txt) return;
 
         const content = HTMLtoMD(txt.innerHTML);
-
         localStorage.setItem("article", content);
 
         setArticle((pr) => {
