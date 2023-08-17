@@ -19,8 +19,10 @@ interface Panel {
   }
 
 export default function Navigation() {
-    const { user } = useSelector((state: IStore) => state.user);
+    const { user } = useSelector((state: IStore) => state).user;
     const [panel, setPanel] = useState<Panel | null>(null);
+
+    console.log(user);
     
     let Logged;
     if(user !== null && user.id !== 0) {

@@ -22,6 +22,7 @@ import arrowB from "images/arrow-bottom.svg";
 import { IUser } from "types/User";
 import { IComment, IPostId } from "types/Post";
 import getRelative from "helpers/time.helper";
+import { IStore } from "store/store";
 
 interface UserProps {
     userInformation: IUser | null;
@@ -34,7 +35,7 @@ export default function User({
     userPosts,
     userComments,
 }: UserProps) {
-    const user = useSelector((state: any) => state.user);
+    const { user } = useSelector((state: IStore) => state).user;
 
     const [sortPosts, setSortPosts] = useState<"new" | "best" | "popular">(
         "new"
@@ -78,7 +79,9 @@ export default function User({
                     <Button Style="purple">Підписатися</Button>
                     <Rank
                         info={userInformation}
-                        disabled={user.id === userInformation.id}
+                        disabled={
+                            user !== null && user.id === userInformation.id
+                        }
                     />
                 </div>
             </div>
@@ -128,7 +131,7 @@ export default function User({
                                             Популярні
                                         </button>
                                     </div>
-                                    {userPosts.map((e: any) => {
+                                    {userPosts.map((e) => {
                                         return (
                                             <div
                                                 key={e.id}
@@ -191,9 +194,14 @@ export default function User({
                                                             src={message}
                                                             alt="Повідомлення"
                                                         />
-                                                        <span>
-                                                            {e._count.Comments}
-                                                        </span>
+                                                        {e._count ? (
+                                                            <span>
+                                                                {
+                                                                    e._count
+                                                                        .Comments
+                                                                }
+                                                            </span>
+                                                        ) : null}
                                                     </div>
                                                     <div
                                                         className={
@@ -441,7 +449,7 @@ export default function User({
                     />
                 </aside>
             </div>
-            {user.id && user.id === userInformation.id ? (
+            {user !== null && user.id && user.id === userInformation.id ? (
                 <Button
                     Style="purple"
                     onClick={() => {

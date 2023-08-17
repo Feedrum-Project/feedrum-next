@@ -41,7 +41,7 @@ export default function Search({result}:{result: IResult}) {
                                 </div>
                                 {
                                     result.users.length !== 0 ? result.users.map(e => {
-                                        return <User user={e as any} key={e.id}/>;
+                                        return <User user={e} key={e.id}/>;
                                     }) : <h1>Ми не знайшли користувачів :(</h1>
                                 }
                             </> :

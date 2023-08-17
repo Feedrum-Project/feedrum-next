@@ -15,9 +15,10 @@ interface InputProps {
     value?: string;
     info?: string;
     id?: string;
-    onChange?: (e: any) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     required?: boolean;
     minLength?: number;
+    size?: number;
 }
 
 export default function Input({
@@ -33,6 +34,7 @@ export default function Input({
     onChange,
     required = false,
     minLength,
+    size = 16,
 }: InputProps) {
     const [show, setShow] = useState<{
         show: boolean;
@@ -60,7 +62,12 @@ export default function Input({
                         setShow({ show: false, coords: { x: 0, y: 0 } });
                     }}
                 >
-                    {info ? <Image src={question} alt="Запитання." /> : null}
+                    {info ? (
+                        <Image
+                            src={question}
+                            alt="Запитання."
+                        />
+                    ) : null}
                 </div>
             </div>
             <div className={styles.inputSquareBottom}>
@@ -79,18 +86,25 @@ export default function Input({
                     className={styles.inputSquareInput}
                     required={required}
                     min={minLength}
+                    style={{ fontSize: size }}
                 />
                 {type === "password" ? (
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                     >
-                        <Image src={eye} alt="show password" />
+                        <Image
+                            src={eye}
+                            alt="show password"
+                        />
                     </button>
                 ) : null}
             </div>
             {show.show && info !== undefined ? (
-                <PopUp info={info} coords={show.coords} />
+                <PopUp
+                    info={info}
+                    coords={show.coords}
+                />
             ) : null}
         </div>
     );

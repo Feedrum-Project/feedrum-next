@@ -14,13 +14,13 @@ export function hightlight(text: string) {
 
 export function MDtoHTML(text: string) {
     if (!text) return "";
-    let result;
-    result = md.render(text);
+    const result = md.render(text).replaceAll("\n", "<br/>");
     return result;
 }
 export function HTMLtoMD(text: string) {
     if (!text) return "";
-    return html.turndown(text);
+    const res = html.turndown(text);
+    return res;
 }
 const parser = {
     MDtoHTML,

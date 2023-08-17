@@ -1,12 +1,13 @@
+import { ReactNode } from "react";
 import styles from "./styles/button.module.sass";
 
 interface ButtonProps {
   Style: "standart" | "secondary" | "purple" | "danger" | "more_danger";
-  children: any;
+  children: ReactNode;
   className?: string | undefined;
   style?: any;
   id?: string;
-  onClick?: undefined | ((e: React.MouseEvent<HTMLButtonElement> | any) => any);
+  onClick?: undefined | ((e: React.MouseEvent<HTMLAnchorElement> | any) => void);
   disabled?: boolean;
   type?: "button" | "reset" | "submit";
   to?: string | undefined;

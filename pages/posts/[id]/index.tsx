@@ -1,7 +1,7 @@
 import styles from "./post.module.sass";
 import prisma from "@database";
 import { GetServerSideProps } from "next";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, ReactNode, useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -40,7 +40,7 @@ export default function PostPage({
         code: number;
         message: string;
     } | null>(null);
-    const [modal, setModal] = useState<{ show: boolean; content: any }>({
+    const [modal, setModal] = useState<{ show: boolean; content: ReactNode }>({
         show: false,
         content: "",
     });
@@ -106,12 +106,21 @@ export default function PostPage({
     return (
         <>
             <Head>
-                <meta name="description" content={postContent.body} />
-                <meta name="author" content={author.name} />
+                <meta
+                    name="description"
+                    content={postContent.body}
+                />
+                <meta
+                    name="author"
+                    content={author.name}
+                />
             </Head>
             <div className={styles.main}>
                 {modal.show && modal.content !== undefined ? (
-                    <Modal setModal={setModal} type="attention">
+                    <Modal
+                        setModal={setModal}
+                        type="attention"
+                    >
                         {modal.content}
                     </Modal>
                 ) : null}
@@ -193,7 +202,10 @@ export default function PostPage({
                         ) : null
                     ) : null}
                     <h1 className={styles.title}>{postContent.title}</h1>
-                    <div className={styles.content} ref={content}></div>
+                    <div
+                        className={styles.content}
+                        ref={content}
+                    ></div>
                     <div className={styles.asideMobile}>
                         <SimilarPosts />
                     </div>
@@ -220,7 +232,10 @@ export default function PostPage({
                             >
                                 {attention ? attention.message : null}
                             </h2>
-                            <form onSubmit={sub} className={styles.comment}>
+                            <form
+                                onSubmit={sub}
+                                className={styles.comment}
+                            >
                                 <div className={styles.commentLeft}>
                                     <Image
                                         alt="Аватар"
@@ -238,7 +253,10 @@ export default function PostPage({
                                         minHeight={130}
                                     />
                                     <div className="minWidth">
-                                        <Button Style="purple" type="submit">
+                                        <Button
+                                            Style="purple"
+                                            type="submit"
+                                        >
                                             Підтвердити
                                         </Button>
                                     </div>
@@ -262,7 +280,10 @@ export default function PostPage({
                     </div>
                 </article>
                 <aside className={styles.aside}>
-                    <AsideProfile userName={author.name} userId={author.id} />
+                    <AsideProfile
+                        userName={author.name}
+                        userId={author.id}
+                    />
                     <SimilarPosts />
                     <div style={{ width: "fit-content" }}>
                         <Rank

@@ -1,12 +1,13 @@
 import { useState } from "react";
-interface ISelectedPanel {
+export interface ISelectedPanel {
     heading?: boolean;
     italic?: boolean;
     link?: boolean;
     bold?: boolean;
     image?: boolean;
+    code?: boolean;
 }
-export default function useSelected() {
+export default function useSelected(): [ISelectedPanel, (e: string) => void] {
     const [selectedPanel, setSelected] = useState<ISelectedPanel>({
         heading: false,
         italic: false,

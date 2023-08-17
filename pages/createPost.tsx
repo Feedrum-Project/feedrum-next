@@ -18,7 +18,6 @@ export default function CreatePost() {
         content: "",
     });
     const [files, setFiles] = useState<File[]>();
-
     const { user } = useSelector((state: { user: IUser }) => state);
 
     useEffect(() => {
@@ -49,7 +48,8 @@ export default function CreatePost() {
         const target = e.target;
 
         const { value: title } = target.title;
-        const text: any = document.getElementById("txt");
+        const text: HTMLElement | null = document.getElementById("txt");
+        if(!text) throw new Error("Couldn't be found field");
         const content = HTMLtoMD(MDtoHTML(text.innerHTML));
 
         if (title.length < 8 || content.length < 100)

@@ -1,8 +1,7 @@
 import { Post, User } from "@prisma/client";
 import { IUser } from "./User";
 
-export interface IPost
-{
+export interface IPost {
     id: number;
     body: string;
     title: string;
@@ -30,7 +29,10 @@ export interface IPostId {
     User: {
         id: number;
         name: string;
-    }
+    };
+    _count?: {
+        Comments: number;
+    };
 }
 
 export interface IComment {

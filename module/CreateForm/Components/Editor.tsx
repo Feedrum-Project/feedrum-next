@@ -23,7 +23,7 @@ interface IEditor {
 export default function Editor({ articleSet }: IEditor) {
     const [article, setArticle] = articleSet;
     const [tempContent, setTempContent] = useState<string>("");
-    const [selected, setSelect]: any = useSelected();
+    const [selected, setSelect] = useSelected();
     const editor = useRef<any>(null);
 
     useEffect(() => {
@@ -34,6 +34,7 @@ export default function Editor({ articleSet }: IEditor) {
         document.addEventListener("keyup", (_) => {
             const panelFields = sel?.anchorNode?.parentElement?.tagName;
 
+            if(panelFields === undefined) return;
             setSelect(panelFields);
 
             if (editor.current === null) return;
@@ -53,6 +54,7 @@ export default function Editor({ articleSet }: IEditor) {
                 info="Назва вашої статті, мінімум 4 символи"
                 minLength={4}
                 value={article.title}
+                size={36}
                 onChange={(e) =>
                     setArticle((pr) => {
                         return { ...pr, title: e.target.value };
