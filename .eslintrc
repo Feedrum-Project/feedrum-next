@@ -1,9 +1,10 @@
 {
-  "extends": "next/core-web-vitals",
-  "rules": {
-    "quotes":["warn", "double"],
-    "indent":["error", 4],
-    "jsx-quotes":["warn", "prefer-double"],
-    "semi": "warn"
-  }
+    "extends": "next/core-web-vitals",
+    "rules": {
+        "quotes": ["warn", "double"],
+        "indent": ["error", 4],
+        "jsx-quotes": ["warn", "prefer-double"],
+        "semi": "warn",
+        "no-unused-vars": "warn"
+    }
 }

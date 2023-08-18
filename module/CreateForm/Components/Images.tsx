@@ -12,14 +12,13 @@ interface IImages {
     showAdd?: boolean;
 }
 
-export default function Images({files, setFiles, showAdd=false}: IImages) {
-
+export default function Images({ files, setFiles, showAdd = false }: IImages) {
     function upload(e: ChangeEvent<HTMLInputElement>) {
         const { files } = e.target;
-        if(!files) return;
+        if (!files) return;
 
-        setFiles((pr: File[] | undefined) =>  {
-            if(pr !== undefined) {
+        setFiles((pr: File[] | undefined) => {
+            if (pr !== undefined) {
                 const buf = [...pr];
                 return buf.concat(Array.from(files));
             } else return Array.from(files);
@@ -29,56 +28,58 @@ export default function Images({files, setFiles, showAdd=false}: IImages) {
     return (
         <div className={styles.images}>
             <div className={styles.imagesList}>
-                {
-                    files?.map((file: File, index: number) => {
-                        return (
-                            <>
-                                <div
-                                    key={index}
-                                    className={styles.imagesImage}>
-                                    <Image
-                                        src={URL.createObjectURL(file)}
-                                        alt="Завантажений малюнок"
-                                        width={9.75*16}
-                                        height={9.75*16}
-                                        className={styles.imagesBackground}/>
-                                    <div className={styles.board}>
-                                        <button>
-                                            <Image src={edit} alt="Відредагувати" width={14}/>
-                                        </button>
-                                        <button>
-                                            <Image
-                                                src={remove}
-                                                alt="Видалити" width={14}
-                                                onClick={() => {
-                                                    const newList = files.filter(e => {
-                                                        if(e === file ) return;
+                {files?.map((file: File, index: number) => {
+                    return (
+                        <>
+                            <div key={index} className={styles.imagesImage}>
+                                <Image
+                                    src={URL.createObjectURL(file)}
+                                    alt="Завантажений малюнок"
+                                    width={9.75 * 16}
+                                    height={9.75 * 16}
+                                    className={styles.imagesBackground}
+                                />
+                                <div className={styles.board}>
+                                    <button>
+                                        <Image
+                                            src={edit}
+                                            alt="Відредагувати"
+                                            width={14}
+                                        />
+                                    </button>
+                                    <button>
+                                        <Image
+                                            src={remove}
+                                            alt="Видалити"
+                                            width={14}
+                                            onClick={() => {
+                                                const newList = files.filter(
+                                                    (e) => {
+                                                        if (e === file) return;
                                                         return e;
-                                                    });
-                                                    setFiles(newList);
-                                                }}/>
-                                        </button>
-                                    </div>
+                                                    },
+                                                );
+                                                setFiles(newList);
+                                            }}
+                                        />
+                                    </button>
                                 </div>
-                            </>
-                        );
-                    })
-                }
-                {
-                    showAdd ?
-                        <label
-                            className={styles.imagesAddImage}>
-                            <input
-                                type="file"
-                                onChange={e => upload(e)}
-                                hidden
-                                multiple
-                            />
-                            <div className={styles.imagesPlus}>+</div>
-                            <h1 className={styles.imagesText}>Додати зображення</h1>
-                        </label>
-                        : null
-                }
+                            </div>
+                        </>
+                    );
+                })}
+                {showAdd ? (
+                    <label className={styles.imagesAddImage}>
+                        <input
+                            type="file"
+                            onChange={(e) => upload(e)}
+                            hidden
+                            multiple
+                        />
+                        <div className={styles.imagesPlus}>+</div>
+                        <h1 className={styles.imagesText}>Додати зображення</h1>
+                    </label>
+                ) : null}
             </div>
         </div>
     );

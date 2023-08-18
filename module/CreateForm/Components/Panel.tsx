@@ -117,10 +117,7 @@ export default function Panel({ selected }: IPanel) {
                 enableArr={[enabled, setEnabled]}
                 content={
                     <>
-                        <Input
-                            Name="Посилання"
-                            id="link_value"
-                        />
+                        <Input Name="Посилання" id="link_value" />
                         <div className={styles.board}>
                             <Button
                                 Style="danger"
@@ -133,7 +130,7 @@ export default function Panel({ selected }: IPanel) {
                                 id="link"
                                 onClick={(e) => {
                                     const elem = document.getElementById(
-                                        "link_value"
+                                        "link_value",
                                     ) as HTMLInputElement;
                                     if (!elem) return;
                                     const { value } = elem;
@@ -167,11 +164,11 @@ export default function Panel({ selected }: IPanel) {
                 onClick={() => {
                     const el = document.getElementById("txt");
                     if (!el) return;
-                    const codeElement = document.createElement("code");
                     const text = document.createElement("p");
-                    text.textContent = "Ваш код";
-                    codeElement.appendChild(text);
-                    
+                    const codeElement = document.createElement("code");
+                    codeElement.textContent = "Ваш код";
+                    text.appendChild(codeElement);
+
                     el.appendChild(codeElement);
                 }}
             />

@@ -3,16 +3,18 @@ import { PostType, PostUpdateType } from "validation/post.model";
 import createVoteSystem from "./voteSystem";
 import { IComment, IPost } from "types/Post";
 
-
 export default Prisma.defineExtension((client: PrismaClient) => {
-    const { voteObject: votePost, deleteVote, isUserVoted } = createVoteSystem(client, "post")
+    const {
+        voteObject: votePost,
+        deleteVote,
+        isUserVoted,
+    } = createVoteSystem(client, "post");
 
     return client.$extends({
         name: "Post",
         model: {
             post: {
                 async getAll(page: number, offset: number): Promise<IPost[]> {
-
                     return client.post.findMany({
                         skip: page * offset,
                         take: offset,
@@ -29,22 +31,25 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                                     email: true,
                                     rank: true,
                                     createdAt: true,
-                                    isVerified: true
-                                }
+                                    isVerified: true,
+                                },
                             },
                             _count: {
                                 select: {
-                                    Comments: true
-                                }
-                            }
-                        }
+                                    Comments: true,
+                                },
+                            },
+                        },
                     });
                 },
-                async createPost(post: PostType, userId: number): Promise<Post> {
+                async createPost(
+                    post: PostType,
+                    userId: number,
+                ): Promise<Post> {
                     return client.post.create({
                         data: {
                             ...post,
-                            userId
+                            userId,
                         },
                     });
                 },
@@ -55,27 +60,30 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                         },
                     });
                 },
-                async updatePostById(id: number, post: PostUpdateType): Promise<Post> {
+                async updatePostById(
+                    id: number,
+                    post: PostUpdateType,
+                ): Promise<Post> {
                     return client.post.update({
                         data: post,
                         where: {
-                            id
-                        }
-                    })
+                            id,
+                        },
+                    });
                 },
                 async deletePostById(id: number): Promise<Post> {
                     return client.post.delete({
                         where: {
-                            id
-                        }
-                    })
+                            id,
+                        },
+                    });
                 },
                 async getPostComments(id: number): Promise<IComment[]> {
                     return client.comment.findMany({
                         where: {
                             Post: {
-                                id
-                            }
+                                id,
+                            },
                         },
                         select: {
                             id: true,
@@ -83,14 +91,14 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                             rank: true,
                             createdAt: true,
                             Post: true, //
-                            User: true // these field needs.
-                        }
-                    })
+                            User: true, // these field needs.
+                        },
+                    });
                 },
                 votePost,
                 deleteVote,
                 isUserVoted,
-            }
+            },
         },
     });
 });

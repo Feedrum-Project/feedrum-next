@@ -15,7 +15,7 @@ interface InputProps {
     value?: string;
     info?: string;
     id?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: ((e: React.ChangeEvent<HTMLInputElement>) => void) | undefined;
     required?: boolean;
     minLength?: number;
     size?: number;
@@ -62,12 +62,7 @@ export default function Input({
                         setShow({ show: false, coords: { x: 0, y: 0 } });
                     }}
                 >
-                    {info ? (
-                        <Image
-                            src={question}
-                            alt="Запитання."
-                        />
-                    ) : null}
+                    {info ? <Image src={question} alt="Запитання." /> : null}
                 </div>
             </div>
             <div className={styles.inputSquareBottom}>
@@ -93,18 +88,12 @@ export default function Input({
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                     >
-                        <Image
-                            src={eye}
-                            alt="show password"
-                        />
+                        <Image src={eye} alt="show password" />
                     </button>
                 ) : null}
             </div>
             {show.show && info !== undefined ? (
-                <PopUp
-                    info={info}
-                    coords={show.coords}
-                />
+                <PopUp info={info} coords={show.coords} />
             ) : null}
         </div>
     );

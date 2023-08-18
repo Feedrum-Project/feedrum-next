@@ -10,7 +10,6 @@ import invalidIdMiddleware from "middlewares/invalidId.middleware";
 import success from "helpers/success.helper";
 
 const handler: NextApiHandler = async (req, res) => {
-
     switch (req.method) {
     case "GET":
         await getPost(req, res);
@@ -18,7 +17,7 @@ const handler: NextApiHandler = async (req, res) => {
     case "PUT":
         await use(missingBodyMiddleware, authMiddleware)(editPost)(
             req,
-            res
+            res,
         );
         break;
     case "DELETE":

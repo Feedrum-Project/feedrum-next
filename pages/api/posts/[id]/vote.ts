@@ -1,5 +1,4 @@
 import PostController from "controllers/post.controller";
-import NotImplementedError from "errors/NotImplemented";
 import success from "helpers/success.helper";
 import authMiddleware from "middlewares/auth.middleware";
 import errorMiddleware from "middlewares/error.middleware";
@@ -21,17 +20,16 @@ const handler: NextApiHandler = async (req, res) => {
 };
 
 const votePost: NextApiHandler = async (req, res) => {
-    typeof req.body === "string" ? req.body = JSON.parse(req.body) : null;
-    
+    typeof req.body === "string" ? (req.body = JSON.parse(req.body)) : null;
+
     const post = await PostController.vote(req.id, req.user.id, req.body.score);
 
     success(res, post);
 };
 
 const unvotePost: NextApiHandler = async (req, res) => {
-    
     const post = await PostController.unvote(req.id, req.user.id);
-    if(!post) throw new Error("Didnt found post");
+    if (!post) throw new Error("Didnt found post");
 
     success(res, post);
 };
@@ -40,5 +38,5 @@ export default use(
     errorMiddleware,
     invalidIdMiddleware,
     validMethodsMiddleware(["POST", "DELETE"]),
-    authMiddleware
+    authMiddleware,
 )(handler);

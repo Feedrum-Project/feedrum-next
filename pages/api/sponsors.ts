@@ -1,7 +1,8 @@
 import { NextApiHandler } from "next";
 
 const handler: NextApiHandler = async (_, res) => {
-    res.json({result: null
+    res.json({
+        result: null,
         // [{
         //     id: 1,
         //     name: "123",

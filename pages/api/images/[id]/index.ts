@@ -1,9 +1,8 @@
-
 import type { NextApiHandler } from "next";
 import { use } from "next-api-middleware";
 import errorMiddleware from "middlewares/error.middleware";
 import validMethodsMiddleware from "middlewares/validMethods.middleware";
-import { sendImage, parseImages } from "helpers/image.helper";
+import { sendImage } from "helpers/image.helper";
 import WTFError from "errors/WTF";
 import ImageController from "controllers/images.controller";
 import authMiddleware from "middlewares/auth.middleware";
@@ -61,4 +60,5 @@ const getImage = (id: string) => {
 
 export default use(
     errorMiddleware,
-    validMethodsMiddleware(["DELETE", "GET"]))(handler);
+    validMethodsMiddleware(["DELETE", "GET"]),
+)(handler);

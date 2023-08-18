@@ -48,7 +48,7 @@ export default function CreatePost() {
 
         const { value: title } = target.title;
         const text: HTMLElement | null = document.getElementById("txt");
-        if(!text) throw new Error("Couldn't be found field");
+        if (!text) throw new Error("Couldn't be found field");
         const content = HTMLtoMD(MDtoHTML(text.innerHTML));
 
         if (title.length < 8 || content.length < 100)
@@ -89,10 +89,7 @@ export default function CreatePost() {
         <>
             <div className={styles.editor}>
                 <article>
-                    <form
-                        method="post"
-                        onSubmit={sub as any}
-                    >
+                    <form method="post" onSubmit={sub as any}>
                         {chapter === "editor" ? (
                             <>
                                 <Images
@@ -104,25 +101,16 @@ export default function CreatePost() {
                             </>
                         ) : (
                             <>
-                                <Images
-                                    files={files}
-                                    setFiles={setFiles}
-                                />
+                                <Images files={files} setFiles={setFiles} />
                                 <View articleSet={[article, setArticle]} />
                             </>
                         )}
 
                         <div className={styles.editorButtons}>
-                            <Button
-                                Style="purple"
-                                type="submit"
-                            >
+                            <Button Style="purple" type="submit">
                                 Опублікувати
                             </Button>
-                            <Button
-                                Style="standart"
-                                onClick={saveToLocale}
-                            >
+                            <Button Style="standart" onClick={saveToLocale}>
                                 Зберегти як чорнетка
                             </Button>
                             <Button Style="danger">Видалити</Button>

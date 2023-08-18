@@ -11,19 +11,18 @@ interface IAside {
 }
 
 export default function Aside(asideComponents: IAside) {
-
     return (
         <aside>
             {
                 <>
-                    {
-                        asideComponents.BestsPosts !== undefined ?
-                            <AsideComponents.BestPosts
-                                posts={asideComponents.BestsPosts}
-                            />
-                            : null
-                    }
-                    { asideComponents.Sponsors ? <AsideComponents.Sponsors/> : null }
+                    {asideComponents.BestsPosts !== undefined ? (
+                        <AsideComponents.BestPosts
+                            posts={asideComponents.BestsPosts}
+                        />
+                    ) : null}
+                    {asideComponents.Sponsors ? (
+                        <AsideComponents.Sponsors />
+                    ) : null}
                 </>
             }
         </aside>

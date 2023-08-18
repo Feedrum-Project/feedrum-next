@@ -16,7 +16,7 @@ interface IButton {
     img: { src: string };
     enableArr: [
         { id: string; content: ReactNode } | null,
-        Dispatch<SetStateAction<{ id: string; content: any } | null>>
+        Dispatch<SetStateAction<{ id: string; content: any } | null>>,
     ];
     content?: any;
     onClick?: (e: any) => void;
@@ -51,7 +51,7 @@ export default function PanelButton({
                     onClick={(
                         e: React.MouseEvent<HTMLButtonElement, MouseEvent> & {
                             target: { id: string };
-                        }
+                        },
                     ) => {
                         if (!content && id !== "code") return toSpecy(e);
                         enabled !== null
@@ -64,12 +64,7 @@ export default function PanelButton({
                         selected[id] ? styles.selected : styles.unselected
                     }
                 >
-                    <Image
-                        src={img.src}
-                        alt="Похилий"
-                        width={16}
-                        height={16}
-                    />
+                    <Image src={img.src} alt="Похилий" width={16} height={16} />
                 </button>
             )}
         </div>

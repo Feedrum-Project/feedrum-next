@@ -9,17 +9,19 @@ interface ITextarea {
     minHeight?: number;
 }
 
-export default function Textarea({name, Name, maxCount, placeholder, minHeight}: ITextarea) {
+export default function Textarea({
+    name,
+    Name,
+    maxCount,
+    placeholder,
+    minHeight,
+}: ITextarea) {
     const [content, setContent] = useState<string>("");
     return (
         <>
-            <div
-                className={styles.textarea}
-                style={{minHeight: minHeight}}>
+            <div className={styles.textarea} style={{ minHeight: minHeight }}>
                 <div className={styles.textareaTop}>
-                    <div className={styles.textareaLeft}>
-                        {Name}
-                    </div>
+                    <div className={styles.textareaLeft}>{Name}</div>
                     <div className={styles.textareaRight}>
                         {content.length} / {maxCount} символів
                     </div>
@@ -31,9 +33,8 @@ export default function Textarea({name, Name, maxCount, placeholder, minHeight}:
                         value={content}
                         maxLength={maxCount}
                         onChange={(e) => setContent(e.target.value)}
-                        placeholder={placeholder}>
-
-                    </textarea>
+                        placeholder={placeholder}
+                    ></textarea>
                 </div>
             </div>
         </>

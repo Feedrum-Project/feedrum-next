@@ -5,29 +5,21 @@ import starG from "images/star-green.svg";
 import starR from "images/star-red.svg";
 import Image from "next/image";
 import { IPost } from "types/Post";
+import Star from "components/UI/Star/Star";
 
-export default function BestPosts({posts}:{posts: IPost[]}) {
-  
-    const parse = posts.map(e => (
+export default function BestPosts({ posts }: { posts: IPost[] }) {
+    const parse = posts.map((e) => (
         <div key={e.id}>
-            <div className="title">
-                {e.title}
-            </div>
+            <div className="title">{e.title}</div>
             <div className={styles.elemBottom}>
                 <div className={styles.elemComments}>
-                    <Image src={message} alt="Повідомлення"/>
-                    <span className={styles.elemCommentsCount}>{e._count?.Comments}</span>
+                    <Image src={message} alt="Повідомлення" />
+                    <span className={styles.elemCommentsCount}>
+                        {e._count?.Comments}
+                    </span>
                 </div>
                 <div className={styles.elemRank}>
-                    <Image src={e.rank > 0 ? starG : e.rank === 0 ? star : starR} alt="Зіронька, репутація статті"/>
-                    <span
-                        className={styles.elemRankCount}
-                        style={
-                            {color: e.rank > 0 ? "#6AEA3D" : e.rank === 0 ? "#BEBEBE" : "#F36A6A"}
-                        }
-                    >
-                        {e.rank}
-                    </span>
+                    <Star reputation={e.rank} />
                 </div>
             </div>
         </div>
@@ -36,9 +28,7 @@ export default function BestPosts({posts}:{posts: IPost[]}) {
     return (
         <div className={styles.elem}>
             <div className={styles.elemTitle}>Найкращі пости тижня</div>
-            <div className={styles.elemBody}>
-                {parse}
-            </div>
+            <div className={styles.elemBody}>{parse}</div>
         </div>
     );
 }

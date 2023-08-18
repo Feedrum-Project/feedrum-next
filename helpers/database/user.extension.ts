@@ -20,7 +20,11 @@ export default Prisma.defineExtension((client: PrismaClient) => {
         isVerified: true,
     };
 
-    const { voteObject: voteUser, deleteVote, isUserVoted } = createVoteSystem(client, "user", viewUserSelectFields)
+    const {
+        voteObject: voteUser,
+        deleteVote,
+        isUserVoted,
+    } = createVoteSystem(client, "user", viewUserSelectFields);
 
     return client.$extends({
         name: "User",
@@ -73,10 +77,10 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                                     email: true,
                                     rank: true,
                                     createdAt: true,
-                                    isVerified: true
-                                }
-                            }
-                        }
+                                    isVerified: true,
+                                },
+                            },
+                        },
                     });
                 },
                 async getUserPosts(id: number) {
@@ -96,24 +100,24 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                                 select: {
                                     id: true,
                                     name: true,
-                                }
+                                },
                             },
                             _count: {
                                 select: {
                                     Comments: true,
                                 },
                             },
-                        }
+                        },
                     });
                 },
                 async getUserImages(id: number) {
                     return client.image.findMany({
                         where: {
                             User: {
-                                id
-                            }
-                        }
-                    })
+                                id,
+                            },
+                        },
+                    });
                 },
                 async setVerified(id: number) {
                     return client.user.update({
@@ -125,7 +129,7 @@ export default Prisma.defineExtension((client: PrismaClient) => {
                 },
                 voteUser,
                 deleteVote,
-                isUserVoted
+                isUserVoted,
             },
         },
     });

@@ -3,8 +3,11 @@ import { CommentUpdateType } from "validation/comment.model";
 import createVoteSystem from "./voteSystem";
 
 export default Prisma.defineExtension((client: PrismaClient) => {
-    const { voteObject: voteComment, deleteVote, isUserVoted } = createVoteSystem(client, "comment")
-
+    const {
+        voteObject: voteComment,
+        deleteVote,
+        isUserVoted,
+    } = createVoteSystem(client, "comment");
 
     return client.$extends({
         name: "Comment",
@@ -12,33 +15,40 @@ export default Prisma.defineExtension((client: PrismaClient) => {
             comment: {
                 async getCommentById(id: number) {
                     return client.comment.findUnique({
-                        where: { id }
-                    })
+                        where: { id },
+                    });
                 },
-                async updateCommentById(id: number, comment: CommentUpdateType) {
+                async updateCommentById(
+                    id: number,
+                    comment: CommentUpdateType,
+                ) {
                     return client.comment.update({
                         where: { id },
-                        data: comment
-                    })
+                        data: comment,
+                    });
                 },
                 async deleteCommentById(id: number) {
                     return client.comment.delete({
-                        where: { id }
-                    })
+                        where: { id },
+                    });
                 },
-                async createComment(comment: CommentUpdateType, userId: number, postId: number) {
+                async createComment(
+                    comment: CommentUpdateType,
+                    userId: number,
+                    postId: number,
+                ) {
                     return client.comment.create({
                         data: {
                             ...comment,
                             userId,
-                            postId
-                        }
-                    })
+                            postId,
+                        },
+                    });
                 },
                 voteComment,
                 deleteVote,
-                isUserVoted
-            }
+                isUserVoted,
+            },
         },
     });
 });

@@ -11,4 +11,4 @@ export default new PrismaClient()
     .$extends(userExtension)
     .$extends(verifyCodeExtension)
     .$extends(commentExtension)
-    .$extends(imageExtension)
+    .$extends(imageExtension);

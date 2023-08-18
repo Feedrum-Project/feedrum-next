@@ -5,30 +5,34 @@ export default Prisma.defineExtension((client: PrismaClient) => {
         name: "Image",
         model: {
             image: {
-                async createImage(id: string, userId: number, type: ImageFormat) {
+                async createImage(
+                    id: string,
+                    userId: number,
+                    type: ImageFormat,
+                ) {
                     return client.image.create({
                         data: {
                             id,
                             type,
                             userId,
-                        }
-                    })
+                        },
+                    });
                 },
                 async getImageById(id: string) {
                     return client.image.findUnique({
                         where: {
-                            id
-                        }
-                    })
+                            id,
+                        },
+                    });
                 },
                 async deleteImageById(id: string) {
                     return client.image.delete({
                         where: {
-                            id
-                        }
-                    })
-                }
-            }
+                            id,
+                        },
+                    });
+                },
+            },
         },
     });
 });

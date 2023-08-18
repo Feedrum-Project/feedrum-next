@@ -8,7 +8,7 @@ import { Middleware } from "next-api-middleware";
 import ApiResponse from "types/ApiResponse";
 
 interface ErrorMap {
-    [key: string]: new (...args: any[]) => ApiError
+    [key: string]: new (...args: any[]) => ApiError;
 }
 
 const errorMiddleware: Middleware = async (req, res, next) => {
@@ -22,17 +22,21 @@ const errorMiddleware: Middleware = async (req, res, next) => {
             TokenExpiredError: ExpiredTokenError,
             JsonWebTokenError: InvalidTokenError,
             ZodError: InvalidBodyError,
-        }
+        };
 
-        const error = e instanceof ApiError ? e : (e.constructor.name in errorMap)
-            ? new errorMap[e.constructor.name](e) : new UnknownError(e)
+        const error =
+            e instanceof ApiError
+                ? e
+                : e.constructor.name in errorMap
+                ? new errorMap[e.constructor.name](e)
+                : new UnknownError(e);
 
         const body: ApiResponse = {
             status: "error",
             message: error.message,
             code: error.code,
             type: error.constructor.name,
-            data: error.issues
+            data: error.issues,
         };
 
         res.status(body.code).json(body);

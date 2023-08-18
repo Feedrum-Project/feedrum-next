@@ -13,8 +13,6 @@ const PostUpdate = Post.omit({
 })
     .partial()
     .refine(...refine(["body", "title"]));
-;
-
 export type PostType = z.infer<typeof Post>;
 export type PostUpdateType = Omit<PostType, "userId">;
 

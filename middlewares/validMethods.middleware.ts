@@ -8,7 +8,7 @@ const validMethodsMiddleware = (methods: method | method[]) => {
             ? methods.includes(req.method as method)
             : req.method === methods;
 
-        if (!isMethodValid) throw new InvalidMethodsError(methods)
+        if (!isMethodValid) throw new InvalidMethodsError(methods);
 
         await next();
     };

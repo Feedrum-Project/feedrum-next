@@ -13,9 +13,6 @@ import styles from "./profile.module.sass";
 
 import message from "images/message.svg";
 import avatar from "images/avatar.svg";
-import star from "images/star.svg";
-import starG from "images/star-green.svg";
-import starR from "images/star-red.svg";
 import arrowT from "images/arrow-top.svg";
 import arrowB from "images/arrow-bottom.svg";
 
@@ -23,6 +20,7 @@ import { IUser } from "types/User";
 import { IComment, IPostId } from "types/Post";
 import getRelative from "helpers/time.helper";
 import { IStore } from "store/store";
+import Star from "components/UI/Star/Star";
 
 interface UserProps {
     userInformation: IUser | null;
@@ -38,7 +36,7 @@ export default function User({
     const { user } = useSelector((state: IStore) => state).user;
 
     const [sortPosts, setSortPosts] = useState<"new" | "best" | "popular">(
-        "new"
+        "new",
     );
     const [type, setType] = useState<"posts" | "comments" | "subs">("posts");
 
@@ -59,10 +57,7 @@ export default function User({
                         "Обліковий запис користувача " + userInformation.name
                     }
                 />
-                <meta
-                    name="author"
-                    content={userInformation.name}
-                />
+                <meta name="author" content={userInformation.name} />
             </Head>
             <div className={styles.top}>
                 <div className={styles.name}>
@@ -143,8 +138,8 @@ export default function User({
                                                     <span>
                                                         {getRelative(
                                                             new Date(
-                                                                e.createdAt
-                                                            )
+                                                                e.createdAt,
+                                                            ),
                                                         )}
                                                     </span>
                                                 </div>
@@ -208,30 +203,7 @@ export default function User({
                                                             styles.postRank
                                                         }
                                                     >
-                                                        <Image
-                                                            width="13"
-                                                            height="14"
-                                                            src={
-                                                                e.rank > 0
-                                                                    ? starG
-                                                                    : e.rank ===
-                                                                      0
-                                                                        ? star
-                                                                        : starR
-                                                            }
-                                                            alt="Зірка"
-                                                        />
-                                                        <span
-                                                            className={
-                                                                e.rank > 0
-                                                                    ? "green"
-                                                                    : e.rank < 0
-                                                                        ? "red"
-                                                                        : "gray"
-                                                            }
-                                                        >
-                                                            {e.rank}
-                                                        </span>
+                                                        <Star reputation={e.rank} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -352,7 +324,7 @@ export default function User({
                                                                             ? "green"
                                                                             : comment
                                                                                 .User
-                                                                                .rank <
+                                                                                .rank <   
                                                                               0
                                                                                 ? "red"
                                                                                 : "gray",
@@ -381,8 +353,8 @@ export default function User({
                                                             <div className="commentDate">
                                                                 {getRelative(
                                                                     new Date(
-                                                                        comment.createdAt
-                                                                    )
+                                                                        comment.createdAt,
+                                                                    ),
                                                                 )}
                                                             </div>
                                                         </div>
@@ -467,13 +439,13 @@ export default function User({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const userInformation: IUser | null = await prisma.user.getUserById(
-        Number(context.query.id)
+        Number(context.query.id),
     );
     const userPosts: IPostId[] | [] = await prisma.user.getUserPosts(
-        Number(context.query.id)
+        Number(context.query.id),
     );
     const userComments: IComment[] = await prisma.user.getUserComments(
-        Number(context.query.id)
+        Number(context.query.id),
     );
 
     return {

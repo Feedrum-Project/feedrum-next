@@ -19,12 +19,12 @@ import sendEmail from "helpers/email.helper";
 import verifyToken from "helpers/verifyToken.helper";
 
 interface UserResponse extends Omit<JwtUser, "password"> {
-    tokens: Tokens
+    tokens: Tokens;
 }
 
 export default class AuthController {
     static sendUser(res: NextApiResponse, user: UserResponse) {
-        this.setCookieToken(res, user.tokens.access)
+        this.setCookieToken(res, user.tokens.access);
 
         return success(res, user);
     }
@@ -36,23 +36,27 @@ export default class AuthController {
     static sign(user: JwtUser) {
         const tokens: Tokens = {
             access: sign(user, process.env.JWT_TOKEN ?? "Nothing", {
-                expiresIn: "1d"
+                expiresIn: "1d",
             }),
-            refresh: sign(user, process.env.JWT_REFRESH_TOKEN ?? "Also nothing", {
-                expiresIn: "2d"
-            })
-        }
+            refresh: sign(
+                user,
+                process.env.JWT_REFRESH_TOKEN ?? "Also nothing",
+                {
+                    expiresIn: "2d",
+                },
+            ),
+        };
 
         return tokens;
     }
 
     static refresh(refreshToken: string) {
-        const user = verifyToken(refreshToken, "refresh")
+        const user = verifyToken(refreshToken, "refresh");
 
-        delete user.exp
-        delete user.iat
+        delete user.exp;
+        delete user.iat;
 
-        return this.sign(user).access
+        return this.sign(user).access;
     }
 
     static async login(userData: Omit<UserType, "name">) {
@@ -63,7 +67,7 @@ export default class AuthController {
 
         const isPasswordValid = await bcrypt.compare(
             userData.password,
-            user.password
+            user.password,
         );
 
         if (!isPasswordValid) {
@@ -81,14 +85,16 @@ export default class AuthController {
         await User.parseAsync(userData);
 
         const uniqueFields: (keyof UserType)[] = ["email", "name"];
-        const checkedUniqueFields = await Promise.all(uniqueFields.map(
-            (field) => prisma.user.isFieldRegistered(userData[field], field)
-        ));
+        const checkedUniqueFields = await Promise.all(
+            uniqueFields.map((field) =>
+                prisma.user.isFieldRegistered(userData[field], field),
+            ),
+        );
 
         checkedUniqueFields.forEach((isFieldRegistered, index) => {
-            if (isFieldRegistered) throw new FieldRegisteredError(uniqueFields[index])
+            if (isFieldRegistered)
+                throw new FieldRegisteredError(uniqueFields[index]);
         });
-
 
         userData.password = await bcrypt.hash(userData.password, 10);
         const user = await prisma.user.createUser(userData);
@@ -99,15 +105,15 @@ export default class AuthController {
             subject: "Please verify your email",
             letterName: "verify",
             options: {
-                link: `https://localhost:3000/api/auth/verify/${verifyCode.code}`
-            }
+                link: `https://localhost:3000/api/auth/verify/${verifyCode.code}`,
+            },
         });
 
         return {
             ...user,
             password: undefined,
             tokens: this.sign(user),
-        }
+        };
     }
 
     static async verifyEmail(code: string) {

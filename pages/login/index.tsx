@@ -9,12 +9,12 @@ export default function Login() {
         <div className={styles.main}>
             <div>
                 <div className={styles.logo}>
-                    <Image src={logo} alt="Логотип" width={42}/>
+                    <Image src={logo} alt="Логотип" width={42} />
                     <Link href="/">Feedrum</Link>
                 </div>
                 <div className={styles.form}>
                     <div className={styles.login}>
-                        <LoginForm/>
+                        <LoginForm />
                     </div>
                 </div>
             </div>

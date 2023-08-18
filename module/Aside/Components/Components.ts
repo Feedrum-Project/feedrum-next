@@ -5,14 +5,13 @@ import Rank from "./Rank";
 import SimilarPosts from "./SimilarPosts";
 import Sponsors from "./Sponsors";
 
-
 const AsideComponents = {
     AsideProfile,
     AsideUser,
     BestPosts,
     Rank,
     SimilarPosts,
-    Sponsors
+    Sponsors,
 };
 
 export default AsideComponents;

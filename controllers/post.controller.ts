@@ -30,7 +30,7 @@ export default class PostController {
 
     static async getBest() {
         const posts = await prisma.post.findMany({
-            orderBy: {createdAt: "asc"},
+            orderBy: { createdAt: "asc" },
             take: 2,
             select: {
                 id: true,
@@ -38,10 +38,10 @@ export default class PostController {
                 rank: true,
                 _count: {
                     select: {
-                        Comments: true
-                    }
-                }
-            }
+                        Comments: true,
+                    },
+                },
+            },
         });
         if (posts === null) throw new ObjectNotFoundError("Post");
 
@@ -58,7 +58,6 @@ export default class PostController {
     }
 
     static async create(newPost: PostType, userId: number) {
-        
         await PostUpdate.parseAsync(newPost);
 
         return prisma.post.createPost(newPost, userId);
@@ -74,26 +73,26 @@ export default class PostController {
     }
 
     static async getPostComments(id: number) {
-        await this.get(id)
+        await this.get(id);
 
-        return prisma.post.getPostComments(id)
+        return prisma.post.getPostComments(id);
     }
 
     static async vote(id: number, userId: number, score: VoteScore) {
         await scores.parseAsync(score);
         const post = await this.get(id);
 
-        if (post.userId === userId) throw new YourVoteError()
+        if (post.userId === userId) throw new YourVoteError();
 
-        return prisma.post.votePost(id, userId, score)
+        return prisma.post.votePost(id, userId, score);
     }
 
     static async unvote(id: number, userId: number) {
-        await this.get(id)
+        await this.get(id);
 
-        const isUserVoted = await prisma.post.isUserVoted(id, userId)
-        if (!isUserVoted) throw new MissingVoteError()
+        const isUserVoted = await prisma.post.isUserVoted(id, userId);
+        if (!isUserVoted) throw new MissingVoteError();
 
-        return prisma.post.deleteVote(id, userId)
+        return prisma.post.deleteVote(id, userId);
     }
 }

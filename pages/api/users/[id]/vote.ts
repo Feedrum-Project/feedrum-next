@@ -20,16 +20,20 @@ const handler: NextApiHandler = async (req, res) => {
 };
 
 const voteUser: NextApiHandler = async (req, res) => {
-    typeof req.body === "string" ? req.body = JSON.parse(req.body) : null;
+    typeof req.body === "string" ? (req.body = JSON.parse(req.body)) : null;
 
-    const comment = await UserController.vote(req.id, req.user.id, req.body.score);
+    const comment = await UserController.vote(
+        req.id,
+        req.user.id,
+        req.body.score,
+    );
 
     success(res, comment);
 };
 
 const unvoteUser: NextApiHandler = async (req, res) => {
     const comment = await UserController.unvote(req.id, req.user.id);
-    if(!comment) throw new Error("Didnt found comment");
+    if (!comment) throw new Error("Didnt found comment");
 
     success(res, comment);
 };
@@ -38,5 +42,5 @@ export default use(
     errorMiddleware,
     invalidIdMiddleware,
     validMethodsMiddleware(["POST", "DELETE"]),
-    authMiddleware
+    authMiddleware,
 )(handler);

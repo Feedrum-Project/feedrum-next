@@ -29,7 +29,7 @@ export default function Settings() {
     }
 
     const [chapter, setChapter] = useState<"profile" | "dev" | "safe">(
-        "profile"
+        "profile",
     );
 
     if (user.user === null) return <div>Увійдіть в аккаунт.</div>;
@@ -166,7 +166,7 @@ export default function Settings() {
                             </Checkbox>
                             <div
                                 className={["centrFlex", styles.admit].join(
-                                    " "
+                                    " ",
                                 )}
                             >
                                 <Button Style="purple">Зберегти</Button>
@@ -177,7 +177,7 @@ export default function Settings() {
                         </Box>
                         <Box title="API Ключі">
                             <div className={styles.inline}>
-                                <Input Name="Назва"/>
+                                <Input Name="Назва" />
                                 <Button Style="purple">Додати</Button>
                             </div>
                         </Box>

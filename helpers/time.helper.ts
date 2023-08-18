@@ -17,12 +17,12 @@ export default function getRelative(time: Date) {
     return result === 1
         ? "вчора в " + hm
         : result === 2
-            ? "позавчора в " + hm
-            : result === -1
-                ? "завтра в " + hm
-                : result === -2
-                    ? "післязавтра в " + hm
-                    : result === 0
-                        ? "сьогодні в " + hm
-                        : time.toLocaleString("uk");
+        ? "позавчора в " + hm
+        : result === -1
+        ? "завтра в " + hm
+        : result === -2
+        ? "післязавтра в " + hm
+        : result === 0
+        ? "сьогодні в " + hm
+        : time.toLocaleString("uk");
 }

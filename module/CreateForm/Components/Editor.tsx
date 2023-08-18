@@ -16,7 +16,7 @@ interface IEditor {
                 title: string;
                 content: string;
             }>
-        >
+        >,
     ];
 }
 
@@ -34,7 +34,7 @@ export default function Editor({ articleSet }: IEditor) {
         document.addEventListener("keyup", (_) => {
             const panelFields = sel?.anchorNode?.parentElement?.tagName;
 
-            if(panelFields === undefined) return;
+            if (panelFields === undefined) return;
             setSelect(panelFields);
 
             if (editor.current === null) return;
@@ -71,8 +71,10 @@ export default function Editor({ articleSet }: IEditor) {
                             tempContent.length < 100
                                 ? "red"
                                 : tempContent.length < 500
-                                    ? "orange"
-                                    : tempContent.length > 2000 ? "red" : "green",
+                                ? "orange"
+                                : tempContent.length > 2000
+                                ? "red"
+                                : "green",
                         ].join(" ")}
                     >
                         {tempContent.length} / 100

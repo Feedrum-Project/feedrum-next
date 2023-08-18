@@ -14,33 +14,45 @@ type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
     const path = useRouter().pathname;
-    const condition = path === "/registration" || path === "/login" || path === "/forgetPassword" || path === "/users/submit";
+    const condition =
+        path === "/registration" ||
+        path === "/login" ||
+        path === "/forgetPassword" ||
+        path === "/users/submit";
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         fetch("/api/auth/me", {
-            method: "post"
+            method: "post",
         })
-            .then(res => res.json())
-            .then(res => {
-                res.id === -1 ? dispatch({type: "setUser", payload: {id: 0}}) :
-                    dispatch({type: "setUser", payload: res});
+            .then((res) => res.json())
+            .then((res) => {
+                res.id === -1
+                    ? dispatch({ type: "setUser", payload: { id: 0 } })
+                    : dispatch({ type: "setUser", payload: res });
 
-                res.isVerified ? null :
-                    dispatch({type: "addNotification", payload: {
-                        type: "bad",
-                        title: "Ви не підтвердили свою пошту",
-                        text: "Перевірте свою скриньку на наявність верефікаційного листа"
-                    }});
+                res.isVerified
+                    ? null
+                    : dispatch({
+                        type: "addNotification",
+                        payload: {
+                            type: "bad",
+                            title: "Ви не підтвердили свою пошту",
+                            text: "Перевірте свою скриньку на наявність верефікаційного листа",
+                        },
+                    });
             })
-            .catch((e) => {
-                dispatch({type:"setUser", payload:{id: 0}});
+            .catch(() => {
+                dispatch({ type: "setUser", payload: { id: 0 } });
 
-                dispatch({type: "addNotification", payload: {
-                    type: "bad",
-                    title: "Ваша сесія застаріла",
-                    text: "Будь-ласка увійдіть знову"
-                }});
+                dispatch({
+                    type: "addNotification",
+                    payload: {
+                        type: "bad",
+                        title: "Ваша сесія застаріла",
+                        text: "Будь-ласка увійдіть знову",
+                    },
+                });
             });
     }, [dispatch]);
 
@@ -48,16 +60,16 @@ export default function Layout({ children }: Props) {
         <>
             <Head>
                 <title>Feedrum</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <link rel="icon" type="image/x-icon" href={favicon.src}/>
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
+                <link rel="icon" type="image/x-icon" href={favicon.src} />
             </Head>
-            {
-                condition ? null : <Header />
-            }
-            <Notifications/>
+            {condition ? null : <Header />}
+            <Notifications />
             <main className={styles.main}>{children}</main>
-            {
-                condition ? null : <Footer />}
+            {condition ? null : <Footer />}
         </>
     );
 }

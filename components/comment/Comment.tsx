@@ -8,7 +8,6 @@ import { IComment } from "types/Post";
 import getRelative from "helpers/time.helper";
 import Link from "next/link";
 import { IStore } from "store/store";
-import { IUser } from "types/User";
 
 interface CommentObj {
     comment: IComment;
@@ -35,19 +34,10 @@ export default function Comment({ comment, disabled = false }: CommentObj) {
     }
 
     return (
-        <div
-            className={styles.comment}
-            key={comment.id}
-        >
+        <div className={styles.comment} key={comment.id}>
             <div className={styles.rank}>
-                <button
-                    disabled={!isUser}
-                    onClick={() => Vote("UPVOTE")}
-                >
-                    <Image
-                        src={arrowTop}
-                        alt="Збільшити репутацію"
-                    />
+                <button disabled={!isUser} onClick={() => Vote("UPVOTE")}>
+                    <Image src={arrowTop} alt="Збільшити репутацію" />
                 </button>
                 <div
                     className={styles.rankCount}
@@ -62,23 +52,14 @@ export default function Comment({ comment, disabled = false }: CommentObj) {
                 >
                     {comment.rank}
                 </div>
-                <button
-                    disabled={!isUser}
-                    onClick={() => Vote("DOWNVOTE")}
-                >
-                    <Image
-                        src={arrowBottom}
-                        alt="Зменшити репутацію"
-                    />
+                <button disabled={!isUser} onClick={() => Vote("DOWNVOTE")}>
+                    <Image src={arrowBottom} alt="Зменшити репутацію" />
                 </button>
             </div>
             <div className={styles.commentContent}>
                 <div className={styles.commentTop}>
                     <div className={styles.commentLeft}>
-                        <Image
-                            src={avatar}
-                            alt="Аватар"
-                        />
+                        <Image src={avatar} alt="Аватар" />
                         <Link href={"/users/" + comment.User.id}>
                             <span className={styles.userName}>
                                 {comment.User.name}

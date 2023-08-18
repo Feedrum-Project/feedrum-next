@@ -9,7 +9,7 @@ export default function Registration() {
         <div className={styles.main}>
             <div>
                 <div className={styles.logo}>
-                    <Image src={logo} alt="Логотип" width={42}/>
+                    <Image src={logo} alt="Логотип" width={42} />
                     <Link href="/">Feedrum</Link>
                 </div>
                 <div className={styles.form}>
@@ -19,10 +19,13 @@ export default function Registration() {
                                 Зареєструватися
                             </div>
                             <div className={styles.login}>
-                                або <u><Link href="/login">увійти</Link></u>
+                                або{" "}
+                                <u>
+                                    <Link href="/login">увійти</Link>
+                                </u>
                             </div>
                         </div>
-                        <RegistrationForm/>
+                        <RegistrationForm />
                     </div>
                 </div>
             </div>

@@ -9,25 +9,30 @@ interface IView {
             content: string;
         },
         setArticle: Dispatch<
-        SetStateAction<{
-            title: string;
-            content: string;
-        }>
-    >
+            SetStateAction<{
+                title: string;
+                content: string;
+            }>
+        >,
     ];
 }
-export default function View({articleSet}: IView) {
+export default function View({ articleSet }: IView) {
     const [article, setArticle] = articleSet;
     return (
         <div className={styles.view}>
             <input
                 value={article.title}
-                onChange={(e) => setArticle(pr => {return {...pr, title: e.target.value};})}
+                onChange={(e) =>
+                    setArticle((pr) => {
+                        return { ...pr, title: e.target.value };
+                    })
+                }
                 className={styles.viewTitle}
                 placeholder="Беззвісна стаття"
             />
-            <p dangerouslySetInnerHTML={{__html: MDtoHTML(article.content)}}>
-            </p>
+            <p
+                dangerouslySetInnerHTML={{ __html: MDtoHTML(article.content) }}
+            ></p>
         </div>
     );
 }

@@ -1,4 +1,3 @@
-
 import type { NextApiHandler } from "next";
 import { use } from "next-api-middleware";
 import errorMiddleware from "middlewares/error.middleware";
@@ -23,4 +22,5 @@ const handler: NextApiHandler = async (req, res) => {
 export default use(
     errorMiddleware,
     authMiddleware,
-    validMethodsMiddleware("POST"))(handler);
+    validMethodsMiddleware("POST"),
+)(handler);

@@ -7,7 +7,12 @@ interface IAsideInfo {
     description?: string;
 }
 
-export default function AsideInfo({organisation, createdAt, country, description}:IAsideInfo) {
+export default function AsideInfo({
+    organisation,
+    createdAt,
+    country,
+    description,
+}: IAsideInfo) {
     return (
         <div className={[styles.elem, styles.asideInfo].join(" ")}>
             <h1 className={styles.elemTop}>Інформація</h1>

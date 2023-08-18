@@ -16,11 +16,12 @@ const handler: NextApiHandler = async (req, res) => {
         await getComments(req, res);
         break;
     case "POST":
-        await use(missingBodyMiddleware, authMiddleware)(createComment)(req, res);
+        await use(missingBodyMiddleware, authMiddleware)(createComment)(
+            req,
+            res,
+        );
         break;
-            
     }
-
 };
 
 const getComments: NextApiHandler = async (req, res) => {
@@ -32,7 +33,7 @@ const getComments: NextApiHandler = async (req, res) => {
 const createComment: NextApiHandler = async (req, res) => {
     const commentData = {
         ...req.body,
-        postId: req.id
+        postId: req.id,
     };
     const comment = await CommentController.create(commentData, req.user.id);
 
@@ -42,5 +43,5 @@ const createComment: NextApiHandler = async (req, res) => {
 export default use(
     errorMiddleware,
     validMethodsMiddleware(["GET", "POST"]),
-    invalidIdMiddleware
+    invalidIdMiddleware,
 )(handler);

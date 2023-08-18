@@ -19,7 +19,7 @@ interface IPage {
 
 export default function EditPost({ postContent, author }: IPage) {
     const { user } = useSelector(
-        (state: { user: { user: IUser } }) => state.user
+        (state: { user: { user: IUser } }) => state.user,
     );
     const [texts, setText] = useState<{
         title: string;
@@ -57,10 +57,7 @@ export default function EditPost({ postContent, author }: IPage) {
             <h1 style={{ color: "white", width: "40rem" }}>
                 Ви не маєте права на редугваня цієї сторінки, будемо вдячні якщо
                 ви повернетеся{" "}
-                <Link
-                    href="/"
-                    style={{ color: "#AE80C3" }}
-                >
+                <Link href="/" style={{ color: "#AE80C3" }}>
                     на головну
                 </Link>
                 .
@@ -70,17 +67,11 @@ export default function EditPost({ postContent, author }: IPage) {
         return (
             <div className={styles.edit}>
                 <h1>Редагування сторінки</h1>
-                <form
-                    method="post"
-                    onSubmit={submit}
-                >
+                <form method="post" onSubmit={submit}>
                     <Editor articleSet={[texts, setText]} />
                     <br />
                     <div className="minWidth">
-                        <Button
-                            Style="purple"
-                            type="submit"
-                        >
+                        <Button Style="purple" type="submit">
                             Edit
                         </Button>
                     </div>

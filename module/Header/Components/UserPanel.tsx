@@ -22,9 +22,9 @@ export default function UserPanel({ user, coors }: UserPanel) {
                 window.innerWidth > 500
                     ? { left: coors.x, top: coors.y }
                     : {
-                        left: "0px",
-                        top: "0px",
-                    }
+                          left: "0px",
+                          top: "0px",
+                      }
             }
         >
             <div className={styles.top}>
@@ -33,7 +33,9 @@ export default function UserPanel({ user, coors }: UserPanel) {
                 ) : (
                     <>
                         <Button Style="purple">Зареєструватися</Button>
-                        <Button Style="secondary" to="/login">Увійти</Button>
+                        <Button Style="secondary" to="/login">
+                            Увійти
+                        </Button>
                     </>
                 )}
             </div>
@@ -41,13 +43,14 @@ export default function UserPanel({ user, coors }: UserPanel) {
                 <Link href="/api" className="API">
                     API
                 </Link>
-                { user !== false ? <Link href="/settings" className="settings">
-                    Налаштування
-                </Link> : null
-                }
+                {user !== false ? (
+                    <Link href="/settings" className="settings">
+                        Налаштування
+                    </Link>
+                ) : null}
             </div>
-            {
-                user !== false ? <div className={styles.bottom}>
+            {user !== false ? (
+                <div className={styles.bottom}>
                     <Link
                         href="#"
                         onClick={() => {
@@ -59,8 +62,8 @@ export default function UserPanel({ user, coors }: UserPanel) {
                     >
                         Вийти
                     </Link>
-                </div> : null
-            }
+                </div>
+            ) : null}
         </div>
     );
 }

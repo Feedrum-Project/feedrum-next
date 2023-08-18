@@ -3,26 +3,31 @@ import { readFile } from "fs/promises";
 import { join } from "path";
 import { Resend } from "resend";
 
-type TemplateVariables = Record<string, string>
+type TemplateVariables = Record<string, string>;
 
 interface EmailOptions {
     email: string;
     subject: string;
     letterName: string;
-    options: TemplateVariables
+    options: TemplateVariables;
 }
 
 async function getLetter(letterName: string, data: TemplateVariables) {
     const lettersFolder = join(process.cwd(), "letters");
-    const letter = await readFile(`${lettersFolder}/${letterName}.html`, "utf-8")
+    const letter = await readFile(
+        `${lettersFolder}/${letterName}.html`,
+        "utf-8",
+    );
 
-    return letter.replace(/{([^{}]+)}/g, (_, key: string) => data[key] ?? "Fuck you")
+    return letter.replace(
+        /{([^{}]+)}/g,
+        (_, key: string) => data[key] ?? "Fuck you",
+    );
 }
 
 export default async function sendEmail(email: EmailOptions) {
-
     const resend = new Resend("re_32epRjtS_CimNmG3f1djXHSeYRdgH4orU");
-    
+
     const sendedEmail = resend.emails.send({
         from: "onboarding@resend.dev",
         to: email.email,
@@ -30,7 +35,7 @@ export default async function sendEmail(email: EmailOptions) {
         html: `
         <p>Congrats on sending your <strong>first email</strong>!</p>
         <a>${email.options.link}</a>
-        `
+        `,
     });
 
     // const account = await createTestAccount();
@@ -51,5 +56,5 @@ export default async function sendEmail(email: EmailOptions) {
 
     // console.log(getTestMessageUrl(sendedEmail))
 
-    return sendedEmail
+    return sendedEmail;
 }

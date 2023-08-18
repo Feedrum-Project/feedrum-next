@@ -16,13 +16,16 @@ const handler: NextApiHandler = async (req, res) => {
         break;
 
     case "PUT":
-        await use(missingBodyMiddleware, authMiddleware)(updateComment)(req, res);
+        await use(missingBodyMiddleware, authMiddleware)(updateComment)(
+            req,
+            res,
+        );
         break;
-        
+
     case "DELETE":
         await use(authMiddleware)(deleteComment)(req, res);
         break;
-    
+
     default:
         break;
     }
@@ -35,7 +38,11 @@ const getComment: NextApiHandler = async (req, res) => {
 };
 
 const updateComment: NextApiHandler = async (req, res) => {
-    const comment = await CommentController.update(req.id, req.body, req.user.id);
+    const comment = await CommentController.update(
+        req.id,
+        req.body,
+        req.user.id,
+    );
 
     return success(res, comment);
 };
@@ -49,5 +56,5 @@ const deleteComment: NextApiHandler = async (req, res) => {
 export default use(
     validMethodsMiddleware(["GET", "PUT", "DELETE"]),
     invalidIdMiddleware,
-    errorMiddleware
+    errorMiddleware,
 )(handler);

@@ -3,7 +3,7 @@ import ApiResponse, { DataType } from "types/ApiResponse";
 
 export default function success(
     res: NextApiResponse<ApiResponse>,
-    data: DataType
+    data: DataType,
 ) {
     const code = 200;
 
