@@ -17,9 +17,13 @@ export default function Textarea({
     minHeight,
 }: ITextarea) {
     const [content, setContent] = useState<string>("");
+
     return (
         <>
-            <div className={styles.textarea} style={{ minHeight: minHeight }}>
+            <div
+                className={styles.textarea}
+                style={{ minHeight: minHeight }}
+            >
                 <div className={styles.textareaTop}>
                     <div className={styles.textareaLeft}>{Name}</div>
                     <div className={styles.textareaRight}>

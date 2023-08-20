@@ -1,8 +1,5 @@
 import styles from "../styles/aside.module.sass";
 import message from "images/message.svg";
-import star from "images/star.svg";
-import starG from "images/star-green.svg";
-import starR from "images/star-red.svg";
 import Image from "next/image";
 import { IPost } from "types/Post";
 import Star from "components/UI/Star/Star";

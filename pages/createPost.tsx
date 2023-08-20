@@ -10,6 +10,7 @@ import { Button } from "components/UI";
 import Images from "module/CreateForm/Components/Images";
 import Editor from "module/CreateForm/Components/Editor";
 import View from "module/CreateForm/Components/View";
+import { useRouter } from "next/router";
 
 export default function CreatePost() {
     const [chapter, setChapter] = useState<"editor" | "view">("view");
@@ -19,6 +20,7 @@ export default function CreatePost() {
     });
     const [files, setFiles] = useState<File[]>();
     const { user } = useSelector((state: { user: IUser }) => state);
+    const router = useRouter();
 
     useEffect(() => {
         const content = localStorage.getItem("article");
@@ -64,7 +66,11 @@ export default function CreatePost() {
             },
         })
             .then((res) => res.json())
-            .then(console.log)
+            .then((res) => {
+                if(res.status === "success") {
+                    router.replace("/posts/"+res.data.id);
+                }
+            })
             .catch(console.log);
 
         // if(files !== undefined && files.length > 1) {
@@ -89,7 +95,10 @@ export default function CreatePost() {
         <>
             <div className={styles.editor}>
                 <article>
-                    <form method="post" onSubmit={sub as any}>
+                    <form
+                        method="post"
+                        onSubmit={sub as any}
+                    >
                         {chapter === "editor" ? (
                             <>
                                 <Images
@@ -101,16 +110,25 @@ export default function CreatePost() {
                             </>
                         ) : (
                             <>
-                                <Images files={files} setFiles={setFiles} />
+                                <Images
+                                    files={files}
+                                    setFiles={setFiles}
+                                />
                                 <View articleSet={[article, setArticle]} />
                             </>
                         )}
 
                         <div className={styles.editorButtons}>
-                            <Button Style="purple" type="submit">
+                            <Button
+                                Style="purple"
+                                type="submit"
+                            >
                                 Опублікувати
                             </Button>
-                            <Button Style="standart" onClick={saveToLocale}>
+                            <Button
+                                Style="standart"
+                                onClick={saveToLocale}
+                            >
                                 Зберегти як чорнетка
                             </Button>
                             <Button Style="danger">Видалити</Button>

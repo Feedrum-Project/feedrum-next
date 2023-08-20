@@ -60,6 +60,7 @@ export default function Editor({ articleSet }: IEditor) {
                         return { ...pr, title: e.target.value };
                     })
                 }
+                borders={false}
             />
             <Panel selected={selected} />
             <div className={styles.textarea}>

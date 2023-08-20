@@ -19,6 +19,7 @@ interface InputProps {
     required?: boolean;
     minLength?: number;
     size?: number;
+    borders?: boolean;
 }
 
 export default function Input({
@@ -35,6 +36,7 @@ export default function Input({
     required = false,
     minLength,
     size = 16,
+    borders=true,
 }: InputProps) {
     const [show, setShow] = useState<{
         show: boolean;
@@ -44,7 +46,12 @@ export default function Input({
     const [valueInp, setValue] = useState<string>(value);
 
     return (
-        <div className={styles.inputSquare}>
+        <div
+            className={[
+                styles.inputSquare,
+                borders ? styles.borders : null,
+            ].join(" ")}
+        >
             <div className={styles.inputSquareName}>
                 <span>
                     {Name}
@@ -62,7 +69,12 @@ export default function Input({
                         setShow({ show: false, coords: { x: 0, y: 0 } });
                     }}
                 >
-                    {info ? <Image src={question} alt="Запитання." /> : null}
+                    {info ? (
+                        <Image
+                            src={question}
+                            alt="Запитання."
+                        />
+                    ) : null}
                 </div>
             </div>
             <div className={styles.inputSquareBottom}>
@@ -88,12 +100,18 @@ export default function Input({
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                     >
-                        <Image src={eye} alt="show password" />
+                        <Image
+                            src={eye}
+                            alt="show password"
+                        />
                     </button>
                 ) : null}
             </div>
             {show.show && info !== undefined ? (
-                <PopUp info={info} coords={show.coords} />
+                <PopUp
+                    info={info}
+                    coords={show.coords}
+                />
             ) : null}
         </div>
     );

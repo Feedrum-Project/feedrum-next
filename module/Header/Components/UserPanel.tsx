@@ -22,9 +22,9 @@ export default function UserPanel({ user, coors }: UserPanel) {
                 window.innerWidth > 500
                     ? { left: coors.x, top: coors.y }
                     : {
-                          left: "0px",
-                          top: "0px",
-                      }
+                        left: "0px",
+                        top: "0px",
+                    }
             }
         >
             <div className={styles.top}>

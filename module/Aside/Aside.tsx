@@ -4,7 +4,7 @@ import AsideComponents from "./Components/Components";
 interface IAside {
     AsideProfile?: boolean;
     AsideUser?: boolean;
-    BestsPosts?: IPost[];
+    BestPosts?: IPost[];
     Rank?: boolean;
     SimilarPosts?: boolean;
     Sponsors?: boolean;
@@ -15,9 +15,9 @@ export default function Aside(asideComponents: IAside) {
         <aside>
             {
                 <>
-                    {asideComponents.BestsPosts !== undefined ? (
+                    {asideComponents.BestPosts !== undefined ? (
                         <AsideComponents.BestPosts
-                            posts={asideComponents.BestsPosts}
+                            posts={asideComponents.BestPosts}
                         />
                     ) : null}
                     {asideComponents.Sponsors ? (

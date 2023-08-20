@@ -18,7 +18,7 @@ import avatar from "images/avatar.svg";
 import parser from "helpers/parsers.helper";
 import { IComment } from "types/Post";
 import { IUser } from "types/User";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { Post } from "@prisma/client";
 
@@ -40,6 +40,8 @@ export default function PostPage({
         code: number;
         message: string;
     } | null>(null);
+    const dispatch = useDispatch();
+
     const [modal, setModal] = useState<{ show: boolean; content: ReactNode }>({
         show: false,
         content: "",
@@ -65,6 +67,31 @@ export default function PostPage({
             .then((res) => res.json())
             .then((e) => {
                 console.log(e);
+                if (e.code !== 200) {
+                    dispatch({
+                        type: "addNotification",
+                        payload: {
+                            type: "bad",
+                            title:
+                                e.data[0].code === "too_small"
+                                    ? "Куций коментар :("
+                                    : e.data[0].code,
+                            text:
+                                e.data[0].code === "too_small"
+                                    ? "Ваш коментар має мати як мінімум 16 літер."
+                                    : e.data[0].message,
+                        },
+                    });
+                } else {
+                    dispatch({
+                        type: "addNotification",
+                        payload: {
+                            type: "good",
+                            title: "Коментар надіслано",
+                            text: "Ваш коментар надіслано.",
+                        },
+                    });
+                }
                 setAttention(e);
             });
     }

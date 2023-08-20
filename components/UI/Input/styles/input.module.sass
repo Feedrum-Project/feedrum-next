@@ -82,6 +82,12 @@
     width: 100%
     padding: 0 0 .625rem 0
     font-weight: 600
+
+    &:focus + .borders
+      border: 1px solid $white
     
     &:disabled
       color: $pink
+
+.borders
+  border: 1px solid $border

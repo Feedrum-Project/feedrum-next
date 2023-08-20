@@ -67,7 +67,7 @@ export default function Home({ posts, best }: HomeProps) {
                         )}
                     </div>
                 </article>
-                <Aside BestsPosts={best} Sponsors />
+                <Aside BestPosts={best} Sponsors />
             </div>
         </>
     );
