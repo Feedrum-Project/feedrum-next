@@ -19,10 +19,11 @@ export function hightlight(text: string) {
  */
 export function MDtoHTML(text: string) {
     if (!text) return "";
-    const result = md
+    let result = md
         .render(text)
         .replaceAll("\n", "<br/>")
         .replaceAll("</code></p><br/>", "</code></p>"); // KALLHOZ
+    result += "<p><br/></p>";
     return result;
 }
 export function HTMLtoMD(text: string) {

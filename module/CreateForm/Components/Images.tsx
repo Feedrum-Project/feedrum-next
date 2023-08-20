@@ -1,10 +1,18 @@
 import styles from "styles/create.module.sass";
 
 import Image from "next/image";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import {
+    ChangeEvent,
+    Dispatch,
+    ReactNode,
+    SetStateAction,
+    useState,
+} from "react";
 
 import remove from "images/Remove.svg";
 import edit from "images/Edit.svg";
+import Modal from "components/Modal/Modal";
+import { Button } from "components/UI";
 
 interface IImages {
     files: File[] | undefined;
@@ -13,6 +21,11 @@ interface IImages {
 }
 
 export default function Images({ files, setFiles, showAdd = false }: IImages) {
+    const [modal, setModal] = useState<{ show: boolean; content: ReactNode }>({
+        show: false,
+        content: "",
+    });
+
     function upload(e: ChangeEvent<HTMLInputElement>) {
         const { files } = e.target;
         if (!files) return;
@@ -27,11 +40,18 @@ export default function Images({ files, setFiles, showAdd = false }: IImages) {
 
     return (
         <div className={styles.images}>
+            <Modal
+                modalState={[modal, setModal]}
+                type="message"
+            />
             <div className={styles.imagesList}>
                 {files?.map((file: File, index: number) => {
                     return (
                         <>
-                            <div key={index} className={styles.imagesImage}>
+                            <div
+                                key={index}
+                                className={styles.imagesImage}
+                            >
                                 <Image
                                     src={URL.createObjectURL(file)}
                                     alt="Завантажений малюнок"
@@ -40,7 +60,44 @@ export default function Images({ files, setFiles, showAdd = false }: IImages) {
                                     className={styles.imagesBackground}
                                 />
                                 <div className={styles.board}>
-                                    <button>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setModal({
+                                                show: true,
+                                                content: (
+                                                    <>
+                                                        <h1
+                                                            style={{
+                                                                color: "white",
+                                                            }}
+                                                        >
+                                                            Редагування..
+                                                        </h1>
+                                                        <Image
+                                                            width={9.75 * 16}
+                                                            height={9.75 * 16}
+                                                            src={URL.createObjectURL(
+                                                                file
+                                                            )}
+                                                            alt="редагуючий файл..."
+                                                        />
+                                                        <Button
+                                                            Style="danger"
+                                                            onClick={() => {
+                                                                setModal({
+                                                                    show: false,
+                                                                    content: "",
+                                                                });
+                                                            }}
+                                                        >
+                                                            Відхилити
+                                                        </Button>
+                                                    </>
+                                                ),
+                                            });
+                                        }}
+                                    >
                                         <Image
                                             src={edit}
                                             alt="Відредагувати"
@@ -57,7 +114,7 @@ export default function Images({ files, setFiles, showAdd = false }: IImages) {
                                                     (e) => {
                                                         if (e === file) return;
                                                         return e;
-                                                    },
+                                                    }
                                                 );
                                                 setFiles(newList);
                                             }}

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "styles/create.module.sass";
 
 import bold from "images/createPost/Bold.svg";
@@ -7,6 +6,7 @@ import image from "images/createPost/Image.svg";
 import italic from "images/createPost/Italic.svg";
 import link from "images/createPost/Link.svg";
 import code from "images/createPost/Code.svg";
+
 import { ReactNode, useState } from "react";
 import { Button, Input } from "components/UI";
 import PanelButton from "./PanelButton";
@@ -97,7 +97,7 @@ export default function Panel({ selected }: IPanel) {
                                 Style="danger"
                                 onClick={() => setEnabled(null)}
                             >
-                                Відхилити
+                                Скасувати
                             </Button>
                         </div>
                     </>
@@ -117,20 +117,23 @@ export default function Panel({ selected }: IPanel) {
                 enableArr={[enabled, setEnabled]}
                 content={
                     <>
-                        <Input Name="Посилання" id="link_value" />
+                        <Input
+                            Name="Посилання"
+                            id="link_value"
+                        />
                         <div className={styles.board}>
                             <Button
                                 Style="danger"
                                 onClick={() => setEnabled(null)}
                             >
-                                Відхилити
+                                Скасувати
                             </Button>
                             <Button
                                 Style="purple"
                                 id="link"
                                 onClick={(e) => {
                                     const elem = document.getElementById(
-                                        "link_value",
+                                        "link_value"
                                     ) as HTMLInputElement;
                                     if (!elem) return;
                                     const { value } = elem;
@@ -155,6 +158,33 @@ export default function Panel({ selected }: IPanel) {
                 id="image"
                 img={image}
                 enableArr={[enabled, setEnabled]}
+                content={
+                    <>
+
+                        <Input
+                            name="link"
+                            Name="Посилання"
+                        />
+                        <div className={styles.board}>
+                            <Button
+                                Style="danger"
+                                onClick={() => setEnabled(null)}
+                            >
+                                Скасувати
+                            </Button>
+                            <Button Style="purple" onClick={() => {
+                                const txt = document.getElementById("txt");
+                                const link = document.getElementsByName("link")[0] as HTMLInputElement | null;
+                                if(!link) return;
+                                const img = document.createElement("img");
+                                img.src = link.value;
+                                txt?.append(img);
+                                setEnabled(null);
+                                
+                            }}>Прикріпити</Button>
+                        </div>
+                    </>
+                }
             />
             <PanelButton
                 selected={selected}
@@ -168,8 +198,11 @@ export default function Panel({ selected }: IPanel) {
                     const codeElement = document.createElement("code");
                     codeElement.textContent = "Ваш код";
                     text.appendChild(codeElement);
+                    const br = document.createElement("br");
 
+                    el.appendChild(br);
                     el.appendChild(codeElement);
+                    el.appendChild(br);
                 }}
             />
         </div>

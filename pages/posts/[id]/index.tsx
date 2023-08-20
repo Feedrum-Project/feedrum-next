@@ -34,7 +34,7 @@ export default function PostPage({
     author,
 }: IPostPage) {
     const { user } = useSelector(
-        (state: { user: { user: IUser } }) => state.user,
+        (state: { user: { user: IUser } }) => state.user
     );
     const [attention, setAttention] = useState<{
         code: number;
@@ -106,15 +106,20 @@ export default function PostPage({
     return (
         <>
             <Head>
-                <meta name="description" content={postContent.body} />
-                <meta name="author" content={author.name} />
+                <meta
+                    name="description"
+                    content={postContent.body}
+                />
+                <meta
+                    name="author"
+                    content={author.name}
+                />
             </Head>
             <div className={styles.main}>
-                {modal.show && modal.content !== undefined ? (
-                    <Modal setModal={setModal} type="attention">
-                        {modal.content}
-                    </Modal>
-                ) : null}
+                <Modal
+                    modalState={[modal, setModal]}
+                    type="attention"
+                />
                 <article className={styles.post}>
                     {user !== null ? (
                         user.id === postContent.userId ? (
@@ -193,7 +198,10 @@ export default function PostPage({
                         ) : null
                     ) : null}
                     <h1 className={styles.title}>{postContent.title}</h1>
-                    <div className={styles.content} ref={content}></div>
+                    <div
+                        className={styles.content}
+                        ref={content}
+                    ></div>
                     <div className={styles.asideMobile}>
                         <SimilarPosts />
                     </div>
@@ -220,7 +228,10 @@ export default function PostPage({
                             >
                                 {attention ? attention.message : null}
                             </h2>
-                            <form onSubmit={sub} className={styles.comment}>
+                            <form
+                                onSubmit={sub}
+                                className={styles.comment}
+                            >
                                 <div className={styles.commentLeft}>
                                     <Image
                                         alt="Аватар"
@@ -238,7 +249,10 @@ export default function PostPage({
                                         minHeight={130}
                                     />
                                     <div className="minWidth">
-                                        <Button Style="purple" type="submit">
+                                        <Button
+                                            Style="purple"
+                                            type="submit"
+                                        >
                                             Підтвердити
                                         </Button>
                                     </div>
@@ -262,7 +276,10 @@ export default function PostPage({
                     </div>
                 </article>
                 <aside className={styles.aside}>
-                    <AsideProfile userName={author.name} userId={author.id} />
+                    <AsideProfile
+                        userName={author.name}
+                        userId={author.id}
+                    />
                     <SimilarPosts />
                     <div style={{ width: "fit-content" }}>
                         <Rank

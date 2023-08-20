@@ -10,12 +10,12 @@ export default function Notifications() {
         <div className={styles.list}>
             {notification !== null
                 ? notification.map((n) => {
-                      return (
-                          <div key={n.id}>
-                              <Notification key={n.id} notification={n} />
-                          </div>
-                      );
-                  })
+                    return (
+                        <div key={n.id}>
+                            <Notification key={n.id} notification={n} />
+                        </div>
+                    );
+                })
                 : null}
         </div>
     );

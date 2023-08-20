@@ -31,7 +31,7 @@ export default function Editor({ articleSet }: IEditor) {
 
         const sel = window.getSelection();
 
-        document.addEventListener("keyup", (_) => {
+        document.addEventListener("keyup", () => {
             const panelFields = sel?.anchorNode?.parentElement?.tagName;
 
             if (panelFields === undefined) return;
@@ -71,10 +71,10 @@ export default function Editor({ articleSet }: IEditor) {
                             tempContent.length < 100
                                 ? "red"
                                 : tempContent.length < 500
-                                ? "orange"
-                                : tempContent.length > 2000
-                                ? "red"
-                                : "green",
+                                    ? "orange"
+                                    : tempContent.length > 2000
+                                        ? "red"
+                                        : "green",
                         ].join(" ")}
                     >
                         {tempContent.length} / 100
