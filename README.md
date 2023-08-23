@@ -9,7 +9,6 @@
 
 ## Схожі сайти
 
-- habr
 - duo
 - dev.to
 - medium
