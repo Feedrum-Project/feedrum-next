@@ -4,8 +4,8 @@ datasource db {
 }
 
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["clientExtensions"]
+    provider = "prisma-client-js"
+    // previewFeatures = ["clientExtensions"]
 }
 
 model User {
@@ -44,6 +44,25 @@ model Post {
     userId Int
 
     Comments Comment[]
+    Tags     PostTag?
+}
+
+model Tag {
+    id Int @id @default(autoincrement())
+
+    name String @unique
+
+    posts PostTag[]
+}
+
+model PostTag {
+    post   Post @relation(fields: [postId], references: [id])
+    postId Int  @unique
+
+    tag   Tag @relation(fields: [tagId], references: [id])
+    tagId Int
+
+    @@id([postId, tagId])
 }
 
 model Comment {
@@ -67,7 +86,7 @@ model Vote {
 
     User   User @relation(fields: [userId], references: [id])
     userId Int
-    
+
     @@id([fieldId, userId, type])
 }
 

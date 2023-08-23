@@ -11,37 +11,34 @@ import { NextApiHandler } from "next";
 import { use } from "next-api-middleware";
 
 const handler: NextApiHandler = async (req, res) => {
-    switch (req.method) {
+  switch (req.method) {
     case "GET":
-        await getComments(req, res);
-        break;
+      await getComments(req, res);
+      break;
     case "POST":
-        await use(missingBodyMiddleware, authMiddleware)(createComment)(
-            req,
-            res,
-        );
-        break;
-    }
+      await use(missingBodyMiddleware, authMiddleware)(createComment)(req, res);
+      break;
+  }
 };
 
 const getComments: NextApiHandler = async (req, res) => {
-    const comments = await PostController.getPostComments(req.id);
+  const comments = await PostController.getPostComments(req.id);
 
-    return success(res, comments);
+  return success(res, comments);
 };
 
 const createComment: NextApiHandler = async (req, res) => {
-    const commentData = {
-        ...req.body,
-        postId: req.id,
-    };
-    const comment = await CommentController.create(commentData, req.user.id);
+  const commentData = {
+    ...req.body,
+    postId: req.id
+  };
+  const comment = await CommentController.create(commentData, req.user.id);
 
-    return success(res, comment);
+  return success(res, comment);
 };
 
 export default use(
-    errorMiddleware,
-    validMethodsMiddleware(["GET", "POST"]),
-    invalidIdMiddleware,
+  errorMiddleware,
+  validMethodsMiddleware(["GET", "POST"]),
+  invalidIdMiddleware
 )(handler);

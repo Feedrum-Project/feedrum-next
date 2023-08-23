@@ -9,38 +9,38 @@ import { NextApiHandler } from "next";
 import { use } from "next-api-middleware";
 
 const handler: NextApiHandler = async (req, res) => {
-    switch (req.method) {
+  switch (req.method) {
     case "POST":
-        await voteComment(req, res);
-        break;
+      await voteComment(req, res);
+      break;
     case "DELETE":
-        await unvoteComment(req, res);
-        break;
-    }
+      await unvoteComment(req, res);
+      break;
+  }
 };
 
 const voteComment: NextApiHandler = async (req, res) => {
-    typeof req.body === "string" ? (req.body = JSON.parse(req.body)) : null;
+  typeof req.body === "string" ? (req.body = JSON.parse(req.body)) : null;
 
-    const comment = await CommentController.vote(
-        req.id,
-        req.user.id,
-        req.body.score,
-    );
+  const comment = await CommentController.vote(
+    req.id,
+    req.user.id,
+    req.body.score
+  );
 
-    success(res, comment);
+  success(res, comment);
 };
 
 const unvoteComment: NextApiHandler = async (req, res) => {
-    const comment = await CommentController.unvote(req.id, req.user.id);
-    if (!comment) throw new Error("Didnt found comment");
+  const comment = await CommentController.unvote(req.id, req.user.id);
+  if (!comment) throw new Error("Didnt found comment");
 
-    success(res, comment);
+  success(res, comment);
 };
 
 export default use(
-    errorMiddleware,
-    invalidIdMiddleware,
-    validMethodsMiddleware(["POST", "DELETE"]),
-    authMiddleware,
+  errorMiddleware,
+  invalidIdMiddleware,
+  validMethodsMiddleware(["POST", "DELETE"]),
+  authMiddleware
 )(handler);

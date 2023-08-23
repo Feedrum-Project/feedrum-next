@@ -6,18 +6,18 @@ import { Provider } from "react-redux";
 import store from "../store/store";
 
 const raleway = Raleway({
-    weight: ["400", "600", "800"],
-    subsets: ["latin", "cyrillic"],
+  weight: ["400", "600", "800"],
+  subsets: ["latin", "cyrillic"]
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-    return (
-        <Provider store={store}>
-            <div className={raleway.className}>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
-            </div>
-        </Provider>
-    );
+  return (
+    <Provider store={store}>
+      <div className={raleway.className}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </div>
+    </Provider>
+  );
 }

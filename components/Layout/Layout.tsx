@@ -13,63 +13,60 @@ import favicon from "../../images/logo.svg";
 type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
-    const path = useRouter().pathname;
-    const condition =
-        path === "/registration" ||
-        path === "/login" ||
-        path === "/forgetPassword" ||
-        path === "/users/submit";
-    const dispatch = useDispatch();
+  const path = useRouter().pathname;
+  const condition =
+    path === "/registration" ||
+    path === "/login" ||
+    path === "/forgetPassword" ||
+    path === "/users/submit";
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        fetch("/api/auth/me", {
-            method: "post",
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                res.id === -1
-                    ? dispatch({ type: "setUser", payload: { id: 0 } })
-                    : dispatch({ type: "setUser", payload: res });
+  useEffect(() => {
+    fetch("/api/auth/me", {
+      method: "post"
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        res.id === -1
+          ? dispatch({ type: "setUser", payload: { id: 0 } })
+          : dispatch({ type: "setUser", payload: res });
 
-                res.isVerified
-                    ? null
-                    : dispatch({
-                        type: "addNotification",
-                        payload: {
-                            type: "bad",
-                            title: "Ви не підтвердили свою пошту",
-                            text: "Перевірте свою скриньку на наявність верефікаційного листа",
-                        },
-                    });
-            })
-            .catch(() => {
-                dispatch({ type: "setUser", payload: { id: 0 } });
-
-                dispatch({
-                    type: "addNotification",
-                    payload: {
-                        type: "bad",
-                        title: "Ваша сесія застаріла",
-                        text: "Будь-ласка увійдіть знову",
-                    },
-                });
+        res.isVerified
+          ? null
+          : dispatch({
+              type: "addNotification",
+              payload: {
+                type: "bad",
+                title: "Ви не підтвердили свою пошту",
+                text: "Перевірте свою скриньку на наявність верефікаційного листа"
+              }
             });
-    }, [dispatch]);
+      })
+      .catch(() => {
+        dispatch({ type: "setUser", payload: { id: 0 } });
 
-    return (
-        <>
-            <Head>
-                <title>Feedrum</title>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" type="image/x-icon" href={favicon.src} />
-            </Head>
-            {condition ? null : <Header />}
-            <Notifications />
-            <main className={styles.main}>{children}</main>
-            {condition ? null : <Footer />}
-        </>
-    );
+        dispatch({
+          type: "addNotification",
+          payload: {
+            type: "bad",
+            title: "Ваша сесія застаріла",
+            text: "Будь-ласка увійдіть знову"
+          }
+        });
+      });
+  }, [dispatch]);
+
+  return (
+    <>
+      <Head>
+        <title>Feedrum</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/x-icon" href={favicon.src} />
+      </Head>
+      {condition ? null : <Header />}
+      <Notifications />
+      <main className={styles.main}>{children}</main>
+      {condition ? null : <Footer />}
+    </>
+  );
 }

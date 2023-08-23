@@ -6,10 +6,10 @@ import { INotification } from "types/Notification";
 const store = createStore(reducer);
 
 export interface IStore {
-    user: { user: IUser | null };
-    notification: {
-        notification: INotification[] | [];
-    };
+  user: { user: IUser | null };
+  notification: {
+    notification: INotification[] | [];
+  };
 }
 
 export default store;

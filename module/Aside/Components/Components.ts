@@ -6,12 +6,12 @@ import SimilarPosts from "./SimilarPosts";
 import Sponsors from "./Sponsors";
 
 const AsideComponents = {
-    AsideProfile,
-    AsideUser,
-    BestPosts,
-    Rank,
-    SimilarPosts,
-    Sponsors,
+  AsideProfile,
+  AsideUser,
+  BestPosts,
+  Rank,
+  SimilarPosts,
+  Sponsors
 };
 
 export default AsideComponents;

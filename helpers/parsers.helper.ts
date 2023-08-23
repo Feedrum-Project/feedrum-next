@@ -6,10 +6,10 @@ const md = new MarkdownIt({ linkify: true, html: true, typographer: true });
 const html = new TurndownService();
 
 export function hightlight(text: string) {
-    if (!text) return "";
-    let result = hljs.highlight(text, { language: "markdown" }).value;
-    // result = result.replaceAll("\n", "<br/>");
-    return result;
+  if (!text) return "";
+  let result = hljs.highlight(text, { language: "markdown" }).value;
+  // result = result.replaceAll("\n", "<br/>");
+  return result;
 }
 
 /**
@@ -18,23 +18,23 @@ export function hightlight(text: string) {
  * @returns
  */
 export function MDtoHTML(text: string) {
-    if (!text) return "";
-    let result = md
-        .render(text)
-        .replaceAll("\n", "<br/>")
-        .replaceAll("</code></p><br/>", "</code></p>"); // KALLHOZ
-    result += "<p><br/></p>";
-    return result;
+  if (!text) return "";
+  let result = md
+    .render(text)
+    .replaceAll("\n", "<br/>")
+    .replaceAll("</code></p><br/>", "</code></p>"); // KALLHOZ
+  result += "<p><br/></p>";
+  return result;
 }
 export function HTMLtoMD(text: string) {
-    if (!text) return "";
-    const res = html.turndown(text);
-    return res;
+  if (!text) return "";
+  const res = html.turndown(text);
+  return res;
 }
 const parser = {
-    MDtoHTML,
-    HTMLtoMD,
-    hightlight,
+  MDtoHTML,
+  HTMLtoMD,
+  hightlight
 };
 
 export default parser;

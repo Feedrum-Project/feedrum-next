@@ -10,57 +10,57 @@ import PostController from "./post.controller";
 import { VoteScore } from "@prisma/client";
 
 export default class CommentController {
-    static async get(id: number) {
-        const comment = await prisma.comment.getCommentById(id);
-        if (comment === null) throw new ObjectNotFoundError("Comment");
+  static async get(id: number) {
+    const comment = await prisma.comment.getCommentById(id);
+    if (comment === null) throw new ObjectNotFoundError("Comment");
 
-        return comment;
-    }
+    return comment;
+  }
 
-    static async vote(id: number, userId: number, score: VoteScore) {
-        await scores.parseAsync(score);
-        const comment = await this.get(id);
+  static async vote(id: number, userId: number, score: VoteScore) {
+    await scores.parseAsync(score);
+    const comment = await this.get(id);
 
-        if (comment.userId === userId) throw new YourVoteError();
+    if (comment.userId === userId) throw new YourVoteError();
 
-        return prisma.comment.voteComment(id, userId, score);
-    }
+    return prisma.comment.voteComment(id, userId, score);
+  }
 
-    static async unvote(id: number, userId: number) {
-        await this.get(id);
+  static async unvote(id: number, userId: number) {
+    await this.get(id);
 
-        const isUserVoted = await prisma.comment.isUserVoted(id, userId);
-        if (!isUserVoted) throw new MissingVoteError();
+    const isUserVoted = await prisma.comment.isUserVoted(id, userId);
+    if (!isUserVoted) throw new MissingVoteError();
 
-        return prisma.post.deleteVote(id, userId);
-    }
+    return prisma.post.deleteVote(id, userId);
+  }
 
-    static async update(
-        id: number,
-        newComment: CommentUpdateType,
-        userId: number,
-    ) {
-        const comment = await this.get(id);
-        if (comment.userId !== userId) throw new InvalidPermissionError();
+  static async update(
+    id: number,
+    newComment: CommentUpdateType,
+    userId: number
+  ) {
+    const comment = await this.get(id);
+    if (comment.userId !== userId) throw new InvalidPermissionError();
 
-        await CommentUpdate.parseAsync(newComment);
+    await CommentUpdate.parseAsync(newComment);
 
-        return prisma.comment.updateCommentById(id, newComment);
-    }
+    return prisma.comment.updateCommentById(id, newComment);
+  }
 
-    static async create(newComment: CommentUpdateType, userId: number) {
-        await CommentUpdate.parseAsync(newComment);
-        const post = await PostController.get(newComment.postId);
+  static async create(newComment: CommentUpdateType, userId: number) {
+    await CommentUpdate.parseAsync(newComment);
+    const post = await PostController.get(newComment.postId);
 
-        return await prisma.comment.createComment(newComment, userId, post.id);
-    }
+    return await prisma.comment.createComment(newComment, userId, post.id);
+  }
 
-    static async delete(id: number, userId: number) {
-        const comment = await this.get(id);
-        if (comment.userId !== userId) throw new InvalidPermissionError();
+  static async delete(id: number, userId: number) {
+    const comment = await this.get(id);
+    if (comment.userId !== userId) throw new InvalidPermissionError();
 
-        await prisma.comment.deleteCommentById(id);
+    await prisma.comment.deleteCommentById(id);
 
-        return comment;
-    }
+    return comment;
+  }
 }

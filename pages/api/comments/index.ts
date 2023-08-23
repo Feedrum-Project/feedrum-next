@@ -8,16 +8,16 @@ import success from "helpers/success.helper";
 import CommentController from "controllers/comments.controller";
 
 const handler: NextApiHandler = async (req, res) => {
-    typeof req.body === "string" ? (req.body = JSON.parse(req.body)) : req.body;
+  typeof req.body === "string" ? (req.body = JSON.parse(req.body)) : req.body;
 
-    const comment = await CommentController.create(req.body, req.user.id);
+  const comment = await CommentController.create(req.body, req.user.id);
 
-    success(res, comment);
+  success(res, comment);
 };
 
 export default use(
-    errorMiddleware,
-    missingBodyMiddleware,
-    authMiddleware,
-    validMethodsMiddleware("POST"),
+  errorMiddleware,
+  missingBodyMiddleware,
+  authMiddleware,
+  validMethodsMiddleware("POST")
 )(handler);

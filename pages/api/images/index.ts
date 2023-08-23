@@ -8,19 +8,19 @@ import authMiddleware from "middlewares/auth.middleware";
 import success from "helpers/success.helper";
 
 export const config = {
-    api: {
-        bodyParser: false,
-    },
+  api: {
+    bodyParser: false
+  }
 };
 
 const handler: NextApiHandler = async (req, res) => {
-    const images = await parseImages(req);
+  const images = await parseImages(req);
 
-    success(res, await ImageController.createImages(images, req.user.id));
+  success(res, await ImageController.createImages(images, req.user.id));
 };
 
 export default use(
-    errorMiddleware,
-    authMiddleware,
-    validMethodsMiddleware("POST"),
+  errorMiddleware,
+  authMiddleware,
+  validMethodsMiddleware("POST")
 )(handler);

@@ -1,10 +1,10 @@
 {
-    "extends": "next/core-web-vitals",
-    "rules": {
-        "quotes": ["warn", "double"],
-        "indent": ["error", 4],
-        "jsx-quotes": ["warn", "prefer-double"],
-        "semi": "warn",
-        "no-unused-vars": "warn"
-    }
+  "extends": ["plugin:@next/next/recomended"],
+  "rules": {
+    "quotes": ["warn", "double"],
+    "indent": ["error", 2],
+    "jsx-quotes": ["warn", "prefer-double"],
+    "semi": "warn",
+    "no-unused-vars": "warn"
+  }
 }

@@ -1,7 +1,7 @@
 export interface INotification {
-    id: number;
-    type: "bad" | "good";
-    title: string;
-    text: string;
-    createdAt: number;
+  id: number;
+  type: "bad" | "good";
+  title: string;
+  text: string;
+  createdAt: number;
 }

@@ -8,13 +8,13 @@ import { NextApiHandler } from "next";
 import { use } from "next-api-middleware";
 
 const handler: NextApiHandler = async (req, res) => {
-    const comments = await UserController.getComments(req.id);
+  const comments = await UserController.getComments(req.id);
 
-    success(res, comments);
+  success(res, comments);
 };
 
 export default use(
-    errorMiddleware,
-    invalidIdMiddleware,
-    validMethodsMiddleware("GET"),
+  errorMiddleware,
+  invalidIdMiddleware,
+  validMethodsMiddleware("GET")
 )(handler);

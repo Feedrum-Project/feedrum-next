@@ -5,15 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
-    return (
-        <header className={styles.header}>
-            <div className={styles.logo}>
-                <Image src={logo} alt="Логотип" />
-                <Link href="/" className={styles.logoText}>
-                    Feedrum
-                </Link>
-            </div>
-            <Navigation />
-        </header>
-    );
+  return (
+    <header className={styles.header}>
+      <div className={styles.logo}>
+        <Image src={logo} alt="Логотип" />
+        <Link href="/" className={styles.logoText}>
+          Feedrum
+        </Link>
+      </div>
+      <Navigation />
+    </header>
+  );
 }
