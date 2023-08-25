@@ -1,8 +1,7 @@
 {
-  "extends": ["plugin:@next/next/recomended"],
+  "extends": ["next"],
   "rules": {
     "quotes": ["warn", "double"],
-    "indent": ["error", 2],
     "jsx-quotes": ["warn", "prefer-double"],
     "semi": "warn",
     "no-unused-vars": "warn"

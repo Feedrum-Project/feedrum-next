@@ -35,6 +35,16 @@ export default Prisma.defineExtension((client) => {
                   isVerified: true
                 }
               },
+              Tags: {
+                select: {
+                  tag: {
+                    select: {
+                      id: true,
+                      name: true
+                    }
+                  }
+                }
+              },
               _count: {
                 select: {
                   Comments: true
@@ -51,13 +61,23 @@ export default Prisma.defineExtension((client) => {
           const createdTags: Tag[] = [];
 
           for (const tag in tags) {
-            const createdTag = await client.tag.create({
-              data: {
+            const existTag = await client.tag.findFirst({
+              where: {
                 name: tag
               }
             });
 
-            createdTags.push(createdTag as Tag);
+            if (existTag) {
+              createdTags.push(existTag);
+            } else {
+              const createdTag = await client.tag.create({
+                data: {
+                  name: tag
+                }
+              });
+
+              createdTags.push(createdTag as Tag);
+            }
           }
 
           const createdPost = await client.post.create({
