@@ -6,6 +6,14 @@ import validMethodsMiddleware from "middlewares/validMethods.middleware";
 import { NextApiHandler } from "next";
 import { use } from "next-api-middleware";
 
+/**
+ * @swagger
+ * /api/users/me:
+ *  get:
+ *    description: Return information about you.
+ *    tags:
+ *      - User
+ */
 const handler: NextApiHandler = async (req, res) => {
   const user = await UserController.get(req.user.id);
 

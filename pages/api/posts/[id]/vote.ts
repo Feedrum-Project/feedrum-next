@@ -8,6 +8,67 @@ import validMethodsMiddleware from "middlewares/validMethods.middleware";
 import { NextApiHandler } from "next";
 import { use } from "next-api-middleware";
 
+/**
+ * @swagger
+ * /api/posts/{id}/vote:
+ *  post:
+ *    tags:
+ *      - Post
+ *    security:
+ *      - schem:
+ *        type: apiKey
+ *        in: cookie
+ *        name: token
+ *    description: Vote for a post.
+ *    parameters:
+ *      - in: path
+ *        name: postId
+ *        schema:
+ *          type: integer
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              id:
+ *                type: integer
+ *              score:
+ *                type: string
+ *                enum: [UPVOTE, DOWNVOTE]
+ *    responses:
+ *      201:
+ *        description: Voted.
+ *      403:
+ *        description: You're not author/invalid token.
+ *  delete:
+ *    tags:
+ *      - Post
+ *    security:
+ *      - schem:
+ *        type: apiKey
+ *        in: cookie
+ *        name: token
+ *    description: Unvote for a post.
+ *    parameters:
+ *      - in: path
+ *        name: postId
+ *        schema:
+ *          type: integer
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              id:
+ *                integer:
+ *    responses:
+ *      204:
+ *        description: Unvoted.
+ *      403:
+ *        description: You're not author/invalid token.
+ */
 const handler: NextApiHandler = async (req, res) => {
   switch (req.method) {
     case "POST":

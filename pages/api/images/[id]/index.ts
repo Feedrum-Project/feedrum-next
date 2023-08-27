@@ -16,6 +16,51 @@ export const config = {
   }
 };
 
+/**
+ * @swagger
+ * /api/images/{id}:
+ *  delete:
+ *    description: Delete an image.
+ *    parameters:
+ *      - in: path
+ *        name: imageId
+ *        schema:
+ *          type: integer
+ *        required: true
+ *    tags:
+ *      - Image
+ *    security:
+ *      - schem:
+ *        type: apiKey
+ *        in: cookie
+ *        name: token
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              id:
+ *                type: string
+ *                description: UUID, actually.
+ *    responses:
+ *      204:
+ *        description: An image succsefully deleted, no neccessary in data.
+ *      400:
+ *        description: Missing request body.
+ *      403:
+ *        description: Seems like something wrong with token. Or maybe you're not author of this image.
+ *  get:
+ *    description: Get an image by id.
+ *    tags:
+ *      - Image
+ *    parameters:
+ *      - in: path
+ *        name: imageId
+ *        schema:
+ *          type: string
+ *        required: true
+ */
 const handler: NextApiHandler = async (req, res) => {
   if (req.query.id === undefined) throw new WTFError();
 

@@ -7,6 +7,39 @@ import missingBodyMiddleware from "middlewares/missingBody.middleware";
 import validMethodsMiddleware from "middlewares/validMethods.middleware";
 import success from "helpers/success.helper";
 
+/**
+ * @swagger
+ * /api/posts:
+ *  post:
+ *    description: create a post
+ *    tags:
+ *      - Post
+ *    security:
+ *      - schem:
+ *        type: apiKey
+ *        in: cookie
+ *        name: token
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              body:
+ *                type: object
+ *                properties:
+ *                  body:
+ *                    type: string
+ *                  title:
+ *                    type: string
+ *                  tags:
+ *                    type: array
+ *                    items:
+ *                      type: object
+ *                      properties:
+ *                        name:
+ *                          type: string
+ */
 const handler: NextApiHandler = async (req, res) => {
   req.body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 

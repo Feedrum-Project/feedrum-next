@@ -7,6 +7,37 @@ import validMethodsMiddleware from "middlewares/validMethods.middleware";
 import errorMiddleware from "middlewares/error.middleware";
 import CORSable from "middlewares/cors.middleware";
 
+/**
+ * @swagger
+ * /api/auth/register:
+ *  post:
+ *    description: Create an account.
+ *    tags:
+ *      - Authentication
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              name:
+ *                type: string
+ *              email:
+ *                type: string
+ *              password:
+ *                type: string
+ *            required:
+ *              - name
+ *              - email
+ *              - password
+ *    responses:
+ *      201:
+ *        description: You created an account.
+ *      400:
+ *        description: Seems like wrong field.
+ *      500:
+ *        description: Okay, actually you dont related to problem. Something with server.
+ */
 const handler: NextApiHandler = async (req, res) => {
   typeof req.body === "string" ? (req.body = JSON.parse(req.body)) : req.body;
 

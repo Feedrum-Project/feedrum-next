@@ -8,6 +8,19 @@ import validMethodsMiddleware from "middlewares/validMethods.middleware";
 import { NextApiHandler } from "next";
 import { use } from "next-api-middleware";
 
+/**
+ * @swagger
+ * /api/users/{id}/images:
+ *  get:
+ *    description: Get an users images.
+ *    parameters:
+ *      in: path
+ *      name: id
+ *      schema:
+ *        type: integer
+ *    tags:
+ *      - User
+ */
 const handler: NextApiHandler = async (req, res) => {
   const images = await UserController.getImages(req.id, req.user.id);
 
