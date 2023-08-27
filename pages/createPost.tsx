@@ -56,7 +56,10 @@ export default function CreatePost() {
     if (title.length < 8 || content.length < 100)
       throw new Error("not enough symbols");
 
-    const body = { body: { title, body: content } };
+    const body = {
+      body: { title, body: content },
+      tags: [{ name: "HTML" }, { name: "CSS" }, { name: "JavaScript" }]
+    };
 
     fetch("/api/posts", {
       method: "POST",
