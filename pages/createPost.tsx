@@ -1,9 +1,9 @@
 import styles from "../styles/create.module.sass";
 
 import { FormEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { IUser } from "types/User";
 import { HTMLtoMD, MDtoHTML } from "helpers/parsers.helper";
-import { z } from "zod";
 
 import Script from "next/script";
 import { Button } from "components/UI";
@@ -11,7 +11,6 @@ import Images from "module/CreateForm/Components/Images";
 import Editor from "module/CreateForm/Components/Editor";
 import View from "module/CreateForm/Components/View";
 import { useRouter } from "next/router";
-import { IStore } from "store/store";
 
 export default function CreatePost() {
   const [chapter, setChapter] = useState<"editor" | "view">("view");
@@ -20,8 +19,7 @@ export default function CreatePost() {
     content: ""
   });
   const [files, setFiles] = useState<File[]>();
-  const { user } = useSelector((state: IStore) => state);
-  const dispatch = useDispatch();
+  const { user } = useSelector((state: { user: IUser }) => state);
   const router = useRouter();
 
   useEffect(() => {
@@ -45,49 +43,23 @@ export default function CreatePost() {
     });
   }
 
-  function sub(e: FormEvent<HTMLFormElement>) {
+  function sub(e: FormEvent & { target: { title: HTMLInputElement } }) {
     e.preventDefault();
     if (!e || !e.target) return;
-    const { target } = e as unknown as {
-      target: {
-        title: HTMLInputElement;
-        tags: HTMLInputElement;
-      };
-    };
+    const target = e.target;
 
     const { value: title } = target.title;
     const text: HTMLElement | null = document.getElementById("txt");
     if (!text) throw new Error("Couldn't be found field");
     const content = HTMLtoMD(MDtoHTML(text.innerHTML));
 
+    if (title.length < 8 || content.length < 100)
+      throw new Error("not enough symbols");
+
     const body = {
       body: { title, body: content },
-      tags: target.tags.value.split(" ").map((tag) => {
-        return { name: tag };
-      })
+      tags: [{ name: "HTML" }, { name: "CSS" }, { name: "JavaScript" }]
     };
-
-    const schema = z.object({
-      body: z.object({
-        title: z.string().min(8),
-        body: z.string().min(100)
-      }),
-      tags: z
-        .object({
-          name: z.string()
-        })
-        .array()
-    });
-    const isSucces = schema.safeParse(body).success;
-    if (!isSucces)
-      dispatch({
-        type: "addNotification",
-        payload: {
-          type: "bad",
-          title: "Пост не створено",
-          text: "Мінімум 8 літер в назві, і 100 в контенті."
-        }
-      });
 
     fetch("/api/posts", {
       method: "POST",
@@ -99,27 +71,10 @@ export default function CreatePost() {
       .then((res) => res.json())
       .then((res) => {
         if (res.status === "success") {
-          dispatch({
-            type: "addNotification",
-            payload: {
-              type: "good",
-              title: "Пост створено",
-              text: "Відбулося перенаправлення."
-            }
-          });
           router.replace("/posts/" + res.data.id);
-        } else {
-          dispatch({
-            type: "addNotification",
-            payload: {
-              type: "bad",
-              title: "Пост не створено",
-              text: "Вкажіть теги. Якщо не допомогло, проблема на сервері ;("
-            }
-          });
         }
       })
-      .catch(console.error);
+      .catch(console.log);
 
     // if(files !== undefined && files.length > 1) {
     //     const form = new FormData();

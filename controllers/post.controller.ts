@@ -46,7 +46,7 @@ export default class PostController {
       },
       where: {
         createdAt: {
-          gte: new Date(Date.now() - 604800000)
+          gte: new Date(Date.now() - 60480000)
         }
       }
     });

@@ -5,7 +5,7 @@ import { IPost } from "types/Post";
 import Star from "components/UI/Star/Star";
 
 export default function BestPosts({ posts }: { posts: IPost[] }) {
-  const parsedPosts = posts.map((e) => (
+  const parse = posts.map((e) => (
     <div key={e.id}>
       <div className="title">{e.title}</div>
       <div className={styles.elemBottom}>
@@ -23,7 +23,7 @@ export default function BestPosts({ posts }: { posts: IPost[] }) {
   return (
     <div className={styles.elem}>
       <div className={styles.elemTitle}>Найкращі пости тижня</div>
-      <div className={styles.elemBody}>{parsedPosts}</div>
+      <div className={styles.elemBody}>{parse}</div>
     </div>
   );
 }
