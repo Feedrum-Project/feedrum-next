@@ -20,7 +20,7 @@ export default function CreatePost() {
     content: ""
   });
   const [files, setFiles] = useState<File[]>();
-  const { user } = useSelector((state: IStore) => state);
+  const { user } = useSelector((state: IStore) => state.user);
   const dispatch = useDispatch();
   const router = useRouter();
 
