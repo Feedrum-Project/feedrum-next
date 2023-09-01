@@ -8,7 +8,7 @@ import Image from "next/image";
 import AsideProfile from "module/Aside/Components/AsideProfile";
 import SimilarPosts from "module/Aside/Components/SimilarPosts";
 import Rank from "module/Aside/Components/Rank";
-import Comment from "components/comment/Comment";
+import Comment from "components/Comment/Comment";
 import Textarea from "components/UI/Textarea/Textarea";
 import { Button, Input } from "components/UI";
 import Modal from "components/Modal/Modal";

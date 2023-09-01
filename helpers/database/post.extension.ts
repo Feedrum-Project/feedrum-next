@@ -2,7 +2,6 @@ import { Tag, Post, Prisma, PrismaClient } from "@prisma/client";
 import { PostType, PostUpdateType } from "validation/post.model";
 import createVoteSystem from "./voteSystem";
 import { IComment, IPost } from "types/Post";
-import { GetResult } from "@prisma/client/runtime/library";
 
 export default Prisma.defineExtension((client) => {
   const {
@@ -60,10 +59,10 @@ export default Prisma.defineExtension((client) => {
         ): Promise<Post> {
           const createdTags: Tag[] = [];
 
-          for (const tag in tags) {
+          for (const tag of tags) {
             const existTag = await client.tag.findFirst({
               where: {
-                name: tag
+                name: tag.name
               }
             });
 
@@ -72,7 +71,7 @@ export default Prisma.defineExtension((client) => {
             } else {
               const createdTag = await client.tag.create({
                 data: {
-                  name: tag
+                  name: tag.name
                 }
               });
 

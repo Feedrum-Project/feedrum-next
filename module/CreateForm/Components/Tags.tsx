@@ -12,11 +12,10 @@ export default function Tags() {
   });
 
   function parseTags(content: string) {
-    console.log(Array.from(new Set(content.split(","))));
     let parsed =
       tags == null
-        ? Array.from(new Set(content.split(",")))
-        : Array.from(new Set(tags.concat(content.split(","))));
+        ? Array.from(new Set(content.split(", ")))
+        : Array.from(new Set(tags.concat(content.split(", "))));
     return parsed;
   }
 

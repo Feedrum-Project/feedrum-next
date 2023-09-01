@@ -13,8 +13,6 @@ import styles from "./profile.module.sass";
 
 import message from "images/message.svg";
 import avatar from "images/avatar.svg";
-import arrowT from "images/arrow-top.svg";
-import arrowB from "images/arrow-bottom.svg";
 
 import { IUser } from "types/User";
 import { IComment, IPostId } from "types/Post";
@@ -154,64 +152,53 @@ export default function User({
                   У&nbsp;користувача відсутні свої коментарі.
                 </h1>
               ) : (
-                <div style={{ width: "100%" }}>
-                  {userComments.map((comment) => {
-                    return (
-                      <div key={comment.id} className={styles.comment}>
-                        <div className={styles.commentPost}>
-                          <span className={styles.commentPostName}>
-                            <Link href={"/posts/" + comment.Post.id}>
-                              {comment.Post.title}
-                            </Link>
-                          </span>
-                          <div className={styles.commentPostAuthor}>
-                            <Image src={avatar} alt="аватар" width={18} />
-                            <span>{comment.Post.userId}</span>
-                          </div>
-                        </div>
-                        <div className={styles.commentBody}>
-                          <div className={styles.commentRank}>
-                            <Image src={arrowT} alt="Покращити репутацію" />
-                            <span>{comment.rank}</span>
-                            <Image src={arrowB} alt="Погіршити репутацію" />
-                          </div>
-                          <div className={styles.commentContent}>
-                            <div className={styles.commentContentTop}>
-                              <div className={styles.commentContentAuthor}>
-                                <Image src={avatar} alt="аватар" width={18} />
-                                <span className={styles.commentAuthorName}>
-                                  {comment.User.name}
-                                </span>
-                                <span
-                                  className={[
-                                    styles.commentAuthorRank,
-                                    comment.User.rank > 0
-                                      ? "green"
-                                      : comment.User.rank < 0
-                                      ? "red"
-                                      : "gray"
-                                  ].join("")}
-                                >
-                                  (
-                                  {comment.User.rank > 0
-                                    ? "+"
+                userComments.map((comment) => {
+                  return (
+                    <div key={comment.id} className={styles.comment}>
+                      <div className={styles.commentPost}>
+                        <span className={styles.commentPostName}>
+                          <Link href={"/posts/" + comment.Post.id}>
+                            {comment.Post.title}
+                          </Link>
+                        </span>
+                      </div>
+                      <div className={styles.commentBody}>
+                        <div className={styles.commentContent}>
+                          <div className={styles.commentContentTop}>
+                            <div className={styles.commentContentAuthor}>
+                              <Image src={avatar} alt="аватар" width={18} />
+                              <span className={styles.commentAuthorName}>
+                                {comment.User.name}
+                              </span>
+                              <span
+                                className={[
+                                  styles.commentAuthorRank,
+                                  comment.User.rank > 0
+                                    ? "green"
                                     : comment.User.rank < 0
-                                    ? "-"
-                                    : null}
-                                  {comment.User.rank})
-                                </span>
-                              </div>
-                              <div className="commentDate">
-                                {getRelative(new Date(comment.createdAt))}
-                              </div>
+                                    ? "red"
+                                    : "gray"
+                                ].join("")}
+                              >
+                                (
+                                {comment.User.rank > 0
+                                  ? "+"
+                                  : comment.User.rank < 0
+                                  ? "-"
+                                  : null}
+                                {comment.User.rank})
+                              </span>
                             </div>
-                            <div className="bodyContent">{comment.body}</div>
+                            <div className="commentDate">
+                              {getRelative(new Date(comment.createdAt))}
+                            </div>
                           </div>
+                          <div className="bodyContent">{comment.body}</div>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
+                    </div>
+                  );
+                })
               )
             ) : (
               <div>

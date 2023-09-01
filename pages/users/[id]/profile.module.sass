@@ -45,6 +45,9 @@
 
 @media screen and (max-width: 1300px)
     .profile
+        display: flex
+        justify-content: flex-end
+    .profileContent
         width: min-content
 
 
@@ -228,29 +231,18 @@
 .comment
     margin-top: 1.5rem
     width: 100%
+    float: right
     &Body
         display: flex
-    &Rank
-        display: flex
-        align-items: center
-        flex-direction: column
-        margin-right: 1rem
-        &>span
-            height: 1.375rem
-            margin: .5rem 0
-            font-weight: 600
 
     &Post
         display: flex
-        justify-content: space-between
+        justify-content: flex-end
         margin-bottom: .875rem
+        margin-right: .875rem
         &Name
-        font-size: 1.25rem
-        font-weight: 500
-
-        &Author
-            display: flex
-            align-items: center
+        font-size: 1rem
+        font-weight: bold
 
     &Content
         background: $block
