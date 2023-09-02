@@ -8,6 +8,6 @@ export interface IUser {
 }
 
 export interface IUserExtended extends IUser {
-  description: string;
+  description: string | null;
   subscribers: number;
 }

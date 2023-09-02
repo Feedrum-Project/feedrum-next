@@ -16,7 +16,7 @@ import Modal from "components/Modal/Modal";
 import message from "images/message.svg";
 import avatar from "images/avatar.svg";
 import parser from "helpers/parsers.helper";
-import { IComment, IPost } from "types/Post";
+import { IComment, IPost, lightPost } from "types/Post";
 import { IUser } from "types/User";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
@@ -26,12 +26,14 @@ interface IPostPage {
   postComments: IComment[];
   postContent: Post;
   author: IUser;
+  similarPosts: (lightPost | any)[];
 }
 
 export default function PostPage({
   postContent,
   postComments,
-  author
+  author,
+  similarPosts
 }: IPostPage) {
   const { user } = useSelector(
     (state: { user: { user: IUser } }) => state.user
@@ -49,9 +51,13 @@ export default function PostPage({
 
   let content = useRef<null | HTMLDivElement>(null);
 
-  function sub(e: FormEvent) {
+  function sub(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const target = e.target as EventTarget & { comment: HTMLInputElement };
+
+    const { target } = e as unknown as {
+      target: { comment: HTMLInputElement };
+    };
+
     const body = JSON.stringify({
       body: target.comment.value,
       postId: postContent.id
@@ -96,11 +102,13 @@ export default function PostPage({
       });
   }
 
-  function onSubmit(event: FormEvent) {
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const target = event.target as typeof event.target & {
-      password: HTMLInputElement;
+    const { target } = event as unknown as {
+      target: {
+        password: HTMLInputElement;
+      };
     };
 
     const { email } = user;
@@ -192,7 +200,7 @@ export default function PostPage({
           <h1 className={styles.title}>{postContent.title}</h1>
           <div className={styles.content} ref={content}></div>
           <div className={styles.asideMobile}>
-            <SimilarPosts />
+            <SimilarPosts posts={similarPosts} />
           </div>
           <div className={styles.comments}>
             <div className="comments">
@@ -250,7 +258,7 @@ export default function PostPage({
         </article>
         <aside className={styles.aside}>
           <AsideProfile userName={author.name} userId={author.id} />
-          <SimilarPosts />
+          <SimilarPosts posts={similarPosts} />
           <div style={{ width: "fit-content" }}>
             <Rank
               info={postContent}
@@ -270,10 +278,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const post: IPost | null = await prisma.post.getPostById(id);
   const postParsed = JSON.parse(JSON.stringify(post));
 
-  if (post !== null && post!.Tags !== null) {
-    console.log(post.Tags);
-  }
-
   let comments: IComment[] = await prisma.post.getPostComments(id);
 
   comments = comments.sort((a: IComment, b: IComment) => {
@@ -284,7 +288,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const commentsParsed = JSON.parse(JSON.stringify(comments));
 
-  if (postParsed === null) {
+  if (postParsed === null || post === null || post.Tags === undefined) {
     return {
       props: {
         postContent: {
@@ -298,11 +302,37 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const author = await prisma.user.getUserById(postParsed.userId);
   const authorParsed = JSON.parse(JSON.stringify(author));
 
+  const similarPosts: (lightPost | any)[] = [];
+  for (const tag of post.Tags!) {
+    similarPosts.push(
+      await prisma.post.findMany({
+        where: {
+          Tags: {
+            some: {
+              tagId: tag.tagId
+            }
+          }
+        },
+        select: {
+          id: true,
+          title: true,
+          rank: true,
+          _count: {
+            select: {
+              Comments: true
+            }
+          }
+        },
+        take: 5
+      })
+    );
+  }
   return {
     props: {
       postContent: postParsed,
       postComments: commentsParsed,
-      author: authorParsed
+      author: authorParsed,
+      similarPosts: similarPosts[0].filter((sPost: any) => sPost.id !== post.id)
     }
   };
 };

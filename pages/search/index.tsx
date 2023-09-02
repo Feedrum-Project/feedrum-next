@@ -4,11 +4,12 @@ import { IUserExtended } from "types/User";
 import { useState } from "react";
 import Post from "components/Post/Post";
 import User from "components/User/User";
+import search from "helpers/search.helper";
 
 interface IResult {
-  posts: IPost[];
-  users: IUserExtended[];
-  comments: IComment[];
+  posts: IPost[] | undefined;
+  users: IUserExtended[] | undefined;
+  comments: IComment[] | undefined;
 }
 
 export default function Search({ result }: { result: IResult }) {
@@ -26,7 +27,7 @@ export default function Search({ result }: { result: IResult }) {
               <button>Найкращі</button>
               <button>Популярні</button>
             </div>
-            {result.posts.length !== 0 ? (
+            {result.posts && result.posts.length !== 0 ? (
               result.posts.map((e) => {
                 return <Post key={e.id} postData={e} />;
               })
@@ -40,7 +41,7 @@ export default function Search({ result }: { result: IResult }) {
               <button>Популярні</button>
               <button>За алфавітом</button>
             </div>
-            {result.users.length !== 0 ? (
+            {result.users && result.users.length !== 0 ? (
               result.users.map((e) => {
                 return <User user={e} key={e.id} />;
               })
@@ -97,69 +98,71 @@ export default function Search({ result }: { result: IResult }) {
   );
 }
 
-export async function getServerSideProps(/*ctx: any*/) {
-  // const quest = ctx.query.q;
+export async function getServerSideProps(ctx: any) {
+  const quest = ctx.query.q;
+  
 
   // imitation
-  const result: IResult = {
-    posts: [
-      {
-        id: 1,
-        body: "Трава не зелена, а помаранчева)",
-        title: "Думка аматора",
-        rank: -6,
-        createdAt: new Date(Math.random() * 1000000000000).toString(),
-        User: {
-          id: 1,
-          name: "admin",
-          email: "",
-          rank: 5,
-          createdAt: new Date(),
-          isVerified: true
-        }
-      },
-      {
-        id: 4,
-        body: "green grass",
-        title: "Зеленкувата трава",
-        rank: 18,
-        createdAt: new Date(Math.random() * 1000000000000).toString(),
-        User: {
-          id: 2,
-          name: "moder",
-          email: "",
-          rank: 2,
-          createdAt: new Date(),
-          isVerified: true
-        }
-      }
-    ],
-    users: [
-      {
-        id: 1,
-        name: "Elias",
-        email: "elias@feedrum.com",
-        createdAt: new Date(Math.random() * 1000000000000).toString(),
-        rank: 506,
-        isVerified: true,
-        description:
-          "Житомир - це найкраще місце на усій планеті. Саме там я і народився і жив довго та цікаво",
-        subscribers: 231
-      },
-      {
-        id: 77,
-        name: "Elias2.0",
-        email: "elias2@feedrum.com",
-        createdAt: new Date(Math.random() * 1000000000000).toString(),
-        rank: -72,
-        isVerified: true,
-        description:
-          "Житомир - це найкраще місце на усій планеті. Саме там я і народився і жив довго та цікаво",
-        subscribers: 2
-      }
-    ],
-    comments: []
-  };
+  // const result: IResult = {
+  //   posts: [
+  //     {
+  //       id: 1,
+  //       body: "Трава не зелена, а помаранчева)",
+  //       title: "Думка аматора",
+  //       rank: -6,
+  //       createdAt: new Date(Math.random() * 1000000000000).toString(),
+  //       User: {
+  //         id: 1,
+  //         name: "admin",
+  //         email: "",
+  //         rank: 5,
+  //         createdAt: new Date(),
+  //         isVerified: true
+  //       }
+  //     },
+  //     {
+  //       id: 4,
+  //       body: "green grass",
+  //       title: "Зеленкувата трава",
+  //       rank: 18,
+  //       createdAt: new Date(Math.random() * 1000000000000).toString(),
+  //       User: {
+  //         id: 2,
+  //         name: "moder",
+  //         email: "",
+  //         rank: 2,
+  //         createdAt: new Date(),
+  //         isVerified: true
+  //       }
+  //     }
+  //   ],
+  //   users: [
+  //     {
+  //       id: 1,
+  //       name: "Elias",
+  //       email: "elias@feedrum.com",
+  //       createdAt: new Date(Math.random() * 1000000000000).toString(),
+  //       rank: 506,
+  //       isVerified: true,
+  //       description:
+  //         "Житомир - це найкраще місце на усій планеті. Саме там я і народився і жив довго та цікаво",
+  //       subscribers: 231
+  //     },
+  //     {
+  //       id: 77,
+  //       name: "Elias2.0",
+  //       email: "elias2@feedrum.com",
+  //       createdAt: new Date(Math.random() * 1000000000000).toString(),
+  //       rank: -72,
+  //       isVerified: true,
+  //       description:
+  //         "Житомир - це найкраще місце на усій планеті. Саме там я і народився і жив довго та цікаво",
+  //       subscribers: 2
+  //     }
+  //   ],
+  //   comments: []
+  // };
+  const result: IResult = await search(quest) as any; // we temporarly do this.
   return {
     props: {
       result: JSON.parse(JSON.stringify(result))

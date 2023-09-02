@@ -45,3 +45,12 @@ export interface IComment {
   User: IUser;
   Post: Post;
 }
+
+export interface lightPost {
+  id: number;
+  title: string;
+  rank: number;
+  _count?: {
+    Comments: number;
+  }
+}

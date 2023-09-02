@@ -25,7 +25,7 @@ export default function User({ user }: { user: IUserExtended }) {
             </span>
           </p>
           <div className={styles.description}>
-            {user.description.length + 3 >= 78
+            {user.description && user.description.length + 3 >= 78
               ? user.description.slice(0, 78) + "..."
               : user.description}
           </div>
