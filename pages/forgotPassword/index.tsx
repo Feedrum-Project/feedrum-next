@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "../styles/forgot.module.sass";
+import styles from "styles/forgot.module.sass";
 import { Input, Button } from "components/UI";
 import logo from "images/logo.svg";
 import Link from "next/link";

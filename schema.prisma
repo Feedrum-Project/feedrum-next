@@ -4,7 +4,7 @@ datasource db {
 }
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
     previewFeatures = ["fullTextSearch"]
 }
 
@@ -17,6 +17,8 @@ model User {
     rank       Int      @default(0)
     role       Role     @default(USER)
     isVerified Boolean  @default(false)
+
+    description Json?
 
     Posts       Post[]
     Comments    Comment[]
@@ -44,7 +46,7 @@ model Post {
     userId Int
 
     Comments Comment[]
-    Tags     PostTag?
+    Tags     PostTag[]
 }
 
 model Tag {

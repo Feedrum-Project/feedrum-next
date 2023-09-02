@@ -1,4 +1,4 @@
-import styles from "../styles/search.module.sass";
+import styles from "styles/search.module.sass";
 import { IComment, IPost } from "types/Post";
 import { IUserExtended } from "types/User";
 import { useState } from "react";

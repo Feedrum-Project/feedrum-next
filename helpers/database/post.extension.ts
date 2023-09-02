@@ -36,12 +36,8 @@ export default Prisma.defineExtension((client) => {
               },
               Tags: {
                 select: {
-                  tag: {
-                    select: {
-                      id: true,
-                      name: true
-                    }
-                  }
+                  postId: true,
+                  tagId: true
                 }
               },
               _count: {
@@ -109,6 +105,19 @@ export default Prisma.defineExtension((client) => {
           return client.post.findUnique({
             where: {
               id
+            },
+            select: {
+              id: true,
+              body: true,
+              title: true,
+              rank: true,
+              createdAt: true,
+              userId: true,
+              Tags: {
+                select: {
+                  tag: true
+                }
+              }
             }
           });
         },

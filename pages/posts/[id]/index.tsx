@@ -16,7 +16,7 @@ import Modal from "components/Modal/Modal";
 import message from "images/message.svg";
 import avatar from "images/avatar.svg";
 import parser from "helpers/parsers.helper";
-import { IComment } from "types/Post";
+import { IComment, IPost } from "types/Post";
 import { IUser } from "types/User";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
@@ -267,8 +267,12 @@ export default function PostPage({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = Number(context.query.id);
-  const post: Post | null = await prisma.post.getPostById(id);
+  const post: IPost | null = await prisma.post.getPostById(id);
   const postParsed = JSON.parse(JSON.stringify(post));
+
+  if (post !== null && post!.Tags !== null) {
+    console.log(post.Tags);
+  }
 
   let comments: IComment[] = await prisma.post.getPostComments(id);
 

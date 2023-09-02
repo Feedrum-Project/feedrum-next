@@ -1,5 +1,6 @@
-import { Post, User } from "@prisma/client";
+import { Post } from "@prisma/client";
 import { IUser } from "./User";
+import ITag from "./Tag";
 
 export interface IPost {
   id: number;
@@ -7,7 +8,7 @@ export interface IPost {
   title: string;
   rank: number;
   createdAt: Date | string;
-  User: {
+  User?: {
     id: number;
     name: string;
     email: string;
@@ -15,6 +16,7 @@ export interface IPost {
     createdAt: Date;
     isVerified: boolean;
   };
+  Tags?: ITag[] | null;
   _count?: {
     Comments: number;
   };

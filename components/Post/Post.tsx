@@ -10,6 +10,8 @@ import getRelative from "helpers/time.helper";
 import Star from "components/UI/Star/Star";
 
 export default function Post({ postData }: { postData: IPost }) {
+
+  if(!postData.User) return <h1>Не знайдено користувача</h1>;
   return (
     <div className={styles.post}>
       <div className={styles.postTop}>
@@ -66,7 +68,7 @@ export default function Post({ postData }: { postData: IPost }) {
         <div className={styles.postComments}>
           <Image src={message} alt="Іконка повідомлень" />
           <span className={styles.postCommentsCount}>
-            {postData._count!.Comments}
+            {postData._count ? postData._count.Comments : 0}
           </span>
         </div>
         <div className={styles.postRank}>

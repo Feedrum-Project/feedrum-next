@@ -1,12 +1,15 @@
-import styles from "../styles/settings.module.sass";
+import styles from "styles/settings.module.sass";
+
 import Box from "components/UI/Box/Box";
-import Checkbox from "components/UI/Checkbox/Checkbox";
-import { Input, Button, Select } from "components/UI";
+import { Input, Button, Select, Checkbox } from "components/UI";
 import Image from "next/image";
+import Textarea from "components/UI/Textarea/Textarea";
+
 import avatar from "images/avatar.svg";
+
 import { useDispatch, useSelector } from "react-redux";
 import { FormEvent, useState } from "react";
-import Textarea from "components/UI/Textarea/Textarea";
+
 import { IStore } from "store/store";
 
 export default function Settings() {
