@@ -5,7 +5,7 @@ import Link from "next/link";
 import styles from "../styles/nav.module.sass";
 import avatar from "images/avatar.svg";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IUser } from "types/User";
 import UserPanel from "./UserPanel";
 import { IStore } from "store/store";
@@ -21,6 +21,12 @@ interface Panel {
 export default function Navigation() {
   const { user } = useSelector((state: IStore) => state).user;
   const [panel, setPanel] = useState<Panel | null>(null);
+
+  useEffect(() => {
+    addEventListener("resize", () => {
+      setPanel(null);
+    });
+  }, []);
 
   let Logged;
   if (user !== null && user.id !== 0) {

@@ -5,12 +5,19 @@ interface IBox {
   title: string;
   children: ReactNode;
 }
+/**
+ * @example
+ * // Usage:
+ * <Box title="Hello, world!">
+ *  <Button Style="secondary">
+ *   Activate
+ *  </Button>
+ * </Box>
+ */
 export default function Box({ title, children }: IBox) {
   return (
     <div className={styles.box}>
-      <div className={styles.boxTop}>
-        <h1>{title}</h1>
-      </div>
+      <h3 className={styles.title}>{title}</h3>
       <div className={styles.middle}>{children}</div>
     </div>
   );

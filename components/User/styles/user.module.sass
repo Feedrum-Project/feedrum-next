@@ -21,16 +21,23 @@
         &>.details
             display: flex
             flex-direction: column
+            justify-content: center
+            font-weight: 1.25rem
             width: 20rem
             height: 100%
 
             &>.nickname
-                margin: 0 0 .875rem 0
+                margin-right: .875rem
+                display: flex
+                align-items: center
+                gap: .625rem
                 &>*:first-child
                     font-size: 1.25rem
                     font-weight: 600
-                    margin: 0 .625rem 0 0
 
             &>.description
                 font-size: .875rem
                 color: $gray
+
+.rank
+    font-weight: 1.125rem

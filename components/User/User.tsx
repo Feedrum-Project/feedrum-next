@@ -15,7 +15,7 @@ export default function User({ user }: { user: IUserExtended }) {
           <p className={styles.nickname}>
             <span>{user.name}</span>
             <span
-              className="rank"
+              className={styles.rank}
               style={
                 user.rank > 0 ? { color: "#6AEA3D" } : { color: "#F36A6A" }
               }
@@ -24,15 +24,19 @@ export default function User({ user }: { user: IUserExtended }) {
               {user.rank})
             </span>
           </p>
-          <div className={styles.description}>
-            {user.description && user.description.length + 3 >= 78
-              ? user.description.slice(0, 78) + "..."
-              : user.description}
-          </div>
+          {user.description && (
+            <div className={styles.description}>
+              {user.description.length + 3 >= 78
+                ? user.description.slice(0, 78) + "..."
+                : user.description}
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.userRight}>
-        <Button Style="purple">Підписатися({user.subscribers})</Button>
+        <Button Style="purple">
+          Підписатися({user.subscribers ? user.subscribers : 0})
+        </Button>
       </div>
     </div>
   );

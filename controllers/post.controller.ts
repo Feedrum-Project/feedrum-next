@@ -32,8 +32,8 @@ export default class PostController {
 
   static async getBest() {
     const posts = await prisma.post.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 2,
+      orderBy: { rank: "desc" },
+      take: 3,
       select: {
         id: true,
         title: true,

@@ -1,10 +1,13 @@
 import styles from "styles/search.module.sass";
 import { IComment, IPost } from "types/Post";
-import { IUserExtended } from "types/User";
+import { IUser, IUserExtended } from "types/User";
 import { useState } from "react";
 import Post from "components/Post/Post";
 import User from "components/User/User";
 import search from "helpers/search.helper";
+import Comment from "components/Comment/Comment";
+import { useSelector } from "react-redux";
+import { IStore } from "store/store";
 
 interface IResult {
   posts: IPost[] | undefined;
@@ -16,6 +19,7 @@ export default function Search({ result }: { result: IResult }) {
   const [chapter, setChapter] = useState<"posts" | "users" | "comments">(
     "posts"
   );
+  const { user } = useSelector((store: IStore) => store).user;
 
   return (
     <div className={styles.search}>
@@ -55,7 +59,28 @@ export default function Search({ result }: { result: IResult }) {
               <button>Найновіщі</button>
               <button>Популярні</button>
             </div>
-            <h1 style={{ color: "#fff" }}>Без коментарів</h1>
+            {result.comments ? null : (
+              <h1 style={{ color: "#fff" }}>Без коментарів</h1>
+            )}
+            {result.comments ? (
+              <>
+                {result.comments.map((comment) => {
+                  return (
+                    <Comment
+                      comment={comment}
+                      key={comment.id}
+                      disabled={
+                        user
+                          ? user.id !== comment.User.id
+                            ? false
+                            : true
+                          : true
+                      }
+                    />
+                  );
+                })}
+              </>
+            ) : null}
           </>
         )}
       </div>
@@ -98,71 +123,10 @@ export default function Search({ result }: { result: IResult }) {
   );
 }
 
-export async function getServerSideProps(ctx: any) {
+export async function getServerSideProps(ctx: { query: { q: string } }) {
   const quest = ctx.query.q;
-  
 
-  // imitation
-  // const result: IResult = {
-  //   posts: [
-  //     {
-  //       id: 1,
-  //       body: "Трава не зелена, а помаранчева)",
-  //       title: "Думка аматора",
-  //       rank: -6,
-  //       createdAt: new Date(Math.random() * 1000000000000).toString(),
-  //       User: {
-  //         id: 1,
-  //         name: "admin",
-  //         email: "",
-  //         rank: 5,
-  //         createdAt: new Date(),
-  //         isVerified: true
-  //       }
-  //     },
-  //     {
-  //       id: 4,
-  //       body: "green grass",
-  //       title: "Зеленкувата трава",
-  //       rank: 18,
-  //       createdAt: new Date(Math.random() * 1000000000000).toString(),
-  //       User: {
-  //         id: 2,
-  //         name: "moder",
-  //         email: "",
-  //         rank: 2,
-  //         createdAt: new Date(),
-  //         isVerified: true
-  //       }
-  //     }
-  //   ],
-  //   users: [
-  //     {
-  //       id: 1,
-  //       name: "Elias",
-  //       email: "elias@feedrum.com",
-  //       createdAt: new Date(Math.random() * 1000000000000).toString(),
-  //       rank: 506,
-  //       isVerified: true,
-  //       description:
-  //         "Житомир - це найкраще місце на усій планеті. Саме там я і народився і жив довго та цікаво",
-  //       subscribers: 231
-  //     },
-  //     {
-  //       id: 77,
-  //       name: "Elias2.0",
-  //       email: "elias2@feedrum.com",
-  //       createdAt: new Date(Math.random() * 1000000000000).toString(),
-  //       rank: -72,
-  //       isVerified: true,
-  //       description:
-  //         "Житомир - це найкраще місце на усій планеті. Саме там я і народився і жив довго та цікаво",
-  //       subscribers: 2
-  //     }
-  //   ],
-  //   comments: []
-  // };
-  const result: IResult = await search(quest) as any; // we temporarly do this.
+  const result: IResult = (await search(quest)) as any; // we temporarly do this.
   return {
     props: {
       result: JSON.parse(JSON.stringify(result))

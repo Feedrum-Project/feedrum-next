@@ -26,7 +26,7 @@ interface IPostPage {
   postComments: IComment[];
   postContent: Post;
   author: IUser;
-  similarPosts: (lightPost | any)[];
+  similarPosts: (lightPost | any)[] | undefined;
 }
 
 export default function PostPage({
@@ -323,7 +323,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             }
           }
         },
-        take: 5
+        take: 3
       })
     );
   }
@@ -332,7 +332,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       postContent: postParsed,
       postComments: commentsParsed,
       author: authorParsed,
-      similarPosts: similarPosts[0].filter((sPost: any) => sPost.id !== post.id)
+      similarPosts: similarPosts[0]
+        ? similarPosts[0].filter((sPost: any) => sPost.id !== post.id)
+        : undefined
     }
   };
 };

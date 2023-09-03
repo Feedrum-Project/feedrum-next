@@ -3,7 +3,7 @@ import styles from "./styles/comment.module.sass";
 import arrowTop from "images/arrow-top.svg";
 import avatar from "images/avatar.svg";
 import arrowBottom from "images/arrow-bottom.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IComment } from "types/Post";
 import getRelative from "helpers/time.helper";
 import Link from "next/link";
@@ -15,6 +15,7 @@ interface CommentObj {
 }
 export default function Comment({ comment, disabled = false }: CommentObj) {
   const { user } = useSelector((state: IStore) => state).user;
+  const dispatch = useDispatch();
 
   let isUser = user !== null ? user.id !== -1 : false;
   if (disabled) isUser = false;
@@ -25,12 +26,30 @@ export default function Comment({ comment, disabled = false }: CommentObj) {
       score: vote
     };
 
-    fetch("http://localhost:3000/api/comments/" + comment.id + "/vote", {
+    fetch("/api/comments/" + comment.id + "/vote", {
       method: "POST",
       body: JSON.stringify(body)
     })
       .then((res) => res.json())
-      .then((e) => console.log(e));
+      .then((e) =>
+        e.code === 200
+          ? dispatch({
+              type: "addNotification",
+              payload: {
+                type: "good",
+                title: "Зацінено",
+                text: "Ви поставили оцінку коментарю."
+              }
+            })
+          : dispatch({
+            type: "addNotification",
+            payload: {
+              type: "bad",
+              title: "На зацінено",
+              text: "Оцінку не зараховано ;("
+            }
+          })
+      );
   }
 
   return (

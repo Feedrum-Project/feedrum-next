@@ -17,17 +17,21 @@ export default async function search(data: string) {
           }
         }
       ]
+    },
+    select: {
+      id: true,
+      body: true,
+      title: true,
+      rank: true,
+      createdAt: true,
+      User: true
     }
   });
   const users = await prisma.user.findMany({
     where: {
-      AND: [
-        {
-          name: {
-            search: data
-          }
-        }
-      ]
+      name: {
+        search: data
+      }
     },
     select: {
       id: true,
@@ -41,13 +45,23 @@ export default async function search(data: string) {
   });
   const comments = await prisma.comment.findMany({
     where: {
-      AND: [
-        {
-          body: {
-            search: data
-          }
+      body: {
+        search: data
+      }
+    },
+    select: {
+      id: true,
+      body: true,
+      rank: true,
+      createdAt: true,
+      postId: true,
+      User: {
+        select: {
+          id: true,
+          name: true,
+          rank: true
         }
-      ]
+      }
     }
   });
   return { posts, users, comments };

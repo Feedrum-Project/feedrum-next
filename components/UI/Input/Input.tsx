@@ -21,7 +21,12 @@ interface InputProps {
   size?: number;
   borders?: boolean;
 }
-
+/**
+ * Feedrums input.
+ * @example
+ * // Usage:
+ * <Input type="text" name="user" id="user"/>
+ */
 export default function Input({
   type = "text",
   Name,

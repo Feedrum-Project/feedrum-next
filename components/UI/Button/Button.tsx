@@ -14,7 +14,12 @@ interface ButtonProps {
   type?: "button" | "reset" | "submit";
   to?: string | undefined;
 }
-
+/**
+ * Feedrums button.
+ * @example
+ * // Usage:
+ * <Button Style="standart">Text</Button>
+ */
 export default function Button({
   Style,
   children,

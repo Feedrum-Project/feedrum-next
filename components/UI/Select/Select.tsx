@@ -60,7 +60,11 @@ export default function Select({
             onFocus={() => setOpened(true)}
             maxLength={32}
           />
-          <button className="symbol" onClick={() => setOpened((pr) => !pr)}>
+          <button
+            className="symbol"
+            onClick={() => setOpened((pr) => !pr)}
+            type="button"
+          >
             {opened ? (
               <Image src={arrowTop} alt="Відкрити список" />
             ) : (
@@ -81,6 +85,7 @@ export default function Select({
                   setChoosed(e);
                   setSearch(e);
                 }}
+                type="button"
               >
                 {e}
               </button>

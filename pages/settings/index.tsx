@@ -105,7 +105,7 @@ export default function Settings() {
               </form>
             </Box>
             <Box title="Про себе">
-              <form onSubmit={save}>
+              <form onSubmit={save} className={styles.inputDistantion}>
                 <Textarea
                   name="description"
                   Name="О собі"
@@ -133,6 +133,7 @@ export default function Settings() {
                   ]}
                   info="Оберіть країну в якій ви наразі."
                 />
+                <Checkbox>Відображати пошту у публічному профілі</Checkbox>
                 <div className={styles.admit}>
                   <Button Style="purple" type="submit">
                     Зберегти
@@ -151,7 +152,7 @@ export default function Settings() {
               <Checkbox>Надсилати аналітику для покращення якості</Checkbox>
               <div className={["centrFlex", styles.admit].join(" ")}>
                 <Button Style="purple">Зберегти</Button>
-                <Button Style="standart">
+                <Button Style="secondary">
                   Скопіювати&nbsp;дебаг&nbsp;інформацію
                 </Button>
               </div>

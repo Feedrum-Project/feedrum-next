@@ -37,8 +37,6 @@ export default function Post({ postData }: { postData: IPost }) {
                 (
                 {postData.User.rank > 0
                   ? "+"
-                  : postData.User.rank < 0
-                  ? "-"
                   : ""}
                 {postData.User.rank})
               </span>
