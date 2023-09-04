@@ -27,7 +27,7 @@ export interface IPostId {
   title: string;
   rank: number;
   createdAt: Date | string;
-  userId: number;
+  userId?: number;
   User: {
     id: number;
     name: string;
