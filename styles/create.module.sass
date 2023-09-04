@@ -182,29 +182,50 @@
     color: $white
     padding: 2rem
 
-.tags
-    &Field
-        display: flex
-        align-items: center
-        gap: .625rem
-        margin-top: .625rem
-        &>input
-            border: none
-            background: none
-            color: $white
-            resize: none
-            font-size: 1rem
-            height: min-content
-        &>button
-            background: $background
-            color: $white
-            border: 1px solid $background
-            border-radius: .625rem
-            padding: .25rem .625rem 
-            cursor: pointer
-            outline: none
+.block
+    background: $block
+    padding: .625rem
+    border-radius: .625rem
+    color: $gray
+    margin-top: 1.625rem
 
-            &:not(:last-child):hover
-                border: 1px solid $red
-            &:last-child:hover
-                border: 1px solid $green
+.addTag
+    background: none
+    border: 1px solid $green
+    border-radius: 50%
+    width: 1.625rem
+    height: 1.625rem
+    display: inline-flex
+    justify-content: center
+    align-items: center
+    cursor: pointer
+
+
+.tags
+    display: flex
+    flex-wrap: wrap
+    gap: .625rem
+.tag
+    background: none
+    border: 1px solid $border
+    border-radius: .25rem
+    padding-left: .625rem
+    color: $white
+    width: fit-content
+    display: flex
+    align-items: center
+    &Name
+        display: inline-flex
+        gap: .25rem
+        margin-right: .875rem
+        padding: .25rem 0
+.close
+    background: none
+    border: none
+    cursor: pointer
+
+    display: inline-flex
+    justify-content: center
+    align-items: center
+
+    padding: .25rem .625rem

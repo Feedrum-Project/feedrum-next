@@ -7,10 +7,11 @@ import { IUser } from "types/User";
 import { Button } from "components/UI";
 
 import prisma from "@database";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FormEvent, useState } from "react";
 import { Post } from "@prisma/client";
 import Editor from "module/CreateForm/Components/Editor";
+import { badAnswer } from "store/dispatcherAnswers";
 
 interface IPage {
   postContent: IPost;
@@ -18,6 +19,8 @@ interface IPage {
 }
 
 export default function EditPost({ postContent, author }: IPage) {
+  const dispatch = useDispatch();
+
   const { user } = useSelector(
     (state: { user: { user: IUser } }) => state.user
   );
@@ -47,7 +50,19 @@ export default function EditPost({ postContent, author }: IPage) {
       }
     })
       .then((res) => res.json())
-      .then(console.log);
+      .then(() => {
+        dispatch({
+          type: "addNotification",
+          payload: {
+            type: "good",
+            title: "Пост оновлено!",
+            text: "Ваш твор отримав зміни, відбувається пересилання на змінену сторінку...."
+          }
+        });
+      })
+      .catch(() => {
+        dispatch(badAnswer);
+      });
   }
 
   if (user === null) return;

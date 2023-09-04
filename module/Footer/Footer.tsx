@@ -13,7 +13,7 @@ export default function Footer() {
       <div className={styles.footerMiddle}>
         <ul>
           <li>
-            <Link href="/api">API</Link>
+            <Link href="/api-doc">API</Link>
           </li>
           <li>
             <Link href="/">Головна</Link>
@@ -22,7 +22,7 @@ export default function Footer() {
             <Link href="/sponsors">Спонсори</Link>
           </li>
           <li>
-            <Link href="/api">API</Link>
+            <Link href="/api-doc">API</Link>
           </li>
           <li>
             <Link href="/login">Вхід</Link>

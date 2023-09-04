@@ -2,7 +2,8 @@ import styles from "../styles/rank.module.sass";
 import Image from "next/image";
 import arrowTop from "images/arrow-top.svg";
 import arrowBottom from "images/arrow-bottom.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { badAnswer } from "store/dispatcherAnswers";
 
 interface RankProps {
   info: {
@@ -15,6 +16,8 @@ interface RankProps {
 }
 
 export default function Rank({ info, disabled = false }: RankProps) {
+  const dispatch = useDispatch();
+
   const user = useSelector((state: any) => state.user);
   let isUser = user.id !== -1;
   if (disabled) isUser = false;
@@ -33,7 +36,10 @@ export default function Rank({ info, disabled = false }: RankProps) {
       body: JSON.stringify(body)
     })
       .then((res) => res.json())
-      .then(console.log);
+      .then(console.log)
+      .catch(() => {
+        dispatch(badAnswer);
+      });
   }
 
   return (

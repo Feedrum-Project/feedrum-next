@@ -3,18 +3,19 @@ import message from "images/message.svg";
 import Image from "next/image";
 import { IPost } from "types/Post";
 import Star from "components/UI/Star/Star";
+import Link from "next/link";
 
 export default function BestPosts({ posts }: { posts: IPost[] }) {
-  const parsedPosts = posts.map((e) => (
-    <div key={e.id}>
-      <div className="title">{e.title}</div>
+  const parsedPosts = posts.map((post) => (
+    <div key={post.id}>
+      <div className="title"><Link href={"/posts/"+post.id}>{post.title}</Link></div>
       <div className={styles.elemBottom}>
         <div className={styles.elemComments}>
           <Image src={message} alt="Повідомлення" />
-          <span className={styles.elemCommentsCount}>{e._count?.Comments}</span>
+          <span className={styles.elemCommentsCount}>{post._count?.Comments}</span>
         </div>
         <div className={styles.elemRank}>
-          <Star reputation={e.rank} />
+          <Star reputation={post.rank} />
         </div>
       </div>
     </div>

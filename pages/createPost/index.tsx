@@ -3,17 +3,18 @@ import styles from "styles/create.module.sass";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { HTMLtoMD} from "helpers/parsers.helper";
+import { HTMLtoMD } from "helpers/parsers.helper";
 import submit from "module/CreateForm/functions/Submit";
 
-import Script from "next/script";
 import { Button } from "components/UI";
 import Images from "module/CreateForm/Components/Images";
 import Editor from "module/CreateForm/Components/Editor";
 import View from "module/CreateForm/Components/View";
 import { useRouter } from "next/router";
 import { IStore } from "store/store";
-
+import Link from "next/link";
+import Tags from "module/CreateForm/Components/Tags";
+import { Tag } from "types/Tag";
 
 export default function CreatePost() {
   const [chapter, setChapter] = useState<"editor" | "view">("view");
@@ -21,6 +22,8 @@ export default function CreatePost() {
     title: "",
     content: ""
   });
+  const [tags, setTags] = useState<Tag>(null);
+
   const [files, setFiles] = useState<File[]>();
   const { user } = useSelector((state: IStore) => state.user);
   const dispatch = useDispatch();
@@ -48,14 +51,22 @@ export default function CreatePost() {
   }
 
   if (user === null || user.id === 0) {
-    return <Script id="0">location.href = &#34;/login&#34;</Script>;
+    return (
+      <h1>
+        Ви маєте увійти в <Link href="/login">обліковий запис</Link>
+      </h1>
+    );
   }
 
   return (
     <>
       <div className={styles.editor}>
         <article>
-          <form method="post" onSubmit={(event) => submit({event, dispatch, router})}>
+          <form
+            method="post"
+            onSubmit={(event) => submit({ event, dispatch, router })}
+          >
+            <input type="text" name="tags" value={tags?.join(", ")} readOnly hidden/>
             {chapter === "editor" ? (
               <>
                 <Images files={files} setFiles={setFiles} showAdd />
@@ -110,6 +121,10 @@ export default function CreatePost() {
               Тут будуть з’являтися динамічні поради щодо редактору, бо не всі
               знають маркдаун
             </p>
+          </div>
+          <div className={styles.asideTags}>
+            <h1>Теги</h1>
+            <Tags tagsSet={[tags, setTags]}/>
           </div>
         </aside>
       </div>

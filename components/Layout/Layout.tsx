@@ -61,6 +61,13 @@ export default function Layout({ children }: Props) {
       <Head>
         <title>Feedrum</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta
+          name="description"
+          content="Ласкаво просимо до Feedrum. Feedrum - це платформа блогів від програмістів до програмістів, українською мовою"
+        />
+        <meta name="author" content="Feedrum.com" />
+
         <link rel="icon" type="image/x-icon" href={favicon.src} />
       </Head>
       {condition ? null : <Header />}

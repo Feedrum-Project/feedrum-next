@@ -30,7 +30,6 @@ export default async function registrate(body: bodyObj) {
       ].join(", ")
     }
   }).then((res) => res.json());
-  console.log(result);
 
   return result;
 }

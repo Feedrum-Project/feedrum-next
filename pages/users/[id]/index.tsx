@@ -15,15 +15,25 @@ import message from "images/message.svg";
 import avatar from "images/avatar.svg";
 
 import { IUser } from "types/User";
-import { IComment, IPostId } from "types/Post";
+import { IPost, IPostId } from "types/Post";
 import getRelative from "helpers/time.helper";
 import { IStore } from "store/store";
 import Star from "components/UI/Star/Star";
+import Comment from "components/Comment/Comment";
+
+interface IuserComment {
+  id: number;
+  body: string;
+  rank: number;
+  createdAt: Date | string;
+  User: IUser;
+  Post: IPost;
+}
 
 interface UserProps {
   userInformation: IUser | null;
   userPosts: IPostId[] | [];
-  userComments: IComment[];
+  userComments: IuserComment[];
 }
 
 export default function User({
@@ -154,49 +164,12 @@ export default function User({
               ) : (
                 userComments.map((comment) => {
                   return (
-                    <div key={comment.id} className={styles.comment}>
-                      <div className={styles.commentPost}>
-                        <span className={styles.commentPostName}>
-                          <Link href={"/posts/" + comment.Post.id}>
-                            {comment.Post.title}
-                          </Link>
-                        </span>
-                      </div>
-                      <div className={styles.commentBody}>
-                        <div className={styles.commentContent}>
-                          <div className={styles.commentContentTop}>
-                            <div className={styles.commentContentAuthor}>
-                              <Image src={avatar} alt="аватар" width={18} />
-                              <span className={styles.commentAuthorName}>
-                                {comment.User.name}
-                              </span>
-                              <span
-                                className={[
-                                  styles.commentAuthorRank,
-                                  comment.User.rank > 0
-                                    ? "green"
-                                    : comment.User.rank < 0
-                                    ? "red"
-                                    : "gray"
-                                ].join("")}
-                              >
-                                (
-                                {comment.User.rank > 0
-                                  ? "+"
-                                  : comment.User.rank < 0
-                                  ? "-"
-                                  : null}
-                                {comment.User.rank})
-                              </span>
-                            </div>
-                            <div className="commentDate">
-                              {getRelative(new Date(comment.createdAt))}
-                            </div>
-                          </div>
-                          <div className="bodyContent">{comment.body}</div>
-                        </div>
-                      </div>
-                    </div>
+                    <Comment
+                      comment={comment}
+                      key={comment.id}
+                      postInfo
+                      disabled={user?.id === userInformation.id}
+                    />
                   );
                 })
               )
@@ -254,16 +227,18 @@ export default function User({
         </aside>
       </div>
       {user !== null && user.id && user.id === userInformation.id ? (
-        <Button
-          Style="purple"
-          onClick={() => {
-            document.cookie =
-              "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-            dispatch({ type: "set", payload: { id: -1 } });
-          }}
-        >
-          Вийти з облікового запису
-        </Button>
+        <div className="minWidth">
+          <Button
+            Style="purple"
+            onClick={() => {
+              document.cookie =
+                "token=deleted; path=/api/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+              dispatch({ type: "set", payload: { id: -1 } });
+            }}
+          >
+            Вийти&nbsp;з&nbsp;облікового&nbsp;запису
+          </Button>
+        </div>
       ) : null}
     </>
   );
@@ -276,7 +251,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const userPosts: IPostId[] | [] = await prisma.user.getUserPosts(
     Number(context.query.id)
   );
-  const userComments: IComment[] = await prisma.user.getUserComments(
+
+  const userComments: IuserComment[] = await prisma.user.getUserComments(
     Number(context.query.id)
   );
 

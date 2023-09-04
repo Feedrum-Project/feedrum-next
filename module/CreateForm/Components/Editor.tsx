@@ -4,7 +4,6 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { HTMLtoMD, MDtoHTML } from "helpers/parsers.helper";
 import Panel from "./Panel";
 import useSelected from "../hooks/useSelected";
-import Tags from "./Tags";
 
 interface IEditor {
   articleSet: [
@@ -65,7 +64,7 @@ export default function Editor({ articleSet }: IEditor) {
         borders={false}
       />
       <Panel selected={selected} />
-      <div className="block">
+      <div className={styles.block}>
         <div className={styles.textareaTop}>
           <div className="name">Контент</div>
           <div
@@ -96,7 +95,6 @@ export default function Editor({ articleSet }: IEditor) {
           id="txt"
         ></div>
       </div>
-      <Tags/>
     </>
   );
 }

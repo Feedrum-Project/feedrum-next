@@ -12,8 +12,20 @@ import { IStore } from "store/store";
 interface CommentObj {
   comment: IComment;
   disabled?: boolean;
+  postInfo?: boolean;
 }
-export default function Comment({ comment, disabled = false }: CommentObj) {
+/**
+ * Comment commponent.
+ *
+ * @example
+ * // Usage:
+ * <Comment comment={comment} disabled={false}/>
+ */
+export default function Comment({
+  comment,
+  disabled = false,
+  postInfo = false
+}: CommentObj) {
   const { user } = useSelector((state: IStore) => state).user;
   const dispatch = useDispatch();
 
@@ -42,65 +54,95 @@ export default function Comment({ comment, disabled = false }: CommentObj) {
               }
             })
           : dispatch({
-            type: "addNotification",
-            payload: {
-              type: "bad",
-              title: "На зацінено",
-              text: "Оцінку не зараховано ;("
-            }
-          })
+              type: "addNotification",
+              payload: {
+                type: "bad",
+                title: "На зацінено",
+                text: "Оцінку не зараховано ;("
+              }
+            })
       );
   }
 
   return (
-    <div className={styles.comment} key={comment.id}>
-      <div className={styles.rank}>
-        <button disabled={!isUser} onClick={() => Vote("UPVOTE")}>
-          <Image src={arrowTop} alt="Збільшити репутацію" />
-        </button>
-        <div
-          className={styles.rankCount}
-          style={{
-            color:
-              comment.rank > 0
-                ? "#6AEA3D"
-                : comment.rank == 0
-                ? "gray"
-                : "#F36A6A"
-          }}
-        >
-          {comment.rank}
-        </div>
-        <button disabled={!isUser} onClick={() => Vote("DOWNVOTE")}>
-          <Image src={arrowBottom} alt="Зменшити репутацію" />
-        </button>
-      </div>
-      <div className={styles.commentContent}>
-        <div className={styles.commentTop}>
-          <div className={styles.commentLeft}>
-            <Image src={avatar} alt="Аватар" />
-            <Link href={"/users/" + comment.User.id}>
-              <span className={styles.userName}>{comment.User.name}</span>
-              <span
-                className={[
-                  "userRank",
-                  comment.User.rank > 0
-                    ? "green"
-                    : comment.User.rank < 0
-                    ? "red"
-                    : "gray"
-                ].join(" ")}
-              >
-                ({comment.User.rank > 0 ? "+" : null}
-                {comment.User.rank})
+    <div className={styles.comment}>
+      {postInfo ? (
+        <div className={styles.post}>
+          <div className={styles.postName}>
+            <Link href={"/posts/" + comment.Post.id}>{comment.Post.title}</Link>
+          </div>
+          <div className={styles.postAuthor}>
+            <Image src={avatar} alt="avatar" />
+            {comment.Post.User ? (
+              <span id="user">
+                <Link href={"/users/" + comment.Post.User.id}>
+                  <span id="name">{comment.Post.User.name} </span>
+                  <span
+                    id="rank"
+                    className={
+                      comment.Post.User.rank > 0
+                        ? "green"
+                        : comment.Post.User.rank < 0
+                        ? "red"
+                        : "gray"
+                    }
+                  >
+                    ({comment.Post.User.rank})
+                  </span>
+                </Link>
               </span>
-            </Link>
-          </div>
-          <div className="commentRight">
-            {getRelative(new Date(comment.createdAt))}
+            ) : null}
           </div>
         </div>
-        <div className="commentcomment">{comment.body}</div>
+      ) : null}
+      <div className={styles.commentBody}>
+        <div className={styles.rank}>
+          <button disabled={!isUser} onClick={() => Vote("UPVOTE")}>
+            <Image src={arrowTop} alt="Збільшити репутацію" />
+          </button>
+          <div
+            className={styles.rankCount}
+            style={{
+              color:
+                comment.rank > 0
+                  ? "#6AEA3D"
+                  : comment.rank == 0
+                  ? "gray"
+                  : "#F36A6A"
+            }}
+          >
+            {comment.rank}
+          </div>
+          <button disabled={!isUser} onClick={() => Vote("DOWNVOTE")}>
+            <Image src={arrowBottom} alt="Зменшити репутацію" />
+          </button>
+        </div>
+        <div className={styles.commentContent}>
+          <div className={styles.commentTop}>
+            <div className={styles.commentLeft}>
+              <Image src={avatar} alt="Аватар" />
+              <Link href={"/users/" + comment.User.id}>
+                <span className={styles.userName}>{comment.User.name}</span>
+                <span
+                  className={
+                    comment.User.rank > 0
+                      ? "green"
+                      : comment.User.rank < 0
+                      ? "red"
+                      : "gray"
+                  }
+                >
+                  ({comment.User.rank > 0 ? "+" : null}
+                  {comment.User.rank})
+                </span>
+              </Link>
+            </div>
+            <div className="commentRight">
+              {getRelative(new Date(comment.createdAt))}
+            </div>
+          </div>
+          <div className="commentcomment">{comment.body}</div>
+        </div>
       </div>
     </div>
   );

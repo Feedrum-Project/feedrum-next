@@ -16,15 +16,15 @@ import Modal from "components/Modal/Modal";
 import message from "images/message.svg";
 import avatar from "images/avatar.svg";
 import parser from "helpers/parsers.helper";
-import { IComment, IPost, lightPost } from "types/Post";
+import { IComment, IPost, IPostId, lightPost } from "types/Post";
 import { IUser } from "types/User";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
-import { Post } from "@prisma/client";
+import AsideTags from "module/Aside/Components/AsideTags";
 
 interface IPostPage {
   postComments: IComment[];
-  postContent: Post;
+  postContent: IPostId;
   author: IUser;
   similarPosts: (lightPost | any)[] | undefined;
 }
@@ -72,7 +72,6 @@ export default function PostPage({
     })
       .then((res) => res.json())
       .then((e) => {
-        console.log(e);
         if (e.code !== 200) {
           dispatch({
             type: "addNotification",
@@ -124,8 +123,12 @@ export default function PostPage({
       headers: {
         "Content-Type": "application/json"
       }
-    }).then((res) => {
-      console.log(res);
+    }).then(() => {
+      dispatch({type: "addNotification", payload: {
+        type: "bad",
+        title: "Пост ліквідовано",
+        text: "Вашого твору більше не існує."
+      }});
     });
   }
 
@@ -235,7 +238,7 @@ export default function PostPage({
                     placeholder="Місце для вашого коментаря"
                     minHeight={130}
                   />
-                  <div className="minWidth">
+                  <div className={styles.admit}>
                     <Button Style="purple" type="submit">
                       Підтвердити
                     </Button>
@@ -259,6 +262,7 @@ export default function PostPage({
         <aside className={styles.aside}>
           <AsideProfile userName={author.name} userId={author.id} />
           <SimilarPosts posts={similarPosts} />
+          {postContent.Tags ? <AsideTags tags={postContent.Tags as any} /> : null}
           <div style={{ width: "fit-content" }}>
             <Rank
               info={postContent}

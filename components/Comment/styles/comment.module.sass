@@ -1,19 +1,20 @@
 @import ../../../styles/variables
 
 .comment
-  display: flex
-  align-items: flex-start
-  margin: 0 0 1.875rem 0
   width: 100%
   color: $white
+  &Body
+    display: flex
+    align-items: flex-start
   &Top
     display: flex
     justify-content: space-between
     align-items: center
-    margin: 0 0 1rem 0
+    margin-bottom: 1rem
+    color: $gray
   &Content
     padding: .75rem
-    margin: 0 0 0 .75rem
+    margin-left: .75rem
     background: $block
     border-radius: .375rem
     min-width: 17.25rem
@@ -24,7 +25,7 @@
     align-items: center
 
     &>p
-      margin: 0 0 0 .5rem
+      margin-right: .5rem
 
 .rank
   display: flex
@@ -49,3 +50,15 @@
 
 .userName
   margin: 0 .25rem 0 .625rem
+  color: $gray
+
+.post
+  display: flex
+  justify-content: space-between
+  margin-bottom: .875rem
+  &Name
+    font-size: 1.25rem
+  &Author
+    display: flex
+    align-items: center
+    gap: .625rem

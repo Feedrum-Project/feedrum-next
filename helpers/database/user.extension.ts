@@ -69,7 +69,22 @@ export default Prisma.defineExtension((client) => {
               body: true,
               rank: true,
               createdAt: true,
-              Post: true,
+              Post: {
+                select: {
+                  id: true,
+                  title: true,
+                  body: true,
+                  rank: true,
+                  createdAt: true,
+                  User: {
+                    select: {
+                      id: true,
+                      name: true,
+                      rank: true,
+                    }
+                  }
+                }
+              },
               User: {
                 select: {
                   id: true,

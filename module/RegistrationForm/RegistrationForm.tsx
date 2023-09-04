@@ -1,8 +1,9 @@
 import { Input, Button } from "components/UI/index";
-import { FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import registrate from "./fetch/registrate";
 
 import styles from "./styles/registration.module.sass";
+import { useDispatch } from "react-redux";
 
 interface bodyObj {
   name: string;
@@ -21,47 +22,44 @@ interface IFormExtneder {
 }
 
 export default function RegistrationForm() {
-  const [message, setMessage] = useState<
-    | any
-    | {
-        body: { data: { id: number; email: string; name: string } };
-        type: string;
-      }
-  >(false);
+  const dispatch = useDispatch();
 
-  async function prepare(e: FormEvent & IFormExtneder) {
+  async function prepare(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    const { target } = e as unknown as IFormExtneder;
     const body: bodyObj = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      password1: e.target.password1.value,
-      password2: e.target.password2.value
+      name: target.name.value,
+      email: target.email.value,
+      password1: target.password1.value,
+      password2: target.password2.value
     };
+
     const user = await registrate(body);
+
     if (user.code === 200) {
-      setMessage({ body: user, type: "succes" });
-      console.error(message);
+      dispatch({
+        type: "addNotification",
+        payload: {
+          type: "good",
+          title: "Аккаунт створено!",
+          text: "Ласкаво просимо :)"
+        }
+      });
     } else {
-      setMessage({ body: user.message, type: "err" });
-      console.error(message);
+      dispatch({
+        type: "addNotification",
+        payload: {
+          type: "bad",
+          title: "Невідома помилка!",
+          text: user.message
+        }
+      });
     }
   }
 
   return (
     <form method="post" onSubmit={(e: any) => prepare(e)}>
-      {message === false ? null : !message.body.data ? (
-        <>
-          <h1 style={{ color: "#F36A6A" }}>Щось пішло не за планом.</h1>
-        </>
-      ) : (
-        <>
-          <h1 style={{ color: "#6AEA3D" }}>
-            Користувача з нікнеймом &ldquo;{message.body.data.name}
-            &rdquo; створено.
-          </h1>
-          <h2>Письмо до {message.body.data.email} відправлено</h2>
-        </>
-      )}
       <div className={styles.registrationMiddle}>
         <Input type="email" name="email" Name="Пошта" placeholder="Пошта" />
         <Input type="text" name="name" Name="Ім'я" placeholder="Ім'я" />

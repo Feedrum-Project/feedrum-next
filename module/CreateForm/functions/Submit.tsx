@@ -34,7 +34,7 @@ export default function submit({ event, dispatch, router }: ISubmit) {
 
   const body = {
     body: { title, body: content },
-    tags: target.tags.value.split(" ").map((tag) => {
+    tags: target.tags.value.split(", ").map((tag) => {
       return { name: tag };
     })
   };

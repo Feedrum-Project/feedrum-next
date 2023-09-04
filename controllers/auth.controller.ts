@@ -59,10 +59,6 @@ export default class AuthController {
     await User.omit({ name: true }).parseAsync(userData);
 
     const user = await prisma.user.getUserByEmail(userData.email);
-    const user2 = await prisma.user.findFirst({
-      where: { email: userData.email }
-    });
-    console.log(user2, user, userData);
     if (user === null) throw new EmailNotFoundError();
 
     const isPasswordValid = await bcrypt.compare(
