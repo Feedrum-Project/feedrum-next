@@ -1,124 +1,124 @@
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["fullTextSearch"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 model User {
-    id         Int      @id @default(autoincrement())
-    createdAt  DateTime @default(now())
-    email      String   @unique
-    name       String   @unique
-    password   String
-    rank       Int      @default(0)
-    role       Role     @default(USER)
-    isVerified Boolean  @default(false)
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  email      String   @unique
+  name       String   @unique
+  password   String
+  rank       Int      @default(0)
+  role       Role     @default(USER)
+  isVerified Boolean  @default(false)
 
-    description Json?
+  description Json?
 
-    Posts       Post[]
-    Comments    Comment[]
-    VerifyCodes VerifyCode[]
-    Votes       Vote[]
-    Images      Image[]
+  Posts       Post[]
+  Comments    Comment[]
+  VerifyCodes VerifyCode[]
+  Votes       Vote[]
+  Images      Image[]
 }
 
 model VerifyCode {
-    code      String   @unique
-    createdAt DateTime @default(now())
+  code      String   @unique
+  createdAt DateTime @default(now())
 
-    User   User @relation(fields: [userId], references: [id])
-    userId Int
+  User   User @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model Post {
-    id        Int      @id @default(autoincrement())
-    body      String
-    title     String
-    rank      Int      @default(0)
-    createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  body      String
+  title     String
+  rank      Int      @default(0)
+  createdAt DateTime @default(now())
 
-    User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId Int
+  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
 
-    Comments Comment[]
-    Tags     PostTag[]
+  Comments Comment[]
+  Tags     PostTag[]
 }
 
 model Tag {
-    id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-    name String @unique
+  name String @unique
 
-    posts PostTag[]
+  posts PostTag[]
 }
 
 model PostTag {
-    post   Post @relation(fields: [postId], references: [id])
-    postId Int  @unique
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
 
-    tag   Tag @relation(fields: [tagId], references: [id]) // fix, please
-    tagId Int
+  tag   Tag @relation(fields: [tagId], references: [id]) // fix, please
+  tagId Int
 
-    @@id([postId, tagId])
+  @@id([postId, tagId])
 }
 
 model Comment {
-    id        Int      @id @default(autoincrement())
-    body      String
-    rank      Int      @default(0)
-    createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  body      String
+  rank      Int      @default(0)
+  createdAt DateTime @default(now())
 
-    Post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-    postId Int
+  Post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
 
-    User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId Int
+  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
 }
 
 model Vote {
-    score     VoteScore
-    type      VoteType
-    fieldId   Int
-    createdAt DateTime  @default(now())
+  score     VoteScore
+  type      VoteType
+  fieldId   Int
+  createdAt DateTime  @default(now())
 
-    User   User @relation(fields: [userId], references: [id])
-    userId Int
+  User   User @relation(fields: [userId], references: [id])
+  userId Int
 
-    @@id([fieldId, userId, type])
+  @@id([fieldId, userId, type])
 }
 
 model Image {
-    id        String      @id
-    createdAt DateTime    @default(now())
-    type      ImageFormat
+  id        String      @id
+  createdAt DateTime    @default(now())
+  type      ImageFormat
 
-    User   User @relation(fields: [userId], references: [id])
-    userId Int
+  User   User @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 enum Role {
-    USER
-    ADMIN
+  USER
+  ADMIN
 }
 
 enum VoteScore {
-    UPVOTE
-    DOWNVOTE
+  UPVOTE
+  DOWNVOTE
 }
 
 enum VoteType {
-    POST
-    COMMENT
-    USER
+  POST
+  COMMENT
+  USER
 }
 
 enum ImageFormat {
-    JPEG
-    PNG
-    GIF
+  JPEG
+  PNG
+  GIF
 }

@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@next/font": "13.0.6",
-    "@prisma/client": "5.0.0",
+    "@prisma/client": "5.2.0",
     "@reduxjs/toolkit": "^1.9.3",
     "bcryptjs": "^2.4.3",
     "formidable": "^2.1.1",
