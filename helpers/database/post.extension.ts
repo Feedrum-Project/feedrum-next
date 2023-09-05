@@ -82,7 +82,7 @@ export default Prisma.defineExtension((client) => {
             }
           });
 
-          createdTags.forEach(async (createdTag: Tag) => {
+          for await (const createdTag of createdTags) { // fixed
             await client.postTag.create({
               data: {
                 post: {
@@ -90,14 +90,14 @@ export default Prisma.defineExtension((client) => {
                     id: createdPost.id
                   }
                 },
-                tag: {
+                tag: { // it needing in fix.
                   connect: {
                     id: createdTag.id
                   }
                 }
               }
             });
-          });
+          }
 
           return createdPost;
         },

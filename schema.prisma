@@ -61,7 +61,7 @@ model PostTag {
     post   Post @relation(fields: [postId], references: [id])
     postId Int  @unique
 
-    tag   Tag @relation(fields: [tagId], references: [id])
+    tag   Tag @relation(fields: [tagId], references: [id]) // fix, please
     tagId Int
 
     @@id([postId, tagId])
