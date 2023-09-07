@@ -6,11 +6,15 @@ interface IBox {
   children: ReactNode;
 }
 /**
+ * @description
+ * Uses for elements what needing in one title and small components.
+ * Can be also used for hard structures.
  * @example
  * // Usage:
  * <Box title="Hello, world!">
+ *  <p>Sell your soul to the devil. :flushed:</p>
  *  <Button Style="secondary">
- *   Activate
+ *   Sell
  *  </Button>
  * </Box>
  */

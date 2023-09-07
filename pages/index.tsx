@@ -5,13 +5,16 @@ import PostComponent from "components/Post/Post";
 import styles from "../styles/home.module.sass";
 import Aside from "module/Aside/Aside";
 import { useState } from "react";
+import TagController from "controllers/tag.controller";
+import { ITagName } from "types/Tag";
 
 interface HomeProps {
   posts: IPost[];
-  best: IPost[];
+  bestPosts: IPost[];
+  bestTags: ITagName[];
 }
 
-export default function Home({ posts, best }: HomeProps) {
+export default function Home({ posts, bestPosts, bestTags }: HomeProps) {
   const [postsSorted, setPostsSorted] = useState<IPost[] | []>(posts);
 
   function setSortingBest() {
@@ -60,7 +63,7 @@ export default function Home({ posts, best }: HomeProps) {
             )}
           </div>
         </article>
-        <Aside BestPosts={best} Sponsors />
+        <Aside BestPosts={bestPosts} Sponsors BestTags={bestTags}/>
       </div>
     </>
   );
@@ -68,12 +71,14 @@ export default function Home({ posts, best }: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
   const posts = await PostController.getAll(0, 20);
-  const best = await PostController.getBest();
+  const bestPosts = await PostController.getBest();
+  const bestTags = await TagController.getBest();
 
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts.reverse())), // It breaks without this json fuckery
-      best: JSON.parse(JSON.stringify(best))
+      bestPosts: JSON.parse(JSON.stringify(bestPosts)),
+      bestTags: JSON.parse(JSON.stringify(bestTags))
     }
   };
 };

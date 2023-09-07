@@ -15,7 +15,7 @@ export interface IPost {
     createdAt?: Date;
     isVerified?: boolean;
   };
-  Tags?: ITag[] | null;
+  Tags?: ITag[];
   _count?: {
     Comments: number;
   };

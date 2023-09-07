@@ -1,6 +1,11 @@
 export default interface ITag {
-  tagId: number;
   postId: number;
+  tagId: number;
+}
+
+export interface ITagName {
+  name: string;
+  id: number;
 }
 
 export type Tag = string[] | null;

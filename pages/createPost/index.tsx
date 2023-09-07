@@ -15,6 +15,8 @@ import { IStore } from "store/store";
 import Link from "next/link";
 import Tags from "module/CreateForm/Components/Tags";
 import { Tag } from "types/Tag";
+import Box from "components/UI/Box/Box";
+import TagElement from "components/UI/Tag/TagElement";
 
 export default function CreatePost() {
   const [chapter, setChapter] = useState<"editor" | "view">("view");
@@ -66,7 +68,13 @@ export default function CreatePost() {
             method="post"
             onSubmit={(event) => submit({ event, dispatch, router })}
           >
-            <input type="text" name="tags" value={tags?.join(", ")} readOnly hidden/>
+            <input
+              type="text"
+              name="tags"
+              value={tags?.join(", ")}
+              readOnly
+              hidden
+            />
             {chapter === "editor" ? (
               <>
                 <Images files={files} setFiles={setFiles} showAdd />
@@ -122,10 +130,22 @@ export default function CreatePost() {
               знають маркдаун
             </p>
           </div>
-          <div className={styles.asideTags}>
-            <h1>Теги</h1>
-            <Tags tagsSet={[tags, setTags]}/>
-          </div>
+          {chapter === "view" ? (
+            <Box title="Теги">
+              {tags ? (
+                tags?.map((tag) => <TagElement name={tag} key={tag} />)
+              ) : (
+                <span className="gray">
+                  Неможливо створити статтю без тегів, додайте хоч 3!
+                </span>
+              )}
+            </Box>
+          ) : (
+            <div className={styles.asideTags}>
+              <h1>Теги</h1>
+              <Tags tagsSet={[tags, setTags]} />
+            </div>
+          )}
         </aside>
       </div>
     </>
