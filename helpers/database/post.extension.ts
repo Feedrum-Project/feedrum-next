@@ -31,7 +31,8 @@ export default Prisma.defineExtension((client) => {
                   email: true,
                   rank: true,
                   createdAt: true,
-                  isVerified: true
+                  isVerified: true,
+                  role: true
                 }
               },
               Tags: {

@@ -1,3 +1,5 @@
+import { role } from "./Post";
+
 export interface IUser {
   id: number;
   name: string;
@@ -5,6 +7,7 @@ export interface IUser {
   rank: number;
   createdAt: string | Date;
   isVerified: boolean;
+  role?: role;
 }
 
 export interface IUserExtended extends IUser {

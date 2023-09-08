@@ -16,6 +16,7 @@ export default Prisma.defineExtension((client) => {
     email: true,
     name: true,
     rank: true,
+    role: true,
     createdAt: true,
     isVerified: true
   };
@@ -81,6 +82,7 @@ export default Prisma.defineExtension((client) => {
                       id: true,
                       name: true,
                       rank: true,
+                      role: true,
                     }
                   }
                 }
@@ -114,7 +116,9 @@ export default Prisma.defineExtension((client) => {
               User: {
                 select: {
                   id: true,
-                  name: true
+                  name: true,
+                  role: true,
+                  rank: true
                 }
               },
               _count: {

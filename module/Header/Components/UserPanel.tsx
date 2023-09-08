@@ -40,13 +40,16 @@ export default function UserPanel({ user, coors }: UserPanel) {
         )}
       </div>
       <div className={styles.middle}>
-        <Link href="/api" className="API">
+        <Link href="/api-doc" className="API">
           API
         </Link>
         {user !== false ? (
-          <Link href="/settings" className="settings">
-            Налаштування
-          </Link>
+          <>
+            <Link href="/settings" className="settings">
+              Налаштування
+            </Link>
+            <Link href="#">Підписки</Link>
+          </>
         ) : null}
       </div>
       {user !== false ? (

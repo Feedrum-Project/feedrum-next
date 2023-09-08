@@ -33,6 +33,13 @@ export default function Home({ posts, bestPosts, bestTags }: HomeProps) {
     });
     setPostsSorted(buffer);
   }
+  function setSortingPopular() {
+    if (postsSorted === undefined) return;
+    let buffer = [...postsSorted].sort((a, b) => {
+      return a._count!.Comments > b._count!.Comments ? -1 : 1;
+    });
+    setPostsSorted(buffer);
+  }
 
   return (
     <>
@@ -51,7 +58,12 @@ export default function Home({ posts, bestPosts, bestTags }: HomeProps) {
               value="Найкращі"
               className={styles.best}
             />
-            <input type="button" value="Популярні" className={styles.popular} />
+            <input
+              type="button"
+              onClick={() => setSortingPopular()}
+              value="Популярні"
+              className={styles.popular}
+            />
           </div>
           <div className={styles.posts}>
             {postsSorted.length ? (
@@ -63,7 +75,7 @@ export default function Home({ posts, bestPosts, bestTags }: HomeProps) {
             )}
           </div>
         </article>
-        <Aside BestPosts={bestPosts} Sponsors BestTags={bestTags}/>
+        <Aside BestPosts={bestPosts} Sponsors BestTags={bestTags} />
       </div>
     </>
   );

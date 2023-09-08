@@ -1,6 +1,8 @@
 import { IUser } from "./User";
 import ITag, { Tag } from "./Tag";
 
+export type role = "ADMIN" | "USER" | "BANNED";
+
 export interface IPost {
   id: number;
   body: string;
@@ -14,6 +16,7 @@ export interface IPost {
     rank: number;
     createdAt?: Date;
     isVerified?: boolean;
+    role: role;
   };
   Tags?: ITag[];
   _count?: {
@@ -31,6 +34,8 @@ export interface IPostId {
   User: {
     id: number;
     name: string;
+    role?: role;
+    rank?: number;
   };
   Tags?: Tag;
   _count?: {

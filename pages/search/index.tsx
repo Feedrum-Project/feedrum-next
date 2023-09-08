@@ -1,6 +1,6 @@
 import styles from "styles/search.module.sass";
 import { IComment, IPost } from "types/Post";
-import { IUser, IUserExtended } from "types/User";
+import { IUserExtended } from "types/User";
 import { useState } from "react";
 import Post from "components/Post/Post";
 import User from "components/User/User";
@@ -42,7 +42,7 @@ export default function Search({ result }: { result: IResult }) {
         ) : chapter === "users" ? (
           <>
             <div className={styles.sort}>
-              <button>Популярні</button>
+              <button>За рейтингом</button>
               <button>За алфавітом</button>
             </div>
             {result.users && result.users.length !== 0 ? (

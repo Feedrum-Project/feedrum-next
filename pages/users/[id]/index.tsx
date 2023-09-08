@@ -2,8 +2,6 @@ import prisma from "@database";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Image from "next/image";
-import Link from "next/link";
 import Head from "next/head";
 import Button from "components/UI/Button/Button";
 import Rank from "module/Aside/Components/Rank";
@@ -11,17 +9,14 @@ import AsideInfo from "module/Aside/Components/AsideInfo";
 
 import styles from "./profile.module.sass";
 
-import message from "images/message.svg";
-import avatar from "images/avatar.svg";
-
 import { IUser } from "types/User";
 import { IPost, IPostId } from "types/Post";
-import getRelative from "helpers/time.helper";
 import { IStore } from "store/store";
-import Star from "components/UI/Star/Star";
 import Comment from "components/Comment/Comment";
+import Post from "components/Post/Post";
+import UserComponent from "components/UI/UserComponent/UserComponent";
 
-interface IuserComment {
+interface IUserComment {
   id: number;
   body: string;
   rank: number;
@@ -33,7 +28,7 @@ interface IuserComment {
 interface UserProps {
   userInformation: IUser | null;
   userPosts: IPostId[] | [];
-  userComments: IuserComment[];
+  userComments: IUserComment[];
 }
 
 export default function User({
@@ -65,8 +60,7 @@ export default function User({
       </Head>
       <div className={styles.top}>
         <div className={styles.name}>
-          <Image src={avatar} alt="Аватар" className={styles.topAvatar} />
-          <span className={styles.nameNick}>{userInformation.name}</span>
+          <UserComponent user={userInformation as any} isBig />
         </div>
         <div className={styles.profileAside}>
           <Button Style="purple">Підписатися</Button>
@@ -118,40 +112,11 @@ export default function User({
                   </div>
                   {userPosts.map((e) => {
                     return (
-                      <div key={e.id} className={styles.post}>
-                        <div className={styles.postTime}>
-                          <span>{getRelative(new Date(e.createdAt))}</span>
-                        </div>
-                        <div className={styles.postContent}>
-                          <div className={styles.postTitle}>
-                            <Link
-                              href={`/posts/${e.id}`}
-                              key={e.id}
-                              style={{
-                                textDecoration: "none",
-                                color: "white"
-                              }}
-                            >
-                              {e.title}
-                            </Link>
-                          </div>
-                          <div className={styles.postBody}>{e.body}</div>
-                        </div>
-                        <div className={styles.postBottom}>
-                          <div className={styles.postComments}>
-                            <Image
-                              width="14"
-                              height="13"
-                              src={message}
-                              alt="Повідомлення"
-                            />
-                            {e._count ? <span>{e._count.Comments}</span> : null}
-                          </div>
-                          <div className={styles.postRank}>
-                            <Star reputation={e.rank} />
-                          </div>
-                        </div>
-                      </div>
+                      <Post
+                        postData={e as any}
+                        key={e.id}
+                        isAuthorShow={false}
+                      />
                     );
                   })}
                 </>
@@ -252,7 +217,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     Number(context.query.id)
   );
 
-  const userComments: IuserComment[] = await prisma.user.getUserComments(
+  const userComments: IUserComment[] = await prisma.user.getUserComments(
     Number(context.query.id)
   );
 

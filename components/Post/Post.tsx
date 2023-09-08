@@ -2,48 +2,26 @@ import styles from "./styles/posts.module.sass";
 import Image from "next/image";
 import Link from "next/link";
 
-import avatar from "images/avatar.svg";
 import message from "images/message.svg";
 
 import { IPost } from "types/Post";
 import getRelative from "helpers/time.helper";
 import Star from "components/UI/Star/Star";
+import UserComponent from "components/UI/UserComponent/UserComponent";
 
-export default function Post({ postData }: { postData: IPost }) {
-
-  if(!postData.User) return <h1>Не знайдено користувача</h1>;
+export default function Post({
+  postData,
+  isAuthorShow=true
+}: {
+  postData: IPost;
+  isAuthorShow?: boolean;
+}) {
+  if (!postData.User) return <h1>Не знайдено користувача</h1>;
   return (
     <div className={styles.post}>
       <div className={styles.postTop}>
-        <div className={styles.postAuthor}>
-          <Image src={avatar} alt="Аватар" />
-          <span className={styles.postAuthorname}>
-            <Link
-              className={styles.postAuthor}
-              href={`/users/${postData.User.id}`}
-              style={{ textDecoration: "none", color: "#fff" }}
-            >
-              <span className="name">{postData.User.name}</span>
-              <span
-                className={[
-                  styles.postAuthorRank,
-                  postData.User.rank > 0
-                    ? "green"
-                    : postData.User.rank < 0
-                    ? "red"
-                    : "gray"
-                ].join(" ")}
-              >
-                (
-                {postData.User.rank > 0
-                  ? "+"
-                  : ""}
-                {postData.User.rank})
-              </span>
-            </Link>
-          </span>
-        </div>
-        <div className={styles.postDate}>
+        {isAuthorShow && <UserComponent user={postData.User} />}
+        <div>
           {getRelative(new Date(postData.createdAt))}
         </div>
       </div>
