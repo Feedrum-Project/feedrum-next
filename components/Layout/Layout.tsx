@@ -43,6 +43,7 @@ export default function Layout({ children }: Props) {
             });
       })
       .catch(() => {
+
         dispatch({ type: "setUser", payload: { id: 0 } });
 
         dispatch({

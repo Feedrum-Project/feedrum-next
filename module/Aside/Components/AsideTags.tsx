@@ -6,7 +6,6 @@ interface ITags {
   tags: { tag: ITagName }[];
 }
 export default function AsideTags({ tags }: ITags) {
-  console.log(tags);
   return (
     <div className={styles.elem}>
       <div className={styles.elemTitle}>Теги</div>

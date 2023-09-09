@@ -66,7 +66,7 @@ export default function User({
           <Button Style="purple">Підписатися</Button>
           <Rank
             info={userInformation}
-            disabled={user !== null && user.id === userInformation.id}
+            disabled={user !== null && (user.id === 0 || user.id === userInformation.id)}
           />
         </div>
       </div>

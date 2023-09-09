@@ -1,5 +1,5 @@
 import { IUser } from "./User";
-import ITag, { Tag } from "./Tag";
+import { Tag } from "./Tag";
 
 export type role = "ADMIN" | "USER" | "BANNED";
 
@@ -18,7 +18,7 @@ export interface IPost {
     isVerified?: boolean;
     role: role;
   };
-  Tags?: ITag[];
+  Tags?: { tag?: { name: string }; postId: number; tagId: number }[];
   _count?: {
     Comments: number;
   };
@@ -58,5 +58,5 @@ export interface lightPost {
   rank: number;
   _count?: {
     Comments: number;
-  }
+  };
 }

@@ -24,7 +24,21 @@ export default async function search(data: string) {
       title: true,
       rank: true,
       createdAt: true,
-      User: true
+      User: true,
+      Tags: {
+        select: {
+          tag: {
+            select: {
+              name: true
+            }
+          }
+        }
+      },
+      _count: {
+        select: {
+          Comments: true
+        }
+      }
     }
   });
   const users = await prisma.user.findMany({

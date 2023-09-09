@@ -8,10 +8,11 @@ import { IPost } from "types/Post";
 import getRelative from "helpers/time.helper";
 import Star from "components/UI/Star/Star";
 import UserComponent from "components/UI/UserComponent/UserComponent";
+import TagElement from "components/UI/Tag/TagElement";
 
 export default function Post({
   postData,
-  isAuthorShow=true
+  isAuthorShow = true
 }: {
   postData: IPost;
   isAuthorShow?: boolean;
@@ -21,9 +22,7 @@ export default function Post({
     <div className={styles.post}>
       <div className={styles.postTop}>
         {isAuthorShow && <UserComponent user={postData.User} />}
-        <div>
-          {getRelative(new Date(postData.createdAt))}
-        </div>
+        <div>{getRelative(new Date(postData.createdAt))}</div>
       </div>
       <div className={styles.postMiddle}>
         <h1 className={styles.postTitle}>
@@ -36,9 +35,18 @@ export default function Post({
         </h1>
         <div className={styles.postBody}>
           {postData.body.length >= 234
-            ? postData.body.slice(0, 234) + "...."
+            ? postData.body.slice(0, 128) + "...."
             : postData.body}
         </div>
+      </div>
+      <div className={styles.postTags}>
+        {postData.Tags && postData.Tags.length
+          ? postData.Tags.map((tag) => {
+              return tag.tag ? (
+                <TagElement name={tag.tag.name} key={tag.tag.name} />
+              ) : null;
+            })
+          : null}
       </div>
       <div className={styles.postBottom}>
         <div className={styles.postComments}>

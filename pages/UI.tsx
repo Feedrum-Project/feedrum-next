@@ -139,7 +139,8 @@ export default function UI() {
                 name: "admin",
                 rank: 2,
                 createdAt: new Date(),
-                isVerified: true
+                isVerified: true,
+                role: "BANNED"
               } as any
             }
           />
@@ -152,7 +153,8 @@ export default function UI() {
                 createdAt: new Date(),
                 isVerified: true,
                 description: "Трохи про себе...",
-                subscribers: 254
+                subscribers: 254,
+                role: "ADMIN"
               } as any
             }
           />

@@ -2,12 +2,10 @@ import styles from "styles/search.module.sass";
 import { IComment, IPost } from "types/Post";
 import { IUserExtended } from "types/User";
 import { useState } from "react";
-import Post from "components/Post/Post";
-import User from "components/User/User";
 import search from "helpers/search.helper";
-import Comment from "components/Comment/Comment";
-import { useSelector } from "react-redux";
-import { IStore } from "store/store";
+import PostList from "module/Search/components/PostList";
+import UserList from "module/Search/components/UserList";
+import CommentList from "module/Search/components/CommentList";
 
 interface IResult {
   posts: IPost[] | undefined;
@@ -19,69 +17,16 @@ export default function Search({ result }: { result: IResult }) {
   const [chapter, setChapter] = useState<"posts" | "users" | "comments">(
     "posts"
   );
-  const { user } = useSelector((store: IStore) => store).user;
 
   return (
     <div className={styles.search}>
       <div className={styles.results}>
         {chapter === "posts" ? (
-          <>
-            <div className={styles.sort}>
-              <button>Найновіщі</button>
-              <button>Найкращі</button>
-              <button>Популярні</button>
-            </div>
-            {result.posts && result.posts.length !== 0 ? (
-              result.posts.map((e) => {
-                return <Post key={e.id} postData={e} />;
-              })
-            ) : (
-              <h1>Ми не знайшли статті :(</h1>
-            )}
-          </>
+          <PostList posts={result.posts} />
         ) : chapter === "users" ? (
-          <>
-            <div className={styles.sort}>
-              <button>За рейтингом</button>
-              <button>За алфавітом</button>
-            </div>
-            {result.users && result.users.length !== 0 ? (
-              result.users.map((e) => {
-                return <User user={e} key={e.id} />;
-              })
-            ) : (
-              <h1>Ми не знайшли користувачів :(</h1>
-            )}
-          </>
+          <UserList users={result.users} />
         ) : (
-          <>
-            <div className={styles.sort}>
-              <button>Найновіщі</button>
-              <button>Популярні</button>
-            </div>
-            {result.comments ? null : (
-              <h1 style={{ color: "#fff" }}>Без коментарів</h1>
-            )}
-            {result.comments ? (
-              <>
-                {result.comments.map((comment) => {
-                  return (
-                    <Comment
-                      comment={comment}
-                      key={comment.id}
-                      disabled={
-                        user
-                          ? user.id !== comment.User.id
-                            ? false
-                            : true
-                          : true
-                      }
-                    />
-                  );
-                })}
-              </>
-            ) : null}
-          </>
+          <CommentList comments={result.comments} />
         )}
       </div>
       <aside className={styles.chapters}>
