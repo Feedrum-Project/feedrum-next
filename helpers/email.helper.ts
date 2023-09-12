@@ -26,7 +26,7 @@ export default async function sendEmail(email: EmailOptions) {
   const resend = new Resend("re_32epRjtS_CimNmG3f1djXHSeYRdgH4orU");
 
   const sendedEmail = resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "onboarding@feedrum.com",
     to: email.email,
     subject: email.letterName,
     html: `

@@ -87,13 +87,11 @@ export default function Settings() {
                       value={user.user.name}
                       Name="Ім'я"
                       placeholder="Ім'я"
-                      info="Ваше ім'я."
                     />
                     <Input
                       value={user.user.email}
                       Name="Пошта"
                       placeholder="E-mail"
-                      info="Поштова скринька."
                     />
                   </div>
                 </div>
@@ -115,12 +113,10 @@ export default function Settings() {
                 <Input
                   placeholder="https://feedrum.com"
                   Name="Вебсайт"
-                  info="Ваша сторінка."
                 />
                 <Input
                   placeholder="Feedrum"
                   Name="Організаці"
-                  info="Де ви працюєте?"
                 />
                 <Select
                   name="Країна"

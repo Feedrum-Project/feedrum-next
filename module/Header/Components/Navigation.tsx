@@ -10,7 +10,7 @@ import { IUser } from "types/User";
 import UserPanel from "./UserPanel";
 import { IStore } from "store/store";
 
-interface Panel {
+export interface IPanel {
   user: IUser | false;
   coors: {
     x: number;
@@ -20,7 +20,7 @@ interface Panel {
 
 export default function Navigation() {
   const { user } = useSelector((state: IStore) => state).user;
-  const [panel, setPanel] = useState<Panel | null>(null);
+  const [panel, setPanel] = useState<IPanel | null>(null);
 
   useEffect(() => {
     addEventListener("resize", () => {
@@ -72,7 +72,7 @@ export default function Navigation() {
             <Image src={avatar} alt="Ваш аватар" height="28" width="28" />
           </button>
         </div>
-        {panel ? <UserPanel user={panel.user} coors={panel.coors} /> : null}
+        {panel ? <UserPanel panel={[panel, setPanel]} user={panel.user}/> : null}
       </>
     );
   } else {
@@ -104,7 +104,7 @@ export default function Navigation() {
             Увійти
           </Button>
         </div>
-        {panel ? <UserPanel user={panel.user} coors={panel.coors} /> : null}
+        {panel ? <UserPanel panel={[panel, setPanel]} user={panel.user}/> : null}
       </>
     );
   }

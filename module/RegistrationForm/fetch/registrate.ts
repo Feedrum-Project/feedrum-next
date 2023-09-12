@@ -25,7 +25,7 @@ export default async function registrate(body: bodyObj) {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": [
-        "http://192.168.0.29:3000",
+        "http://0.0.0.0:3000",
         "https://feedrum.com"
       ].join(", ")
     }

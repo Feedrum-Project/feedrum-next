@@ -4,6 +4,7 @@ import registrate from "./fetch/registrate";
 
 import styles from "./styles/registration.module.sass";
 import { useDispatch } from "react-redux";
+import { z } from "zod";
 
 interface bodyObj {
   name: string;
@@ -35,7 +36,21 @@ export default function RegistrationForm() {
       password2: target.password2.value
     };
 
+    const isOk = z.object({
+      name: z.string(),
+      email: z.string(),
+      password1: z.string().min(7),
+      password2: z.string().min(7)
+    }).safeParse(body).success;
+
+    if(!isOk) return dispatch({type: "addNotification", payload: {
+      type: "bad",
+      title: "Невідома помилка!",
+    }});
+
     const user = await registrate(body);
+
+    console.log(user);
 
     if (user.code === 200) {
       dispatch({

@@ -18,12 +18,15 @@
     height: min-content
     width: 25%
     color: $gray
+
+    display: flex
+    flex-direction: column
+    gap: 1.5rem
     &>*
         background: $block
         padding: 1rem
         width: 100%
         border-radius: .625rem
-        margin-bottom: 1.5rem
         &>h1
             color: $white
             margin-bottom: 1.5rem
@@ -31,8 +34,11 @@
 .chapters
     display: flex
     flex-direction: column
+    gap: .5rem
     &Selected
         background: $background
+        &:hover
+            background: $background !important
     &Unselected
         background: none
         cursor: pointer
@@ -41,7 +47,11 @@
     color: $gray
     text-align: left
     border: none
+    border-radius: .5rem
     padding: .625rem
+
+    &:hover
+        background: $border
 
 .images
 

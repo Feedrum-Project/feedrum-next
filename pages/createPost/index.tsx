@@ -47,6 +47,11 @@ export default function CreatePost() {
     const content = HTMLtoMD(txt.innerHTML);
     localStorage.setItem("article", content);
 
+    dispatch({type: "addNotification", payload: {
+      type: "good",
+      title: "Чорнетку збережено"
+    }});
+
     setArticle((pr) => {
       return { ...pr, content };
     });
@@ -138,10 +143,9 @@ export default function CreatePost() {
               )}
             </Box>
           ) : (
-            <div className={styles.asideTags}>
-              <h1>Теги</h1>
+            <Box title="Теги">
               <Tags tagsSet={[tags, setTags]} />
-            </div>
+            </Box>
           )}
         </aside>
       </div>
