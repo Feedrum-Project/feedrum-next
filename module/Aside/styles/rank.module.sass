@@ -16,10 +16,18 @@
 .growReputation
   border-top-left-radius: .3125rem
   border-bottom-left-radius: .3125rem
+  transition: .5s
+  &:hover
+    transition: .25s
+    background: $green
 
 .reduceReputation
   border-top-right-radius: .3125rem
   border-bottom-right-radius: .3125rem
+  transition: .5s
+  &:hover
+    transition: .25s
+    background: $red
 
 .growReputation, .reduceReputation
   border: none

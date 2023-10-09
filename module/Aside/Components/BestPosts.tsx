@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function BestPosts({ posts }: { posts: IPost[] }) {
   const parsedPosts = posts.map((post) => (
     <div key={post.id}>
-      <div className="title"><Link href={"/posts/"+post.id}>{post.title}</Link></div>
+      <div className={styles.title}><Link href={"/posts/"+post.id}>{post.title}</Link></div>
       <div className={styles.elemBottom}>
         <div className={styles.elemComments}>
           <Image src={message} alt="Повідомлення" />

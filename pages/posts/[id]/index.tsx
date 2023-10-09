@@ -2,8 +2,11 @@ import styles from "./post.module.sass";
 import prisma from "@database";
 import { GetServerSideProps } from "next";
 import { FormEvent, ReactNode, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 import AsideProfile from "module/Aside/Components/AsideProfile";
 import SimilarPosts from "module/Aside/Components/SimilarPosts";
@@ -12,15 +15,15 @@ import Comment from "components/Comment/Comment";
 import Textarea from "components/UI/Textarea/Textarea";
 import { Button, Input } from "components/UI";
 import Modal from "components/Modal/Modal";
+import AsideTags from "module/Aside/Components/AsideTags";
 
 import message from "images/message.svg";
 import avatar from "images/avatar.svg";
 import parser from "helpers/parsers.helper";
+
 import { IComment, IPost, IPostId, lightPost } from "types/Post";
 import { IUser } from "types/User";
-import { useDispatch, useSelector } from "react-redux";
-import Link from "next/link";
-import AsideTags from "module/Aside/Components/AsideTags";
+
 
 interface IPostPage {
   postComments: IComment[];
@@ -38,6 +41,10 @@ export default function PostPage({
   const { user } = useSelector(
     (state: { user: { user: IUser } }) => state.user
   );
+  const [post, setPost] = useState(postContent);
+  const [comments, setComments] = useState(postComments);
+  const [commentField, setField] = useState("");
+
   const [attention, setAttention] = useState<{
     code: number;
     message: string;
@@ -51,7 +58,7 @@ export default function PostPage({
 
   let content = useRef<null | HTMLDivElement>(null);
 
-  function sub(e: FormEvent<HTMLFormElement>) {
+  function toSendComment(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const { target } = e as unknown as {
@@ -60,7 +67,7 @@ export default function PostPage({
 
     const body = JSON.stringify({
       body: target.comment.value,
-      postId: postContent.id
+      postId: post.id
     });
 
     fetch("/api/comments", {
@@ -96,6 +103,8 @@ export default function PostPage({
               text: "Ваш коментар надіслано."
             }
           });
+          setComments(pr => [{...e.data, User: user}].concat(pr));
+          setField("");
         }
         setAttention(e);
       });
@@ -112,7 +121,7 @@ export default function PostPage({
 
     const { email } = user;
     const body = JSON.stringify({
-      postId: postContent.id,
+      postId: post.id,
       email,
       password: target.password.value
     });
@@ -133,27 +142,27 @@ export default function PostPage({
   }
 
   useEffect(() => {
-    const post_content = parser.MDtoHTML(postContent.body + "\n");
+    const post_content = parser.MDtoHTML(post.body + "\n");
     if (content && content.current) {
       content.current.innerHTML = post_content;
     }
-  }, [postContent.body]);
+  }, [post.body]);
 
   if (author.id === -1)
     return <h1 style={{ color: "#eee" }}>Статті не було знайдено</h1>;
   return (
     <>
       <Head>
-        <meta name="description" content={postContent.body} />
+        <meta name="description" content={post.body} />
         <meta name="author" content={author.name} />
       </Head>
       <div className={styles.main}>
         <Modal modalState={[modal, setModal]} type="attention" />
         <article className={styles.post}>
           {user !== null ? (
-            user.id === postContent.userId ? (
+            user.id === post.userId ? (
               <div className={styles.author}>
-                <Button Style="purple" to={"./" + postContent.id + "/edit"}>
+                <Button Style="purple" to={"./" + post.id + "/edit"}>
                   Редагувати
                 </Button>
                 <Button
@@ -173,7 +182,7 @@ export default function PostPage({
                               Ця дія не відворотня, може хочете просто{" "}
                               <Link
                                 className={styles.link}
-                                href={"./" + postContent.id + "/edit"}
+                                href={"./" + post.id + "/edit"}
                               >
                                 редагувати
                               </Link>
@@ -200,7 +209,7 @@ export default function PostPage({
               </div>
             ) : null
           ) : null}
-          <h1 className={styles.title}>{postContent.title}</h1>
+          <h1 className={styles.title}>{post.title}</h1>
           <div className={styles.content} ref={content}></div>
           <div className={styles.asideMobile}>
             <SimilarPosts posts={similarPosts} />
@@ -210,12 +219,12 @@ export default function PostPage({
               <div className={styles.commentsTitle}>
                 <Image
                   src={message}
-                  alt="comment icon."
+                  alt="Іконка коментарю"
                   width={20}
                   height={18}
                 />
                 <span className={styles.commentsTitleText}>
-                  Коментарі - {postComments.length}
+                  Коментарі - {comments.length}
                 </span>
               </div>
               <h2
@@ -226,7 +235,7 @@ export default function PostPage({
               >
                 {attention ? attention.message : null}
               </h2>
-              <form onSubmit={sub} className={styles.comment}>
+              <form onSubmit={toSendComment} className={styles.comment}>
                 <div className={styles.commentLeft}>
                   <Image alt="Аватар" src={avatar} width={40} height={40} />
                 </div>
@@ -237,7 +246,7 @@ export default function PostPage({
                     maxCount={2048}
                     placeholder="Місце для вашого коментаря"
                     minHeight={130}
-                  />
+                  >{commentField}</Textarea>
                   <div className={styles.admit}>
                     <Button Style="purple" type="submit">
                       Підтвердити
@@ -246,7 +255,7 @@ export default function PostPage({
                 </div>
               </form>
               <div className={styles.commentsList}>
-                {postComments.map((e: IComment) => {
+                {comments.map((e: IComment) => {
                   return (
                     <Comment
                       key={e.id}
@@ -262,12 +271,12 @@ export default function PostPage({
         <aside className={styles.aside}>
           <AsideProfile userName={author.name} userId={author.id} />
           <SimilarPosts posts={similarPosts} />
-          {postContent.Tags ? <AsideTags tags={postContent.Tags as any} /> : null}
+          {post.Tags ? <AsideTags tags={post.Tags as any} /> : null}
           <div style={{ width: "fit-content" }}>
             <Rank
-              info={postContent}
+              info={post}
               disabled={
-                user !== null ? user.id === postContent.userId : undefined
+                user !== null ? user.id === post.userId : undefined
               }
             />
           </div>

@@ -2,10 +2,12 @@
 
 .search
   background: $block
+  border: 1px solid rgba(0, 0, 0, 0)
   border-radius: 99px
   padding: .6875rem 1.25rem
   cursor: text
   width: 294px
+  transition: .5s
   &>form
     display: flex
     justify-content: space-between
@@ -21,6 +23,8 @@
     cursor: pointer
     width: 1.2rem
     height: 1.2rem
+  &:hover
+    border: 1px solid $white
 
 .input
   background: $block
@@ -56,6 +60,10 @@
   background: $block
   border-radius: .5625rem
   padding: .625rem .625rem 0 .625rem
+  transition: .25s
+  &:hover
+    border: 1px solid $gray
+    transition: .5s
   &Name
     display: flex
     font-weight: 400

@@ -7,7 +7,6 @@ import errorMiddleware from "middlewares/error.middleware";
 import CORSable from "middlewares/cors.middleware";
 
 /**
- * @swagger
  * /api/auth/login:
  *  post:
  *    security:

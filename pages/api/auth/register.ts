@@ -8,7 +8,6 @@ import errorMiddleware from "middlewares/error.middleware";
 import CORSable from "middlewares/cors.middleware";
 
 /**
- * @swagger
  * /api/auth/register:
  *  post:
  *    description: Create an account.
@@ -50,5 +49,5 @@ export default use(
   errorMiddleware,
   missingBodyMiddleware,
   validMethodsMiddleware("POST"),
-  CORSable(["http://192.168.0.29:3000", "https://feedrum.com"])
+  CORSable(["http://0.0.0.0:3000", "https://feedrum.com"])
 )(handler);

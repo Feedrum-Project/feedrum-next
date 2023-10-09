@@ -1,5 +1,5 @@
 import styles from "./styles/textarea.module.sass";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 interface ITextarea {
   name: string;
@@ -7,6 +7,7 @@ interface ITextarea {
   maxCount: number;
   placeholder?: string;
   minHeight?: number;
+  children?: ReactNode;
 }
 
 export default function Textarea({
@@ -14,9 +15,10 @@ export default function Textarea({
   Name,
   maxCount,
   placeholder,
-  minHeight
+  minHeight,
+  children
 }: ITextarea) {
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<string>(children ? children.toString() : "");
 
   return (
     <>

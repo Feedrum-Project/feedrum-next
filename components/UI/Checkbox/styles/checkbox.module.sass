@@ -2,6 +2,8 @@
 .checkbox
     display: flex
     user-select: none
+    &:hover
+        cursor: pointer
 .checkbox input
     display: none
 
@@ -18,12 +20,21 @@
     display: block
     width: 1.25rem
     height: 1.25rem
+
     background: none
     border: 1px solid $border
     border-radius: .1875rem
+    
     display: flex
     align-items: center
     justify-content: center
+
+    transition: .5s
+
+    &:hover
+        cursor: pointer
+        border: 1px solid $white
+
 
 .labelText
     margin: 0 0 0 .875rem

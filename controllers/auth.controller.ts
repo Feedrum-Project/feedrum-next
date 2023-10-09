@@ -95,15 +95,15 @@ export default class AuthController {
     userData.password = await bcrypt.hash(userData.password, 10);
     const user = await prisma.user.createUser(userData);
 
-    const verifyCode = await prisma.verifyCode.createCode(user.id);
-    await sendEmail({
-      email: user.email,
-      subject: "Please verify your email",
-      letterName: "verify",
-      options: {
-        link: `https://localhost:3000/api/auth/verify/${verifyCode.code}`
-      }
-    });
+    // const verifyCode = await prisma.verifyCode.createCode(user.id);
+    // await sendEmail({
+    //   email: user.email,
+    //   subject: "Please verify your email",
+    //   letterName: "verify",
+    //   options: {
+    //     link: `https://localhost:3000/api/auth/verify/${verifyCode.code}`
+    //   }
+    // });
 
     return {
       ...user,

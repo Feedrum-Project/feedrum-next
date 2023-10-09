@@ -7,7 +7,6 @@ import AuthController from "controllers/auth.controller";
 import success from "helpers/success.helper";
 
 /**
- * @swagger
  * /api/auth/refresh:
  *    post:
  *      security:

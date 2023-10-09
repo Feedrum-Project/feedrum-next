@@ -7,7 +7,6 @@ import errorMiddleware from "middlewares/error.middleware";
 import InvalidQueryParamError from "errors/InvalidQueryParam";
 import success from "helpers/success.helper";
 /**
- * @swagger
  * /api/auth/verify/{code}:
  *  get:
  *    description: Verify account by this link. After registration, this link going to an e-mail.

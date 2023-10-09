@@ -28,7 +28,6 @@ export default function Post({
         <h1 className={styles.postTitle}>
           <Link
             href={`/posts/${postData.id}`}
-            style={{ textDecoration: "none", color: "#fff" }}
           >
             {postData.title}
           </Link>

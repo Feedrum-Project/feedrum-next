@@ -42,7 +42,7 @@ export default function RegistrationForm() {
       password1: z.string().min(7),
       password2: z.string().min(7)
     }).safeParse(body).success;
-
+    
     if(!isOk) return dispatch({type: "addNotification", payload: {
       type: "bad",
       title: "Невідома помилка!",
@@ -50,9 +50,7 @@ export default function RegistrationForm() {
 
     const user = await registrate(body);
 
-    console.log(user);
-
-    if (user.code === 200) {
+    if (user.status) {
       dispatch({
         type: "addNotification",
         payload: {

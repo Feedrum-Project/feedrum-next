@@ -1,0 +1,120 @@
+.footer {
+  color: #BEBEBE;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.footerTop {
+  display: flex;
+  align-items: center;
+}
+.footerMiddle {
+  margin: 1.875rem 0 0 0;
+}
+.footerMiddle > ul {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  list-style: none;
+}
+.footerMiddle > ul > li > a {
+  text-decoration: none;
+  color: #BEBEBE;
+  transition: 0.5s;
+  padding: 0 0.25rem;
+}
+.footerMiddle > ul > li > a:hover {
+  background: #ffffff;
+  color: #1B1B1B;
+  border-radius: 0.25rem;
+}
+.footerMiddle > ul > li:nth-child(1) {
+  display: none;
+}
+.footerBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 6.25rem;
+}
+.footerBottomLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media screen and (max-width: 500px) {
+  .footerMiddle > ul {
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 180px;
+  }
+  .footerMiddle > ul > li {
+    padding: 0 0.5rem;
+    margin-bottom: 0.625rem;
+    margin-right: 0;
+  }
+  .footerMiddle > ul > li:nth-last-child(1) {
+    display: none;
+  }
+  .footerMiddle > ul > li:nth-last-child(2) {
+    display: none;
+  }
+  .footerBottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+.dots {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  gap: 1.875rem;
+}
+.dots > * {
+  background: none;
+  border: none;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dots > *:hover {
+  background: #ffffff;
+  box-shadow: 1px 1px 4px #AE80C3, -1px -1px 4px #E28585;
+}
+.dots > *:hover .dot {
+  fill: #312035;
+}
+
+.desc {
+  width: 17.875rem;
+}
+
+@media screen and (max-width: 500px) {
+  .dots {
+    justify-content: space-between;
+  }
+  .dots > * {
+    margin: 0;
+  }
+  .desc {
+    display: none;
+  }
+}
+.logo {
+  display: flex;
+  align-items: center;
+  margin: 0 0 1rem 0;
+}
+.logo > span {
+  margin-left: .625rem;
+  transition: .5s;
+  border-radius: .25rem;
+}
+.logo > span:hover {
+  background: #fff;
+  color: #1B1B1B;
+}
+
+/*# sourceMappingURL=footer.module.css.map */

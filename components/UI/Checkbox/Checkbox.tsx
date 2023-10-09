@@ -7,7 +7,7 @@ export default function Checkbox({ children }: { children: string }) {
     <div className={styles.checkbox}>
       <div className={styles.checkbox} onClick={() => setChecked((pr) => !pr)}>
         <input type="checkbox" checked={isChecked} readOnly />
-        <button className={styles.checkmark}>
+        <button className={styles.checkmark} type="button">
           <span className={styles.isChecked}></span>
         </button>
         <span className={styles.labelText}>{children}</span>

@@ -11,15 +11,25 @@
 .standart
   background-color: $block
   border: none
+  transition: .5s
+
+  &:hover
+    background: $white
+    color: $border
 
 .purple
   border: 1px solid $pink
   background-color: $purple
+  transition: .5s
 
   &:disabled
     background: $background
     border: 1px solid $border
     color: $pink
+
+  &:hover
+    background: $pink
+    border: 1px solid $white
 
 .danger
   background: none
@@ -42,5 +52,5 @@
     box-shadow: 0 0 .5rem $orange
 
 .secondary
-  border: $border 1px solid
+  border: 1px solid $border
   background: $block

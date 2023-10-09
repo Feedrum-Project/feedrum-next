@@ -29,7 +29,7 @@ export default async function registrate(body: bodyObj) {
         "https://feedrum.com"
       ].join(", ")
     }
-  }).then((res) => res.json());
+  }).then(res => res.json());
 
   return result;
 }

@@ -51,9 +51,11 @@ export default function Navigation() {
           </button>
         </div>
         <div className={styles.centr}>
-          <Link className={styles.LinkInsteadButton} href="/createPost">
-            Створити пост
-          </Link>
+          <Button Style="purple">
+            <Link href="/createPost">
+              Створити пост
+            </Link>
+          </Button>
 
           <button
             className={styles.office}

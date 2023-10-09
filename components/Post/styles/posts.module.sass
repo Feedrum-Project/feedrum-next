@@ -19,7 +19,7 @@
         display: flex
         align-items: center
         &name
-            margin: 0 0 0 .5rem
+            margin-left: .5rem
         &Rank
             margin-left: .625rem
 
@@ -33,6 +33,12 @@
         font-weight: 600
         font-size: 1.5rem
         margin: 0 0 .75rem
+        &>a
+            text-decoration: none
+            color: $white
+            transition: .5s
+            &:hover
+                text-decoration: underline
 
     &Body
         font-weight: 400

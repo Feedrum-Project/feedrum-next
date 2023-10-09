@@ -4,6 +4,7 @@ import arrowTop from "images/arrow-top.svg";
 import arrowBottom from "images/arrow-bottom.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { badAnswer } from "store/dispatcherAnswers";
+import { useState } from "react";
 
 interface RankProps {
   info: {
@@ -17,6 +18,7 @@ interface RankProps {
 
 export default function Rank({ info, disabled = false }: RankProps) {
   const dispatch = useDispatch();
+  const [rank, setRank] = useState(info.rank);
 
   const user = useSelector((state: any) => state.user);
   let isUser = user.id !== -1;
@@ -36,7 +38,21 @@ export default function Rank({ info, disabled = false }: RankProps) {
       body: JSON.stringify(body)
     })
       .then((res) => res.json())
-      .then(console.log)
+      .then((res) => {
+
+        if (res.code !== 200) return dispatch(badAnswer);
+        setRank(res.data.rank);
+
+        dispatch({
+          type: "addNotification",
+          payload: {
+            type: "good",
+            title: "Схвалено",
+            text: "Вашу оцінку зараховано."
+          }
+        });
+
+      })
       .catch(() => {
         dispatch(badAnswer);
       });
@@ -55,11 +71,11 @@ export default function Rank({ info, disabled = false }: RankProps) {
         className={styles.rankCount}
         style={{
           color:
-            info.rank > 0 ? "#6AEA3D" : info.rank < 0 ? "#F36A6A" : "#BEBEBE"
+            rank > 0 ? "#6AEA3D" : rank < 0 ? "#F36A6A" : "#BEBEBE"
         }}
       >
-        {info && info.rank > 0 ? "+" : null}
-        {info.rank}
+        {info && rank > 0 ? "+" : null}
+        {rank}
       </div>
       <button
         className={styles.reduceReputation}

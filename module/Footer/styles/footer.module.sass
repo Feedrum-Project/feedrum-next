@@ -13,13 +13,19 @@
         margin: 1.875rem 0 0 0
         &>ul
             display: flex
-            list-style: none
             justify-content: space-between
+            gap: .75rem
+            list-style: none
             &>li
-                margin-right: 1.25rem
                 &>a
                     text-decoration: none
                     color: $gray
+                    transition: .5s
+                    padding: 0 .25rem
+                    &:hover
+                        background: $white
+                        color: $background
+                        border-radius: .25rem
                     
                 &:nth-child(1)
                         display: none
@@ -53,15 +59,20 @@
         &Bottom
             align-items: flex-start
             flex-direction: column
-
 .dots
     display: flex
     justify-content: center
     margin: 2rem 0
+    gap: 1.875rem
     &>*
-        margin: 0 0 0 1.875rem
         background: none
         border: none
+        border-radius: .25rem
+        display: flex
+        align-items: center
+        justify-content: center
+        &:hover
+            background: $white
 
 .desc
     width: 17.875rem

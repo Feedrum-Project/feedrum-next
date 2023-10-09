@@ -58,7 +58,7 @@ export default function Comment({
               payload: {
                 type: "bad",
                 title: "На зацінено",
-                text: "Оцінку не зараховано ;("
+                text: "Оцінку не схвалено ;("
               }
             })
       );
@@ -97,7 +97,7 @@ export default function Comment({
       ) : null}
       <div className={styles.commentBody}>
         <div className={styles.rank}>
-          <button disabled={!isUser} onClick={() => Vote("UPVOTE")}>
+          <button disabled={!isUser} onClick={() => Vote("UPVOTE")} className={styles.growRep}>
             <Image src={arrowTop} alt="Збільшити репутацію" />
           </button>
           <div
@@ -113,7 +113,7 @@ export default function Comment({
           >
             {comment.rank}
           </div>
-          <button disabled={!isUser} onClick={() => Vote("DOWNVOTE")}>
+          <button disabled={!isUser} onClick={() => Vote("DOWNVOTE")} className={styles.decreaseRep}>
             <Image src={arrowBottom} alt="Зменшити репутацію" />
           </button>
         </div>
