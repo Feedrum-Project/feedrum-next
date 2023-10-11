@@ -103,7 +103,7 @@ export default function PostPage({
               text: "Ваш коментар надіслано."
             }
           });
-          setComments(pr => [{...e.data, User: user}].concat(pr));
+          setComments(pr => [{ ...e.data, User: user }].concat(pr));
           setField("");
         }
         setAttention(e);
@@ -133,11 +133,13 @@ export default function PostPage({
         "Content-Type": "application/json"
       }
     }).then(() => {
-      dispatch({type: "addNotification", payload: {
-        type: "bad",
-        title: "Пост ліквідовано",
-        text: "Вашого твору більше не існує."
-      }});
+      dispatch({
+        type: "addNotification", payload: {
+          type: "bad",
+          title: "Пост ліквідовано",
+          text: "Вашого твору більше не існує."
+        }
+      });
     });
   }
 
@@ -240,15 +242,34 @@ export default function PostPage({
                   <Image alt="Аватар" src={avatar} width={40} height={40} />
                 </div>
                 <div className={styles.commentRight}>
-                  <Textarea
+                  <div className={styles.textarea} style={{ minHeight: 130 }}>
+                    <div className={styles.textareaTop}>
+                      <div className={styles.textareaLeft}>Комментар</div>
+                      <div className={styles.textareaRight}>
+                        {commentField.length} / {2048} символів
+                      </div>
+                    </div>
+                    <div className={styles.textareaBottom}>
+                      <textarea
+                        name="comment"
+                        className={styles.textareaContent}
+                        value={commentField}
+                        maxLength={2048}
+                        onChange={(e) => {
+                          setField(e.target.value);
+                        }}
+                        placeholder={"Місце для вашого коментаря"}
+                      ></textarea>
+                    </div>
+                  </div>
+                  {/* <Textarea
                     Name="Комментар"
                     name="comment"
                     maxCount={2048}
                     placeholder="Місце для вашого коментаря"
-                    minHeight={130}
-                  >{commentField}</Textarea>
+                    minHeight={130}/> */}
                   <div className={styles.admit}>
-                    <Button Style="purple" type="submit">
+                    <Button Style="purple" type="submit" disabled={commentField.length < 16}>
                       Підтвердити
                     </Button>
                   </div>

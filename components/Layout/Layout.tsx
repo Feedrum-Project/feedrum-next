@@ -31,16 +31,17 @@ export default function Layout({ children }: Props) {
           ? dispatch({ type: "setUser", payload: { id: 0 } })
           : dispatch({ type: "setUser", payload: res });
 
-        res.isVerified
-          ? null
-          : dispatch({
-              type: "addNotification",
-              payload: {
-                type: "bad",
-                title: "Ви не підтвердили свою пошту",
-                text: "Перевірте свою скриньку на наявність верефікаційного листа"
-              }
-            });
+        // res.isVerified
+        //   ? null
+        //   : dispatch({
+        //       type: "addNotification",
+        //       payload: {
+        //         type: "bad",
+        //         title: "Ви не підтвердили свою пошту",
+        //         text: "Перевірте свою скриньку на наявність верефікаційного листа"
+        //       }
+        //     });
+        // left it for better times.
       })
       .catch(() => {
 

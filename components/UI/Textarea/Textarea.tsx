@@ -7,7 +7,8 @@ interface ITextarea {
   maxCount: number;
   placeholder?: string;
   minHeight?: number;
-  children?: ReactNode;
+  contentIn?: string;
+  onEdit?: (e: any) => any;
 }
 
 export default function Textarea({
@@ -16,9 +17,8 @@ export default function Textarea({
   maxCount,
   placeholder,
   minHeight,
-  children
 }: ITextarea) {
-  const [content, setContent] = useState<string>(children ? children.toString() : "");
+  const [content, setContent] = useState<string>("");
 
   return (
     <>
@@ -35,7 +35,9 @@ export default function Textarea({
             className={styles.textareaContent}
             value={content}
             maxLength={maxCount}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
             placeholder={placeholder}
           ></textarea>
         </div>

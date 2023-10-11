@@ -8,7 +8,7 @@
   display: flex
   align-items: center
   &>*
-    margin: 0 0 0 1rem
+    margin-left: 1rem
   &Mobile
     display: none
 
@@ -32,34 +32,45 @@
 
   .top
     display: flex
-    padding-bottom: .625rem
     border-bottom: 1px solid $border
+    width: 100%
     &>*
-      width: min-content
+      display: flex
+      align-items: center
+      padding-bottom: .5rem
+      width: 100%
       color: $white
-      font-weight: 600
-      cursor: pointer
       text-decoration: none
-      display: block
-      &:first-child
-        margin-right: .5rem
+      &:hover
+        color: $background
+        background: $white
+        border-radius: .25rem
   .middle
     &>*
-      display: block
-      padding: 0 0 .5rem 0
+      display: flex
+      align-items: center
+      padding-bottom: .5rem
       width: 100%
       color: $white
       text-decoration: none
       &:first-child
         padding-top: .5rem
+      &:hover
+        color: $background
+        background: $white
+        border-radius: .25rem
   .bottom
     &>*
       display: block
-      padding: .5rem 0 0 0
+      padding-top: .5rem
       width: 100%
       color: $red
       font-weight: 600
       text-decoration: none
+      &:hover
+        color: $background
+        background: $red
+        border-radius: .25rem
   
 .office
   background: none

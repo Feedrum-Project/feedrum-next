@@ -40,7 +40,7 @@ export default function Settings() {
         <h1>Розділи</h1>
         <div className={styles.chaptersBottom}>
           <div
-            className={chapter === "profile" ? styles.choosed : ""}
+            className={chapter === "profile" ? styles.choosed : styles.chapter}
             onClick={() => setChapter("profile")}
             tabIndex={0}
             style={
@@ -50,7 +50,7 @@ export default function Settings() {
             Профіль
           </div>
           <div
-            className={chapter === "dev" ? styles.choosed : ""}
+            className={chapter === "dev" ? styles.choosed : styles.chapter}
             onClick={() => setChapter("dev")}
             tabIndex={0}
             style={chapter === "dev" ? { background: "#1B1B1B" } : undefined}
@@ -58,7 +58,7 @@ export default function Settings() {
             Інформація для розробників
           </div>
           <div
-            className={chapter === "safe" ? styles.choosed : ""}
+            className={chapter === "safe" ? styles.choosed : styles.chapter}
             onClick={() => setChapter("safe")}
             tabIndex={0}
             style={chapter === "safe" ? { background: "#1B1B1B" } : undefined}

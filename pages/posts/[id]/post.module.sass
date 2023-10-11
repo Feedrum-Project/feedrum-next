@@ -152,3 +152,41 @@
 .admit
   width: min-content
   margin-top: .875rem
+
+.textarea
+    background: $block
+    border: 1px solid $border
+    width: 100%
+    min-height: 5rem
+    border-radius: .5625rem
+
+    &Left
+        font-size: .875rem
+        color: $gray
+
+    &Top
+        display: flex
+        justify-content: space-between
+        padding: .625rem .625rem .25rem .625rem
+        color: $gray
+        font-size: .875rem
+
+        &>*
+            font-size: .875rem
+
+    &Bottom
+        height: 100%
+
+    &Content
+        width: 100%
+        height: 100%
+        background: $block
+        color: $white
+        border: none
+        resize: none
+        outline: none
+        padding: 0 .625rem
+        font-size: 1rem
+
+.button
+    width: min-content

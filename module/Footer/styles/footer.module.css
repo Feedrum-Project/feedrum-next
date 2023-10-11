@@ -78,10 +78,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 1s;
 }
 .dots > *:hover {
   background: #ffffff;
   box-shadow: 1px 1px 4px #AE80C3, -1px -1px 4px #E28585;
+  transition: .25s;
 }
 .dots > *:hover .dot {
   fill: #312035;
